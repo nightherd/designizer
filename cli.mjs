@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // designizer CLI (Chrome via playwright-core).
 //   node cli.mjs scan <url|file> [--overlay out.jpg] [--only id,id] [--config .designizer.json]
-//   node cli.mjs eval [--split dev|test|all] [--baselines] [--write]
+//   node cli.mjs eval [--split dev|test|test-b|all] [--baselines] [--write] [--report-only]
 //   node cli.mjs examples            screenshot one overlay per pattern from the AI pages into examples/
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -75,6 +75,7 @@ function sets(split) {
 
 async function evaluate() {
   const split = flag('split', 'test');
+  if (flag('report-only')) return finish(read(RESULTS), split);
   const items = sets(split);
   const baselines = flag('baselines') ? await import('./eval/baselines.mjs') : null;
   const browser = await chromium.launch({ channel: 'chrome' });
@@ -107,6 +108,10 @@ async function evaluate() {
   await browser.close();
   const merged = Object.fromEntries(Object.entries({ ...old, ...out }).sort(([a], [b]) => a.localeCompare(b)));
   writeFileSync(RESULTS, JSON.stringify(merged, null, 2) + '\n');
+  finish(merged, split);
+}
+
+function finish(merged, split) {
   const table = report(merged, split);
   console.log(table.text);
   if (flag('write')) {
@@ -121,7 +126,9 @@ async function evaluate() {
 // the same way designizer's threshold was, then applied unchanged to the split being reported.
 function report(results, split) {
   const rows = Object.entries(results).filter(([, r]) => split === 'all' || split.split(',').includes(r.split));
-  const dev = Object.values(results).filter(r => r.split === 'dev');
+  // Development data: dev for the first test run; dev + test once test had been seen (v2), for every tool alike.
+  const devSplits = split === 'test-b' ? ['dev', 'test'] : ['dev'];
+  const dev = Object.values(results).filter(r => devSplits.includes(r.split));
   const stats = (rs, isAi) => {
     const ai = rs.filter(r => r.label === 'ai'), hu = rs.filter(r => r.label === 'human');
     const tp = ai.filter(isAi).length, fp = hu.filter(isAi).length;
@@ -134,7 +141,7 @@ function report(results, split) {
     const cands = [...new Set(dev.map(score).filter(v => typeof v === 'number'))].sort((a, b) => a - b);
     let best = { t: Infinity, acc: -1 };
     for (const t of cands) { const s = stats(dev.filter(r => typeof score(r) === 'number'), r => score(r) >= t); if (s.acc > best.acc) best = { t, acc: s.acc }; }
-    tools.push({ name, isAi: r => typeof score(r) === 'number' && score(r) >= best.t, note: `score ≥ ${best.t} (tuned on dev)` });
+    tools.push({ name, isAi: r => typeof score(r) === 'number' && score(r) >= best.t, note: `score ≥ ${best.t} (tuned on ${devSplits.join(' + ')})` });
   }
   const md = ['| Tool | Accuracy | AI pages caught | Human pages flagged as AI | Verdict rule |', '|---|---|---|---|---|'];
   let text = `\n${split} split, ${rows.length} pages\n`;

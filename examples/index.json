@@ -75,7 +75,7 @@
     "id": "gradient-text",
     "n": 13,
     "file": "examples/13-gradient-text.jpg",
-    "page": "ex-01"
+    "page": "ai-65"
   },
   {
     "id": "gradients",
@@ -98,7 +98,8 @@
   {
     "id": "dark-acid",
     "n": 17,
-    "file": null
+    "file": "examples/17-dark-acid.jpg",
+    "page": "ex-05"
   },
   {
     "id": "card-kit",
@@ -163,7 +164,8 @@
   {
     "id": "fake-window",
     "n": 28,
-    "file": null
+    "file": "examples/28-fake-window.jpg",
+    "page": "ex-02"
   },
   {
     "id": "uniform-spacing",
