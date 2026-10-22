@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ashgrove &amp; Lind LLP — Counsel for startups</title>
+<meta name="description" content="A small law firm for seed-to-Series-B startups. Fixed fees, one partner per matter, and a phone that gets answered.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3efe6;
+    --paper-deep: #e9e3d4;
+    --ink: #1c1b18;
+    --ink-soft: #5a5649;
+    --rule: #cfc6b1;
+    --rust: #9c3f22;
+    --serif: "Newsreader", Georgia, serif;
+    --sans: "IBM Plex Sans", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --gutter: 16px;
+    --max: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    /* faint paper grain, so the page isn't a flat digital fill */
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    opacity: .35;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0 0.2  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    z-index: 100;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  @media (min-width: 900px) { :root { --gutter: 48px; } }
+
+  a { color: inherit; }
+  .label {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .mono { font-family: var(--mono); font-size: 15px; }
+
+  /* ---------- top bar ---------- */
+  header {
+    border-bottom: 1px solid var(--ink);
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    gap: 16px;
+  }
+  .mark {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+  }
+  .mark strong {
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -.01em;
+  }
+  .mark span {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+  nav ul {
+    list-style: none;
+    display: none;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+  }
+  nav a {
+    text-decoration: none;
+    font-family: var(--sans);
+    font-size: 14px;
+  }
+  nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  @media (min-width: 800px) { nav ul { display: flex; } }
+
+  .btn {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 12px 18px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    white-space: nowrap;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.solid { background: var(--ink); color: var(--paper); }
+  .btn.solid:hover { background: var(--rust); border-color: var(--rust); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    display: grid;
+    gap: 48px;
+    padding: 56px 0 72px;
+  }
+  @media (min-width: 900px) {
+    .hero { grid-template-columns: 1.45fr 1fr; gap: 64px; padding: 96px 0 110px; align-items: end; }
+  }
+  .hero h1 {
+    font-weight: 400;
+    font-size: clamp(44px, 6.4vw, 84px);
+    line-height: .98;
+    letter-spacing: -.02em;
+    margin: 20px 0 28px;
+  }
+  .hero h1 em { color: var(--rust); font-style: italic; }
+  .lede {
+    font-size: 21px;
+    max-width: 34em;
+    color: #2f2d27;
+    margin: 0 0 36px;
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+  .cta-row .quiet {
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .ledger {
+    border-top: 1px solid var(--ink);
+    padding-top: 14px;
+  }
+  .ledger h2 {
+    margin: 10px 0 14px;
+    font-weight: 500;
+    font-size: 22px;
+  }
+  .ledger dl { margin: 0; }
+  .ledger .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .ledger dt { font-size: 17px; }
+  .ledger dd {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .ledger .note {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 14px;
+  }
+
+  /* ---------- sections ---------- */
+  section { padding: 88px 0; border-top: 1px solid var(--rule); }
+  .sec-head {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 52px;
+  }
+  @media (min-width: 900px) {
+    .sec-head { grid-template-columns: 220px 1fr; gap: 48px; }
+  }
+  .sec-head .label { padding-top: 10px; }
+  .sec-head h2 {
+    font-weight: 400;
+    font-size: clamp(34px, 4.2vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -.015em;
+    margin: 0;
+    max-width: 20em;
+  }
+
+  /* ---------- services as a fee schedule ---------- */
+  .schedule {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .schedule th {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-align: left;
+    padding: 0 0 12px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .schedule td {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .schedule td.name { font-size: 24px; line-height: 1.2; width: 42%; }
+  .schedule td.name small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    line-height: 1.45;
+  }
+  .schedule td.when { font-family: var(--sans); font-size: 14px; color: var(--ink-soft); }
+  .schedule td.fee { font-family: var(--mono); font-size: 18px; text-align: right; white-space: nowrap; }
+  .schedule td.fee i { font-style: normal; color: var(--ink-soft); font-size: 13px; display: block; }
+  .schedule th.fee { text-align: right; }
+  .schedule th.when { display: table-cell; }
+  @media (max-width: 720px) {
+    .schedule thead { display: none; }
+    .schedule, .schedule tbody, .schedule tr, .schedule td { display: block; width: 100%; }
+    .schedule td.name { width: 100%; padding-bottom: 6px; border-bottom: 0; }
+    .schedule td.when { padding-top: 0; display: inline-block; width: 60%; }
+    .schedule td.fee { display: inline-block; width: 38%; text-align: right; padding-top: 0; }
+  }
+
+  .fine-print {
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 22px 0 0;
+    max-width: 62em;
+  }
+
+  /* ---------- process ---------- */
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+    counter-reset: step;
+  }
+  @media (min-width: 900px) {
+    .steps { grid-template-columns: repeat(4, 1fr); }
+  }
+  .steps li {
+    padding: 22px 24px 32px 0;
+    border-top: 1px solid var(--ink);
+  }
+  .steps li + li { border-left: 0; }
+  @media (min-width: 900px) {
+    .steps li { padding-right: 28px; }
+    .steps li + li { padding-left: 24px; border-left: 1px solid var(--rule); }
+  }
+  .steps .num {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--rust);
+  }
+  .steps h3 {
+    font-weight: 500;
+    font-size: 26px;
+    margin: 10px 0 10px;
+    line-height: 1.15;
+  }
+  .steps p {
+    margin: 0;
+    font-size: 17px;
+    color: #37352e;
+  }
+  .steps .time {
+    display: block;
+    margin-top: 14px;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- pull quote ---------- */
+  .pull {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 96px 0;
+  }
+  .pull blockquote {
+    margin: 0;
+    font-size: clamp(30px, 4vw, 50px);
+    line-height: 1.18;
+    letter-spacing: -.01em;
+    max-width: 24em;
+    text-indent: -.45em;
+  }
+  .pull cite {
+    display: block;
+    margin-top: 32px;
+    font-style: normal;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: #bdb6a3;
+    text-indent: 0;
+  }
+  .pull .label { color: #bdb6a3; }
+
+  /* ---------- people ---------- */
+  .people {
+    display: grid;
+    gap: 40px 28px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) { .people { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 900px) { .people { grid-template-columns: repeat(4, 1fr); } }
+  .person .initials {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 14px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .person .initials b {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 72px;
+    line-height: .8;
+    color: var(--ink);
+    letter-spacing: -.03em;
+  }
+  .person h3 { font-weight: 500; font-size: 22px; margin: 16px 0 2px; }
+  .person .role { font-family: var(--sans); font-size: 14px; color: var(--ink-soft); margin: 0 0 10px; }
+  .person p { margin: 0; font-size: 16px; color: #37352e; }
+
+  /* ---------- fees / faq ---------- */
+  .split {
+    display: grid;
+    gap: 48px;
+  }
+  @media (min-width: 900px) { .split { grid-template-columns: 1fr 1.25fr; gap: 80px; } }
+  .split p { font-size: 18px; margin: 0 0 18px; max-width: 30em; }
+  details {
+    border-top: 1px solid var(--rule);
+    padding: 20px 0;
+  }
+  details:last-child { border-bottom: 1px solid var(--rule); }
+  summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: "+";
+    font-family: var(--mono);
+    font-size: 20px;
+    color: var(--rust);
+    line-height: 1.2;
+  }
+  details[open] summary::after { content: "−"; }
+  details p {
+    margin: 14px 0 0;
+    font-size: 17px;
+    color: #37352e;
+    max-width: 40em;
+  }
+
+  /* ---------- contact ---------- */
+  .contact {
+    display: grid;
+    gap: 40px;
+  }
+  @media (min-width: 900px) { .contact { grid-template-columns: 1.2fr 1fr; gap: 96px; } }
+  .contact h2 {
+    font-weight: 400;
+    font-size: clamp(38px, 5vw, 64px);
+    line-height: 1;
+    letter-spacing: -.02em;
+    margin: 16px 0 24px;
+  }
+  .contact .big-mail {
+    font-size: 28px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--rust);
+    color: var(--ink);
+  }
+  .contact .big-mail:hover { color: var(--rust); }
+  .addr {
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    color: #37352e;
+  }
+  .addr h4 {
+    margin: 0 0 6px;
+    font-family: var(--sans);
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .addr div + div { margin-top: 24px; }
+
+  /* ---------- footer ---------- */
+  footer {
+    background: var(--paper-deep);
+    border-top: 1px solid var(--ink);
+    padding: 40px 0 48px;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  footer .cols {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px 32px;
+    margin-bottom: 28px;
+  }
+  footer .cols a { text-decoration: none; margin-right: 22px; }
+  footer .cols a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  footer p { margin: 0; max-width: 70em; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap topbar">
+    <a class="mark" href="#top">
+      <strong>Ashgrove &amp; Lind</strong>
+      <span>Counsel for startups</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#services">Fees</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#people">People</a></li>
+        <li><a href="#faq">Questions</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="#contact">Book a call</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="wrap hero">
+    <div>
+      <p class="label">Startup counsel · Est. 2014 · San Francisco and remote</p>
+      <h1>Lawyers for companies that haven’t finished <em>becoming</em> companies yet.</h1>
+      <p class="lede">We handle the incorporation, the financing, the first hire and the first letter nobody wanted to receive. Seed through Series B. Fixed fees wherever we can price the work, and a partner on every matter, including the dull ones.</p>
+      <div class="cta-row">
+        <a class="btn solid" href="#contact">Book a 30-minute call</a>
+        <a class="btn" href="#services">See the fee schedule</a>
+      </div>
+    </div>
+
+    <aside class="ledger" aria-label="Typical turnaround">
+      <p class="label">Typical turnaround</p>
+      <h2>How long things take here</h2>
+      <dl>
+        <div class="row"><dt>Founder agreements and incorporation</dt><dd>3 business days</dd></div>
+        <div class="row"><dt>SAFE or convertible note review</dt><dd>48 hours</dd></div>
+        <div class="row"><dt>Written quote after a first call</dt><dd>by end of next day</dd></div>
+        <div class="row"><dt>Priced seed round, first draft</dt><dd>7 to 10 days</dd></div>
+        <div class="row"><dt>Response to a phone message</dt><dd>same business day</dd></div>
+      </dl>
+      <p class="note">Turnaround assumes the company has sent us what we asked for. We’ll tell you what that is on the first call.</p>
+    </aside>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">Fee schedule</p>
+        <h2>What we do, and what it costs before we start.</h2>
+      </div>
+
+      <table class="schedule">
+        <thead>
+          <tr>
+            <th scope="col">Matter</th>
+            <th scope="col" class="when">Usual timing</th>
+            <th scope="col" class="fee">Fee</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">Formation and founder agreements<small>Delaware C-corp, stock purchase, IP assignment, vesting, board consents.</small></td>
+            <td class="when">One to two weeks</td>
+            <td class="fee">$2,400<i>fixed</i></td>
+          </tr>
+          <tr>
+            <td class="name">SAFE and convertible note rounds<small>Documents, side letter review, and the closing checklist.</small></td>
+            <td class="when">One to three weeks</td>
+            <td class="fee">$3,800<i>fixed</i></td>
+          </tr>
+          <tr>
+            <td class="name">Priced seed or Series A<small>Term sheet negotiation, charter, investor rights, and closing.</small></td>
+            <td class="when">Four to six weeks</td>
+            <td class="fee">from $14,000<i>fixed per round</i></td>
+          </tr>
+          <tr>
+            <td class="name">Equity plan and first hires<small>Option pool sizing, plan adoption, offer letters, and contractor agreements.</small></td>
+            <td class="when">Ongoing as needed</td>
+            <td class="fee">$1,800<i>per plan</i></td>
+          </tr>
+          <tr>
+            <td class="name">Trademark and IP clearance<small>Search, filing, and assignment from founders and contractors.</small></td>
+            <td class="when">Search in 3 days</td>
+            <td class="fee">$950<i>per mark</i></td>
+          </tr>
+          <tr>
+            <td class="name">Retainer for everything else<small>Questions by phone or email, unlimited, with a monthly cap you set.</small></td>
+            <td class="when">Monthly</td>
+            <td class="fee">$1,100<i>per month</i></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="fine-print">Government filing fees and third-party costs are billed at cost and listed on every quote. Fixed fees cover the scope written in the quote. If the scope changes, we tell you in writing before doing the extra work.</p>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">How a matter runs</p>
+        <h2>Four steps. No surprise invoices in between.</h2>
+      </div>
+
+      <ol class="steps">
+        <li>
+          <span class="num">01</span>
+          <h3>A call</h3>
+          <p>Thirty minutes, free. We’ll tell you if you don’t need us yet, and point you at what to do instead.</p>
+          <span class="time">Same week</span>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <h3>A quote</h3>
+          <p>A written, fixed-fee proposal with the scope spelled out, including what we are not doing.</p>
+          <span class="time">By end of next day</span>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <h3>The work</h3>
+          <p>One partner and one associate on your file. Drafts go into a shared folder you can read at any hour.</p>
+          <span class="time">Weekly status note</span>
+        </li>
+        <li>
+          <span class="num">04</span>
+          <h3>The close</h3>
+          <p>We send a binder of signed documents and a one-page list of what to do next. Then we stay reachable.</p>
+          <span class="time">Retainer optional</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="pull">
+    <div class="wrap">
+      <p class="label">Our one house rule</p>
+      <blockquote>If a founder can’t explain a clause to their co-founder over coffee, we rewrite the clause before we send it.</blockquote>
+      <cite>Dana Ashgrove, managing partner</cite>
+    </div>
+  </div>
+
+  <section id="people">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">The people</p>
+        <h2>Four lawyers, and nobody on the bench.</h2>
+      </div>
+
+      <div class="people">
+        <article class="person">
+          <div class="initials"><span>Partner · 01</span><b>DA</b></div>
+          <h3>Dana Ashgrove</h3>
+          <p class="role">Managing partner</p>
+          <p>Fifteen years in venture-backed corporate work. Has closed financings from pre-seed to Series B and still reads every first draft.</p>
+        </article>
+        <article class="person">
+          <div class="initials"><span>Partner · 02</span><b>OL</b></div>
+          <h3>Owen Lind</h3>
+          <p class="role">Partner, employment and equity</p>
+          <p>Writes option plans that employees can actually read. Former in-house counsel at a fintech that went through two layoffs and came out fine.</p>
+        </article>
+        <article class="person">
+          <div class="initials"><span>Partner · 03</span><b>PS</b></div>
+          <h3>Priya Sandoval</h3>
+          <p class="role">Partner, IP and commercial</p>
+          <p>Handles trademark, licensing, and the vendor agreements that show up in the second year. Runs the clearance search herself.</p>
+        </article>
+        <article class="person">
+          <div class="initials"><span>Associate</span><b>MT</b></div>
+          <h3>Miguel Tran</h3>
+          <p class="role">Associate, corporate</p>
+          <p>Our closing-checklist person. If something is missing from a binder, Miguel noticed it first, and usually fixed it that morning.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap split">
+      <div>
+        <div class="sec-head" style="margin-bottom:24px">
+          <p class="label">Questions</p>
+        </div>
+        <h2 style="font-weight:400;font-size:clamp(34px,4.2vw,50px);line-height:1.05;letter-spacing:-.015em;margin:0 0 20px">The ones founders ask us first.</h2>
+        <p>If yours isn’t here, the call is free and the answer is usually short.</p>
+        <a class="btn" href="#contact">Ask on a call</a>
+      </div>
+
+      <div>
+        <details open>
+          <summary>Do you take equity instead of fees?</summary>
+          <p>Only through accelerator programs we are approved to work with, and only when the program requires it. We do not ask for equity from companies we are not already working with, and we will say so in writing if you ask.</p>
+        </details>
+        <details>
+          <summary>We have no revenue yet. Are we too early?</summary>
+          <p>No. Most of our clients were pre-revenue when they first called. Formation and the founder agreements are the right first step, and they are cheaper to get right now than to fix after your first investor asks.</p>
+        </details>
+        <details>
+          <summary>What happens if we outgrow you?</summary>
+          <p>We refer you to firms we would hire ourselves, and we hand over the complete file, including drafts and correspondence, without a fee for the transfer.</p>
+        </details>
+        <details>
+          <summary>Do you represent investors and founders on the same deal?</summary>
+          <p>No. We act for one side of any transaction, and we tell you which side on the first call. If a conflict appears mid-matter, we say so the same day and help you find other counsel.</p>
+        </details>
+        <details>
+          <summary>How do you bill the monthly retainer?</summary>
+          <p>A flat fee each month with a cap you choose. You see every hour logged against it in a weekly note, and anything above the cap waits for your approval.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact">
+      <div>
+        <p class="label">Contact</p>
+        <h2>Thirty minutes, on us.</h2>
+        <a class="big-mail" href="mailto:hello@ashgrovelind.example">hello@ashgrovelind.example</a>
+        <p style="font-family:var(--sans);font-size:15px;color:var(--ink-soft);margin:22px 0 0;max-width:30em">Tell us what you are building, what you need in the next thirty days, and what you are worried about. We will tell you what we think, including if you should go elsewhere.</p>
+      </div>
+      <div class="addr">
+        <div>
+          <h4>Office</h4>
+          288 Hayes Street, Suite 4<br>San Francisco, CA 94102
+        </div>
+        <div>
+          <h4>Phone</h4>
+          (415) 555-0142<br>Mon–Fri, 8:30 to 6:00 Pacific
+        </div>
+        <div>
+          <h4>Also in practice</h4>
+          Remote for clients in New York, Austin and London. Admitted in California and New York.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <strong style="font-family:var(--serif);font-size:17px;font-weight:600;color:var(--ink)">Ashgrove &amp; Lind LLP</strong>
+      </div>
+      <div>
+        <a href="#services">Fees</a>
+        <a href="#process">Process</a>
+        <a href="#people">People</a>
+        <a href="#faq">Questions</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p>Nothing on this site is legal advice, and reading it does not create an attorney–client relationship. Results in past matters do not predict results in yours. Fees shown are starting points; each engagement is priced in a written quote. Attorney advertising. Prior results depend on facts specific to each matter.</p>
+  </div>
+</footer>
+
+</body>
+</html>

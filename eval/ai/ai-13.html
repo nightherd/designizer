@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halden &amp; Rowe — City Apartments</title>
+<meta name="description" content="Halden & Rowe let and sell flats in Old Quay, Tannery Row, Marlow Hill and Canal Side. Office on Ferry Street since 1987.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Archivo:wdth,wght@75..100,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f1ece2;
+    --paper-2: #e6dfd0;
+    --card: #f7f3eb;
+    --ink: #1d1b17;
+    --ink-2: #5a554b;
+    --ink-3: #8a8477;
+    --rule: #1d1b17;
+    --rule-soft: #cfc6b4;
+    --brick: #a8432a;
+    --brick-ink: #fff6ee;
+    --moss: #4f5d3a;
+    --lamp: #eab865;
+    --serif: "Newsreader", Georgia, serif;
+    --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --gutter: clamp(16px, 4vw, 48px);
+    --max: 1280px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #191815; --paper-2: #23211d; --card: #201e1a;
+      --ink: #ece6da; --ink-2: #b4ac9d; --ink-3: #847d70;
+      --rule: #ece6da; --rule-soft: #3a3731;
+      --brick: #d0694c; --brick-ink: #1a0f0b; --moss: #9db07c; --lamp: #f0c477;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #191815; --paper-2: #23211d; --card: #201e1a;
+    --ink: #ece6da; --ink-2: #b4ac9d; --ink-3: #847d70;
+    --rule: #ece6da; --rule-soft: #3a3731;
+    --brick: #d0694c; --brick-ink: #1a0f0b; --moss: #9db07c; --lamp: #f0c477;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .mono { font-family: var(--mono); font-size: .8125rem; letter-spacing: .01em; }
+  .label {
+    font-family: var(--sans); font-stretch: 80%; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .08em; font-size: .75rem;
+  }
+  :focus-visible { outline: 2px solid var(--brick); outline-offset: 3px; }
+
+  /* ---------- top strip & nav ---------- */
+  .strip { border-bottom: 1px solid var(--rule); font-size: .8125rem; }
+  .strip .wrap { display: flex; gap: 24px; justify-content: space-between; padding-top: 8px; padding-bottom: 8px; flex-wrap: wrap; }
+  .strip .open::before {
+    content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--moss); margin-right: 8px; vertical-align: 1px;
+  }
+  header.nav .wrap {
+    display: grid; grid-template-columns: auto 1fr auto; align-items: end; gap: 32px;
+    padding-top: 22px; padding-bottom: 18px; border-bottom: 3px double var(--rule);
+  }
+  .brand { text-decoration: none; display: block; }
+  .brand b { font-family: var(--serif); font-weight: 500; font-size: 1.9rem; letter-spacing: -.01em; line-height: 1; display: block; }
+  .brand b i { font-weight: 300; }
+  .brand small { display: block; margin-top: 6px; color: var(--ink-2); font-size: .8125rem; }
+  nav.links { display: flex; gap: 26px; justify-content: center; }
+  nav.links a { text-decoration: none; font-size: .9375rem; padding-bottom: 2px; border-bottom: 1px solid transparent; }
+  nav.links a:hover { border-color: var(--ink); }
+  .call {
+    text-decoration: none; font-family: var(--mono); font-size: .875rem;
+    border: 1px solid var(--rule); padding: 8px 12px; white-space: nowrap;
+  }
+  .call:hover { background: var(--ink); color: var(--paper); }
+
+  /* ---------- hero ---------- */
+  .hero .wrap { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(28px, 5vw, 72px); padding-top: clamp(40px, 7vw, 88px); padding-bottom: clamp(40px, 6vw, 72px); }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 350; font-size: clamp(2.5rem, 5.6vw, 5.1rem);
+    line-height: 1.02; letter-spacing: -.025em; margin: 18px 0 28px; text-wrap: balance;
+  }
+  .hero h1 em { font-style: italic; font-weight: 300; color: var(--brick); }
+  .hero .lede { font-family: var(--serif); font-size: 1.25rem; line-height: 1.45; max-width: 34em; color: var(--ink-2); margin: 0 0 32px; }
+  .hero .actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer;
+    background: var(--ink); color: var(--paper); border: 1px solid var(--ink);
+    padding: 13px 18px; font-weight: 600; font-size: .9375rem;
+  }
+  .btn:hover { background: var(--brick); border-color: var(--brick); color: var(--brick-ink); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .hero .facts { display: flex; gap: 0; margin-top: 44px; border-top: 1px solid var(--rule); }
+  .hero .facts div { flex: 1; padding: 14px 16px 0 0; }
+  .hero .facts div + div { padding-left: 16px; border-left: 1px solid var(--rule-soft); }
+  .hero .facts strong { display: block; font-family: var(--serif); font-weight: 400; font-size: 2rem; line-height: 1.1; }
+  .hero .facts span { color: var(--ink-2); font-size: .8125rem; }
+
+  .building { align-self: end; }
+  .building figure { margin: 0; }
+  .building svg { width: 100%; height: auto; display: block; }
+  .building .win { cursor: default; transition: fill .2s; }
+  .building .win.lit { fill: var(--lamp); cursor: pointer; }
+  .building .win.lit:hover, .building .win.lit.hot { fill: var(--brick); }
+  .building figcaption {
+    border-top: 1px solid var(--rule); margin-top: 0; padding-top: 10px;
+    display: flex; justify-content: space-between; gap: 16px; font-size: .8125rem; color: var(--ink-2); min-height: 3.2em;
+  }
+  .building figcaption b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- section heads ---------- */
+  section { scroll-margin-top: 16px; }
+  .sec-head { display: grid; grid-template-columns: 180px 1fr; gap: 24px; border-top: 1px solid var(--rule); padding-top: 18px; margin-bottom: 36px; }
+  .sec-head .num { font-family: var(--mono); font-size: .8125rem; color: var(--ink-2); padding-top: 10px; }
+  .sec-head h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 3rem); line-height: 1.05; letter-spacing: -.02em; margin: 0; max-width: 20em; text-wrap: balance; }
+  .sec-head p { margin: 12px 0 0; color: var(--ink-2); max-width: 40em; }
+  .block { padding: clamp(48px, 7vw, 96px) 0; }
+
+  /* ---------- listings ---------- */
+  .controls { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .seg { display: inline-flex; border: 1px solid var(--rule); }
+  .seg button { background: none; border: 0; padding: 8px 14px; cursor: pointer; font-size: .875rem; }
+  .seg button + button { border-left: 1px solid var(--rule); }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips button {
+    background: none; border: 1px solid var(--rule-soft); border-radius: 999px; padding: 5px 12px;
+    font-size: .8125rem; cursor: pointer;
+  }
+  .chips button:hover { border-color: var(--ink); }
+  .chips button[aria-pressed="true"] { border-color: var(--brick); background: var(--brick); color: var(--brick-ink); }
+  .count { color: var(--ink-2); font-size: .8125rem; }
+
+  .table { border-top: 2px solid var(--rule); }
+  .cols, .row-head {
+    display: grid; align-items: baseline; gap: 16px;
+    grid-template-columns: 96px minmax(0, 2.2fr) minmax(0, 1.2fr) 60px 70px 56px minmax(0, 1.1fr) 110px;
+  }
+  .cols { padding: 10px 0; border-bottom: 1px solid var(--rule); color: var(--ink-2); }
+  .cols button { background: none; border: 0; padding: 0; cursor: pointer; text-align: left; font: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; }
+  .cols button:hover { color: var(--ink); }
+  .cols .num, .row-head .num { text-align: right; }
+  .row { border-bottom: 1px solid var(--rule-soft); }
+  .row-head {
+    width: 100%; background: none; border: 0; text-align: left; cursor: pointer; padding: 16px 0;
+  }
+  .row-head:hover { background: var(--paper-2); }
+  .row-head .addr { font-family: var(--serif); font-size: 1.2rem; line-height: 1.25; }
+  .row-head .addr small { display: block; font-family: var(--sans); font-size: .8125rem; color: var(--ink-2); }
+  .row-head .price { font-family: var(--serif); font-size: 1.15rem; text-align: right; }
+  .row-head .price small { font-family: var(--sans); font-size: .75rem; color: var(--ink-2); }
+  .status { font-size: .75rem; font-weight: 600; text-align: right; }
+  .status.new { color: var(--brick); }
+  .status.offer { color: var(--ink-3); text-decoration: line-through; }
+  .status.view { color: var(--moss); }
+  .row.open .row-head { background: var(--paper-2); }
+
+  .detail { display: none; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 56px); padding: 8px 0 32px; }
+  .row.open .detail { display: grid; }
+  .plan { background: var(--card); border: 1px solid var(--rule-soft); padding: 18px; }
+  .plan svg { width: 100%; height: auto; display: block; }
+  .plan .cap { display: flex; justify-content: space-between; margin-top: 10px; color: var(--ink-2); }
+  .detail .note { font-family: var(--serif); font-size: 1.15rem; line-height: 1.5; margin: 6px 0 20px; }
+  .detail .note::before { content: "Agent's note — "; font-family: var(--sans); font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--brick); }
+  .spec { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; margin: 0 0 24px; font-size: .9375rem; }
+  .spec dt { color: var(--ink-2); }
+  .spec dd { margin: 0; }
+  .empty { padding: 40px 0; color: var(--ink-2); font-family: var(--serif); font-size: 1.2rem; }
+
+  /* ---------- neighbourhoods ---------- */
+  .hoods { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--rule); }
+  .hood { padding: 22px 22px 26px 0; }
+  .hood + .hood { padding-left: 22px; border-left: 1px solid var(--rule-soft); }
+  .hood h3 { font-family: var(--serif); font-weight: 400; font-size: 1.6rem; margin: 0 0 4px; letter-spacing: -.01em; }
+  .hood .tag { color: var(--ink-2); font-size: .8125rem; margin-bottom: 16px; display: block; }
+  .hood p { margin: 0 0 14px; font-size: .9375rem; }
+  .hood .not { font-size: .875rem; color: var(--ink-2); border-left: 2px solid var(--brick); padding-left: 10px; }
+  .hood dl { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 18px 0 0; font-size: .8125rem; border-top: 1px dotted var(--ink-3); padding-top: 12px; }
+  .hood dt { color: var(--ink-2); }
+  .hood dd { margin: 0; font-family: var(--mono); text-align: right; }
+  .hood .see { margin-top: 16px; display: inline-block; font-size: .875rem; background: none; border: 0; padding: 0; border-bottom: 1px solid currentColor; cursor: pointer; }
+
+  /* ---------- fees ---------- */
+  .fees-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(28px, 5vw, 80px); align-items: start; }
+  .fees { width: 100%; border-collapse: collapse; }
+  .fees th, .fees td { text-align: left; padding: 16px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  .fees thead th { border-bottom: 1px solid var(--rule); color: var(--ink-2); padding-top: 0; }
+  .fees td:first-child { width: 34%; font-weight: 600; padding-right: 16px; }
+  .fees .amt { font-family: var(--serif); font-size: 1.5rem; line-height: 1.1; display: block; }
+  .fees small { color: var(--ink-2); font-size: .875rem; }
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 44px 1fr; padding: 0 0 22px; }
+  .steps li::before { content: counter(s, decimal-leading-zero); font-family: var(--mono); font-size: .8125rem; color: var(--brick); padding-top: 3px; }
+  .steps b { display: block; font-weight: 600; margin-bottom: 2px; }
+  .steps span { color: var(--ink-2); font-size: .9375rem; }
+
+  /* ---------- quote ---------- */
+  .quote { background: var(--ink); color: var(--paper); }
+  .quote .wrap { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding-top: clamp(48px, 7vw, 88px); padding-bottom: clamp(48px, 7vw, 88px); }
+  .quote blockquote { margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(1.5rem, 3vw, 2.4rem); line-height: 1.25; letter-spacing: -.01em; max-width: 26em; }
+  .quote cite { display: block; margin-top: 22px; font-style: normal; font-size: .875rem; opacity: .7; }
+  .quote .mono { opacity: .6; padding-top: 10px; }
+
+  /* ---------- people ---------- */
+  .people { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); }
+  .person { padding: 22px 22px 0 0; }
+  .person + .person { padding-left: 22px; border-left: 1px solid var(--rule-soft); }
+  .mark {
+    width: 64px; height: 64px; display: grid; place-items: center; margin-bottom: 18px;
+    font-family: var(--serif); font-size: 1.6rem; font-style: italic; border: 1px solid var(--rule);
+  }
+  .person:nth-child(2) .mark { background: var(--brick); color: var(--brick-ink); border-color: var(--brick); }
+  .person:nth-child(4) .mark { background: var(--ink); color: var(--paper); }
+  .person h3 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 1.3rem; }
+  .person .role { color: var(--ink-2); font-size: .8125rem; margin-bottom: 12px; display: block; }
+  .person p { font-size: .9375rem; margin: 0 0 14px; }
+  .person a { font-family: var(--mono); font-size: .8125rem; text-decoration: none; border-bottom: 1px solid var(--rule-soft); }
+
+  /* ---------- contact ---------- */
+  .contact-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(28px, 5vw, 80px); }
+  form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; }
+  .field { display: grid; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label, fieldset legend { font-size: .8125rem; font-weight: 600; }
+  input, textarea, select {
+    font: inherit; color: var(--ink); background: transparent; border: 0; border-bottom: 1px solid var(--rule);
+    padding: 8px 0; border-radius: 0; width: 100%;
+  }
+  textarea { resize: vertical; min-height: 96px; border: 1px solid var(--rule); padding: 10px; }
+  input:focus, textarea:focus { outline: none; border-color: var(--brick); box-shadow: 0 1px 0 var(--brick); }
+  fieldset { border: 0; padding: 0; margin: 0; grid-column: 1 / -1; }
+  .radios { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .radios label { cursor: pointer; }
+  .radios input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .radios span { display: inline-block; border: 1px solid var(--rule-soft); padding: 7px 14px; font-size: .875rem; }
+  .radios input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .radios input:focus-visible + span { outline: 2px solid var(--brick); outline-offset: 2px; }
+  .form-foot { grid-column: 1 / -1; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  .form-foot small { color: var(--ink-2); max-width: 30em; }
+  .sent { grid-column: 1 / -1; border: 1px solid var(--moss); color: var(--moss); padding: 14px 16px; display: none; }
+  .office { border: 1px solid var(--rule); padding: 24px; background: var(--card); }
+  .office h3 { font-family: var(--serif); font-weight: 400; font-size: 1.5rem; margin: 0 0 14px; }
+  .office address { font-style: normal; margin-bottom: 18px; }
+  .hours { width: 100%; border-collapse: collapse; font-size: .9375rem; margin-bottom: 18px; }
+  .hours td { padding: 5px 0; border-bottom: 1px dotted var(--rule-soft); }
+  .hours td:last-child { text-align: right; font-family: var(--mono); font-size: .8125rem; }
+  .hours tr.today td { font-weight: 600; }
+  .office p { font-size: .875rem; color: var(--ink-2); margin: 0; }
+
+  footer { border-top: 3px double var(--rule); margin-top: clamp(48px, 7vw, 96px); }
+  footer .wrap { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 24px; padding-top: 28px; padding-bottom: 40px; font-size: .875rem; color: var(--ink-2); }
+  footer b { color: var(--ink); font-weight: 600; display: block; margin-bottom: 6px; }
+  footer .big { font-family: var(--serif); color: var(--ink); font-size: 1.4rem; line-height: 1.2; }
+  footer ul { list-style: none; margin: 0; padding: 0; }
+  footer li { margin-bottom: 4px; }
+  footer a { text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1020px) {
+    nav.links { display: none; }
+    header.nav .wrap { grid-template-columns: 1fr auto; }
+    .hoods, .people { grid-template-columns: 1fr 1fr; }
+    .hood:nth-child(3), .person:nth-child(3) { padding-left: 0; border-left: 0; }
+    .hood:nth-child(n+3), .person:nth-child(n+3) { border-top: 1px solid var(--rule-soft); }
+    .person:nth-child(n+3) { padding-top: 22px; margin-top: 22px; }
+    .cols, .row-head { grid-template-columns: 84px minmax(0, 2fr) 54px 64px minmax(0, 1fr) 96px; }
+    .c-hood, .c-floor { display: none; }
+  }
+  @media (max-width: 760px) {
+    .hero .wrap, .fees-grid, .contact-grid { grid-template-columns: 1fr; }
+    .sec-head, .quote .wrap { grid-template-columns: 1fr; gap: 6px; }
+    .sec-head .num { padding-top: 0; }
+    .building { max-width: 420px; }
+    .cols { display: none; }
+    .row-head { grid-template-columns: 1fr auto; gap: 4px 12px; padding: 16px 0; }
+    .row-head .c-ref { grid-column: 1 / -1; order: -1; color: var(--ink-2); }
+    .row-head .addr { grid-column: 1; }
+    .row-head .price { grid-column: 2; grid-row: 2; }
+    .row-head .c-rooms, .row-head .c-size { display: inline; text-align: left; }
+    .row-head .c-rooms::after { content: " rooms"; }
+    .row-head .c-size::after { content: ""; }
+    .row-head .meta-m { grid-column: 1; }
+    .row-head .status { grid-column: 2; text-align: right; }
+    .detail { grid-template-columns: 1fr; }
+    form { grid-template-columns: 1fr; }
+    footer .wrap { grid-template-columns: 1fr 1fr; }
+    footer .wrap > div:first-child { grid-column: 1 / -1; }
+    .hero .facts strong { font-size: 1.6rem; }
+  }
+  @media (max-width: 520px) {
+    .hoods, .people { grid-template-columns: 1fr; }
+    .hood + .hood, .person + .person { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule-soft); }
+    .person + .person { padding-top: 22px; margin-top: 22px; }
+    .strip .hide-s { display: none; }
+    .brand b { font-size: 1.55rem; }
+    .call { padding: 7px 9px; font-size: .8125rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <div class="wrap">
+    <span class="open" id="openState">Office open today, 9:00–18:00</span>
+    <span class="hide-s">41 Ferry Street, first floor (above the pharmacy)</span>
+    <span class="mono">Listings updated Wed 21 Oct, 16:40</span>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#">
+      <b>Halden <i>&amp;</i> Rowe</b>
+      <small>City apartments, let &amp; sold. Est. 1987.</small>
+    </a>
+    <nav class="links" aria-label="Main">
+      <a href="#list">This week's list</a>
+      <a href="#areas">Areas</a>
+      <a href="#fees">Fees</a>
+      <a href="#people">Who you'll talk to</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="call" href="tel:+3120555018">020 555 018</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="label">Lettings · Sales · Valuations</span>
+        <h1>We rent and sell flats in the old town, the docks, and <em>the streets in between.</em></h1>
+        <p class="lede">Four agents, one office on Ferry Street, and a list of apartments we've actually walked through. No stock photos, no “luxury living” — just the floor plan, the price, and what the stairwell smells like.</p>
+        <div class="actions">
+          <a class="btn" href="#list">See this week's list <span aria-hidden="true">↓</span></a>
+          <a class="btn ghost" href="#contact" data-intent="sell">Value my flat</a>
+        </div>
+        <div class="facts">
+          <div><strong id="factCount">9</strong><span>flats on the list this week</span></div>
+          <div><strong>11 days</strong><span>average time to let, 2025</span></div>
+          <div><strong>€0</strong><span>charged to tenants. Ever.</span></div>
+        </div>
+      </div>
+
+      <div class="building">
+        <figure>
+          <svg id="buildingSvg" viewBox="0 0 320 400" role="img" aria-label="Drawing of 14 Tannery Row. Lit windows mark flats available now."></svg>
+          <figcaption>
+            <span id="bCap"><b>14 Tannery Row</b> — three flats free in one building this month. Lit windows are available; tap one.</span>
+            <span class="mono">1904</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="list" class="block" style="padding-top:24px">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="num">01 / The list</span>
+        <div>
+          <h2>Every flat we have right now. Not a teaser — the whole list.</h2>
+          <p>Click a row for the floor plan and our honest note. Prices are what the owner will accept, not a starting bid.</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+          <div class="seg" role="group" aria-label="Rent or buy">
+            <button type="button" data-mode="all" aria-pressed="true">All</button>
+            <button type="button" data-mode="rent" aria-pressed="false">To rent</button>
+            <button type="button" data-mode="buy" aria-pressed="false">To buy</button>
+          </div>
+          <div class="chips" id="hoodChips" role="group" aria-label="Neighbourhood"></div>
+        </div>
+        <span class="count" id="count"></span>
+      </div>
+
+      <div class="table" id="table">
+        <div class="cols label" aria-hidden="true">
+          <span class="c-ref">Ref</span>
+          <span>Address</span>
+          <span class="c-hood">Area</span>
+          <button class="num c-rooms" type="button" data-sort="rooms">Rooms</button>
+          <button class="num c-size" type="button" data-sort="size">m²</button>
+          <span class="num c-floor">Floor</span>
+          <button class="num" type="button" data-sort="price" style="text-align:right">Price ↕</button>
+          <span class="num">Status</span>
+        </div>
+        <div id="rows"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="areas" class="block">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="num">02 / Areas</span>
+        <div>
+          <h2>Four neighbourhoods we know street by street.</h2>
+          <p>We don't take listings outside these. It's why we can tell you which side of Marlow Hill gets the afternoon sun.</p>
+        </div>
+      </div>
+      <div class="hoods" id="hoods"></div>
+    </div>
+  </section>
+
+  <section id="fees" class="block">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="num">03 / Fees</span>
+        <div>
+          <h2>What it costs, written down before you ask.</h2>
+        </div>
+      </div>
+      <div class="fees-grid">
+        <table class="fees">
+          <thead><tr><th class="label">If you are…</th><th class="label">You pay</th></tr></thead>
+          <tbody>
+            <tr><td>Renting a flat</td><td><span class="amt">Nothing</span><small>No finding fee, no admin fee, no “reference check” charge. The landlord pays us.</small></td></tr>
+            <tr><td>Letting your flat</td><td><span class="amt">1 month's rent</span><small>Plus VAT, once, when a tenant signs. Optional management: 6% of monthly rent.</small></td></tr>
+            <tr><td>Selling your flat</td><td><span class="amt">1.6%</span><small>Of the sale price, on completion. If it doesn't sell, you owe us nothing — photos and floor plan included.</small></td></tr>
+            <tr><td>Buying</td><td><span class="amt">Nothing</span><small>We work for the seller, and we'll say so. We can recommend an independent surveyor.</small></td></tr>
+          </tbody>
+        </table>
+        <div>
+          <span class="label" style="display:block;margin-bottom:18px">How a viewing works</span>
+          <ol class="steps">
+            <li><div><b>You call or send the form</b><span>A real person replies the same working day, usually within two hours.</span></div></li>
+            <li><div><b>We book a slot within 48 hours</b><span>Evenings until 19:30 on Tuesdays and Thursdays. Saturday mornings too.</span></div></li>
+            <li><div><b>The agent who listed it shows you round</b><span>Not a stand-in. They'll point out the boiler age and the noisy neighbour if there is one.</span></div></li>
+            <li><div><b>Decide in your own time</b><span>We don't run “best and final” rounds on rentals. First complete application gets it.</span></div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote" aria-label="From a tenant">
+    <div class="wrap">
+      <span class="mono">Unprompted, by email</span>
+      <div>
+        <blockquote>“Mira told us the flat we loved had a damp bedroom wall and steered us to the one two doors down. We've been there four years. Nobody else told us anything.”</blockquote>
+        <cite>— Priya &amp; Jonas, renting on Marlow Hill since 2021</cite>
+      </div>
+    </div>
+  </section>
+
+  <section id="people" class="block">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="num">04 / People</span>
+        <div>
+          <h2>The four people who'll answer the phone.</h2>
+          <p>No call centre, no chatbot. If someone's out on a viewing, the next one picks up.</p>
+        </div>
+      </div>
+      <div class="people">
+        <div class="person">
+          <div class="mark" aria-hidden="true">MH</div>
+          <h3>Mira Halden</h3><span class="role">Partner · Old Quay, Canal Side · 22 yrs</span>
+          <p>Knows which canal buildings flood their basements and which ones only say they don't.</p>
+          <a href="mailto:mira@haldenrowe.example">mira@haldenrowe</a>
+        </div>
+        <div class="person">
+          <div class="mark" aria-hidden="true">AO</div>
+          <h3>Ade Okafor</h3><span class="role">Lettings · Tannery Row · 9 yrs</span>
+          <p>Handles most of our rentals. Will tell you if a landlord is slow with repairs — he keeps a list.</p>
+          <a href="mailto:ade@haldenrowe.example">ade@haldenrowe</a>
+        </div>
+        <div class="person">
+          <div class="mark" aria-hidden="true">LV</div>
+          <h3>Lena Vos</h3><span class="role">Sales · Marlow Hill · 14 yrs</span>
+          <p>Prices flats with a tape measure and last year's land registry, not a hunch. Speaks Dutch and German.</p>
+          <a href="mailto:lena@haldenrowe.example">lena@haldenrowe</a>
+        </div>
+        <div class="person">
+          <div class="mark" aria-hidden="true">JR</div>
+          <h3>Jakob Rowe</h3><span class="role">Partner · Valuations · 31 yrs</span>
+          <p>Son of the original Rowe. Does the free valuations and most of the floor plans you see on this page.</p>
+          <a href="mailto:jakob@haldenrowe.example">jakob@haldenrowe</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="block" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="num">05 / Contact</span>
+        <div>
+          <h2>Book a viewing, or ask what your flat is worth.</h2>
+        </div>
+      </div>
+      <div class="contact-grid">
+        <form id="form" novalidate>
+          <fieldset>
+            <legend>I'd like to</legend>
+            <div class="radios">
+              <label><input type="radio" name="intent" value="view" checked><span>View a flat</span></label>
+              <label><input type="radio" name="intent" value="sell"><span>Sell my flat</span></label>
+              <label><input type="radio" name="intent" value="let"><span>Let my flat</span></label>
+              <label><input type="radio" name="intent" value="other"><span>Something else</span></label>
+            </div>
+          </fieldset>
+          <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="f-contact">Phone or email</label><input id="f-contact" name="contact" autocomplete="email" required></div>
+          <div class="field full"><label for="f-ref" id="refLabel">Listing ref (if you have one)</label><input id="f-ref" name="ref" placeholder="e.g. TR-14-3C"></div>
+          <div class="field full"><label for="f-msg">Anything we should know</label><textarea id="f-msg" name="msg" placeholder="Best times to call, moving date, pets…"></textarea></div>
+          <div class="form-foot">
+            <button class="btn" type="submit">Send to the office</button>
+            <small>Goes straight to our shared inbox. We don't add you to a mailing list.</small>
+          </div>
+          <div class="sent" id="sent" role="status"></div>
+        </form>
+
+        <aside class="office">
+          <h3>Come by the office</h3>
+          <address>41 Ferry Street, first floor<br>Tram 4 to Ferry Street — we're above the pharmacy, green door.</address>
+          <table class="hours" id="hours">
+            <tr data-d="1"><td>Monday</td><td>9:00–18:00</td></tr>
+            <tr data-d="2"><td>Tuesday</td><td>9:00–19:30</td></tr>
+            <tr data-d="3"><td>Wednesday</td><td>9:00–18:00</td></tr>
+            <tr data-d="4"><td>Thursday</td><td>9:00–19:30</td></tr>
+            <tr data-d="5"><td>Friday</td><td>9:00–17:00</td></tr>
+            <tr data-d="6"><td>Saturday</td><td>10:00–13:00</td></tr>
+            <tr data-d="0"><td>Sunday</td><td>Closed</td></tr>
+          </table>
+          <p>Or just call <a href="tel:+3120555018" class="mono">020 555 018</a>. After hours it goes to whoever's on call for emergency repairs on managed flats.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <p class="big">Halden &amp; Rowe<br><span style="color:var(--ink-2)">Letting and selling city flats since 1987.</span></p>
+      <p>Registered estate agent · Member of the City Letting Association · Client deposits held in a protected account.</p>
+    </div>
+    <div><b>Areas</b><ul><li>Old Quay</li><li>Tannery Row</li><li>Marlow Hill</li><li>Canal Side</li></ul></div>
+    <div><b>Pages</b><ul><li><a href="#list">The list</a></li><li><a href="#fees">Fees</a></li><li><a href="#people">People</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div><b>Office</b><ul><li>41 Ferry Street</li><li>020 555 018</li><li><a href="mailto:office@haldenrowe.example">office@haldenrowe</a></li><li>© <span id="yr">2026</span></li></ul></div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  // Floor plan templates: [x, y, w, h, label] in metres-ish units, plus optional dashed balcony
+  const PLANS = {
+    studio: { w: 8.5, h: 4.4, rooms: [[0,0,5.6,4.4,'Living / sleep'],[5.6,0,2.9,2.4,'Kitchen'],[5.6,2.4,2.9,2,'Bath']] },
+    one: { w: 8, h: 5.6, rooms: [[0,0,4.8,3.4,'Living'],[4.8,0,3.2,3.4,'Bedroom'],[0,3.4,2.8,2.2,'Kitchen'],[2.8,3.4,2,2.2,'Bath'],[4.8,3.4,3.2,2.2,'Hall']] },
+    oneL: { w: 9, h: 6, rooms: [[0,0,5.4,3.6,'Living + kitchen'],[5.4,0,3.6,3.6,'Bedroom'],[0,3.6,2.4,2.4,'Bath'],[2.4,3.6,3,2.4,'Hall'],[5.4,3.6,3.6,2.4,'Study']] },
+    two: { w: 10, h: 6, rooms: [[0,0,4.6,3.4,'Living'],[4.6,0,2.9,3.4,'Bed 1'],[7.5,0,2.5,3.4,'Bed 2'],[0,3.4,2.6,2.6,'Kitchen'],[2.6,3.4,2,2.6,'Bath'],[4.6,3.4,5.4,2.6,'Hall + store']], balcony: [0,6,4.6,1.2] },
+    three: { w: 11, h: 7, rooms: [[0,0,5,4,'Living'],[5,0,3,4,'Bed 1'],[8,0,3,4,'Bed 2'],[0,4,3,3,'Kitchen'],[3,4,2,3,'Bath'],[5,4,3,3,'Hall'],[8,4,3,3,'Bed 3']], balcony: [0,7,5,1.3] }
+  };
+
+  const LISTINGS = [
+    { ref:'TR-14-2A', addr:'14 Tannery Row, flat 2A', hood:'Tannery Row', mode:'rent', rooms:2, size:54, floor:2, price:1390, status:['view','Viewing Thu'], plan:'one', bw:[[2,0],[2,1]],
+      note:'Former leather warehouse, so the ceilings are 3.4 m and the windows are huge. Radiators are new; the lift is not — it works, slowly.',
+      spec:{'Available':'1 Nov','Deposit':'2 months','Heating':'Gas, combi boiler 2023','Lift':'Yes (1904, refurbished)','Pets':'Ask — landlord is flexible'} },
+    { ref:'TR-14-3C', addr:'14 Tannery Row, flat 3C', hood:'Tannery Row', mode:'rent', rooms:3, size:71, floor:3, price:1820, status:['new','New this week'], plan:'two', bw:[[3,3],[3,4]],
+      note:'Corner flat, windows on two sides. Second bedroom is small but fits a double. The bakery downstairs starts at 5:30 — you will smell it.',
+      spec:{'Available':'15 Nov','Deposit':'2 months','Heating':'District heating','Lift':'Yes','Balcony':'Yes, 5 m², faces the yard'} },
+    { ref:'TR-14-5B', addr:'14 Tannery Row, flat 5B', hood:'Tannery Row', mode:'buy', rooms:2, size:61, floor:5, price:412000, status:['', 'For sale'], plan:'oneL', bw:[[5,1],[5,2]],
+      note:'Top floor under the old hoist beam. Slanted ceiling in the study cuts usable space by about 4 m². Roof redone in 2022, paperwork in hand.',
+      spec:{'Service charge':'€148 / mo','Ground rent':'None (freehold share)','Heating':'Gas','Lift':'Yes','Energy label':'C'} },
+    { ref:'OQ-03-1', addr:'3 Harbour Steps, ground floor', hood:'Old Quay', mode:'rent', rooms:1, size:34, floor:0, price:1050, status:['', 'Available'], plan:'studio',
+      note:'Studio with its own street door, which is lovely until the Friday crowd leaves the Anchor at midnight. Double glazing helps. Good for one person.',
+      spec:{'Available':'Now','Deposit':'1 month','Heating':'Electric','Lift':'n/a','Bike storage':'Shared, locked'} },
+    { ref:'OQ-27-4', addr:'27 Customs Lane, 4th floor', hood:'Old Quay', mode:'buy', rooms:3, size:88, floor:4, price:695000, status:['offer','Under offer'], plan:'three',
+      note:'Water view from the living room if you lean a bit. Under offer, but the buyer\'s mortgage isn\'t confirmed — worth a viewing as backup.',
+      spec:{'Service charge':'€210 / mo','Heating':'Heat pump (2024)','Lift':'Yes','Energy label':'A','Parking':'1 space, €95 / mo extra'} },
+    { ref:'MH-08-2', addr:'8 Larch Terrace, 2nd floor', hood:'Marlow Hill', mode:'rent', rooms:3, size:76, floor:2, price:1950, status:['view','Viewing Sat'], plan:'two',
+      note:'West-facing, so the living room gets sun from about 2pm. School and park two minutes away. Landlord lives in the building — mostly a good thing.',
+      spec:{'Available':'1 Dec','Deposit':'2 months','Heating':'Gas','Lift':'No, 2 flights','Garden':'Shared, tidy'} },
+    { ref:'MH-31-G', addr:'31 Orchard Road, garden flat', hood:'Marlow Hill', mode:'buy', rooms:4, size:102, floor:0, price:780000, status:['new','New this week'], plan:'three',
+      note:'Rare on the hill: a private 40 m² garden. Basement bedroom is dry (we checked with a meter) but dark. Owner is relocating, flexible on dates.',
+      spec:{'Service charge':'€90 / mo','Heating':'Gas, underfloor in kitchen','Lift':'n/a','Energy label':'B','Garden':'Private, 40 m²'} },
+    { ref:'CS-12-3', addr:'12 Lock Keeper\'s Walk, 3rd floor', hood:'Canal Side', mode:'rent', rooms:2, size:49, floor:3, price:1280, status:['', 'Available'], plan:'one',
+      note:'2019 build, so it\'s warm, quiet and a bit characterless. Bedroom looks straight at the canal. Cheapest decent one-bed we\'ve had all year.',
+      spec:{'Available':'Now','Deposit':'1.5 months','Heating':'Heat pump','Lift':'Yes','Bike storage':'Yes, in basement'} },
+    { ref:'CS-02-6', addr:'2 Wharf Yard, 6th floor', hood:'Canal Side', mode:'buy', rooms:2, size:58, floor:6, price:398000, status:['', 'For sale'], plan:'oneL',
+      note:'Highest flat on the canal with a clear view to the cathedral. The study is really a box room — fine for a desk, not a guest bed.',
+      spec:{'Service charge':'€175 / mo','Heating':'District heating','Lift':'Yes, two','Energy label':'A','Parking':'Waiting list'} }
+  ];
+
+  const HOODS = [
+    { name:'Old Quay', tag:'Cobbles, bars, the harbour', text:'The oldest part of the city. Narrow streets, crooked buildings, and the fish market on Tuesday mornings.', not:'Not for you if you need quiet on a Friday night.', rent:'€1,560', walk:'4 min', },
+    { name:'Tannery Row', tag:'Converted warehouses', text:'Former industrial blocks turned into flats with high ceilings and big windows. Good coffee, a climbing gym, the tram depot.', not:'Not for you if you want a green view — there are barely any trees.', rent:'€1,480', walk:'12 min' },
+    { name:'Marlow Hill', tag:'Terraces and schools', text:'Quiet residential streets, two primary schools, the big park. Where people move when they stop going out on weekdays.', not:'Not for you if you hate hills. It\'s in the name.', rent:'€1,720', walk:'18 min' },
+    { name:'Canal Side', tag:'New builds on the water', text:'Mostly built after 2015. Energy-efficient, lifts everywhere, a long towpath for running. Still a bit empty after 8pm.', not:'Not for you if you want old buildings with character.', rent:'€1,350', walk:'15 min' }
+  ];
+
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const fmt = n => '€' + n.toLocaleString('en-GB');
+  const floorName = f => f === 0 ? 'Ground' : f + (['th','st','nd','rd'][(f % 10 > 3 || ~~(f / 10) === 1) ? 0 : f % 10] || 'th');
+
+  const state = { mode: 'all', hood: null, sort: null, dir: 1, open: null };
+
+  // ---------- floor plans ----------
+  function planSVG(key, size) {
+    const p = PLANS[key];
+    const pad = 0.6, s = 10;
+    const extraH = p.balcony ? p.balcony[3] : 0;
+    const W = (p.w + pad * 2) * s, H = (p.h + extraH + pad * 2 + 1) * s;
+    const X = v => (v + pad) * s;
+    let out = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Floor plan, ${size} square metres">`;
+    out += `<defs><pattern id="hatch-${key}" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-width=".6" opacity=".35"/></pattern></defs>`;
+    out += `<g fill="none" stroke="currentColor" style="color:var(--ink)">`;
+    if (p.balcony) {
+      const [bx, by, bw, bh] = p.balcony;
+      out += `<rect x="${X(bx)}" y="${X(by)}" width="${bw * s}" height="${bh * s}" stroke-dasharray="3 2" stroke-width=".8" fill="url(#hatch-${key})"/>`;
+      out += `<text x="${X(bx + bw / 2)}" y="${X(by + bh / 2) + 3}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="currentColor" stroke="none">Balcony</text>`;
+    }
+    p.rooms.forEach(([x, y, w, h, label]) => {
+      out += `<rect x="${X(x)}" y="${X(y)}" width="${w * s}" height="${h * s}" stroke-width="1"/>`;
+      const area = (w * h * (size / p.rooms.reduce((a, r) => a + r[2] * r[3], 0))).toFixed(1);
+      out += `<text x="${X(x + w / 2)}" y="${X(y + h / 2)}" text-anchor="middle" font-family="Archivo, sans-serif" font-size="7" font-weight="600" fill="currentColor" stroke="none">${label}</text>`;
+      out += `<text x="${X(x + w / 2)}" y="${X(y + h / 2) + 9}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="currentColor" stroke="none" opacity=".65">${area} m²</text>`;
+    });
+    // outer walls, thicker
+    out += `<rect x="${X(0)}" y="${X(0)}" width="${p.w * s}" height="${p.h * s}" stroke-width="3"/>`;
+    // window marks on top wall
+    for (let i = 0; i < Math.floor(p.w / 2.2); i++) {
+      const wx = X(0.7 + i * 2.2);
+      out += `<line x1="${wx}" y1="${X(0)}" x2="${wx + 12}" y2="${X(0)}" stroke="var(--card)" stroke-width="2.2"/><line x1="${wx}" y1="${X(0) - 1.4}" x2="${wx + 12}" y2="${X(0) - 1.4}" stroke-width=".5"/><line x1="${wx}" y1="${X(0) + 1.4}" x2="${wx + 12}" y2="${X(0) + 1.4}" stroke-width=".5"/>`;
+    }
+    // scale bar: 2 m
+    const sy = H - s * 0.6;
+    out += `<line x1="${X(0)}" y1="${sy}" x2="${X(2)}" y2="${sy}" stroke-width="1"/><line x1="${X(0)}" y1="${sy - 3}" x2="${X(0)}" y2="${sy + 3}" stroke-width="1"/><line x1="${X(2)}" y1="${sy - 3}" x2="${X(2)}" y2="${sy + 3}" stroke-width="1"/>`;
+    out += `<text x="${X(2) + 5}" y="${sy + 2.5}" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="currentColor" stroke="none">2 m (approx.)</text>`;
+    out += `<text x="${W - s * pad}" y="${sy + 2.5}" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="currentColor" stroke="none">N ↑</text>`;
+    return out + '</g></svg>';
+  }
+
+  // ---------- list ----------
+  const chips = $('#hoodChips');
+  chips.innerHTML = HOODS.map(h => `<button type="button" aria-pressed="false" data-hood="${h.name}">${h.name}</button>`).join('');
+
+  function visible() {
+    let list = LISTINGS.filter(l => (state.mode === 'all' || l.mode === state.mode) && (!state.hood || l.hood === state.hood));
+    if (state.sort) list = [...list].sort((a, b) => (a[state.sort] - b[state.sort]) * state.dir);
+    return list;
+  }
+
+  function render() {
+    const list = visible();
+    $('#count').textContent = `Showing ${list.length} of ${LISTINGS.length}`;
+    if (!list.length) {
+      $('#rows').innerHTML = `<p class="empty">Nothing matching right now. Ade gets new rentals most Mondays — <a href="#contact">leave your number</a> and he'll call.</p>`;
+      return;
+    }
+    $('#rows').innerHTML = list.map(l => `
+      <article class="row${state.open === l.ref ? ' open' : ''}" id="r-${l.ref}">
+        <button class="row-head" type="button" aria-expanded="${state.open === l.ref}" aria-controls="d-${l.ref}" data-ref="${l.ref}">
+          <span class="mono c-ref">${l.ref}</span>
+          <span class="addr">${l.addr}<small>${l.mode === 'rent' ? 'To rent' : 'For sale'} · ${l.hood}</small></span>
+          <span class="c-hood">${l.hood}</span>
+          <span class="meta-m"><span class="num mono c-rooms">${l.rooms}</span><span class="mobile-sep" aria-hidden="true"></span> <span class="num mono c-size">${l.size} m²</span></span>
+          <span class="num mono c-floor">${floorName(l.floor)}</span>
+          <span class="price">${fmt(l.price)}${l.mode === 'rent' ? '<small> /mo</small>' : ''}</span>
+          <span class="status ${l.status[0]}">${l.status[1]}</span>
+        </button>
+        <div class="detail" id="d-${l.ref}">
+          <div class="plan">${planSVG(l.plan, l.size)}<div class="cap mono"><span>${l.ref}</span><span>${l.size} m² · ${floorName(l.floor)} floor</span></div></div>
+          <div>
+            <p class="note">${l.note}</p>
+            <dl class="spec">${Object.entries(l.spec).map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
+            <button class="btn" type="button" data-book="${l.ref}">Book a viewing of ${l.ref}</button>
+          </div>
+        </div>
+      </article>`).join('');
+  }
+
+  // Grid needs rooms/size as separate columns on desktop; unwrap the mobile wrapper there
+  const style = document.createElement('style');
+  style.textContent = `@media (min-width: 761px){ .row-head .meta-m{display:contents} .mobile-sep{display:none} } @media (max-width:760px){ .row-head .c-size::before{content:"· "} }`;
+  document.head.appendChild(style);
+
+  function toggle(ref, scroll) {
+    state.open = state.open === ref ? null : ref;
+    if (scroll && !visible().some(l => l.ref === ref)) { state.mode = 'all'; state.hood = null; syncControls(); }
+    if (scroll) state.open = ref;
+    render();
+    if (scroll) $('#r-' + CSS.escape(ref))?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  function syncControls() {
+    $$('.seg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === state.mode));
+    $$('#hoodChips button').forEach(b => b.setAttribute('aria-pressed', b.dataset.hood === state.hood));
+  }
+
+  $('.seg').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    state.mode = b.dataset.mode; syncControls(); render();
+  });
+  chips.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    state.hood = state.hood === b.dataset.hood ? null : b.dataset.hood; syncControls(); render();
+  });
+  $('.cols').addEventListener('click', e => {
+    const b = e.target.closest('[data-sort]'); if (!b) return;
+    if (state.sort === b.dataset.sort) state.dir *= -1; else { state.sort = b.dataset.sort; state.dir = 1; }
+    render();
+  });
+  $('#rows').addEventListener('click', e => {
+    const head = e.target.closest('.row-head');
+    if (head) return toggle(head.dataset.ref);
+    const book = e.target.closest('[data-book]');
+    if (book) prefill('view', book.dataset.book);
+  });
+
+  // ---------- areas ----------
+  $('#hoods').innerHTML = HOODS.map(h => {
+    const n = LISTINGS.filter(l => l.hood === h.name).length;
+    return `<div class="hood">
+      <h3>${h.name}</h3><span class="tag">${h.tag}</span>
+      <p>${h.text}</p>
+      <p class="not">${h.not}</p>
+      <dl><dt>Typical 2-room rent</dt><dd>${h.rent}</dd><dt>Walk to Ferry St</dt><dd>${h.walk}</dd><dt>On our list now</dt><dd>${n}</dd></dl>
+      <button class="see" type="button" data-hood="${h.name}">See ${n} flat${n === 1 ? '' : 's'} in ${h.name}</button>
+    </div>`;
+  }).join('');
+  $('#hoods').addEventListener('click', e => {
+    const b = e.target.closest('[data-hood]'); if (!b) return;
+    state.hood = b.dataset.hood; state.mode = 'all'; syncControls(); render();
+    $('#list').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // ---------- building drawing ----------
+  (function building() {
+    const svg = $('#buildingSvg');
+    const floors = 6, cols = 5, x0 = 30, w = 260, top = 70, fh = 44, ground = top + floors * fh;
+    const lit = {};
+    LISTINGS.filter(l => l.bw).forEach(l => l.bw.forEach(([f, c]) => lit[f + '-' + c] = l));
+    let s = `<g fill="none" stroke="currentColor" style="color:var(--ink)" stroke-width="1.2">`;
+    // roof & cornice
+    s += `<path d="M${x0 - 8} ${top} H${x0 + w + 8} M${x0 - 4} ${top - 6} H${x0 + w + 4} M${x0} ${top - 6} V${top}"/>`;
+    s += `<path d="M${x0 + 90} ${top - 6} V${top - 34} H${x0 + 170} V${top - 6}" />`;
+    s += `<text x="${x0 + 130}" y="${top - 16}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="currentColor" stroke="none">LEERMANN 1904</text>`;
+    s += `<line x1="${x0 + 70}" y1="${top - 6}" x2="${x0 + 70}" y2="${top - 22}"/><line x1="${x0 + 60}" y1="${top - 22}" x2="${x0 + 80}" y2="${top - 22}"/>`;
+    s += `<rect x="${x0}" y="${top}" width="${w}" height="${floors * fh + 46}" stroke-width="1.6"/>`;
+    // floors
+    for (let f = floors; f >= 1; f--) {
+      const y = top + (floors - f) * fh;
+      if (f !== floors) s += `<line x1="${x0}" y1="${y}" x2="${x0 + w}" y2="${y}" stroke-width=".4" stroke-dasharray="2 3"/>`;
+      s += `<text x="${x0 - 12}" y="${y + fh / 2 + 3}" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="8" fill="currentColor" stroke="none" opacity=".55">${f}</text>`;
+      for (let c = 0; c < cols; c++) {
+        const wx = x0 + 18 + c * 48, wy = y + 9, ww = 30, wh = 28;
+        const l = lit[f + '-' + c];
+        const arch = f === floors ? `M${wx} ${wy + wh} V${wy + 10} Q${wx + ww / 2} ${wy - 4} ${wx + ww} ${wy + 10} V${wy + wh} Z` : `M${wx} ${wy} H${wx + ww} V${wy + wh} H${wx} Z`;
+        s += `<path class="win${l ? ' lit' : ''}" d="${arch}" fill="var(--paper-2)" ${l ? `data-ref="${l.ref}" tabindex="0" role="button" aria-label="${l.addr}, ${l.rooms} rooms, ${fmt(l.price)}"` : ''}/>`;
+        s += `<line x1="${wx + ww / 2}" y1="${wy + (f === floors ? 4 : 0)}" x2="${wx + ww / 2}" y2="${wy + wh}" stroke-width=".6" pointer-events="none"/>`;
+        s += `<line x1="${wx - 3}" y1="${wy + wh + 2}" x2="${wx + ww + 3}" y2="${wy + wh + 2}" stroke-width="1.4" pointer-events="none"/>`;
+      }
+    }
+    // ground floor: bakery + door
+    const gy = ground;
+    s += `<line x1="${x0}" y1="${gy}" x2="${x0 + w}" y2="${gy}" stroke-width="1.6"/>`;
+    s += `<rect x="${x0 + 14}" y="${gy + 10}" width="130" height="36" />`;
+    s += `<text x="${x0 + 79}" y="${gy + 31}" text-anchor="middle" font-family="Newsreader, serif" font-style="italic" font-size="13" fill="currentColor" stroke="none">Bakkerij Mol</text>`;
+    s += `<path d="M${x0 + 190} ${gy + 46} V${gy + 18} Q${x0 + 208} ${gy + 4} ${x0 + 226} ${gy + 18} V${gy + 46}"/>`;
+    s += `<text x="${x0 + 208}" y="${gy + 34}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="currentColor" stroke="none">14</text>`;
+    s += `<line x1="0" y1="${gy + 46}" x2="320" y2="${gy + 46}" stroke-width="1.6"/>`;
+    s += `</g>`;
+    svg.innerHTML = s;
+
+    const cap = $('#bCap'), def = cap.innerHTML;
+    const show = ref => {
+      const l = LISTINGS.find(x => x.ref === ref);
+      $$('.win.lit', svg).forEach(w => w.classList.toggle('hot', w.dataset.ref === ref));
+      cap.innerHTML = l ? `<b>${floorName(l.floor)} floor, ${l.ref}</b> — ${l.rooms} rooms, ${l.size} m², ${fmt(l.price)}${l.mode === 'rent' ? ' a month' : ''}. Click for the plan.` : def;
+    };
+    svg.addEventListener('mouseover', e => { const w = e.target.closest('.lit'); if (w) show(w.dataset.ref); });
+    svg.addEventListener('mouseleave', () => show(null));
+    svg.addEventListener('focusin', e => { const w = e.target.closest('.lit'); if (w) show(w.dataset.ref); });
+    svg.addEventListener('click', e => { const w = e.target.closest('.lit'); if (w) toggle(w.dataset.ref, true); });
+    svg.addEventListener('keydown', e => {
+      const w = e.target.closest('.lit');
+      if (w && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(w.dataset.ref, true); }
+    });
+  })();
+
+  // ---------- form ----------
+  function prefill(intent, ref) {
+    const r = $(`input[name="intent"][value="${intent}"]`); if (r) r.checked = true;
+    if (ref) $('#f-ref').value = ref;
+    syncRefLabel();
+    $('#contact').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => $('#f-name').focus({ preventScroll: true }), 500);
+  }
+  function syncRefLabel() {
+    const v = $('input[name="intent"]:checked').value;
+    $('#refLabel').textContent = (v === 'sell' || v === 'let') ? 'Address of your flat' : 'Listing ref (if you have one)';
+    $('#f-ref').placeholder = (v === 'sell' || v === 'let') ? 'Street, number, flat' : 'e.g. TR-14-3C';
+  }
+  $$('input[name="intent"]').forEach(r => r.addEventListener('change', syncRefLabel));
+  $$('[data-intent]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); prefill(a.dataset.intent); }));
+
+  $('#form').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = $('#f-name'), contact = $('#f-contact');
+    [name, contact].forEach(i => i.style.borderColor = i.value.trim() ? '' : 'var(--brick)');
+    if (!name.value.trim() || !contact.value.trim()) { (name.value.trim() ? contact : name).focus(); return; }
+    const d = new Date(), h = d.getHours(), day = d.getDay();
+    const inHours = day !== 0 && h >= 9 && h < (day === 6 ? 13 : 17);
+    const sent = $('#sent');
+    sent.style.display = 'block';
+    sent.textContent = `Thanks, ${name.value.trim().split(' ')[0]}. ` + (inHours
+      ? 'Someone in the office will get back to you within a couple of hours.'
+      : 'The office is closed right now — you\'ll hear from us first thing next working morning.');
+    e.target.querySelector('button[type="submit"]').disabled = true;
+  });
+
+  // ---------- opening hours ----------
+  (function hours() {
+    const d = new Date(), day = d.getDay(), t = d.getHours() + d.getMinutes() / 60;
+    const row = $(`#hours tr[data-d="${day}"]`); row?.classList.add('today');
+    const span = { 0: null, 1: [9, 18], 2: [9, 19.5], 3: [9, 18], 4: [9, 19.5], 5: [9, 17], 6: [10, 13] }[day];
+    const el = $('#openState');
+    const fmtH = v => `${Math.floor(v)}:${v % 1 ? '30' : '00'}`;
+    if (!span) { el.textContent = 'Closed today — back Monday at 9:00'; el.style.setProperty('--x', 1); el.classList.add('closed'); }
+    else if (t < span[0]) el.textContent = `Opens today at ${fmtH(span[0])}`;
+    else if (t >= span[1]) el.textContent = `Closed for today — opened ${fmtH(span[0])}–${fmtH(span[1])}`;
+    else el.textContent = `Open now, until ${fmtH(span[1])}`;
+    if (!span || t < span[0] || t >= span[1]) el.classList.add('closed');
+    const st = document.createElement('style'); st.textContent = '.strip .open.closed::before{background:var(--ink-3)}'; document.head.appendChild(st);
+    $('#yr').textContent = d.getFullYear();
+  })();
+
+  $('#factCount').textContent = LISTINGS.length;
+  render();
+})();
+</script>
+</body>
+</html>

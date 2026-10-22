@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hollis &amp; Pike — Accountants for online sellers</title>
+<meta name="description" content="Monthly bookkeeping, sales tax, and tax filing for Shopify, Amazon, and multichannel e-commerce brands.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3efe6;
+    --paper-2: #ebe5d8;
+    --sheet: #fbf9f4;
+    --ink: #1c1d1a;
+    --ink-2: #4a4b45;
+    --ink-3: #7a7a71;
+    --rule: #d6cfbf;
+    --rule-blue: #cdd7de;
+    --green: #1e4a37;
+    --green-2: #2d6a50;
+    --red: #b3402a;
+    --serif: "Libre Caslon Text", Georgia, serif;
+    --display: "Libre Caslon Display", "Libre Caslon Text", Georgia, serif;
+    --sans: "IBM Plex Sans", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --hand: "Caveat", cursive;
+    --wrap: 1180px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 17px/1.6 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  img, svg { display: block; max-width: 100%; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 28px; }
+  @media (max-width: 640px) { .wrap { padding: 0 16px; } }
+
+  /* ---------- top notice ---------- */
+  .notice {
+    background: var(--green);
+    color: #e9efe9;
+    font: 500 13px/1.4 var(--sans);
+    letter-spacing: .01em;
+  }
+  .notice .wrap { display: flex; justify-content: space-between; gap: 16px; padding-top: 9px; padding-bottom: 9px; }
+  .notice a { color: #fff; text-underline-offset: 3px; }
+  @media (max-width: 640px) { .notice .hide-sm { display: none; } }
+
+  /* ---------- header ---------- */
+  header.site { border-bottom: 1px solid var(--rule); }
+  header.site .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .mark { display: flex; align-items: baseline; gap: 10px; text-decoration: none; }
+  .mark b { font: 400 27px/1 var(--display); letter-spacing: -.01em; }
+  .mark span { font: 500 11px/1 var(--mono); color: var(--ink-3); text-transform: uppercase; letter-spacing: .08em; }
+  nav.main { display: flex; gap: 30px; align-items: center; font-size: 15px; }
+  nav.main a { text-decoration: none; color: var(--ink-2); }
+  nav.main a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+  .btn {
+    display: inline-block; text-decoration: none; cursor: pointer;
+    font: 500 15px/1 var(--sans);
+    padding: 14px 20px; border-radius: 3px;
+    background: var(--ink); color: var(--paper); border: 1px solid var(--ink);
+  }
+  .btn:hover { background: var(--green); border-color: var(--green); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: var(--paper); }
+  nav.main .btn { color: var(--paper); padding: 11px 16px; }
+  nav.main .btn:hover { text-decoration: none; color: #fff; }
+  @media (max-width: 860px) { nav.main a:not(.btn) { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 72px 0 88px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: start; }
+  .eyebrow { font: 500 12px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); margin: 0 0 22px; }
+  h1 {
+    font: 400 clamp(42px, 5.6vw, 72px)/1.02 var(--display);
+    letter-spacing: -.02em; margin: 0 0 28px;
+  }
+  h1 em { font-family: var(--serif); font-style: italic; color: var(--green); font-size: .92em; }
+  .lede { font-size: 19px; color: var(--ink-2); max-width: 33em; margin: 0 0 34px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .cta-note { font-size: 14px; color: var(--ink-3); margin-top: 18px; }
+  .platforms { margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--rule); font-size: 14px; color: var(--ink-3); }
+  .platforms ul { list-style: none; padding: 0; margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 6px 22px; }
+  .platforms li { font: 500 15px/1.4 var(--sans); color: var(--ink-2); }
+
+  /* the worksheet */
+  .sheet {
+    position: relative;
+    background:
+      linear-gradient(90deg, transparent 46px, #e8b9ae 46px, #e8b9ae 47px, transparent 47px),
+      repeating-linear-gradient(180deg, var(--sheet) 0 31px, var(--rule-blue) 31px 32px);
+    background-color: var(--sheet);
+    border: 1px solid var(--rule);
+    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -24px rgba(40, 35, 20, .35);
+    padding: 22px 26px 30px 64px;
+    transform: rotate(.6deg);
+    margin-top: 8px;
+  }
+  .sheet::before {
+    content: ""; position: absolute; top: -10px; left: 50%; width: 92px; height: 22px; margin-left: -46px;
+    background: rgba(220, 210, 180, .7); transform: rotate(-2deg);
+  }
+  .sheet h3 { font: 500 12px/32px var(--mono); text-transform: uppercase; letter-spacing: .08em; margin: 0; color: var(--ink-2); display: flex; justify-content: space-between; }
+  .sheet table { width: 100%; border-collapse: collapse; font: 400 14px/32px var(--mono); }
+  .sheet td { padding: 0; white-space: nowrap; }
+  .sheet td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  .sheet tr.sub td { color: var(--ink-2); }
+  .sheet tr.total td { font-weight: 500; border-top: 1.5px solid var(--ink); }
+  .sheet tr.bank td { color: var(--ink); }
+  .sheet tr.diff td { color: var(--red); font-weight: 500; }
+  .sheet td.label { overflow: hidden; text-overflow: ellipsis; max-width: 0; width: 70%; }
+  .note {
+    font: 500 25px/1.05 var(--hand); color: var(--red);
+    position: absolute; right: -14px; bottom: -58px; width: 230px; transform: rotate(-3deg);
+  }
+  .note svg { position: absolute; left: -38px; top: -34px; }
+  @media (max-width: 960px) {
+    .hero .wrap { grid-template-columns: 1fr; gap: 56px; }
+    .sheet { transform: none; margin-bottom: 64px; }
+    .note { right: 4px; }
+  }
+  @media (max-width: 520px) {
+    .sheet { padding: 18px 14px 26px 40px; background:
+      linear-gradient(90deg, transparent 28px, #e8b9ae 28px, #e8b9ae 29px, transparent 29px),
+      repeating-linear-gradient(180deg, var(--sheet) 0 31px, var(--rule-blue) 31px 32px); }
+    .sheet table { font-size: 12.5px; }
+    .note { font-size: 22px; width: 200px; }
+  }
+
+  /* ---------- section shell ---------- */
+  section { padding: 96px 0; }
+  .sec-head { display: grid; grid-template-columns: 220px 1fr; gap: 40px; margin-bottom: 56px; }
+  .sec-num { font: 500 12px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); padding-top: 12px; border-top: 1px solid var(--ink); }
+  h2 { font: 400 clamp(32px, 3.8vw, 48px)/1.08 var(--display); letter-spacing: -.015em; margin: 0; max-width: 18em; }
+  .sec-head p { color: var(--ink-2); max-width: 36em; margin: 18px 0 0; font-size: 18px; }
+  @media (max-width: 760px) {
+    section { padding: 72px 0; }
+    .sec-head { grid-template-columns: 1fr; gap: 18px; margin-bottom: 40px; }
+    .sec-num { border-top: 0; padding-top: 0; }
+  }
+
+  /* ---------- problems ---------- */
+  .problems { background: var(--sheet); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .quotes { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--rule); }
+  .quotes blockquote { margin: 0; padding: 28px 28px 32px 0; border-bottom: 1px solid var(--rule); }
+  .quotes blockquote:not(:nth-child(3n+1)) { padding-left: 28px; border-left: 1px solid var(--rule); }
+  .quotes p { font: 400 21px/1.35 var(--serif); margin: 0 0 14px; }
+  .quotes cite { font: 400 13px/1.4 var(--mono); color: var(--ink-3); font-style: normal; }
+  .quotes .fix { font-size: 15px; color: var(--green); margin-top: 14px; display: block; }
+  .quotes .fix::before { content: "→ "; }
+  @media (max-width: 900px) {
+    .quotes { grid-template-columns: 1fr 1fr; }
+    .quotes blockquote:not(:nth-child(3n+1)) { padding-left: 0; border-left: 0; }
+    .quotes blockquote:nth-child(even) { padding-left: 24px; border-left: 1px solid var(--rule); }
+  }
+  @media (max-width: 600px) {
+    .quotes { grid-template-columns: 1fr; }
+    .quotes blockquote:nth-child(even) { padding-left: 0; border-left: 0; }
+    .quotes blockquote { padding-right: 0; }
+  }
+
+  /* ---------- services ---------- */
+  .svc { border-top: 1px solid var(--ink); }
+  .svc-row { display: grid; grid-template-columns: 220px 1.1fr 1fr; gap: 40px; padding: 34px 0; border-bottom: 1px solid var(--rule); }
+  .svc-row .n { font: 400 15px/1.4 var(--mono); color: var(--ink-3); }
+  .svc-row h3 { font: 400 28px/1.15 var(--display); margin: 0 0 10px; letter-spacing: -.01em; }
+  .svc-row p { margin: 0; color: var(--ink-2); }
+  .svc-row ul { margin: 0; padding: 0; list-style: none; font-size: 15px; color: var(--ink-2); }
+  .svc-row li { padding: 6px 0 6px 22px; position: relative; border-bottom: 1px dotted var(--rule); }
+  .svc-row li:last-child { border-bottom: 0; }
+  .svc-row li::before { content: ""; position: absolute; left: 2px; top: 15px; width: 9px; height: 1.5px; background: var(--green); }
+  @media (max-width: 860px) {
+    .svc-row { grid-template-columns: 1fr; gap: 14px; }
+  }
+
+  /* ---------- month ---------- */
+  .month { background: var(--green); color: #e8eee9; }
+  .month .sec-num { color: #a9bfb3; border-color: #a9bfb3; }
+  .month .sec-head p { color: #c5d4cb; }
+  .cal { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid rgba(255,255,255,.35); }
+  .cal div { padding: 22px 22px 28px 0; }
+  .cal div + div { padding-left: 22px; border-left: 1px solid rgba(255,255,255,.18); }
+  .cal .d { font: 400 44px/1 var(--display); color: #fff; display: block; margin-bottom: 4px; }
+  .cal .dl { font: 500 11px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: #a9bfb3; display: block; margin-bottom: 16px; }
+  .cal b { display: block; font-weight: 600; color: #fff; margin-bottom: 6px; font-size: 16px; }
+  .cal p { margin: 0; font-size: 15px; color: #c5d4cb; line-height: 1.5; }
+  @media (max-width: 900px) {
+    .cal { grid-template-columns: 1fr; }
+    .cal div, .cal div + div { padding: 20px 0; border-left: 0; border-bottom: 1px solid rgba(255,255,255,.18); display: grid; grid-template-columns: 90px 1fr; column-gap: 16px; }
+    .cal .d, .cal .dl { grid-column: 1; }
+    .cal b, .cal p { grid-column: 2; }
+    .cal b { grid-row: 1; }
+    .cal p { grid-row: 2 / span 2; }
+  }
+
+  /* ---------- pricing ---------- */
+  .pricing-grid { display: grid; grid-template-columns: 1fr 380px; gap: 56px; align-items: start; }
+  table.tiers { width: 100%; border-collapse: collapse; font-size: 15px; }
+  table.tiers th, table.tiers td { text-align: left; padding: 14px 12px 14px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  table.tiers thead th { font: 400 24px/1.1 var(--display); border-bottom: 1.5px solid var(--ink); padding-bottom: 16px; }
+  table.tiers thead th small { display: block; font: 400 13px/1.5 var(--sans); color: var(--ink-3); margin-top: 6px; }
+  table.tiers tbody th { font-weight: 500; color: var(--ink-2); width: 30%; }
+  table.tiers .price td { font: 500 22px/1.2 var(--mono); }
+  table.tiers .price td span { font: 400 13px var(--sans); color: var(--ink-3); }
+  .yes { color: var(--green); font-weight: 500; }
+  .no { color: var(--ink-3); }
+  .tiers-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tiers-wrap table { min-width: 560px; }
+
+  .calc { background: var(--sheet); border: 1px solid var(--rule); padding: 28px; position: sticky; top: 24px; }
+  .calc h3 { font: 400 24px/1.15 var(--display); margin: 0 0 6px; }
+  .calc > p { font-size: 14px; color: var(--ink-3); margin: 0 0 22px; }
+  .field { margin-bottom: 20px; }
+  .field label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+  .field label output { font-family: var(--mono); font-weight: 400; color: var(--ink-2); }
+  input[type=range] { width: 100%; accent-color: var(--green); }
+  .seg { display: flex; border: 1px solid var(--ink); border-radius: 3px; overflow: hidden; }
+  .seg button { flex: 1; font: 500 14px/1 var(--sans); padding: 10px 0; background: transparent; border: 0; cursor: pointer; color: var(--ink); }
+  .seg button + button { border-left: 1px solid var(--ink); }
+  .seg button[aria-pressed=true] { background: var(--ink); color: var(--paper); }
+  .check { display: flex; gap: 10px; align-items: center; font-size: 14px; }
+  .check input { accent-color: var(--green); width: 16px; height: 16px; }
+  .est { border-top: 1.5px solid var(--ink); margin-top: 24px; padding-top: 18px; display: flex; justify-content: space-between; align-items: baseline; }
+  .est span { font-size: 14px; color: var(--ink-2); }
+  .est strong { font: 500 34px/1 var(--mono); letter-spacing: -.02em; }
+  .est-note { font-size: 13px; color: var(--ink-3); margin: 10px 0 18px; }
+  .calc .btn { width: 100%; text-align: center; }
+  @media (max-width: 980px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+    .calc { position: static; }
+  }
+
+  /* ---------- fit ---------- */
+  .fit { background: var(--paper-2); }
+  .fit-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--ink); }
+  .fit-cols > div { padding: 30px 40px 10px 0; }
+  .fit-cols > div + div { padding-left: 40px; border-left: 1px solid var(--rule); }
+  .fit-cols h3 { font: 500 12px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .1em; margin: 0 0 18px; }
+  .fit-cols ul { list-style: none; margin: 0; padding: 0; }
+  .fit-cols li { font: 400 19px/1.4 var(--serif); padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .fit-cols .not li { color: var(--ink-2); }
+  .fit-cols .not li em { font-style: normal; font-family: var(--sans); font-size: 14px; color: var(--ink-3); display: block; margin-top: 4px; }
+  @media (max-width: 760px) {
+    .fit-cols { grid-template-columns: 1fr; }
+    .fit-cols > div, .fit-cols > div + div { padding: 28px 0 8px; border-left: 0; }
+  }
+
+  /* ---------- client story ---------- */
+  .story .wrap { display: grid; grid-template-columns: 220px 1fr; gap: 40px; }
+  .story blockquote { margin: 0; }
+  .story blockquote p { font: 400 clamp(24px, 2.7vw, 34px)/1.3 var(--serif); margin: 0 0 28px; letter-spacing: -.005em; }
+  .story blockquote p:first-child::before { content: "“"; position: absolute; margin-left: -.5em; color: var(--ink-3); }
+  .story footer { display: flex; gap: 40px; flex-wrap: wrap; font-size: 15px; color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 18px; }
+  .story footer b { display: block; color: var(--ink); font-weight: 600; }
+  .story .stat b { font: 500 22px/1.2 var(--mono); }
+  @media (max-width: 760px) { .story .wrap { grid-template-columns: 1fr; gap: 18px; } .story blockquote p:first-child::before { position: static; margin: 0; } }
+
+  /* ---------- letter ---------- */
+  .letter { background: var(--sheet); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .letter .wrap { display: grid; grid-template-columns: 220px minmax(0, 640px); gap: 40px; }
+  .letter p { font: 400 19px/1.65 var(--serif); margin: 0 0 1.1em; }
+  .letter .sig { font: 500 34px/1 var(--hand); color: var(--green); margin: 28px 0 6px; }
+  .letter .who { font-size: 14px; color: var(--ink-3); }
+  @media (max-width: 760px) { .letter .wrap { grid-template-columns: 1fr; gap: 18px; } }
+
+  /* ---------- faq ---------- */
+  .faq-list { border-top: 1px solid var(--ink); max-width: 860px; margin-left: 260px; }
+  .faq-list details { border-bottom: 1px solid var(--rule); }
+  .faq-list summary { list-style: none; cursor: pointer; padding: 22px 40px 22px 0; font: 400 21px/1.35 var(--serif); position: relative; }
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list summary::after { content: "+"; position: absolute; right: 4px; top: 18px; font: 300 28px/1 var(--sans); color: var(--ink-3); }
+  .faq-list details[open] summary::after { content: "–"; }
+  .faq-list details p { margin: -6px 0 24px; color: var(--ink-2); max-width: 40em; }
+  @media (max-width: 1000px) { .faq-list { margin-left: 0; } }
+
+  /* ---------- final cta ---------- */
+  .final { padding: 110px 0; text-align: left; }
+  .final .wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: end; }
+  .final h2 { font-size: clamp(38px, 5vw, 64px); max-width: 12em; }
+  .final p { color: var(--ink-2); font-size: 18px; margin: 0 0 26px; }
+  .final dl { margin: 26px 0 0; font-size: 15px; display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; color: var(--ink-2); }
+  .final dt { font: 500 12px/1.9 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); }
+  .final dd { margin: 0; }
+  @media (max-width: 860px) { .final .wrap { grid-template-columns: 1fr; gap: 28px; } .final { padding: 80px 0; } }
+
+  footer.site { border-top: 1px solid var(--ink); padding: 34px 0 48px; font-size: 13px; color: var(--ink-3); }
+  footer.site .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  footer.site a { color: var(--ink-2); }
+  footer.site .links { display: flex; gap: 20px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<div class="notice">
+  <div class="wrap">
+    <span>Taking on 6 new clients for January 2027 closes. 2 spots left.</span>
+    <a class="hide-sm" href="#book">Reserve a spot</a>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="mark" href="#" aria-label="Hollis &amp; Pike home"><b>Hollis &amp; Pike</b><span>CPAs · est. 2014</span></a>
+    <nav class="main" aria-label="Main">
+      <a href="#services">What we do</a>
+      <a href="#month">How a month works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">Questions</a>
+      <a class="btn" href="#book">Book a 20-min call</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" style="padding-top:72px">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Accounting for Shopify, Amazon &amp; multichannel brands</p>
+      <h1>Your payouts don’t match your sales. <em>We know why.</em></h1>
+      <p class="lede">Hollis &amp; Pike is a small CPA firm that only works with online sellers. We reconcile every payout to the order, keep your inventory costs honest, file sales tax wherever you owe it, and hand you books your lender won’t question.</p>
+      <div class="cta-row">
+        <a class="btn" href="#book">Book a 20-minute call</a>
+        <a class="btn ghost" href="#pricing">See what it costs</a>
+      </div>
+      <p class="cta-note">You’ll talk to an accountant, not a salesperson. Usually Dana.</p>
+
+      <div class="platforms">
+        Platforms we reconcile every month:
+        <ul>
+          <li>Shopify</li><li>Amazon Seller Central</li><li>Walmart Marketplace</li><li>TikTok Shop</li><li>Etsy</li><li>Faire</li><li>ShipBob &amp; 3PLs</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sheet" role="figure" aria-label="Example payout reconciliation worksheet">
+      <h3><span>Shopify payout recon</span><span>Mar 2026</span></h3>
+      <table>
+        <tr><td class="label">Gross sales</td><td>84,212.40</td></tr>
+        <tr class="sub"><td class="label">Discounts</td><td>(6,118.00)</td></tr>
+        <tr class="sub"><td class="label">Refunds</td><td>(3,940.15)</td></tr>
+        <tr class="sub"><td class="label">Payments processing fees</td><td>(2,377.82)</td></tr>
+        <tr class="sub"><td class="label">Installments fees</td><td>(311.40)</td></tr>
+        <tr class="sub"><td class="label">Chargebacks (2)</td><td>(264.00)</td></tr>
+        <tr class="sub"><td class="label">Sales tax collected</td><td>4,902.11</td></tr>
+        <tr class="total"><td class="label">Expected deposits</td><td>76,103.14</td></tr>
+        <tr class="bank"><td class="label">Hit the bank</td><td>75,641.14</td></tr>
+        <tr class="diff"><td class="label">Difference</td><td>462.00</td></tr>
+      </table>
+      <div class="note">
+        <svg width="46" height="40" viewBox="0 0 46 40" fill="none" aria-hidden="true"><path d="M42 36C30 34 14 26 6 6M6 6l1 10M6 6l9 4" stroke="#b3402a" stroke-width="2" stroke-linecap="round"/></svg>
+        reserve hold, released Apr 9. not missing — just late.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="problems">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">01 — Sound familiar</div>
+      <div>
+        <h2>Things sellers say on our first call.</h2>
+        <p>Almost word for word. None of these mean you did something wrong. They mean your books were set up for a coffee shop, not a store with eleven sources of revenue and fees.</p>
+      </div>
+    </div>
+    <div class="quotes">
+      <blockquote>
+        <p>“Shopify says I did $1.2M last year. My P&amp;L says $940k. My bank says something else.”</p>
+        <cite>Apparel, Shopify + Amazon</cite>
+        <span class="fix">Gross-to-net reconciliation, every payout</span>
+      </blockquote>
+      <blockquote>
+        <p>“I got a letter from Washington State. I’ve never been to Washington State.”</p>
+        <cite>Home goods, 3 channels</cite>
+        <span class="fix">Economic nexus study + voluntary disclosure</span>
+      </blockquote>
+      <blockquote>
+        <p>“We’re profitable on paper but I can’t make payroll in October.”</p>
+        <cite>Supplements, Amazon FBA</cite>
+        <span class="fix">Inventory-aware cash forecast</span>
+      </blockquote>
+      <blockquote>
+        <p>“My bookkeeper books Amazon deposits as revenue. Just the deposits.”</p>
+        <cite>Pet supplies, Amazon</cite>
+        <span class="fix">Settlement-level Amazon accounting</span>
+      </blockquote>
+      <blockquote>
+        <p>“I have no idea what my real margin is per SKU after ads and returns.”</p>
+        <cite>Beauty, Shopify + TikTok Shop</cite>
+        <span class="fix">Contribution margin by product line</span>
+      </blockquote>
+      <blockquote>
+        <p>“The bank wants two years of reviewed financials by the 30th.”</p>
+        <cite>Outdoor gear, wholesale + DTC</cite>
+        <span class="fix">Cleanup + lender-ready statements</span>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">02 — What we do</div>
+      <div>
+        <h2>Four things, done properly, every month.</h2>
+        <p>We don’t do payroll for restaurants or audits for nonprofits. Staying narrow is why we can tell you what a Walmart “WFS reimbursement” line is without looking it up.</p>
+      </div>
+    </div>
+
+    <div class="svc">
+      <div class="svc-row">
+        <div class="n">A.</div>
+        <div>
+          <h3>Monthly bookkeeping &amp; close</h3>
+          <p>Books closed by the 10th business day. Every channel’s payouts broken into sales, fees, refunds, tax and reserves, matched against the bank.</p>
+        </div>
+        <ul>
+          <li>Payout-level reconciliation for every channel</li>
+          <li>Accrual-basis P&amp;L, balance sheet, cash flow</li>
+          <li>Ad spend and app subscriptions categorised</li>
+          <li>A short written note on what changed and why</li>
+        </ul>
+      </div>
+      <div class="svc-row">
+        <div class="n">B.</div>
+        <div>
+          <h3>Inventory &amp; cost of goods</h3>
+          <p>Landed cost that includes freight, duties and 3PL fees, so your gross margin is a number you can actually price against.</p>
+        </div>
+        <ul>
+          <li>Landed cost per SKU, updated per PO</li>
+          <li>Month-end inventory valuation and shrink</li>
+          <li>Syncs with Cin7, Katana, Shopify inventory</li>
+          <li>Deposits to suppliers tracked, not expensed</li>
+        </ul>
+      </div>
+      <div class="svc-row">
+        <div class="n">C.</div>
+        <div>
+          <h3>Sales tax</h3>
+          <p>We figure out where you have nexus, get you registered, and file the returns. Marketplace-facilitated sales separated so you don’t pay twice.</p>
+        </div>
+        <ul>
+          <li>Annual nexus study across all 45 taxing states</li>
+          <li>Registrations and filings, monthly or quarterly</li>
+          <li>Voluntary disclosure if you’re behind</li>
+          <li>Notice handling. Forward us the letter.</li>
+        </ul>
+      </div>
+      <div class="svc-row">
+        <div class="n">D.</div>
+        <div>
+          <h3>Income tax &amp; planning</h3>
+          <p>Business and owner returns prepared by the same people who keep your books, so nobody in March is guessing what happened in July.</p>
+        </div>
+        <ul>
+          <li>1120-S, 1065 and personal returns</li>
+          <li>Quarterly estimates and a mid-year projection</li>
+          <li>1099-K and Form 1099 reconciliation</li>
+          <li>S-corp salary and entity structure advice</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MONTH -->
+<section class="month" id="month">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">03 — A month with us</div>
+      <div>
+        <h2>Same schedule every month, so you can plan around it.</h2>
+        <p>We send you a calendar invite for the review call when you sign. It doesn’t move.</p>
+      </div>
+    </div>
+    <div class="cal">
+      <div><span class="d">1–3</span><span class="dl">Business days</span><b>We pull everything</b><p>Settlement reports, payout files, 3PL invoices and bank feeds. You don’t upload anything.</p></div>
+      <div><span class="d">4–7</span><span class="dl">Business days</span><b>Reconcile &amp; ask</b><p>One short list of questions in a shared doc. Most months it’s three or fewer.</p></div>
+      <div><span class="d">10</span><span class="dl">Business day</span><b>Books are closed</b><p>Financials plus a one-page note: margin, cash, anything weird.</p></div>
+      <div><span class="d">12</span><span class="dl">Business day</span><b>30-minute review</b><p>Optional call with your accountant. Bring the questions you’ve been sitting on.</p></div>
+      <div><span class="d">20</span><span class="dl">Calendar day</span><b>Sales tax filed</b><p>Returns filed and paid from your account. Confirmations go in your folder.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">04 — Pricing</div>
+      <div>
+        <h2>Flat monthly fee. Quoted before you sign.</h2>
+        <p>Priced on how many channels and orders we’re reconciling, not on revenue. If your volume changes a lot, we re-quote once a year — never mid-year without asking.</p>
+      </div>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="tiers-wrap">
+        <table class="tiers">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Books<small>One or two channels</small></th>
+              <th>Books + Tax<small>Most clients start here</small></th>
+              <th>Finance team<small>$5M+ or raising</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="price"><th>Starts at</th><td>$850<span>/mo</span></td><td>$1,600<span>/mo</span></td><td>$3,900<span>/mo</span></td></tr>
+            <tr><th>Monthly close</th><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Weekly</td></tr>
+            <tr><th>Payout reconciliation</th><td>2 channels</td><td>4 channels</td><td>Unlimited</td></tr>
+            <tr><th>Inventory &amp; COGS</th><td>Simple</td><td>Landed cost</td><td>Landed cost + forecasting</td></tr>
+            <tr><th>Sales tax filings</th><td class="no">Add-on</td><td>Up to 8 states</td><td>All states</td></tr>
+            <tr><th>Income tax returns</th><td class="no">—</td><td class="yes">Business + owners</td><td class="yes">Business + owners</td></tr>
+            <tr><th>Review calls</th><td>Quarterly</td><td>Monthly</td><td>Monthly + board pack</td></tr>
+            <tr><th>Catch-up / cleanup</th><td colspan="3">One-off, quoted separately. Typically $1,200–$6,000 depending on how many months behind.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <form class="calc" id="calc" onsubmit="return false">
+        <h3>Rough estimate</h3>
+        <p>Not a quote. Takes ten seconds, gets you within about 15%.</p>
+
+        <div class="field">
+          <label for="orders">Orders per month <output id="ordersOut">1,500</output></label>
+          <input type="range" id="orders" min="100" max="20000" step="100" value="1500">
+        </div>
+
+        <div class="field">
+          <label>Sales channels</label>
+          <div class="seg" id="channels" role="group" aria-label="Sales channels">
+            <button type="button" data-v="1" aria-pressed="false">1</button>
+            <button type="button" data-v="2" aria-pressed="true">2</button>
+            <button type="button" data-v="3" aria-pressed="false">3</button>
+            <button type="button" data-v="4" aria-pressed="false">4+</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="states">States you file sales tax in <output id="statesOut">3</output></label>
+          <input type="range" id="states" min="0" max="45" step="1" value="3">
+        </div>
+
+        <div class="field">
+          <label class="check"><input type="checkbox" id="tax" checked> Include business &amp; owner tax returns</label>
+        </div>
+        <div class="field">
+          <label class="check"><input type="checkbox" id="inv"> We hold inventory with a 3PL or our own warehouse</label>
+        </div>
+
+        <div class="est"><span>Estimated</span><strong id="total">$1,650</strong></div>
+        <p class="est-note">per month, billed monthly. No setup fee if your books are current.</p>
+        <a class="btn" href="#book">Get an exact quote</a>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FIT -->
+<section class="fit">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">05 — Fit</div>
+      <div>
+        <h2>We’re a good fit for some sellers, and honest about the rest.</h2>
+      </div>
+    </div>
+    <div class="fit-cols">
+      <div>
+        <h3>Usually a good fit</h3>
+        <ul>
+          <li>$300k to $25M in annual sales</li>
+          <li>Selling physical products on two or more channels</li>
+          <li>Holding inventory, or about to</li>
+          <li>Planning to borrow, raise, or sell in the next few years</li>
+          <li>Tired of explaining Amazon to your accountant</li>
+        </ul>
+      </div>
+      <div class="not">
+        <h3>Probably not us</h3>
+        <ul>
+          <li>Just getting started, under ~$100k<em>Use a good app and a spreadsheet for now. We’ll still answer an email.</em></li>
+          <li>Digital products or dropshipping only<em>Simpler books; you’d be overpaying.</em></li>
+          <li>Looking for the cheapest option<em>We’re not. We’re the ones you call after the cheapest option.</em></li>
+          <li>Need an audit<em>We refer these out to firms we trust.</em></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story">
+  <div class="wrap">
+    <div class="sec-num">06 — A client</div>
+    <div>
+      <blockquote>
+        <p>We came to them with eighteen months of Amazon deposits booked as revenue and a line of credit renewal due in six weeks. They rebuilt the books, found $41k in fees we’d been double-counting, and sat on the call with our banker.</p>
+        <p>The renewal went through. We’ve been with them four years now.</p>
+        <footer>
+          <div><b>Priya Raman</b>Co-founder, a kitchenware brand on Amazon, Shopify and Faire</div>
+          <div class="stat"><b>$41,280</b>fees found</div>
+          <div class="stat"><b>5 wks</b>to lender-ready</div>
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- LETTER -->
+<section class="letter">
+  <div class="wrap">
+    <div class="sec-num">07 — From us</div>
+    <div>
+      <p>We started Hollis &amp; Pike in 2014 after a few years at a regional firm where e-commerce clients were the ones nobody wanted. Their books took twice as long, and nobody understood where the money went between “sold” and “deposited.”</p>
+      <p>We liked those clients. So we built a firm around them. Today we’re eleven people, all in-house, working with about 140 brands. We don’t offshore your books and we don’t hand you a new accountant every year.</p>
+      <p>If you book a call, you’ll get one of us. We’ll look at a recent payout with you and tell you honestly whether we can help.</p>
+      <div class="sig">Dana Hollis &amp; Marcus Pike</div>
+      <div class="who">Founding partners, both CPAs. Based in Columbus, Ohio, working with sellers in all 50 states.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">08 — Questions</div>
+      <div><h2>Things people ask before signing.</h2></div>
+    </div>
+    <div class="faq-list">
+      <details>
+        <summary>Do I have to switch from QuickBooks or Xero?</summary>
+        <p>No. We work in both. If you’re on something else, we’ll talk about it, but we won’t force a migration in month one.</p>
+      </details>
+      <details>
+        <summary>Do you use A2X, Link My Books, or something else?</summary>
+        <p>Usually A2X for Shopify and Amazon settlements, and our own workpapers for the channels it doesn’t cover. The connector subscription is included in your fee.</p>
+      </details>
+      <details>
+        <summary>My books are a year behind. Is that a problem?</summary>
+        <p>It’s common. We’ll quote a fixed-price catch-up, usually finished in three to six weeks, then roll straight into monthly work. If you owe back sales tax, we’ll tell you before we start, not after.</p>
+      </details>
+      <details>
+        <summary>What if I want to leave?</summary>
+        <p>Thirty days’ notice. You keep your accounting file, every workpaper, and every login. We’ll do a handoff call with whoever’s next.</p>
+      </details>
+      <details>
+        <summary>Who actually does the work?</summary>
+        <p>A senior accountant who owns your account, with a staff accountant doing the reconciliations. Same two people every month. Everyone is a US-based employee of the firm.</p>
+      </details>
+      <details>
+        <summary>Can you help if I sell outside the US?</summary>
+        <p>We handle Canada and the UK regularly, including GST/HST and VAT registrations through partners. For EU OSS filings we coordinate with a firm in Dublin.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final" id="book">
+  <div class="wrap">
+    <h2>Bring last month’s payout report. We’ll walk through it with you.</h2>
+    <div>
+      <p>Twenty minutes, on video or phone. You’ll leave knowing what’s off in your books, even if you don’t hire us.</p>
+      <a class="btn" href="mailto:hello@hollispike.example?subject=Intro%20call">Book a 20-minute call</a>
+      <dl>
+        <dt>Email</dt><dd><a href="mailto:hello@hollispike.example">hello@hollispike.example</a></dd>
+        <dt>Phone</dt><dd>(614) 555-0142, weekdays 9–5 ET</dd>
+        <dt>Reply</dt><dd>Within one business day</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div>© 2026 Hollis &amp; Pike CPAs, LLC · 266 N. Fourth St, Suite 400, Columbus, OH</div>
+    <div class="links"><a href="#">Privacy</a><a href="#">Engagement terms</a><a href="#">Client portal</a></div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const $ = (id) => document.getElementById(id);
+    const orders = $('orders'), states = $('states'), tax = $('tax'), inv = $('inv');
+    const seg = $('channels');
+    let channels = 2;
+    const fmt = (n) => n.toLocaleString('en-US');
+
+    function calc() {
+      const o = +orders.value, s = +states.value;
+      let fee = 650;
+      fee += Math.min(o, 2000) * 0.12 + Math.max(0, o - 2000) * 0.04;
+      fee += (channels - 1) * 175;
+      fee += s * 30;
+      if (tax.checked) fee += 450;
+      if (inv.checked) fee += 250;
+      fee = Math.round(fee / 25) * 25;
+      $('ordersOut').textContent = fmt(o) + (o >= 20000 ? '+' : '');
+      $('statesOut').textContent = s;
+      $('total').textContent = '$' + fmt(fee);
+    }
+
+    seg.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      channels = +b.dataset.v;
+      seg.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+      calc();
+    });
+    [orders, states, tax, inv].forEach((el) => el.addEventListener('input', calc));
+    calc();
+  })();
+</script>
+</body>
+</html>

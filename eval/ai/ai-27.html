@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Longwave: podcast hosting</title>
+<meta name="description" content="Longwave hosts your podcast, counts downloads honestly, and gives you a plain RSS feed you can take anywhere.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #e4eae8;
+    --paper-deep: #d5dedb;
+    --ink: #101a1e;
+    --steel: #4f6269;
+    --tape: #0f3b3f;
+    --tape-ink: #d9e6e3;
+    --signal: #e5482a;
+    --rule: #b3c2bf;
+
+    --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --text: "Newsreader", Georgia, "Times New Roman", serif;
+
+    --gutter: clamp(16px, 4vw, 48px);
+    --max: 1160px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0c1517;
+      --paper-deep: #132025;
+      --ink: #e4eae8;
+      --steel: #9fb2b6;
+      --tape: #082427;
+      --tape-ink: #d9e6e3;
+      --signal: #ff6a4d;
+      --rule: #2b3e44;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--text);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img, svg { display: block; max-width: 100%; }
+
+  a { color: inherit; }
+
+  :focus-visible {
+    outline: 3px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    width: min(100% - var(--gutter) * 2, var(--max));
+    margin-inline: auto;
+  }
+
+  /* Header */
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 22px;
+  }
+
+  .logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--signal);
+    display: inline-block;
+  }
+
+  .nav {
+    display: flex;
+    gap: 26px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .nav a { text-decoration: none; }
+  .nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-block;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 14px 22px;
+    border: 2px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    cursor: pointer;
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+
+  .btn:hover { background: transparent; color: var(--ink); }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .btn--ghost:hover { background: var(--ink); color: var(--paper); }
+
+  .btn--signal {
+    background: var(--signal);
+    border-color: var(--signal);
+    color: #fff;
+  }
+
+  .btn--signal:hover { background: transparent; color: var(--signal); }
+
+  /* Hero */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: end;
+    padding-block: clamp(48px, 9vw, 110px) clamp(56px, 8vw, 96px);
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(3rem, 8.4vw, 7.2rem);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    margin: 0;
+    font-variation-settings: "opsz" 96;
+  }
+
+  .hero h1 span { display: block; }
+  .hero h1 .late { color: var(--steel); }
+
+  .lede {
+    font-size: clamp(1.15rem, 1.6vw, 1.3rem);
+    max-width: 30ch;
+    margin: 28px 0 36px;
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 18px;
+    align-items: center;
+  }
+
+  .cta-row .note {
+    font-size: 0.98rem;
+    color: var(--steel);
+  }
+
+  /* Player */
+  .player {
+    border: 2px solid var(--ink);
+    background: var(--paper-deep);
+  }
+
+  .cover {
+    background: var(--tape);
+    color: var(--tape-ink);
+    padding: 26px 24px 22px;
+    display: grid;
+    gap: 6px;
+  }
+
+  .cover .show {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 4.6vw, 3.1rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+
+  .cover .ep {
+    font-size: 1rem;
+    margin: 0;
+    opacity: 0.85;
+  }
+
+  .deck {
+    padding: 22px 22px 20px;
+    display: grid;
+    gap: 18px;
+  }
+
+  .ep-title {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.2rem;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  .wave {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 96px;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  .wave b {
+    flex: 1 1 0;
+    min-width: 1px;
+    height: var(--h);
+    background: var(--rule);
+    transition: background-color 120ms linear;
+  }
+
+  .wave b.played { background: var(--ink); }
+  .wave b.head { background: var(--signal); }
+
+  .transport {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .play {
+    width: 56px;
+    height: 56px;
+    flex: none;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .play:hover { background: var(--signal); border-color: var(--signal); }
+
+  .play svg { width: 18px; height: 18px; fill: currentColor; }
+
+  .time {
+    font-variant-numeric: tabular-nums;
+    font-size: 1rem;
+    color: var(--steel);
+    margin-left: auto;
+  }
+
+  /* Intro band */
+  .claim {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: clamp(28px, 5vw, 72px);
+    padding-block: clamp(56px, 8vw, 100px);
+    border-top: 2px solid var(--ink);
+  }
+
+  .claim h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+
+  .claim p {
+    font-size: 1.3rem;
+    margin: 0 0 1em;
+    max-width: 38ch;
+  }
+
+  .claim p:last-child { margin-bottom: 0; }
+
+  /* Features */
+  .features {
+    background: var(--tape);
+    color: var(--tape-ink);
+    padding-block: clamp(64px, 9vw, 120px);
+  }
+
+  .features .split {
+    display: grid;
+    grid-template-columns: minmax(200px, 1fr) 2fr;
+    gap: clamp(32px, 6vw, 88px);
+  }
+
+  .features .label {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
+    position: sticky;
+    top: 32px;
+    align-self: start;
+  }
+
+  .feature-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+  }
+
+  .feature-list li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: 24px;
+    padding-block: 34px;
+    border-top: 1px solid rgba(217, 230, 227, 0.28);
+  }
+
+  .feature-list li:last-child {
+    border-bottom: 1px solid rgba(217, 230, 227, 0.28);
+  }
+
+  .feature-list h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .feature-list p {
+    margin: 0;
+    font-size: 1.08rem;
+    line-height: 1.62;
+  }
+
+  /* Counting */
+  .count {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 6vw, 88px);
+    padding-block: clamp(64px, 9vw, 120px);
+    align-items: start;
+  }
+
+  .count h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.4em;
+  }
+
+  .count p { margin: 0 0 1em; max-width: 44ch; }
+
+  .tally {
+    margin: 0;
+    border-top: 2px solid var(--ink);
+  }
+
+  .tally div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding-block: 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tally dt { font-size: 1.05rem; }
+
+  .tally dd {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tally dd.muted { color: var(--steel); font-weight: 600; }
+
+  /* Pricing */
+  .pricing {
+    padding-block: clamp(64px, 9vw, 120px);
+  }
+
+  .pricing header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: 16px 40px;
+    margin-bottom: 44px;
+  }
+
+  .pricing h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+
+  .pricing header p { margin: 0; max-width: 34ch; color: var(--steel); }
+
+  .tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 2px solid var(--ink);
+  }
+
+  .tier {
+    padding: 32px 28px 36px 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .tier + .tier {
+    padding-left: 28px;
+    border-left: 1px solid var(--rule);
+  }
+
+  .tier h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .price {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 3.4rem;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .price small {
+    font-family: var(--text);
+    font-weight: 400;
+    font-size: 1rem;
+    letter-spacing: 0;
+    color: var(--steel);
+    margin-left: 4px;
+  }
+
+  .tier ul {
+    margin: 6px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 1.02rem;
+  }
+
+  .tier li {
+    padding-block: 7px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .tier .btn { margin-top: auto; text-align: center; }
+
+  .tier--featured h3 { color: var(--signal); }
+
+  /* Closing */
+  .close {
+    background: var(--ink);
+    color: var(--paper);
+    padding-block: clamp(72px, 10vw, 128px);
+  }
+
+  .close h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2.6rem, 7vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    margin: 0 0 40px;
+    max-width: 14ch;
+  }
+
+  .close .btn {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+  }
+
+  .close .btn:hover { background: transparent; color: var(--paper); }
+
+  .close .btn--ghost {
+    background: transparent;
+    color: var(--paper);
+    border-color: var(--paper);
+  }
+
+  .close .btn--ghost:hover { background: var(--paper); color: var(--ink); }
+
+  .close .cta-row { gap: 14px; }
+
+  footer {
+    padding-block: 28px;
+    font-size: 0.98rem;
+    color: var(--steel);
+  }
+
+  footer .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+  }
+
+  footer a { color: var(--ink); }
+
+  /* Narrow screens */
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: 1fr; }
+    .claim { grid-template-columns: 1fr; }
+    .features .split { grid-template-columns: 1fr; }
+    .features .label { position: static; }
+    .feature-list li { grid-template-columns: 1fr; gap: 12px; }
+    .count { grid-template-columns: 1fr; }
+    .tiers { grid-template-columns: 1fr; }
+    .tier, .tier + .tier {
+      padding: 26px 0;
+      padding-left: 0;
+      border-left: 0;
+    }
+    .nav { display: none; }
+  }
+
+  @media (max-width: 420px) {
+    .top .btn { padding: 10px 14px; font-size: 0.92rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#"><i aria-hidden="true"></i>Longwave</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#features">Features</a>
+      <a href="#counting">Downloads</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <a class="btn btn--ghost" href="#start">Log in</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title">
+          <span>Record it.</span>
+          <span>Publish it.</span>
+          <span class="late">Keep the listeners.</span>
+        </h1>
+        <p class="lede">Longwave hosts your podcast, counts each download once, and gives you a plain RSS feed you can take to any app or host.</p>
+        <div class="cta-row" id="start">
+          <a class="btn btn--signal" href="#pricing">Start your feed free</a>
+          <span class="note">No card needed. Free up to 2 hours of audio a month.</span>
+        </div>
+      </div>
+
+      <figure class="player" aria-label="Episode preview">
+        <div class="cover">
+          <p class="show">The Lighthouse Keepers</p>
+          <p class="ep">Episode 214</p>
+        </div>
+        <div class="deck">
+          <p class="ep-title">The winter the relief boat didn't come</p>
+          <button class="wave" id="wave" type="button" aria-label="Episode waveform. Click to seek."></button>
+          <div class="transport">
+            <button class="play" id="play" type="button" aria-label="Play episode">
+              <svg id="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>
+              <svg id="icon-pause" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M6 4.5h4.2v15H6zM13.8 4.5H18v15h-4.2z"/></svg>
+            </button>
+            <span class="time" id="time" aria-live="off">0:00 / 48:31</span>
+          </div>
+        </div>
+      </figure>
+    </section>
+
+    <section class="claim" aria-labelledby="claim-title">
+      <h2 id="claim-title">Hosting that stays out of the way.</h2>
+      <div>
+        <p>Most hosts are built to show you dashboards. Longwave is built to get your episode out, correctly tagged and on time, and then leave you alone to make the next one.</p>
+        <p>Your feed is ordinary RSS. If you ever leave, one export moves every episode, artwork and transcript with it.</p>
+      </div>
+    </section>
+  </main>
+
+  <section class="features" id="features" aria-labelledby="features-title">
+    <div class="wrap">
+      <div class="split">
+        <h2 class="label" id="features-title">What you get</h2>
+        <ul class="feature-list">
+          <li>
+            <h3>Upload once. It reaches every app.</h3>
+            <p>Drop in a WAV or MP3 and Longwave writes the feed that Apple Podcasts, Spotify, YouTube Music and everything else reads. Titles, show notes and chapter markers arrive intact.</p>
+          </li>
+          <li>
+            <h3>Ads go where you put them.</h3>
+            <p>Mark a spot at a timestamp, set your rate, and let sponsors book it. We take a fixed share of what you sell and nothing from the audio itself.</p>
+          </li>
+          <li>
+            <h3>Transcripts without the wait.</h3>
+            <p>Every episode gets a searchable transcript and captions the moment it publishes. Edit the text yourself if a name is spelled wrong.</p>
+          </li>
+          <li>
+            <h3>A site that is already yours.</h3>
+            <p>Point your own domain at a finished show page with episodes, a subscribe menu and an email signup. No design work required.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="count" id="counting" aria-labelledby="count-title">
+      <div>
+        <h2 id="count-title">A download is a person, not a bot.</h2>
+        <p>We drop repeat requests from the same listener within a day, filter known crawlers, and publish the numbers every hour. Ad-supported shows can see exactly what a sponsor paid for.</p>
+        <p>The figures below are from a sample show over one week.</p>
+      </div>
+      <dl class="tally" aria-label="Sample week, counted">
+        <div><dt>Requests received</dt><dd class="muted">41,870</dd></div>
+        <div><dt>Crawlers removed</dt><dd class="muted">6,212</dd></div>
+        <div><dt>Repeat listens in one day</dt><dd class="muted">3,044</dd></div>
+        <div><dt>Counted downloads</dt><dd>32,614</dd></div>
+      </dl>
+    </section>
+
+    <section class="pricing" id="pricing" aria-labelledby="pricing-title">
+      <header>
+        <h2 id="pricing-title">Pay for hours and reach, not seats.</h2>
+        <p>Every plan includes the feed, transcripts and unlimited episode history. Change or cancel from your settings page at any time.</p>
+      </header>
+
+      <div class="tiers">
+        <article class="tier">
+          <h3>Starter</h3>
+          <p class="price">$0<small>/ month</small></p>
+          <ul>
+            <li>2 hours of audio a month</li>
+            <li>Up to 5,000 downloads</li>
+            <li>Feed and transcripts</li>
+          </ul>
+          <a class="btn btn--ghost" href="#start">Create a free feed</a>
+        </article>
+
+        <article class="tier tier--featured">
+          <h3>Studio</h3>
+          <p class="price">$19<small>/ month</small></p>
+          <ul>
+            <li>Unlimited audio</li>
+            <li>Your own domain and show page</li>
+            <li>Dynamic ad insertion</li>
+            <li>Detailed listener reports</li>
+          </ul>
+          <a class="btn btn--signal" href="#start">Choose Studio</a>
+        </article>
+
+        <article class="tier">
+          <h3>Network</h3>
+          <p class="price">$79<small>/ month</small></p>
+          <ul>
+            <li>Up to 20 shows</li>
+            <li>Team seats with roles</li>
+            <li>API and bulk import</li>
+            <li>Priority support by email</li>
+          </ul>
+          <a class="btn btn--ghost" href="#start">Talk to us</a>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <section class="close" aria-labelledby="close-title">
+    <div class="wrap">
+      <h2 id="close-title">Your next episode is already recorded.</h2>
+      <div class="cta-row">
+        <a class="btn" href="#start">Create your feed</a>
+        <a class="btn btn--ghost" href="#start">Move an existing show</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>Longwave, podcast hosting. Built for shows that run longer than a season.</span>
+      <span><a href="#">Export your feed</a> &middot; <a href="#">Privacy</a> &middot; <a href="#">Status</a></span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var BAR_COUNT = 96;
+    var TOTAL = 48 * 60 + 31;
+    var wave = document.getElementById('wave');
+    var playBtn = document.getElementById('play');
+    var iconPlay = document.getElementById('icon-play');
+    var iconPause = document.getElementById('icon-pause');
+    var timeEl = document.getElementById('time');
+    var bars = [];
+    var position = 0;
+    var timer = null;
+
+    // Deterministic heights so the waveform looks the same on every load.
+    function height(i) {
+      var v = Math.abs(
+        Math.sin(i * 1.73) * 0.55 +
+        Math.sin(i * 0.41 + 1.2) * 0.35 +
+        ((i * 37) % 11) / 22
+      );
+      return Math.round(18 + Math.min(v, 1) * 78) + '%';
+    }
+
+    for (var i = 0; i < BAR_COUNT; i++) {
+      var b = document.createElement('b');
+      b.style.setProperty('--h', height(i));
+      wave.appendChild(b);
+      bars.push(b);
+    }
+
+    function fmt(s) {
+      var m = Math.floor(s / 60);
+      var r = String(Math.floor(s % 60)).padStart(2, '0');
+      return m + ':' + r;
+    }
+
+    function render() {
+      var idx = Math.floor((position / TOTAL) * BAR_COUNT);
+      bars.forEach(function (bar, n) {
+        bar.classList.toggle('played', n < idx);
+        bar.classList.toggle('head', n === idx);
+      });
+      timeEl.textContent = fmt(position) + ' / ' + fmt(TOTAL);
+    }
+
+    function setPlaying(on) {
+      iconPlay.hidden = on;
+      iconPause.hidden = !on;
+      playBtn.setAttribute('aria-label', on ? 'Pause episode' : 'Play episode');
+      clearInterval(timer);
+      if (on) {
+        timer = setInterval(function () {
+          position += 0.25;
+          if (position >= TOTAL) {
+            position = TOTAL;
+            setPlaying(false);
+          }
+          render();
+        }, 250);
+      }
+    }
+
+    playBtn.addEventListener('click', function () {
+      setPlaying(iconPause.hidden);
+    });
+
+    wave.addEventListener('click', function (e) {
+      var rect = wave.getBoundingClientRect();
+      var ratio = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+      position = ratio * TOTAL;
+      render();
+    });
+
+    render();
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terra Incognita: Mapping the World, 3000 BCE to Today</title>
+  <meta name="description" content="A museum exhibition on how people learned to draw the world, from Babylonian clay tablets to satellite surveys.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #E8ECE6;
+      --paper-deep: #D9E0DA;
+      --ink: #101B2B;
+      --ink-soft: #3D4A5C;
+      --rubric: #A12F24;
+      --graticule: #9FB0B3;
+      --verdigris: #2E5E63;
+
+      --serif: "IM Fell English", "Times New Roman", serif;
+      --small-caps: "IM Fell English SC", "IM Fell English", serif;
+      --sans: "Hanken Grotesk", system-ui, sans-serif;
+
+      --gutter: 16px;
+      --measure: 62ch;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --paper: #0E1622;
+        --paper-deep: #15202F;
+        --ink: #E4E9E2;
+        --ink-soft: #AEB9BE;
+        --rubric: #E0705F;
+        --graticule: #37495A;
+        --verdigris: #7FB7B8;
+      }
+    }
+    :root[data-theme="dark"] {
+      --paper: #0E1622;
+      --paper-deep: #15202F;
+      --ink: #E4E9E2;
+      --ink-soft: #AEB9BE;
+      --rubric: #E0705F;
+      --graticule: #37495A;
+      --verdigris: #7FB7B8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img, svg { display: block; max-width: 100%; }
+
+    a {
+      color: inherit;
+      text-decoration-color: var(--rubric);
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 0.22em;
+    }
+    a:hover { color: var(--rubric); }
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--rubric);
+      outline-offset: 3px;
+    }
+
+    .wrap {
+      width: min(1180px, 100% - 2 * var(--gutter));
+      margin-inline: auto;
+    }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-block: 22px;
+      border-bottom: 1px solid var(--graticule);
+    }
+    .site-name {
+      font-family: var(--small-caps);
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .site-nav {
+      display: flex;
+      gap: 24px;
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+    }
+    .site-nav a { text-decoration: none; }
+    .site-nav a:hover { text-decoration: underline; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 40px;
+      padding-block: clamp(48px, 9vw, 110px) clamp(56px, 8vw, 96px);
+      align-items: center;
+    }
+    @media (min-width: 900px) {
+      .hero { grid-template-columns: 5fr 6fr; gap: 56px; }
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(3.4rem, 9vw, 7.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.015em;
+      margin: 0 0 28px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      display: block;
+      font-size: 0.5em;
+      letter-spacing: 0;
+      line-height: 1.2;
+      margin-top: 0.4em;
+      color: var(--ink-soft);
+    }
+
+    .hero .lede {
+      font-size: 1.25rem;
+      line-height: 1.5;
+      max-width: var(--measure);
+      margin: 0 0 36px;
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 6px 24px;
+      margin: 0 0 40px;
+      padding: 18px 0 0;
+      border-top: 1px solid var(--graticule);
+      font-size: 0.975rem;
+    }
+    .hero-meta dt { color: var(--ink-soft); }
+    .hero-meta dd { margin: 0; }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 26px;
+      background: var(--ink);
+      color: var(--paper);
+      font: inherit;
+      font-weight: 500;
+      text-decoration: none;
+      border: 0;
+      cursor: pointer;
+      transition: background-color 200ms ease;
+    }
+    .btn:hover { background: var(--rubric); color: var(--paper); }
+    .btn-quiet {
+      margin-left: 18px;
+      background: none;
+      color: var(--ink);
+      padding-inline: 0;
+      text-decoration: underline;
+      text-decoration-color: var(--rubric);
+      text-underline-offset: 0.25em;
+    }
+    .btn-quiet:hover { background: none; color: var(--rubric); }
+
+    /* The map: the one memorable thing */
+    .chart {
+      margin: 0;
+      background: var(--paper-deep);
+      padding: clamp(12px, 2vw, 24px);
+    }
+    .chart svg { width: 100%; height: auto; }
+    .chart .coast {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 2;
+      stroke-linejoin: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: draw-coast 2.4s cubic-bezier(.6,.1,.3,1) 0.3s forwards;
+    }
+    .chart .island {
+      fill: var(--paper);
+      stroke: var(--ink);
+      stroke-width: 2;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: draw-coast 1.4s ease-out 1.8s forwards;
+    }
+    .chart .route {
+      fill: none;
+      stroke: var(--rubric);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 0.5 9;
+    }
+    .chart .grid line,
+    .chart .grid path {
+      stroke: var(--graticule);
+      stroke-width: 1;
+    }
+    .chart .grid .equator { stroke: var(--ink-soft); stroke-dasharray: 6 6; }
+    .chart figcaption {
+      margin-top: 12px;
+      font-size: 0.875rem;
+      color: var(--ink-soft);
+    }
+    @keyframes draw-coast {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* ---------- Sections ---------- */
+    section { padding-block: clamp(56px, 8vw, 104px); }
+    .rule { border: 0; border-top: 1px solid var(--graticule); margin: 0; }
+
+    h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin: 0 0 24px;
+      max-width: 20ch;
+    }
+    h3 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.6rem;
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+    p { margin: 0 0 1em; max-width: var(--measure); }
+
+    /* Intro: asymmetric, text offset to the right */
+    .intro {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    @media (min-width: 900px) {
+      .intro { grid-template-columns: 4fr 8fr; gap: 56px; }
+      .intro .lede-large { margin-left: 0; }
+    }
+    .intro .lede-large {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+      line-height: 1.3;
+      max-width: 30ch;
+      margin: 0;
+    }
+    .intro .body p:first-child::first-letter {
+      font-family: var(--serif);
+      float: left;
+      font-size: 4.2em;
+      line-height: 0.8;
+      padding: 6px 10px 0 0;
+      color: var(--rubric);
+    }
+
+    /* Rooms: a true sequence, so numbering is justified */
+    .rooms {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--ink);
+    }
+    .room {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px 40px;
+      padding-block: 36px;
+      border-bottom: 1px solid var(--graticule);
+    }
+    @media (min-width: 900px) {
+      .room { grid-template-columns: 1fr 2fr; }
+    }
+    .room-no {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--rubric);
+    }
+    .room h3 { font-size: 2rem; margin: 0; }
+    .room .years {
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      margin: 4px 0 14px;
+    }
+    .room p { margin-bottom: 0; }
+
+    /* Objects */
+    .objects-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .objects-head h2 { margin: 0; }
+    .objects-head p { margin: 0; color: var(--ink-soft); max-width: 36ch; }
+
+    .objects {
+      display: grid;
+      gap: 48px 40px;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    @media (min-width: 700px) {
+      .objects { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    .object figure { margin: 0 0 18px; }
+    .object figure svg {
+      width: 100%;
+      height: auto;
+      background: var(--paper-deep);
+    }
+    .object h3 { font-size: 1.4rem; }
+    .object .meta {
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      margin: 0 0 8px;
+    }
+    .object p { margin: 0; font-size: 0.975rem; }
+
+    /* Visit */
+    .visit {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .visit h2 { color: var(--paper); }
+    .visit-grid {
+      display: grid;
+      gap: 40px;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    @media (min-width: 900px) {
+      .visit-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px; }
+    }
+    .visit h3 { font-size: 1.5rem; color: var(--paper); }
+    .visit dl { margin: 0; }
+    .visit dt { color: #AEB9BE; font-size: 0.9rem; margin-top: 14px; }
+    .visit dt:first-child { margin-top: 0; }
+    .visit dd { margin: 2px 0 0; }
+    .visit a { text-decoration-color: #E0705F; }
+    .visit .btn { background: var(--paper); color: var(--ink); }
+    .visit .btn:hover { background: #E0705F; color: var(--ink); }
+
+    /* Footer */
+    .site-footer {
+      padding-block: 40px 56px;
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+    }
+    .site-footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px 32px;
+      flex-wrap: wrap;
+    }
+
+    /* Quality floor */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .chart .coast, .chart .island {
+        animation: none;
+        stroke-dashoffset: 0;
+      }
+      .btn { transition: none; }
+    }
+
+    @media (max-width: 480px) {
+      .site-header { flex-direction: column; align-items: flex-start; }
+      .btn-quiet { margin-left: 0; margin-top: 14px; display: inline-block; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <header class="site-header">
+      <a class="site-name" href="#top">Meridian Hall</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="#rooms">Rooms</a>
+        <a href="#objects">Objects</a>
+        <a href="#visit">Visit</a>
+      </nav>
+    </header>
+  </div>
+
+  <main id="top">
+    <div class="wrap">
+
+      <div class="hero">
+        <div>
+          <h1>
+            Terra Incognita
+            <em>Five thousand years of drawing the world</em>
+          </h1>
+          <p class="lede">
+            Every map is an argument about what is known and what is not.
+            This exhibition traces how people measured, guessed at, and
+            redrew the planet, from clay tablets in Mesopotamia to the
+            satellite surveys that now correct our coastlines by the metre.
+          </p>
+          <dl class="hero-meta">
+            <dt>Open</dt>
+            <dd>14 March to 2 September 2027</dd>
+            <dt>Where</dt>
+            <dd>Gallery 4, Meridian Hall</dd>
+          </dl>
+          <a class="btn" href="#visit">Book a timed ticket</a>
+          <a class="btn btn-quiet" href="#rooms">See the rooms</a>
+        </div>
+
+        <figure class="chart" aria-labelledby="map-caption">
+          <svg viewBox="0 0 800 600" role="img" aria-labelledby="map-title map-desc">
+            <title id="map-title">An unfinished coastline with a hatched unknown region</title>
+            <desc id="map-desc">A drawn coastline sketched in ink, a small island, a dotted rust-coloured route, and a hatched area marking unmapped territory in the lower right.</desc>
+            <defs>
+              <pattern id="hatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="12" stroke="#9FB0B3" stroke-width="2"/>
+              </pattern>
+            </defs>
+
+            <g class="grid">
+              <line x1="0" y1="150" x2="800" y2="150"/>
+              <line x1="0" y1="300" x2="800" y2="300" class="equator"/>
+              <line x1="0" y1="450" x2="800" y2="450"/>
+              <line x1="200" y1="0" x2="200" y2="600"/>
+              <line x1="400" y1="0" x2="400" y2="600"/>
+              <line x1="600" y1="0" x2="600" y2="600"/>
+            </g>
+
+            <rect x="560" y="380" width="240" height="220" fill="url(#hatch)" opacity="0.9"/>
+
+            <path class="coast" pathLength="1"
+              d="M120 180 C180 120 300 100 380 130 S520 110 600 170 S700 260 680 340 S600 420 520 430 S460 520 380 500 S300 430 250 400 S110 330 120 260 Z"/>
+            <path class="island" pathLength="1"
+              d="M430 40 C470 30 520 50 510 90 S470 120 440 100 Z"/>
+
+            <path class="route" d="M150 470 C300 380 400 420 520 300"/>
+          </svg>
+          <figcaption id="map-caption">Unsurveyed coastline, drawn for the exhibition. Rust line: a route plotted from latitude and longitude.</figcaption>
+        </figure>
+      </div>
+
+    </div>
+
+    <hr class="rule">
+
+    <section aria-labelledby="intro-title">
+      <div class="wrap intro">
+        <h2 id="intro-title" class="lede-large">Maps are never neutral. They are how a culture decides what matters.</h2>
+        <div class="body">
+          <p>
+            A Babylonian clay disc from about 600 BCE placed its world inside
+            a ring of ocean. Ptolemy gave Europe a grid of coordinates around
+            the year 150. Medieval sailors drew coasts in ink that could be
+            read by touch on rough seas. Each of these charts was right
+            about some things and wrong about others, and most of the wrong
+            parts were the ones nobody had yet gone to see.
+          </p>
+          <p>
+            The exhibition follows that uneven progress in four rooms and
+            more than two hundred objects, including manuscripts, printed
+            atlases, navigators' instruments, and digital surveys. Visitors
+            can compare the same stretch of coast across six centuries and
+            see where each mapmaker stopped looking.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="rooms" aria-labelledby="rooms-title">
+      <div class="wrap">
+        <h2 id="rooms-title">Four rooms, read in order</h2>
+        <div class="rooms">
+
+          <article class="room">
+            <div>
+              <p class="room-no">Room one</p>
+              <h3>The world as a disc</h3>
+              <p class="years">c. 3000 BCE to 500 CE</p>
+            </div>
+            <p>
+              Early maps were tools for land records, temple plans, and
+              cosmology. Clay, papyrus, and stone show the first attempts to
+              fix distance and direction, and the first assumption that the
+              edge of the known world is an ocean.
+            </p>
+          </article>
+
+          <article class="room">
+            <div>
+              <p class="room-no">Room two</p>
+              <h3>Coordinates and copies</h3>
+              <p class="years">c. 150 CE to 1450</p>
+            </div>
+            <p>
+              Ptolemy's <i>Geography</i> introduced latitude and longitude,
+              and later scribes copied it for centuries with errors that
+              shifted whole continents. This room holds the manuscripts and
+              the arguments they set off.
+            </p>
+          </article>
+
+          <article class="room">
+            <div>
+              <p class="room-no">Room three</p>
+              <h3>Sea charts and the edge of the page</h3>
+              <p class="years">c. 1270 to 1600</p>
+            </div>
+            <p>
+              Portolan charts were built from compass bearings and sailing
+              experience, not projections. Their coastlines are remarkably
+              accurate, and their interiors are often blank. The room asks
+              what a navigator needed to know, and what they were content
+              to leave out.
+            </p>
+          </article>
+
+          <article class="room">
+            <div>
+              <p class="room-no">Room four</p>
+              <h3>Measured earth</h3>
+              <p class="years">c. 1700 to today</p>
+            </div>
+            <p>
+              Triangulation, the chronometer, aerial survey, and satellite
+              positioning turned mapping into measurement. The final room
+              shows the last blank areas on the globe and how they were
+              filled in, often by people who had lived on that land for
+              generations.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="objects" aria-labelledby="objects-title">
+      <div class="wrap">
+        <div class="objects-head">
+          <h2 id="objects-title">Three objects to look for</h2>
+          <p>Each is on display for the full run. Bring a pencil for the rubbings table in Room two.</p>
+        </div>
+
+        <div class="objects">
+
+          <article class="object">
+            <figure>
+              <svg viewBox="0 0 320 220" role="img" aria-label="Schematic of a circular world map with a ring of ocean">
+                <circle cx="160" cy="110" r="96" fill="none" stroke="#101B2B" stroke-width="2"/>
+                <circle cx="160" cy="110" r="70" fill="none" stroke="#9FB0B3" stroke-width="1"/>
+                <path d="M120 80 Q160 60 190 90 Q176 130 140 140 Q112 124 120 80 Z" fill="none" stroke="#A12F24" stroke-width="2"/>
+                <line x1="64" y1="110" x2="256" y2="110" stroke="#9FB0B3" stroke-dasharray="4 4"/>
+              </svg>
+            </figure>
+            <h3>Ring of the known world</h3>
+            <p class="meta">Clay tablet, Mesopotamia, c. 600 BCE</p>
+            <p>A circular world surrounded by water, with the known lands in the middle. The inscription is nearly as old as the map.</p>
+          </article>
+
+          <article class="object">
+            <figure>
+              <svg viewBox="0 0 320 220" role="img" aria-label="Schematic of a latitude and longitude grid">
+                <g stroke="#9FB0B3" stroke-width="1">
+                  <line x1="30" y1="40" x2="290" y2="40"/>
+                  <line x1="30" y1="90" x2="290" y2="90"/>
+                  <line x1="30" y1="140" x2="290" y2="140"/>
+                  <line x1="30" y1="180" x2="290" y2="180"/>
+                  <line x1="70" y1="20" x2="70" y2="200"/>
+                  <line x1="130" y1="20" x2="130" y2="200"/>
+                  <line x1="190" y1="20" x2="190" y2="200"/>
+                  <line x1="250" y1="20" x2="250" y2="200"/>
+                </g>
+                <path d="M90 60 L150 80 L210 120 L240 160" fill="none" stroke="#A12F24" stroke-width="2.5" stroke-dasharray="1 6" stroke-linecap="round"/>
+              </svg>
+            </figure>
+            <h3>Grid from the Geography</h3>
+            <p class="meta">Manuscript copy, Constantinople, 15th century</p>
+            <p>The coordinate system that made it possible to say exactly where a place was, and to disagree about it in numbers.</p>
+          </article>
+
+          <article class="object">
+            <figure>
+              <svg viewBox="0 0 320 220" role="img" aria-label="Schematic of a portolan chart with wind lines radiating from a compass rose">
+                <g fill="none" stroke="#9FB0B3" stroke-width="1">
+                  <path d="M160 110 L160 20"/>
+                  <path d="M160 110 L240 40"/>
+                  <path d="M160 110 L290 110"/>
+                  <path d="M160 110 L240 180"/>
+                  <path d="M160 110 L160 200"/>
+                  <path d="M160 110 L80 180"/>
+                  <path d="M160 110 L30 110"/>
+                  <path d="M160 110 L80 40"/>
+                </g>
+                <circle cx="160" cy="110" r="22" fill="none" stroke="#101B2B" stroke-width="2"/>
+                <path d="M60 170 Q120 140 150 170 T250 160" fill="none" stroke="#101B2B" stroke-width="2"/>
+              </svg>
+            </figure>
+            <h3>Rhumb lines on vellum</h3>
+            <p class="meta">Portolan chart, Majorca, c. 1375</p>
+            <p>A sailor's chart: coasts from bearings, and a web of compass lines to steer by. No projection, only experience.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section class="visit" id="visit" aria-labelledby="visit-title">
+      <div class="wrap">
+        <h2 id="visit-title">Plan your visit</h2>
+        <div class="visit-grid">
+
+          <div>
+            <h3>Hours</h3>
+            <dl>
+              <dt>Tuesday to Sunday</dt>
+              <dd>10:00 to 18:00</dd>
+              <dt>Thursday</dt>
+              <dd>10:00 to 21:00</dd>
+              <dt>Closed</dt>
+              <dd>Mondays</dd>
+            </dl>
+          </div>
+
+          <div>
+            <h3>Tickets</h3>
+            <dl>
+              <dt>General admission</dt>
+              <dd>£14, timed entry</dd>
+              <dt>Under 18 and students</dt>
+              <dd>£7</dd>
+              <dt>Members</dt>
+              <dd>Free, with booking</dd>
+            </dl>
+          </div>
+
+          <div>
+            <h3>Find us</h3>
+            <dl>
+              <dt>Address</dt>
+              <dd>Meridian Hall, 12 Harbour Street</dd>
+              <dt>Access</dt>
+              <dd>Step-free throughout. Large-print guides and audio description are available at the desk.</dd>
+              <dt>Questions</dt>
+              <dd><a href="mailto:visit@meridianhall.example">visit@meridianhall.example</a></dd>
+            </dl>
+          </div>
+
+        </div>
+        <p style="margin-top: 48px;">
+          <a class="btn" href="#top">Book a timed ticket</a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Terra Incognita is a Meridian Hall exhibition, 14 March to 2 September 2027.</span>
+      <a href="#top">Back to top</a>
+    </div>
+  </footer>
+
+</body>
+</html>

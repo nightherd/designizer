@@ -1,0 +1,362 @@
+[
+  {
+    "id": "h-01",
+    "url": "https://www.basicagency.com/",
+    "split": "test",
+    "category": "studio",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-02",
+    "url": "https://www.instrument.com/",
+    "split": "test",
+    "category": "studio",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same design since 2024 (giant wordmark, pill nav)"
+  },
+  {
+    "id": "h-03",
+    "url": "https://order.design/",
+    "split": "test",
+    "category": "studio",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same design since 2024 (Cargo build)"
+  },
+  {
+    "id": "h-04",
+    "url": "https://koto.com/",
+    "split": "test",
+    "category": "studio",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same black layout as koto.studio in 2024 (domain moved; old koto.com snapshots are another site)"
+  },
+  {
+    "id": "h-05",
+    "url": "https://teenage.engineering/",
+    "split": "test",
+    "category": "product",
+    "hard": false,
+    "wayback": "20240629",
+    "note": "same icon nav system since 2024; hero content rotates"
+  },
+  {
+    "id": "h-06",
+    "url": "https://ia.net/",
+    "split": "test",
+    "category": "product",
+    "hard": false,
+    "wayback": "20240629",
+    "note": "same site shell since 2024; hero product swapped"
+  },
+  {
+    "id": "h-07",
+    "url": "https://www.are.na/",
+    "split": "test",
+    "category": "product",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-08",
+    "url": "https://www.hey.com/",
+    "split": "test",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240628",
+    "note": "same design since 2024; purple gradient text, star quotes, pill buttons"
+  },
+  {
+    "id": "h-09",
+    "url": "https://www.raycast.com/",
+    "split": "test",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240629",
+    "note": "same design since 2024; dark + glow, Inter"
+  },
+  {
+    "id": "h-10",
+    "url": "https://linear.app/",
+    "split": "test",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240614",
+    "note": "redesign 2025, in-house team; dark, Inter-family"
+  },
+  {
+    "id": "h-11",
+    "url": "https://stripe.com/",
+    "split": "test",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240630",
+    "note": "redesign 2025-26, in-house team; gradient canvas hero"
+  },
+  {
+    "id": "h-12",
+    "url": "https://vercel.com/",
+    "split": "test",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240630",
+    "note": "redesign 2025-26, in-house team (Geist); 2024 snapshot fails to render"
+  },
+  {
+    "id": "h-13",
+    "url": "https://klim.co.nz/",
+    "split": "test",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same site shell since 2024; featured-typeface hero rotates"
+  },
+  {
+    "id": "h-14",
+    "url": "https://abcdinamo.com/",
+    "split": "test",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-15",
+    "url": "https://commercialtype.com/",
+    "split": "test",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-16",
+    "url": "https://www.swisstypefaces.com/",
+    "split": "test",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same design since 2024; hero carousel"
+  },
+  {
+    "id": "h-17",
+    "url": "https://www.grillitype.com/",
+    "split": "test",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-18",
+    "url": "https://www.theverge.com/",
+    "split": "test",
+    "category": "editorial",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same 2022 redesign; EU consent banner covers bottom ~30%"
+  },
+  {
+    "id": "h-19",
+    "url": "https://www.quantamagazine.org/",
+    "split": "test",
+    "category": "editorial",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-20",
+    "url": "https://thegentlewoman.co.uk/",
+    "split": "test",
+    "category": "editorial",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-21",
+    "url": "https://craigmod.com/",
+    "split": "test",
+    "category": "editorial",
+    "hard": false,
+    "wayback": "20240627",
+    "note": "same design since 2024 (Hugo)"
+  },
+  {
+    "id": "h-22",
+    "url": "https://www.graza.co/",
+    "split": "test",
+    "category": "brand",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-23",
+    "url": "https://acehotel.com/",
+    "split": "test",
+    "category": "brand",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-24",
+    "url": "https://liquiddeath.com/",
+    "split": "test",
+    "category": "brand",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024; redirects to geo path"
+  },
+  {
+    "id": "h-25",
+    "url": "https://www.glossier.com/",
+    "split": "test",
+    "category": "brand",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design family since 2024; redirects to geo path"
+  },
+  {
+    "id": "h-26",
+    "url": "https://www.hermanmiller.com/",
+    "split": "test",
+    "category": "brand",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024; centered cookie dialog, no backdrop"
+  },
+  {
+    "id": "h-27",
+    "url": "https://maggieappleton.com/",
+    "split": "test",
+    "category": "portfolio",
+    "hard": false,
+    "wayback": "20240625",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-28",
+    "url": "https://emilkowal.ski/",
+    "split": "test",
+    "category": "portfolio",
+    "hard": false,
+    "wayback": "20240614",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-29",
+    "url": "https://paco.me/",
+    "split": "test",
+    "category": "portfolio",
+    "hard": true,
+    "wayback": "20240620",
+    "note": "same design since 2024; Inter, minimal"
+  },
+  {
+    "id": "h-30",
+    "url": "https://brittanychiang.com/",
+    "split": "test",
+    "category": "portfolio",
+    "hard": true,
+    "wayback": "20240616",
+    "note": "same design since 2024 (2023 v4); dark navy, Inter, mono labels, pill tags"
+  },
+  {
+    "id": "h-31",
+    "url": "https://how.studio/",
+    "split": "dev",
+    "category": "studio",
+    "hard": false,
+    "wayback": "20240626",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-32",
+    "url": "https://locomotive.ca/en",
+    "split": "dev",
+    "category": "studio",
+    "hard": false,
+    "wayback": "20240626",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-33",
+    "url": "https://culturedcode.com/things/",
+    "split": "dev",
+    "category": "product",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-34",
+    "url": "https://mymind.com/",
+    "split": "dev",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240621",
+    "note": "same design since 2024; serif display, pastel glow, Inter"
+  },
+  {
+    "id": "h-35",
+    "url": "https://www.typotheque.com/",
+    "split": "dev",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-36",
+    "url": "https://ohnotype.co/",
+    "split": "dev",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240629",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-37",
+    "url": "https://99percentinvisible.org/",
+    "split": "dev",
+    "category": "editorial",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024 (WordPress)"
+  },
+  {
+    "id": "h-38",
+    "url": "https://www.kinfolk.com/",
+    "split": "dev",
+    "category": "editorial",
+    "hard": true,
+    "wayback": "20240630",
+    "note": "same design since 2024; centered serif, newspaper-ish"
+  },
+  {
+    "id": "h-39",
+    "url": "https://takearecess.com/",
+    "split": "dev",
+    "category": "brand",
+    "hard": false,
+    "wayback": "20240622",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-40",
+    "url": "https://www.joshwcomeau.com/",
+    "split": "dev",
+    "category": "portfolio",
+    "hard": false,
+    "wayback": "20240626",
+    "note": "same design since 2024"
+  }
+]

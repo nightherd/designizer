@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Willow Creek Veterinary Clinic</title>
+<meta name="description" content="Compassionate, modern veterinary care for dogs, cats and small pets. Book a visit today.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf8f3; --surface:#fff; --ink:#1f2a28; --muted:#5b6866;
+  --brand:#2f7d6d; --brand-d:#225c50; --accent:#f2a65a; --soft:#e6f1ed; --line:#e7e1d6;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.15}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+section{padding:80px 0}
+.btn{display:inline-block;padding:14px 26px;border-radius:999px;font-weight:600;background:var(--brand);color:#fff;transition:.2s}
+.btn:hover{background:var(--brand-d);transform:translateY(-2px)}
+.btn.alt{background:transparent;color:var(--brand-d);border:2px solid var(--brand)}
+.btn.alt:hover{background:var(--soft)}
+header{position:sticky;top:0;z-index:10;background:rgba(251,248,243,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-family:Fraunces,serif;font-weight:700;font-size:1.3rem;color:var(--brand-d)}
+nav ul{display:flex;gap:28px;list-style:none;font-weight:500}
+nav ul a:hover{color:var(--brand)}
+.hero{padding:70px 0 90px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.eyebrow{color:var(--brand);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem;margin-bottom:14px}
+.hero h1{font-size:clamp(2.4rem,5vw,3.8rem);margin-bottom:20px}
+.hero p{color:var(--muted);font-size:1.15rem;max-width:520px;margin-bottom:30px}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.art{background:var(--soft);border-radius:40% 60% 55% 45%/50% 45% 55% 50%;aspect-ratio:1;display:grid;place-items:center;font-size:clamp(7rem,16vw,11rem)}
+.stats{display:flex;gap:40px;margin-top:40px;flex-wrap:wrap}
+.stats b{font-family:Fraunces,serif;font-size:1.9rem;display:block;color:var(--brand-d)}
+.stats span{color:var(--muted);font-size:.9rem}
+.title{text-align:center;max-width:600px;margin:0 auto 48px}
+.title h2{font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:12px}
+.title p{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;transition:.2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(31,42,40,.08)}
+.card .ic{font-size:2rem;margin-bottom:12px}
+.card h3{font-size:1.2rem;margin-bottom:8px}
+.card p{color:var(--muted);font-size:.95rem}
+.alt-bg{background:var(--soft)}
+.team .card{text-align:center}
+.avatar{width:84px;height:84px;border-radius:50%;background:var(--accent);display:grid;place-items:center;font-size:2.2rem;margin:0 auto 14px}
+.role{color:var(--brand);font-weight:500;font-size:.9rem}
+.quote p{font-size:1rem;color:var(--ink);margin-bottom:14px}
+.quote small{color:var(--muted)}
+.stars{color:var(--accent);letter-spacing:2px;margin-bottom:8px}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.hours{list-style:none;margin:16px 0 24px}
+.hours li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line)}
+form{display:grid;gap:14px;background:var(--surface);padding:28px;border-radius:20px;border:1px solid var(--line)}
+input,select,textarea{font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--brand);border-color:transparent}
+.emerg{background:var(--brand-d);color:#fff;text-align:center;padding:18px 20px;font-weight:500}
+.emerg a{text-decoration:underline;font-weight:600}
+footer{padding:30px 0;text-align:center;color:var(--muted);font-size:.9rem}
+#ok{display:none;color:var(--brand-d);font-weight:600}
+@media(max-width:800px){
+  nav ul{display:none}
+  .hero .wrap,.contact{grid-template-columns:1fr}
+  .art{max-width:320px;margin:0 auto}
+  section{padding:56px 0}
+}
+</style>
+</head>
+<body>
+<div class="emerg">🚨 Pet emergency? Call our 24/7 line: <a href="tel:+15555550199">(555) 555-0199</a></div>
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="#" class="logo">🐾 Willow Creek Vet</a>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="btn">Book a Visit</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Family-owned since 2008</p>
+      <h1>Gentle care for the ones who love you back.</h1>
+      <p>From puppy checkups to senior wellness, our caring team treats every pet like family — with modern medicine and a lot of belly rubs.</p>
+      <div class="cta">
+        <a href="#contact" class="btn">Book an appointment</a>
+        <a href="#services" class="btn alt">Explore services</a>
+      </div>
+      <div class="stats">
+        <div><b>15+</b><span>Years of care</span></div>
+        <div><b>12k</b><span>Happy patients</span></div>
+        <div><b>4.9★</b><span>Average rating</span></div>
+      </div>
+    </div>
+    <div class="art" aria-hidden="true">🐶🐱</div>
+  </div>
+</section>
+
+<section id="services" class="alt-bg">
+  <div class="wrap">
+    <div class="title"><h2>Everything your pet needs</h2><p>Comprehensive care under one roof, so your pet stays healthy at every stage of life.</p></div>
+    <div class="grid">
+      <div class="card"><div class="ic">💉</div><h3>Vaccines &amp; Wellness</h3><p>Tailored vaccination plans and annual exams to catch problems early.</p></div>
+      <div class="card"><div class="ic">🦷</div><h3>Dental Care</h3><p>Cleanings, X-rays and extractions for fresher breath and healthier lives.</p></div>
+      <div class="card"><div class="ic">🔬</div><h3>Diagnostics &amp; Lab</h3><p>In-house bloodwork, ultrasound and digital radiology with same-day results.</p></div>
+      <div class="card"><div class="ic">🩺</div><h3>Surgery</h3><p>Spay/neuter and soft-tissue procedures with advanced pain management.</p></div>
+      <div class="card"><div class="ic">🐕‍🦺</div><h3>Senior Pet Care</h3><p>Mobility, arthritis and chronic condition support to keep golden years happy.</p></div>
+      <div class="card"><div class="ic">🚑</div><h3>Urgent Care</h3><p>Same-day sick visits and 24/7 emergency triage when it matters most.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="team" class="team">
+  <div class="wrap">
+    <div class="title"><h2>Meet your vets</h2><p>Experienced, compassionate, and obsessed with animals.</p></div>
+    <div class="grid">
+      <div class="card"><div class="avatar">👩‍⚕️</div><h3>Dr. Maya Patel</h3><p class="role">Lead Veterinarian</p><p>Internal medicine &amp; dogs. Mom to two rescue greyhounds.</p></div>
+      <div class="card"><div class="avatar">👨‍⚕️</div><h3>Dr. Tom Alvarez</h3><p class="role">Surgeon</p><p>Orthopedics and soft-tissue surgery with a gentle touch.</p></div>
+      <div class="card"><div class="avatar">🧑‍⚕️</div><h3>Dr. Sam Okafor</h3><p class="role">Feline &amp; Exotics</p><p>Cat-friendly certified; calm with even the grumpiest patients.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" class="alt-bg">
+  <div class="wrap">
+    <div class="title"><h2>Loved by pets &amp; their people</h2></div>
+    <div class="grid">
+      <div class="card quote"><div class="stars">★★★★★</div><p>“Dr. Patel was so patient with my anxious rescue. He actually wags his tail walking in now!”</p><small>— Jenna R., owner of Biscuit</small></div>
+      <div class="card quote"><div class="stars">★★★★★</div><p>“They squeezed us in same-day when our cat stopped eating. Clear, kind, and no pressure.”</p><small>— Marcus L., owner of Luna</small></div>
+      <div class="card quote"><div class="stars">★★★★★</div><p>“Transparent pricing and genuinely caring staff. We wouldn’t go anywhere else.”</p><small>— The Nguyen family</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact">
+    <div>
+      <h2 style="font-size:2.2rem;margin-bottom:12px">Book a visit</h2>
+      <p style="color:var(--muted)">New patients always welcome. Tell us about your pet and we’ll confirm within one business day.</p>
+      <ul class="hours">
+        <li><span>Mon – Fri</span><span>8am – 7pm</span></li>
+        <li><span>Saturday</span><span>9am – 4pm</span></li>
+        <li><span>Sunday</span><span>Emergency only</span></li>
+      </ul>
+      <p>📍 214 Willow Creek Road, Springfield<br>📞 <a href="tel:+15555550142"><b>(555) 555-0142</b></a><br>✉️ hello@willowcreekvet.example</p>
+    </div>
+    <form id="f">
+      <input required placeholder="Your name" aria-label="Your name">
+      <input required type="email" placeholder="Email" aria-label="Email">
+      <select aria-label="Pet type"><option>Dog</option><option>Cat</option><option>Rabbit / small pet</option><option>Other</option></select>
+      <textarea rows="4" placeholder="How can we help?" aria-label="Message"></textarea>
+      <button class="btn" style="border:0;cursor:pointer;font:inherit;font-weight:600">Request appointment</button>
+      <p id="ok">Thank you! We’ll be in touch shortly. 🐾</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>© <span id="y"></span> Willow Creek Veterinary Clinic. Made with ❤️ for animals.</footer>
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();e.target.reset();document.getElementById('ok').style.display='block'});
+</script>
+</body>
+</html>

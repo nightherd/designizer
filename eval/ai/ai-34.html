@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strata — database migrations, one layer at a time</title>
+<meta name="description" content="Strata is a single-binary command-line tool for writing, planning and applying SQL migrations on Postgres, MySQL and SQLite.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --chalk: #EEF0EA;
+    --chalk-2: #E2E5DD;
+    --shale: #2B3238;
+    --shale-2: #3A434A;
+    --ink-soft: #5A6369;
+    --slate: #46627A;
+    --slate-light: #9DB4C7;
+    --sand: #D6B66E;
+    --sage: #93A98C;
+    --clay: #B9AFA2;
+    --mud: #7C8B8F;
+    --ok: #A9C79C;
+    --warn: #E2C27A;
+
+    --sans: "Schibsted Grotesk", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+    --measure: 34rem;
+    --gutter: clamp(1rem, 4vw, 3rem);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--chalk);
+    color: var(--shale);
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--slate); text-underline-offset: 0.2em; }
+  a:hover { color: var(--shale); }
+  :focus-visible { outline: 3px solid var(--slate); outline-offset: 3px; border-radius: 2px; }
+  code, kbd, pre { font-family: var(--mono); }
+
+  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* Header */
+  .site-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1.5rem; padding-bottom: 1.5rem;
+  }
+  .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--shale); text-decoration: none; }
+  .brand-mark { display: grid; gap: 2px; width: 22px; }
+  .brand-mark span { display: block; height: 5px; border-radius: 1px; }
+  .brand-mark span:nth-child(1) { background: var(--mud); width: 70%; }
+  .brand-mark span:nth-child(2) { background: var(--sage); width: 88%; }
+  .brand-mark span:nth-child(3) { background: var(--sand); }
+  .site-nav { display: flex; gap: 1.5rem; font-size: 0.95rem; }
+  .site-nav a { color: var(--shale); text-decoration: none; }
+  .site-nav a:hover { text-decoration: underline; }
+
+  /* Hero */
+  .hero { padding-top: clamp(2rem, 6vw, 5rem); padding-bottom: 3rem; }
+  .hero h1 {
+    font-size: clamp(2.6rem, 7.2vw, 5.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    font-weight: 800;
+    margin: 0 0 1.5rem;
+    max-width: 12ch;
+  }
+  .hero h1 .line { display: block; }
+  .hero h1 .line:nth-child(2) { padding-left: 0.6em; }
+  .hero h1 .line:nth-child(3) { padding-left: 1.2em; }
+  .lede { font-size: 1.25rem; line-height: 1.5; max-width: var(--measure); color: var(--shale-2); margin: 0 0 2rem; }
+
+  .install {
+    display: inline-flex; align-items: stretch; max-width: 100%;
+    background: var(--shale); color: var(--chalk); border-radius: 6px; overflow: hidden;
+  }
+  .install code { padding: 0.8rem 1rem; font-size: 0.95rem; white-space: nowrap; overflow-x: auto; }
+  .install code::before { content: "$ "; color: var(--slate-light); }
+  .copy-btn {
+    font: 500 0.875rem var(--sans); border: 0; cursor: pointer;
+    background: var(--shale-2); color: var(--chalk); padding: 0 1rem; min-width: 5.5rem;
+  }
+  .copy-btn:hover { background: var(--slate); }
+  .install-alt { margin: 0.75rem 0 0; font-size: 0.95rem; color: var(--ink-soft); }
+
+  /* Cross-section demo */
+  .section-demo { padding-bottom: clamp(3rem, 8vw, 6rem); }
+  .demo {
+    display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    border: 1.5px solid var(--shale); border-radius: 10px; overflow: hidden; background: var(--chalk-2);
+  }
+  .term { background: var(--shale); color: #DCE1DA; display: flex; flex-direction: column; min-height: 30rem; }
+  .term-bar { display: flex; gap: 0.5rem; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid var(--shale-2); font-size: 0.85rem; color: var(--clay); }
+  .term-bar .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--shale-2); }
+  .term-bar .title { margin-left: 0.5rem; font-family: var(--mono); }
+  .term-log {
+    flex: 1; margin: 0; padding: 1rem 1.25rem; font-size: 0.875rem; line-height: 1.65;
+    overflow-y: auto; max-height: 24rem; white-space: pre-wrap; word-break: break-word;
+  }
+  .term-log .prompt { color: var(--slate-light); }
+  .term-log .ok { color: var(--ok); }
+  .term-log .warn { color: var(--warn); }
+  .term-log .dim { color: #8C969B; }
+  .term-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 1rem 1.25rem; border-top: 1px solid var(--shale-2); }
+  .run {
+    font: 500 0.9rem var(--mono); cursor: pointer;
+    background: transparent; color: var(--chalk); border: 1.5px solid var(--mud);
+    border-radius: 5px; padding: 0.5rem 0.85rem;
+  }
+  .run:hover:not(:disabled) { background: var(--chalk); color: var(--shale); border-color: var(--chalk); }
+  .run:disabled { opacity: 0.4; cursor: not-allowed; }
+  .run-primary { background: var(--sand); border-color: var(--sand); color: var(--shale); }
+
+  .section-view { position: relative; padding: 1.25rem 1.25rem 0; display: flex; flex-direction: column; }
+  .section-view h2 { font-size: 0.95rem; font-weight: 500; margin: 0 0 0.25rem; color: var(--ink-soft); }
+  .section-view .legend { font-size: 0.85rem; color: var(--ink-soft); margin: 0 0 1rem; }
+  .column { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 0; }
+  .pending { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+  .pending .layer {
+    background: transparent; border: 1.5px dashed var(--mud); color: var(--ink-soft);
+    height: 34px;
+  }
+  .surface { border-top: 2px solid var(--shale); position: relative; }
+  .surface span { position: absolute; right: 0; top: -1.45rem; font-size: 0.75rem; color: var(--ink-soft); }
+  .applied { display: flex; flex-direction: column; }
+  .layer {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 0 0.75rem; font-family: var(--mono); font-size: 0.8rem; color: var(--shale);
+    position: relative; overflow: hidden;
+  }
+  .layer .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .layer .ver { flex: none; opacity: 0.7; }
+  .layer.t0 { background-color: var(--sand); background-image: radial-gradient(rgba(43,50,56,.18) 1px, transparent 1.4px); background-size: 7px 7px; }
+  .layer.t1 { background-color: var(--sage); background-image: repeating-linear-gradient(0deg, rgba(43,50,56,.14) 0 1px, transparent 1px 6px); }
+  .layer.t2 { background-color: var(--clay); background-image: repeating-linear-gradient(-35deg, rgba(43,50,56,.12) 0 1px, transparent 1px 9px); }
+  .layer.t3 { background-color: var(--mud); color: var(--chalk); background-image: radial-gradient(rgba(238,240,234,.16) 1.2px, transparent 1.6px); background-size: 11px 5px; }
+  .applied .layer + .layer { border-top: 1px solid rgba(43,50,56,.35); }
+  .bedrock {
+    height: 46px; background: var(--shale);
+    background-image: repeating-linear-gradient(60deg, rgba(238,240,234,.08) 0 2px, transparent 2px 14px);
+    color: var(--clay); font-family: var(--mono); font-size: 0.8rem; display: flex; align-items: center; padding: 0 0.75rem;
+  }
+  .layer.depositing { animation: deposit 520ms cubic-bezier(.2,.8,.2,1); }
+  .layer.eroding { animation: erode 380ms ease-in forwards; }
+  @keyframes deposit {
+    from { transform: translateY(-120px); opacity: 0; }
+    70% { transform: translateY(3px); opacity: 1; }
+    to { transform: translateY(0); }
+  }
+  @keyframes erode {
+    to { transform: translateX(30%); opacity: 0; filter: blur(2px); }
+  }
+
+  /* Content sections */
+  .block { padding-top: clamp(3rem, 8vw, 6rem); padding-bottom: clamp(3rem, 8vw, 6rem); border-top: 1.5px solid var(--shale); }
+  .block h2 {
+    font-size: clamp(1.9rem, 4vw, 2.75rem); line-height: 1.05; letter-spacing: -0.03em; font-weight: 800;
+    margin: 0 0 1rem; max-width: 18ch;
+  }
+  .block > .wrap > p { max-width: var(--measure); margin: 0 0 2.5rem; color: var(--shale-2); }
+
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+
+  .file {
+    background: #fff; border: 1.5px solid var(--shale); border-radius: 8px; overflow: hidden;
+  }
+  .file-name { font-family: var(--mono); font-size: 0.8rem; padding: 0.6rem 1rem; border-bottom: 1px solid var(--chalk-2); color: var(--ink-soft); }
+  .file pre { margin: 0; padding: 1rem; font-size: 0.85rem; line-height: 1.65; overflow-x: auto; }
+  .file .c { color: var(--slate); }
+  .file .k { color: var(--shale); font-weight: 500; }
+  .file .marker { color: #8a6d1e; background: #F4E9C8; }
+
+  .steps { list-style: none; padding: 0; margin: 0; counter-reset: step; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 2.5rem 1fr; gap: 0 0.5rem; padding: 1.25rem 0; border-bottom: 1px solid var(--clay); }
+  .steps li:first-child { padding-top: 0; }
+  .steps li::before { content: counter(step); font-weight: 800; font-size: 1.5rem; line-height: 1.2; color: var(--slate); }
+  .steps h3 { margin: 0 0 0.25rem; font-size: 1.15rem; letter-spacing: -0.01em; }
+  .steps p { margin: 0; color: var(--shale-2); max-width: 30rem; }
+  .steps code { font-size: 0.9em; background: var(--chalk-2); padding: 0.1em 0.35em; border-radius: 3px; }
+
+  .plan-out {
+    background: var(--shale); color: #DCE1DA; border-radius: 8px; margin: 0; padding: 1.25rem;
+    font-size: 0.85rem; line-height: 1.7; overflow-x: auto;
+  }
+  .plan-out .prompt { color: var(--slate-light); }
+  .plan-out .warn { color: var(--warn); }
+  .plan-out .ok { color: var(--ok); }
+  .plan-out .dim { color: #8C969B; }
+
+  .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 0; border-top: 1px solid var(--clay); }
+  .facts div { padding: 1.5rem 1.5rem 1.5rem 0; border-bottom: 1px solid var(--clay); }
+  .facts div:not(:nth-child(3n+1)) { padding-left: 1.5rem; border-left: 1px solid var(--clay); }
+  .facts dt { font-weight: 700; font-size: 1.1rem; margin-bottom: 0.35rem; letter-spacing: -0.01em; }
+  .facts dd { margin: 0; color: var(--shale-2); font-size: 0.98rem; }
+
+  .cmds { width: 100%; border-collapse: collapse; font-size: 0.98rem; }
+  .cmds th { text-align: left; font-weight: 500; color: var(--ink-soft); font-size: 0.9rem; padding: 0 1rem 0.75rem 0; border-bottom: 1.5px solid var(--shale); }
+  .cmds td { padding: 0.9rem 1rem 0.9rem 0; border-bottom: 1px solid var(--clay); vertical-align: top; }
+  .cmds td:first-child { font-family: var(--mono); font-size: 0.9rem; white-space: nowrap; color: var(--slate); }
+
+  .closing { background: var(--shale); color: var(--chalk); border-top: 0; }
+  .closing h2 { color: var(--chalk); }
+  .closing .wrap > p { color: var(--clay); }
+  .closing .install { background: var(--chalk); color: var(--shale); }
+  .closing .install code::before { color: var(--slate); }
+  .closing .copy-btn { background: var(--sand); color: var(--shale); }
+  .closing .copy-btn:hover { background: var(--clay); }
+  .closing-links { margin-top: 1.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .closing a { color: var(--slate-light); }
+  .closing a:hover { color: var(--chalk); }
+
+  .site-foot { background: var(--shale); color: var(--mud); font-size: 0.9rem; padding: 1.5rem 0 2.5rem; }
+  .site-foot .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-top: 1px solid var(--shale-2); padding-top: 1.5rem; }
+  .site-foot a { color: var(--clay); }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (max-width: 860px) {
+    .demo { grid-template-columns: minmax(0, 1fr); }
+    .term { min-height: 0; }
+    .term-log { max-height: 16rem; min-height: 12rem; }
+    .section-view { padding-bottom: 0; }
+    .split { grid-template-columns: minmax(0, 1fr); }
+    .facts { grid-template-columns: minmax(0, 1fr); }
+    .facts div, .facts div:not(:nth-child(3n+1)) { padding: 1.25rem 0; border-left: 0; }
+    .cmds td:first-child { white-space: normal; word-break: break-word; }
+  }
+  @media (max-width: 520px) {
+    .site-nav a:not(:last-child) { display: none; }
+    .hero h1 .line:nth-child(2), .hero h1 .line:nth-child(3) { padding-left: 0; }
+    .lede { font-size: 1.1rem; }
+    .cmds th:last-child { display: none; }
+    .cmds, .cmds tbody, .cmds tr, .cmds td { display: block; }
+    .cmds thead { display: none; }
+    .cmds td:first-child { border-bottom: 0; padding-bottom: 0.2rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .layer.depositing, .layer.eroding { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap site-head">
+  <a class="brand" href="#" aria-label="Strata home">
+    <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+    Strata
+  </a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="#how">How it works</a>
+    <a href="#commands">Commands</a>
+    <a href="#">GitHub</a>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <h1>
+      <span class="line">Change your</span>
+      <span class="line">schema one</span>
+      <span class="line">layer at a time.</span>
+    </h1>
+    <p class="lede">Strata is a command-line tool for database migrations. You write plain SQL files, Strata applies them in order, records what ran, and warns you before anything locks a busy table.</p>
+    <div class="install">
+      <code id="install-cmd">brew install strata</code>
+      <button class="copy-btn" type="button" data-copy="install-cmd">Copy</button>
+    </div>
+    <p class="install-alt">Or download a single binary for macOS, Linux or Windows. Works with Postgres, MySQL and SQLite.</p>
+  </section>
+
+  <section class="wrap section-demo" aria-labelledby="demo-title">
+    <h2 id="demo-title" class="sr-only">Try it</h2>
+    <div class="demo">
+      <div class="term">
+        <div class="term-bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="title">~/acme-api</span></div>
+        <pre class="term-log" id="log" aria-live="polite"></pre>
+        <div class="term-actions">
+          <button class="run run-primary" type="button" id="btn-up">strata up</button>
+          <button class="run" type="button" id="btn-down">strata down</button>
+          <button class="run" type="button" id="btn-status">strata status</button>
+        </div>
+      </div>
+      <div class="section-view">
+        <h2>acme_production</h2>
+        <p class="legend">Applied migrations stack up from the oldest. Dashed outlines are waiting to be applied.</p>
+        <div class="column">
+          <div class="pending" id="pending"></div>
+          <div class="surface"><span>current version</span></div>
+          <div class="applied" id="applied"></div>
+          <div class="bedrock">empty database</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <h2 id="how-title">Every change is a file you can read</h2>
+      <p>No DSL and no generated code. A migration is a SQL file with an up half and a down half, named so the order is obvious in any file listing.</p>
+      <div class="split">
+        <ol class="steps">
+          <li>
+            <h3>Write it</h3>
+            <p><code>strata new add_accounts_timezone</code> creates a numbered file with both halves ready to fill in.</p>
+          </li>
+          <li>
+            <h3>Plan it</h3>
+            <p><code>strata plan</code> shows the exact statements that will run and which ones take locks, before you touch the database.</p>
+          </li>
+          <li>
+            <h3>Apply it</h3>
+            <p><code>strata up</code> runs each pending file in its own transaction and records a checksum, so edited history gets caught later.</p>
+          </li>
+          <li>
+            <h3>Undo it if you need to</h3>
+            <p><code>strata down</code> runs the down half of the most recent migration. Add <code>--steps 3</code> to go further back.</p>
+          </li>
+        </ol>
+        <div class="file">
+          <div class="file-name">migrations/0006_add_accounts_timezone.sql</div>
+<pre><span class="c">-- strata:up</span>
+<span class="k">ALTER TABLE</span> accounts
+  <span class="k">ADD COLUMN</span> timezone text
+  <span class="k">NOT NULL DEFAULT</span> 'UTC';
+
+<span class="k">CREATE INDEX CONCURRENTLY</span> accounts_timezone_idx
+  <span class="k">ON</span> accounts (timezone);
+
+<span class="c">-- strata:down</span>
+<span class="k">DROP INDEX</span> accounts_timezone_idx;
+<span class="k">ALTER TABLE</span> accounts <span class="k">DROP COLUMN</span> timezone;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="plan-title">
+    <div class="wrap split">
+      <div>
+        <h2 id="plan-title">Know what locks before it locks</h2>
+        <p style="max-width: var(--measure); color: var(--shale-2);">Strata reads each statement and tells you how it will behave on your database version. A column with a default is instant on Postgres 11 and later. An index built without <code>CONCURRENTLY</code> blocks writes until it finishes. You find out at your desk, not during the deploy.</p>
+      </div>
+<pre class="plan-out"><span class="prompt">$</span> strata plan
+<span class="dim">Target: acme_production (Postgres 16.2)</span>
+<span class="dim">Pending: 3 migrations</span>
+
+0006_add_accounts_timezone
+  <span class="ok">ok</span>    ADD COLUMN with constant default
+  <span class="ok">ok</span>    CREATE INDEX CONCURRENTLY
+        runs outside a transaction
+
+0007_backfill_timezone
+  <span class="warn">warn</span>  UPDATE without WHERE touches
+        ~4.2M rows in accounts
+
+0008_drop_legacy_sessions
+  <span class="warn">warn</span>  DROP TABLE takes an ACCESS
+        EXCLUSIVE lock on legacy_sessions
+
+<span class="dim">Run strata up to apply, or</span>
+<span class="dim">strata up --to 0006 to stop early.</span></pre>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="facts-title">
+    <div class="wrap">
+      <h2 id="facts-title">Small tool, careful defaults</h2>
+      <p>Strata does one job. It doesn't need an ORM, a runtime or a config server.</p>
+      <dl class="facts">
+        <div><dt>One binary</dt><dd>About 9 MB with no dependencies. Drop it into a CI image or a container and run it.</dd></div>
+        <div><dt>Transactions by default</dt><dd>Each migration commits or rolls back on its own. A failure halfway leaves your schema at the last good version.</dd></div>
+        <div><dt>Checksums on history</dt><dd>If someone edits a migration that already ran, <code>strata verify</code> fails and names the file.</dd></div>
+        <div><dt>A lock that prevents races</dt><dd>Two deploys starting at once can't both migrate. The second one waits, then sees there's nothing left to do.</dd></div>
+        <div><dt>Readable state</dt><dd>History lives in a <code>strata_history</code> table you can query with any SQL client.</dd></div>
+        <div><dt>Bring your own layout</dt><dd>Point it at any folder with <code>--dir</code> or a two-line <code>strata.toml</code>. Existing numbered files work as they are.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="block" id="commands" aria-labelledby="cmd-title">
+    <div class="wrap">
+      <h2 id="cmd-title">The whole interface</h2>
+      <p>There are six commands. Run <code>strata help &lt;command&gt;</code> for flags.</p>
+      <table class="cmds">
+        <thead><tr><th scope="col">Command</th><th scope="col">What it does</th></tr></thead>
+        <tbody>
+          <tr><td>strata new &lt;name&gt;</td><td>Creates the next numbered migration file with empty up and down sections.</td></tr>
+          <tr><td>strata plan</td><td>Lists pending migrations and flags statements that lock tables or rewrite many rows.</td></tr>
+          <tr><td>strata up [--to &lt;version&gt;]</td><td>Applies pending migrations in order, stopping at a version if you give one.</td></tr>
+          <tr><td>strata down [--steps &lt;n&gt;]</td><td>Rolls back the most recent migration, or the last <em>n</em>.</td></tr>
+          <tr><td>strata status</td><td>Shows the current version and which files are applied, pending or modified.</td></tr>
+          <tr><td>strata verify</td><td>Compares checksums of applied files with what's on disk. Exits non-zero on a mismatch.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block closing" aria-labelledby="close-title">
+    <div class="wrap">
+      <h2 id="close-title">Install Strata and run your first migration</h2>
+      <p>Set <code>DATABASE_URL</code>, run <code>strata new</code>, then <code>strata up</code>. That's the whole setup.</p>
+      <div class="install">
+        <code id="install-cmd-2">curl -fsSL https://strata.sh/install | sh</code>
+        <button class="copy-btn" type="button" data-copy="install-cmd-2">Copy</button>
+      </div>
+      <div class="closing-links">
+        <a href="#">Read the docs</a>
+        <a href="#">View on GitHub</a>
+        <a href="#">Release notes for 2.4</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <span>Strata is open source under the MIT license.</span>
+    <a href="#">Report an issue</a>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const migrations = [
+    { v: "0001", name: "create_accounts", h: 44 },
+    { v: "0002", name: "create_projects", h: 38 },
+    { v: "0003", name: "add_projects_owner_fk", h: 26 },
+    { v: "0004", name: "create_events", h: 48 },
+    { v: "0005", name: "index_events_created_at", h: 30 },
+    { v: "0006", name: "add_accounts_timezone", h: 34, ms: 41 },
+    { v: "0007", name: "backfill_timezone", h: 40, ms: 2314 },
+    { v: "0008", name: "drop_legacy_sessions", h: 28, ms: 18 },
+  ];
+  let applied = 5;
+  let busy = false;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const $applied = document.getElementById("applied");
+  const $pending = document.getElementById("pending");
+  const $log = document.getElementById("log");
+  const $up = document.getElementById("btn-up");
+  const $down = document.getElementById("btn-down");
+  const $status = document.getElementById("btn-status");
+
+  const layerEl = (m, i, isPending) => {
+    const el = document.createElement("div");
+    el.className = "layer" + (isPending ? "" : " t" + (i % 4));
+    if (!isPending) el.style.height = m.h + "px";
+    el.innerHTML = `<span class="name">${m.name}</span><span class="ver">${m.v}</span>`;
+    return el;
+  };
+
+  function render() {
+    $applied.innerHTML = "";
+    for (let i = applied - 1; i >= 0; i--) $applied.appendChild(layerEl(migrations[i], i, false));
+    $pending.innerHTML = "";
+    for (let i = migrations.length - 1; i >= applied; i--) $pending.appendChild(layerEl(migrations[i], i, true));
+    $up.disabled = busy;
+    $down.disabled = busy;
+    $status.disabled = busy;
+  }
+
+  function print(html) {
+    $log.insertAdjacentHTML("beforeend", html + "\n");
+    $log.scrollTop = $log.scrollHeight;
+  }
+  const cmd = (c) => print(`<span class="prompt">$</span> ${c}`);
+  const id = (m) => `${m.v}_${m.name}`;
+
+  function up() {
+    cmd("strata up");
+    if (applied >= migrations.length) {
+      print(`Nothing to apply. Schema is at ${migrations[applied - 1].v}.\n`);
+      return;
+    }
+    const m = migrations[applied];
+    busy = true; render();
+    print(`<span class="dim">applying</span> ${id(m)} ...`);
+    setTimeout(() => {
+      applied++;
+      busy = false; render();
+      const top = $applied.firstElementChild;
+      if (top && !reduce) top.classList.add("depositing");
+      print(`<span class="ok">ok</span>  ${id(m)} <span class="dim">(${m.ms} ms)</span>`);
+      const left = migrations.length - applied;
+      print(left ? `<span class="dim">${left} pending. Run strata up again for the next one.</span>\n` : `<span class="dim">Schema is up to date at ${m.v}.</span>\n`);
+    }, reduce ? 0 : 450);
+  }
+
+  function down() {
+    cmd("strata down");
+    if (applied === 0) {
+      print("Nothing to roll back. The database has no applied migrations.\n");
+      return;
+    }
+    const m = migrations[applied - 1];
+    busy = true; render();
+    print(`<span class="dim">rolling back</span> ${id(m)} ...`);
+    const top = $applied.firstElementChild;
+    if (top && !reduce) top.classList.add("eroding");
+    setTimeout(() => {
+      applied--;
+      busy = false; render();
+      print(`<span class="ok">ok</span>  rolled back ${id(m)}`);
+      print(`<span class="dim">Schema is at ${applied ? migrations[applied - 1].v : "0000"}.</span>\n`);
+    }, reduce ? 0 : 400);
+  }
+
+  function status() {
+    cmd("strata status");
+    print(`<span class="dim">Database: acme_production</span>`);
+    migrations.forEach((m, i) => {
+      print(i < applied ? `  <span class="ok">applied</span>  ${id(m)}` : `  <span class="warn">pending</span>  ${id(m)}`);
+    });
+    print("");
+  }
+
+  $up.addEventListener("click", up);
+  $down.addEventListener("click", down);
+  $status.addEventListener("click", status);
+
+  print(`<span class="dim">Connected to acme_production (Postgres 16.2)</span>`);
+  print(`<span class="dim">5 applied, 3 pending. Try the buttons below.</span>\n`);
+  render();
+
+  document.querySelectorAll("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const text = document.getElementById(btn.dataset.copy).textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = "Copied";
+      } catch {
+        btn.textContent = "Select and copy";
+      }
+      setTimeout(() => (btn.textContent = "Copy"), 1600);
+    });
+  });
+})();
+</script>
+</body>
+</html>

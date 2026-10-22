@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HALDE 2027 — three days on the heap</title>
+<meta name="description" content="HALDE is a three-day electronic music festival on a former coal spoil heap in Gelsenkirchen, 21–23 May 2027.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --haze: #D5DADB;
+    --chalk: #F3F5F2;
+    --slag: #23282C;
+    --slag-2: #333A3F;
+    --sodium: #F2A33A;
+    --moss: #5C7A4A;
+    --rust: #9C4A2B;
+    --ink-soft: #4C5458;
+
+    --display: "Anybody", "Arial Narrow", sans-serif;
+    --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+
+    /* scale: 1.25 major third from 17px */
+    --s-1: 0.85rem;
+    --s0: 1.0625rem;
+    --s1: 1.33rem;
+    --s2: 1.66rem;
+    --s3: 2.07rem;
+    --s4: clamp(2.2rem, 5vw, 3.6rem);
+
+    --gutter: clamp(1rem, 4vw, 3rem);
+    --measure: 36rem;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--haze);
+    color: var(--slag);
+    font-family: var(--body);
+    font-size: var(--s0);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--sodium); outline-offset: 3px; }
+
+  .wrap { padding-inline: var(--gutter); max-width: 90rem; margin-inline: auto; }
+
+  h2 {
+    font-family: var(--display);
+    font-variation-settings: "wdth" 62;
+    font-weight: 800;
+    font-size: var(--s4);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.5rem;
+  }
+  p { max-width: var(--measure); margin: 0 0 1em; }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: absolute; inset: 0 0 auto 0; z-index: 5;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem var(--gutter);
+    font-weight: 700;
+  }
+  .nav ul { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+  .nav a { text-decoration: none; }
+  .nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .nav .brand { font-family: var(--display); font-variation-settings: "wdth" 140; font-weight: 900; font-size: var(--s1); }
+  @media (max-width: 640px) { .nav ul li:not(:last-child) { display: none; } }
+
+  .btn {
+    display: inline-block;
+    font-family: var(--display);
+    font-variation-settings: "wdth" 120;
+    font-weight: 800;
+    font-size: var(--s0);
+    text-decoration: none;
+    background: var(--slag);
+    color: var(--chalk);
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    border: 2px solid var(--slag);
+    transition: background .15s, color .15s;
+  }
+  .btn:hover { background: var(--sodium); color: var(--slag); }
+  .btn.small { padding: .45rem 1rem; font-size: var(--s-1); }
+  .btn.ghost { background: transparent; color: var(--slag); }
+  .btn.ghost:hover { background: var(--slag); color: var(--chalk); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: 1fr auto auto;
+    overflow: hidden;
+    padding-top: 5rem;
+  }
+  .contours { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .contours path { fill: none; stroke: var(--slag); stroke-opacity: .28; stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .contours path.index { stroke-opacity: .55; stroke-width: 1.4; }
+  .pin circle { fill: var(--sodium); stroke: var(--slag); stroke-width: 2; vector-effect: non-scaling-stroke; }
+  .pin text { font-family: var(--body); font-weight: 700; font-size: 15px; fill: var(--slag); paint-order: stroke; stroke: var(--haze); stroke-width: 4px; }
+  .pin .elev { font-weight: 400; font-size: 12px; fill: var(--ink-soft); }
+
+  .hero-copy {
+    position: relative; z-index: 2;
+    align-self: end;
+    display: grid; gap: 1.2rem 3rem;
+    grid-template-columns: minmax(0, 30rem) auto;
+    align-items: end;
+    padding-bottom: 1.5rem;
+  }
+  .hero-copy .when {
+    font-family: var(--display);
+    font-variation-settings: "wdth" 100;
+    font-weight: 700;
+    font-size: var(--s2);
+    line-height: 1.1;
+    margin: 0 0 .5rem;
+  }
+  .hero-copy p { margin: 0; }
+  .hero-copy .actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+  @media (max-width: 760px) { .hero-copy { grid-template-columns: 1fr; } }
+
+  .word {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between;
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(5rem, 21vw, 22rem);
+    line-height: .78;
+    padding: 0 var(--gutter) .04em;
+    user-select: none;
+  }
+  .word span { display: block; font-variation-settings: "wdth" 100; will-change: font-variation-settings; }
+  .word span:nth-child(3) { color: var(--rust); }
+
+  /* ---------- lineup ---------- */
+  section { padding-block: clamp(4rem, 9vw, 7.5rem); }
+  .lineup-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem 2rem; margin-bottom: 2.5rem; }
+  .lineup-head h2 { margin: 0; }
+  .tabs { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .tabs button {
+    font: inherit; font-weight: 700; cursor: pointer;
+    background: transparent; color: var(--slag);
+    border: 2px solid var(--slag); border-radius: 999px;
+    padding: .5rem 1.1rem;
+  }
+  .tabs button[aria-selected="true"] { background: var(--slag); color: var(--chalk); }
+  .tabs button:hover:not([aria-selected="true"]) { background: var(--chalk); }
+
+  .bill { list-style: none; margin: 0; padding: 0; font-family: var(--display); font-weight: 800; line-height: .98; }
+  .bill li { display: inline; }
+  .bill li::after { content: " / "; font-weight: 300; color: var(--ink-soft); font-variation-settings: "wdth" 60; }
+  .bill li:last-child::after { content: ""; }
+  .bill .t1 { font-size: clamp(2.6rem, 8vw, 6.5rem); font-variation-settings: "wdth" 72; }
+  .bill .t2 { font-size: clamp(1.8rem, 4.6vw, 3.6rem); font-variation-settings: "wdth" 88; }
+  .bill .t3 { font-size: clamp(1.25rem, 2.6vw, 2rem); font-variation-settings: "wdth" 110; font-weight: 600; }
+  .bill + .bill { margin-top: .6rem; }
+  .bill-panel[hidden] { display: none; }
+  .bill-panel.enter .bill { animation: squeeze .45s cubic-bezier(.2,.8,.2,1); }
+  @keyframes squeeze { from { opacity: 0; font-variation-settings: "wdth" 50; } }
+  .bill-note { margin-top: 2rem; color: var(--ink-soft); }
+
+  /* ---------- running times (night) ---------- */
+  .night { background: var(--slag); color: var(--chalk); }
+  .night h2 { color: var(--chalk); }
+  .night .intro { color: #C3C9CB; }
+  .chart { margin-top: 2.5rem; display: grid; gap: 2.2rem; }
+  .day h3 { font-family: var(--display); font-variation-settings: "wdth" 130; font-weight: 800; font-size: var(--s1); margin: 0 0 .6rem; }
+  .grid-hours {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    row-gap: .35rem;
+    align-items: center;
+  }
+  .grid-hours .stage { font-weight: 700; font-size: var(--s-1); }
+  .track { position: relative; height: 2.1rem; background: var(--slag-2); border-radius: 3px; }
+  .bar {
+    position: absolute; top: 0; bottom: 0;
+    border-radius: 3px;
+    display: flex; align-items: center; padding-inline: .6rem;
+    font-size: var(--s-1); font-weight: 700; color: var(--slag);
+    white-space: nowrap; overflow: hidden;
+  }
+  .bar.schacht { background: var(--sodium); }
+  .bar.bunker { background: #C9744E; }
+  .bar.gipfel { background: #8FA87D; }
+  .hours { grid-column: 2; display: flex; justify-content: space-between; font-size: .75rem; color: #9AA3A6; margin-top: .2rem; }
+  @media (max-width: 640px) {
+    .grid-hours { grid-template-columns: 1fr; }
+    .grid-hours .stage { margin-top: .4rem; }
+    .hours { grid-column: 1; }
+  }
+
+  /* ---------- tickets ---------- */
+  .tickets-grid { display: grid; grid-template-columns: minmax(0, 22rem) 1fr; gap: 2rem 5rem; }
+  @media (max-width: 860px) { .tickets-grid { grid-template-columns: 1fr; } }
+  .price-list { margin: 0; padding: 0; list-style: none; border-top: 2px solid var(--slag); }
+  .price-list li {
+    display: grid; grid-template-columns: 1fr auto auto; gap: .4rem 2rem; align-items: center;
+    padding: 1.4rem 0; border-bottom: 1px solid rgba(35,40,44,.3);
+  }
+  .price-list h3 { margin: 0; font-family: var(--display); font-variation-settings: "wdth" 110; font-weight: 800; font-size: var(--s2); line-height: 1.05; }
+  .price-list p { margin: .25rem 0 0; color: var(--ink-soft); font-size: var(--s-1); }
+  .price { font-family: var(--display); font-variation-settings: "wdth" 70; font-weight: 800; font-size: var(--s3); }
+  .price-list li.main { background: var(--sodium); margin-inline: calc(var(--gutter) * -0.5); padding-inline: calc(var(--gutter) * .5); border-bottom-color: var(--slag); }
+  .price-list li.main p { color: var(--slag); }
+  .sold { text-decoration: line-through; color: var(--ink-soft); }
+  @media (max-width: 560px) {
+    .price-list li { grid-template-columns: 1fr auto; }
+    .price-list li .btn { grid-column: 1 / -1; justify-self: start; }
+  }
+
+  /* ---------- travel ---------- */
+  .travel { background: var(--chalk); }
+  .travel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2.5rem 3rem; margin-top: 1rem; }
+  .travel-grid h3 { font-family: var(--display); font-variation-settings: "wdth" 120; font-weight: 800; font-size: var(--s1); margin: 0 0 .4rem; border-top: 3px solid var(--moss); padding-top: .7rem; }
+  .travel-grid p { font-size: var(--s0); }
+
+  /* ---------- faq ---------- */
+  .faq { max-width: 48rem; }
+  .faq details { border-bottom: 1px solid rgba(35,40,44,.3); }
+  .faq summary {
+    cursor: pointer; list-style: none;
+    padding: 1.1rem 2.5rem 1.1rem 0; position: relative;
+    font-weight: 700; font-size: var(--s1);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: "+"; position: absolute; right: .2rem; top: .9rem;
+    font-family: var(--display); font-weight: 400; font-size: var(--s3); line-height: 1;
+    transition: transform .2s;
+  }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq details p { padding-bottom: 1rem; }
+
+  /* ---------- footer ---------- */
+  footer { background: var(--slag); color: #C3C9CB; padding: 3rem 0 2rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; align-items: end; }
+  footer .big { font-family: var(--display); font-variation-settings: "wdth" 150; font-weight: 900; font-size: clamp(2.5rem, 8vw, 5rem); color: var(--chalk); line-height: .9; margin: 0; }
+  footer ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 1.4rem; flex-wrap: wrap; }
+  footer small { display: block; margin-top: 1.5rem; width: 100%; }
+
+  .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="#top">HALDE</a>
+  <ul>
+    <li><a href="#lineup">Lineup</a></li>
+    <li><a href="#times">Running times</a></li>
+    <li><a href="#travel">Getting there</a></li>
+    <li><a class="btn small" href="#tickets">Tickets</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <svg class="contours" id="contours" aria-hidden="true" preserveAspectRatio="xMidYMid slice"></svg>
+
+  <div class="hero-copy wrap">
+    <div>
+      <p class="when">21–23 May 2027<br>Halde Rungenberg, Gelsenkirchen</p>
+      <p>Three days of techno, electro and ambient on top of a 70-metre coal spoil heap in the Ruhr. Three stages, 46 artists, and a sunrise you climb up to.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="#tickets">Buy a 3-day ticket</a>
+      <a class="btn ghost" href="#lineup">See the lineup</a>
+    </div>
+  </div>
+
+  <h1 class="word" id="word" aria-label="HALDE">
+    <span aria-hidden="true">H</span><span aria-hidden="true">A</span><span aria-hidden="true">L</span><span aria-hidden="true">D</span><span aria-hidden="true">E</span>
+  </h1>
+</header>
+
+<main>
+  <section id="lineup" class="wrap" aria-labelledby="lineup-title">
+    <div class="lineup-head">
+      <h2 id="lineup-title">Who's playing</h2>
+      <div class="tabs" role="tablist" aria-label="Festival day">
+        <button role="tab" id="tab-fri" aria-controls="panel-fri" aria-selected="true">Friday 21</button>
+        <button role="tab" id="tab-sat" aria-controls="panel-sat" aria-selected="false" tabindex="-1">Saturday 22</button>
+        <button role="tab" id="tab-sun" aria-controls="panel-sun" aria-selected="false" tabindex="-1">Sunday 23</button>
+      </div>
+    </div>
+
+    <div class="bill-panel" role="tabpanel" id="panel-fri" aria-labelledby="tab-fri" tabindex="0">
+      <ul class="bill"><li class="t1">Orla Venn</li><li class="t1">Kessler Drift</li></ul>
+      <ul class="bill"><li class="t2">Mirabel Okafor</li><li class="t2">Zeche 9</li><li class="t2">Lumen Trust</li><li class="t2">Ana Pallas</li></ul>
+      <ul class="bill"><li class="t3">Grubengas</li><li class="t3">Tove Hallin</li><li class="t3">Siebold &amp; Ruth</li><li class="t3">Deepcast</li><li class="t3">Inez Marrow</li><li class="t3">Förderband</li><li class="t3">Kito Lane</li><li class="t3">Polder</li><li class="t3">Asha Brenn</li></ul>
+    </div>
+    <div class="bill-panel" role="tabpanel" id="panel-sat" aria-labelledby="tab-sat" tabindex="0" hidden>
+      <ul class="bill"><li class="t1">Hexa Moraine</li><li class="t1">The Slag Choir</li></ul>
+      <ul class="bill"><li class="t2">Dunja Rehm</li><li class="t2">Cobalt Weather</li><li class="t2">Yusuf Arden</li><li class="t2">Nightshift Union</li><li class="t2">Pell</li></ul>
+      <ul class="bill"><li class="t3">Kokerei</li><li class="t3">Mara Lindqvist</li><li class="t3">Low Ceiling</li><li class="t3">Bram Osei</li><li class="t3">Tiefbau</li><li class="t3">Salt &amp; Shale</li><li class="t3">Juno Ferreira</li><li class="t3">Vantablock</li></ul>
+    </div>
+    <div class="bill-panel" role="tabpanel" id="panel-sun" aria-labelledby="tab-sun" tabindex="0" hidden>
+      <ul class="bill"><li class="t1">Rune Calder</li><li class="t1">Pit Pony</li></ul>
+      <ul class="bill"><li class="t2">Selin Hartmann</li><li class="t2">Ore Body</li><li class="t2">Celeste Ngata</li><li class="t2">Waschkaue</li></ul>
+      <ul class="bill"><li class="t3">Emil Strand</li><li class="t3">Haldenglück</li><li class="t3">Noor Vega</li><li class="t3">Quiet Seam</li><li class="t3">Lior Bassett</li><li class="t3">Steiger</li><li class="t3">Ivo Kranz (closing ambient set)</li></ul>
+    </div>
+
+    <p class="bill-note">Set times by stage go live two weeks before the festival. The running times below show when each stage is open.</p>
+  </section>
+
+  <section id="times" class="night" aria-labelledby="times-title">
+    <div class="wrap">
+      <h2 id="times-title">When the stages are open</h2>
+      <p class="intro">Schacht is the main stage at the foot of the heap. Kohlenbunker is the indoor room in the old coal bunker. Gipfel is the small sound system at the summit, which plays slow music for sunrise.</p>
+
+      <div class="chart" id="chart"></div>
+    </div>
+  </section>
+
+  <section id="tickets" class="wrap" aria-labelledby="tickets-title">
+    <div class="tickets-grid">
+      <div>
+        <h2 id="tickets-title">Tickets</h2>
+        <p>Every ticket gets you onto the heap and into all three stages. Prices include booking fees and a free regional transport pass (VRR) from Friday morning to Monday noon.</p>
+        <p>Under-18s can come in with a guardian on the day tickets only.</p>
+      </div>
+      <ul class="price-list">
+        <li class="main">
+          <div><h3>3-day pass</h3><p>Friday noon to Monday 6am. Final release.</p></div>
+          <span class="price">€149</span>
+          <a class="btn" href="#tickets">Buy 3-day pass</a>
+        </li>
+        <li>
+          <div><h3>3-day pass, early</h3><p>Sold out in March.</p></div>
+          <span class="price sold">€119</span>
+          <span aria-hidden="true"></span>
+        </li>
+        <li>
+          <div><h3>Day ticket</h3><p>One day, from noon until 6am the next morning.</p></div>
+          <span class="price">€65</span>
+          <a class="btn ghost" href="#tickets">Choose a day</a>
+        </li>
+        <li>
+          <div><h3>Camping add-on</h3><p>Pitch in the Rungenberg meadow. Showers and lockers included.</p></div>
+          <span class="price">€35</span>
+          <a class="btn ghost" href="#tickets">Add camping</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="travel" class="travel" aria-labelledby="travel-title">
+    <div class="wrap">
+      <h2 id="travel-title">Getting there</h2>
+      <div class="travel-grid">
+        <div>
+          <h3>By tram</h3>
+          <p>Take tram 301 from Gelsenkirchen Hbf to Buer Rathaus, then the festival shuttle bus. Shuttles run every 10 minutes, all night.</p>
+        </div>
+        <div>
+          <h3>By train</h3>
+          <p>Gelsenkirchen Hbf is 25 minutes from Düsseldorf and 15 from Essen. Your ticket covers regional trains across the VRR network.</p>
+        </div>
+        <div>
+          <h3>By bike</h3>
+          <p>The Emscher cycle path runs past the gate. There's a guarded bike park with 2,000 spaces, free for ticket holders.</p>
+        </div>
+        <div>
+          <h3>On the heap</h3>
+          <p>The climb to Gipfel takes about 15 minutes on gravel paths. Wear proper shoes. A step-free route runs on the east side.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="faq-title">
+    <h2 id="faq-title">Before you come</h2>
+    <div class="faq">
+      <details>
+        <summary>Can I leave and come back in?</summary>
+        <p>Yes. Your wristband lets you in and out as often as you like, until 4am each night.</p>
+      </details>
+      <details>
+        <summary>Is the site accessible?</summary>
+        <p>Schacht and Kohlenbunker are step-free, with a raised viewing platform at Schacht. Gipfel is reached by a step-free path that takes about 25 minutes. Book an access ticket and a companion goes free.</p>
+      </details>
+      <details>
+        <summary>What happens if it rains?</summary>
+        <p>The festival goes ahead. Kohlenbunker is indoors, and Schacht has a covered area for 3,000 people. We only close Gipfel if there's lightning.</p>
+      </details>
+      <details>
+        <summary>Can I get a refund?</summary>
+        <p>You can resell your ticket at face value through our exchange until 14 May. If the festival is cancelled, you get a full refund automatically.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="big">HALDE</p>
+    <ul>
+      <li><a href="#">Newsletter</a></li>
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">Press</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <small>HALDE Festival, Gelsenkirchen. Held with the Regionalverband Ruhr, who look after the heap the rest of the year.</small>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- contour map of the heap ---- */
+  const svg = document.getElementById("contours");
+  const W = 1600, H = 1000;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const NS = "http://www.w3.org/2000/svg";
+  const cx = 1080, cy = 380;
+  const levels = 26;
+  // a deterministic lumpy radius per angle, so the heap looks surveyed, not random each load
+  const lump = (a, k) =>
+    1 + 0.13 * Math.sin(3 * a + 0.6) + 0.08 * Math.sin(5 * a + 1.9 + k * 0.05)
+      + 0.05 * Math.sin(9 * a + k * 0.21) + 0.12 * Math.cos(a - 0.4) * (k / levels);
+  for (let k = 1; k <= levels; k++) {
+    const r = 18 + k * k * 1.35 + k * 18;
+    let d = "";
+    for (let i = 0; i <= 120; i++) {
+      const a = (i / 120) * Math.PI * 2;
+      const rr = r * lump(a, k);
+      const x = cx + Math.cos(a) * rr * 1.25;
+      const y = cy + Math.sin(a) * rr * 0.82;
+      d += (i ? "L" : "M") + x.toFixed(1) + " " + y.toFixed(1);
+    }
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", d + "Z");
+    if (k % 5 === 0) p.setAttribute("class", "index");
+    svg.appendChild(p);
+  }
+  const pins = [
+    { x: cx + 10, y: cy - 6, name: "Gipfel", elev: "+70 m" },
+    { x: cx - 330, y: cy + 230, name: "Kohlenbunker", elev: "+12 m" },
+    { x: cx + 360, y: cy + 300, name: "Schacht", elev: "+4 m" },
+  ];
+  pins.forEach(p => {
+    const g = document.createElementNS(NS, "g");
+    g.setAttribute("class", "pin");
+    g.innerHTML = `<circle cx="${p.x}" cy="${p.y}" r="9"/>
+      <text x="${p.x + 16}" y="${p.y + 2}">${p.name}</text>
+      <text class="elev" x="${p.x + 16}" y="${p.y + 18}">${p.elev}</text>`;
+    svg.appendChild(g);
+  });
+
+  /* ---- the word as a spectrum analyser ---- */
+  const letters = [...document.querySelectorAll("#word span")];
+  const word = document.getElementById("word");
+  const set = (el, w) => el.style.fontVariationSettings = `"wdth" ${w.toFixed(1)}`;
+  if (reduce) {
+    letters.forEach(l => set(l, 100));
+  } else {
+    let pointer = null;
+    word.parentElement.addEventListener("pointermove", e => { pointer = e.clientX; });
+    word.parentElement.addEventListener("pointerleave", () => { pointer = null; });
+    const cur = letters.map(() => 50);
+    const t0 = performance.now();
+    const bpm = 128, beat = 60000 / bpm;
+    function frame(now) {
+      const t = now - t0;
+      const intro = Math.min(1, t / 1600); // opening sweep from squeezed to full
+      const phase = (t % beat) / beat;
+      const kick = Math.exp(-phase * 5); // decays each beat
+      letters.forEach((l, i) => {
+        let target = 80 + 18 * Math.sin(t / 900 + i * 1.3) + 14 * kick * ((i % 2) ? 0.6 : 1);
+        if (pointer !== null) {
+          const r = l.getBoundingClientRect();
+          const dist = Math.abs(pointer - (r.left + r.width / 2)) / innerWidth;
+          target += 40 * Math.max(0, 1 - dist * 4);
+        }
+        target = 50 + (target - 50) * intro;
+        cur[i] += (target - cur[i]) * 0.12;
+        set(l, Math.max(50, Math.min(140, cur[i])));
+      });
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* ---- lineup tabs ---- */
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  function select(tab) {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", on);
+      t.tabIndex = on ? 0 : -1;
+      const panel = document.getElementById(t.getAttribute("aria-controls"));
+      panel.hidden = !on;
+      if (on && !reduce) { panel.classList.remove("enter"); void panel.offsetWidth; panel.classList.add("enter"); }
+    });
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => select(t));
+    t.addEventListener("keydown", e => {
+      const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      const next = tabs[(i + d + tabs.length) % tabs.length];
+      select(next); next.focus();
+    });
+  });
+
+  /* ---- running times: hours from 12:00 (0) to 06:00 next day (18) ---- */
+  const days = [
+    { name: "Friday 21 May", rows: [
+      ["Schacht", "schacht", 2, 11, "14:00–23:00"],
+      ["Kohlenbunker", "bunker", 9, 18, "21:00–06:00"],
+      ["Gipfel", "gipfel", 14, 18, "02:00–06:00"] ] },
+    { name: "Saturday 22 May", rows: [
+      ["Schacht", "schacht", 0, 11, "12:00–23:00"],
+      ["Kohlenbunker", "bunker", 8, 18, "20:00–06:00"],
+      ["Gipfel", "gipfel", 14, 18, "02:00–06:00"] ] },
+    { name: "Sunday 23 May", rows: [
+      ["Schacht", "schacht", 0, 10, "12:00–22:00"],
+      ["Kohlenbunker", "bunker", 6, 18, "18:00–06:00"],
+      ["Gipfel", "gipfel", 13, 18, "01:00–06:00"] ] },
+  ];
+  const chart = document.getElementById("chart");
+  const span = 18;
+  days.forEach(d => {
+    const el = document.createElement("div");
+    el.className = "day";
+    el.innerHTML = `<h3>${d.name}</h3><div class="grid-hours">` +
+      d.rows.map(([n, c, s, e, label]) =>
+        `<span class="stage">${n}</span>
+         <div class="track"><div class="bar ${c}" style="left:${s / span * 100}%;width:${(e - s) / span * 100}%"
+           aria-label="${n} open ${label}">${label}</div></div>`).join("") +
+      `<div class="hours" aria-hidden="true"><span>12:00</span><span>18:00</span><span>00:00</span><span>06:00</span></div></div>`;
+    chart.appendChild(el);
+  });
+})();
+</script>
+</body>
+</html>

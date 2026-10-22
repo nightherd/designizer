@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casa Verbo: Spanish classes in small groups</title>
+<meta name="description" content="Small-group Spanish classes with native teachers. Placement test, free trial class, A1 to C1.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Palette: five named values, used with restraint */
+    --tinta: #1C2238;      /* ink: text and structure */
+    --papel: #F7F6F2;      /* paper: page ground */
+    --tinto: #9A2B3A;      /* wine: the one accent, used for the stem and key actions */
+    --azulejo: #2C5E9E;    /* tile blue: links, focus, secondary notes */
+    --cal: #E3E7EE;        /* cool grey: rules and table lines */
+
+    --display: "Gloock", Georgia, serif;
+    --text: "Hanken Grotesk", system-ui, sans-serif;
+
+    --gutter: 16px;
+    --max: 1120px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: var(--text);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: var(--azulejo); text-underline-offset: 0.2em; }
+  :focus-visible { outline: 2px solid var(--azulejo); outline-offset: 3px; }
+
+  .wrap {
+    width: min(var(--max), calc(100% - var(--gutter) * 2));
+    margin-inline: auto;
+  }
+
+  /* Type scale: 1.0625 body, 1.5 / 2.25 / 3.4 / 5.2 for steps */
+  h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.08; margin: 0; letter-spacing: -0.01em; }
+  h1 { font-size: clamp(2.6rem, 6vw, 4.9rem); }
+  h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
+  h3 { font-size: 1.5rem; line-height: 1.2; }
+  p { margin: 0; }
+  .lede { font-size: clamp(1.1rem, 1.6vw, 1.3rem); line-height: 1.5; max-width: 34ch; }
+
+  /* Header */
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 22px;
+    border-bottom: 1px solid var(--cal);
+  }
+  .mark {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    color: var(--tinta);
+    text-decoration: none;
+  }
+  .mark em { font-style: normal; color: var(--tinto); }
+  .top nav { display: flex; gap: 28px; font-size: 0.95rem; }
+  .top nav a { color: var(--tinta); text-decoration: none; }
+  .top nav a:hover { color: var(--tinto); text-decoration: underline; }
+
+  /* Buttons: one solid, one quiet */
+  .btn {
+    display: inline-block;
+    font: 600 1rem/1 var(--text);
+    padding: 16px 24px;
+    border-radius: 2px;
+    text-decoration: none;
+    border: 2px solid var(--tinto);
+    cursor: pointer;
+  }
+  .btn-solid { background: var(--tinto); color: var(--papel); }
+  .btn-solid:hover { background: #7E2231; border-color: #7E2231; }
+  .btn-quiet { background: transparent; color: var(--tinta); border-color: var(--tinta); }
+  .btn-quiet:hover { background: var(--tinta); color: var(--papel); }
+
+  /* Hero */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+    padding-block: clamp(56px, 9vw, 120px);
+  }
+  .hero h1 { margin-bottom: 28px; }
+  .hero .lede { margin-bottom: 40px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+  /* The conjugation table is the hero object */
+  .conj {
+    background: #fff;
+    border: 1px solid var(--cal);
+    padding: clamp(24px, 3vw, 40px);
+  }
+  .conj-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--tinta);
+    padding-bottom: 14px;
+    margin-bottom: 4px;
+  }
+  .conj-head h2 { font-size: 2.4rem; }
+  .conj-head span { font-size: 0.95rem; color: #555F78; }
+  .conj ul { list-style: none; margin: 0; padding: 0; }
+  .conj li {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    align-items: baseline;
+    padding: 10px 8px;
+    margin-inline: -8px;
+    border-bottom: 1px solid var(--cal);
+    cursor: default;
+    transition: background-color 180ms ease;
+  }
+  .conj li:hover, .conj li:focus-visible { background: var(--papel); }
+  .conj .pro { font-size: 0.95rem; color: #555F78; }
+  .conj .form { font-family: var(--display); font-size: 2rem; line-height: 1.1; }
+  .conj .stem { color: var(--tinto); }
+  .conj-note {
+    min-height: 3.2em;
+    margin-top: 18px;
+    font-size: 0.98rem;
+    color: #3A4262;
+  }
+  .conj-note b { font-weight: 600; color: var(--tinta); }
+
+  /* Single load sequence: the stems settle in once */
+  @media (prefers-reduced-motion: no-preference) {
+    .conj li { animation: settle 520ms ease both; }
+    .conj li:nth-child(2) { animation-delay: 90ms; }
+    .conj li:nth-child(3) { animation-delay: 180ms; }
+    .conj li:nth-child(4) { animation-delay: 270ms; }
+    .conj li:nth-child(5) { animation-delay: 360ms; }
+    .conj li:nth-child(6) { animation-delay: 450ms; }
+    @keyframes settle {
+      from { opacity: 0; transform: translateX(-6px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+
+  /* Sections */
+  section { padding-block: clamp(64px, 9vw, 120px); border-top: 1px solid var(--cal); }
+  .split {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+  .split > h2 { position: sticky; top: 32px; }
+
+  /* Levels: CEFR is a real sequence, so a table is the honest shape */
+  .levels { width: 100%; border-collapse: collapse; }
+  .levels th, .levels td {
+    text-align: left;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--cal);
+    vertical-align: top;
+  }
+  .levels th {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555F78;
+    padding-top: 0;
+  }
+  .levels td.code {
+    font-family: var(--display);
+    font-size: 2rem;
+    width: 4.5rem;
+    color: var(--tinto);
+    line-height: 1;
+  }
+  .levels td.can { font-size: 1.1rem; padding-right: 24px; }
+  .levels td.can em { display: block; font-style: normal; font-size: 0.95rem; color: #555F78; margin-top: 4px; }
+
+  /* Teachers: no cards, just a column of voices */
+  .teachers { display: grid; gap: 48px; }
+  .teacher { display: grid; grid-template-columns: 1fr; gap: 10px; max-width: 58ch; }
+  .teacher blockquote {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 1.45rem;
+    line-height: 1.35;
+    color: var(--tinta);
+  }
+  .teacher p.who { font-size: 0.95rem; color: #555F78; }
+  .teacher p.who strong { color: var(--tinta); font-weight: 600; }
+
+  /* Pricing: plain rows, prices set in the display face */
+  .prices { border-top: 2px solid var(--tinta); }
+  .price {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 24px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--cal);
+  }
+  .price h3 { grid-column: 1; }
+  .price p { grid-column: 1; color: #3A4262; font-size: 0.98rem; }
+  .price .amount {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    font-family: var(--display);
+    font-size: 2.6rem;
+    line-height: 1;
+    text-align: right;
+    align-self: center;
+  }
+  .price .amount small { display: block; font: 500 0.9rem var(--text); color: #555F78; margin-top: 6px; }
+
+  /* FAQ */
+  details { border-bottom: 1px solid var(--cal); padding-block: 22px; }
+  details:first-of-type { border-top: 1px solid var(--cal); }
+  summary {
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-weight: 400; color: var(--tinto); }
+  details[open] summary::after { content: "\2212"; }
+  details p { margin-top: 12px; max-width: 62ch; color: #3A4262; }
+
+  /* Booking */
+  .book {
+    background: var(--tinta);
+    color: var(--papel);
+    padding-block: clamp(64px, 9vw, 110px);
+    border-top: none;
+  }
+  .book h2 { color: var(--papel); max-width: 16ch; margin-bottom: 20px; }
+  .book p.lede { color: #C9CFDC; }
+  .book-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 44px;
+    max-width: 760px;
+  }
+  .field { display: grid; gap: 8px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-size: 0.92rem; color: #C9CFDC; }
+  .field input, .field select {
+    font: inherit;
+    font-size: 1rem;
+    color: var(--tinta);
+    background: var(--papel);
+    border: 2px solid transparent;
+    border-radius: 2px;
+    padding: 14px 14px;
+  }
+  .field input:focus, .field select:focus { outline: 2px solid var(--azulejo); outline-offset: 2px; }
+  .book-form .btn { justify-self: start; }
+  .status { min-height: 1.6em; color: #E8C9CE; font-size: 0.98rem; margin-top: 6px; }
+  .book a { color: #A9C4EA; }
+
+  footer { padding-block: 40px; font-size: 0.92rem; color: #555F78; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+
+  /* Mobile */
+  @media (max-width: 860px) {
+    .hero, .split { grid-template-columns: 1fr; }
+    .split > h2 { position: static; }
+    .top nav { display: none; }
+  }
+  @media (max-width: 560px) {
+    .book-form { grid-template-columns: 1fr; }
+    .levels th:nth-child(3), .levels td.len { display: none; }
+    .levels td.code { width: 3.2rem; font-size: 1.7rem; }
+    .price { grid-template-columns: 1fr; }
+    .price .amount { grid-column: 1; grid-row: auto; text-align: left; }
+    .actions .btn { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="#">Casa <em>Verbo</em></a>
+    <nav aria-label="Main">
+      <a href="#levels">Levels</a>
+      <a href="#teachers">Teachers</a>
+      <a href="#prices">Prices</a>
+      <a href="#questions">Questions</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <div class="hero">
+      <div>
+        <h1>Hablar desde la primera clase.</h1>
+        <p class="lede">Small Spanish groups of six, taught by native speakers. You speak from day one, and you leave able to hold a real conversation.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="#book">Book a free trial class</a>
+          <a class="btn btn-quiet" href="#levels">See the levels</a>
+        </div>
+      </div>
+
+      <figure class="conj" aria-labelledby="conj-title" style="margin:0">
+        <div class="conj-head">
+          <h2 id="conj-title">hablar</h2>
+          <span>to speak, present tense</span>
+        </div>
+        <ul id="conj-list">
+          <li tabindex="0" data-note="<b>Yo hablo</b> con mi vecina todas las mañanas.">
+            <span class="pro">yo</span><span class="form"><span class="stem">habl</span>o</span></li>
+          <li tabindex="0" data-note="<b>Tú hablas</b> inglés en el trabajo, ¿verdad?">
+            <span class="pro">tú</span><span class="form"><span class="stem">habl</span>as</span></li>
+          <li tabindex="0" data-note="<b>Ella habla</b> tres idiomas y enseña en un colegio.">
+            <span class="pro">él / ella</span><span class="form"><span class="stem">habl</span>a</span></li>
+          <li tabindex="0" data-note="<b>Nosotros hablamos</b> despacio cuando llega alguien nuevo.">
+            <span class="pro">nosotros</span><span class="form"><span class="stem">habl</span>amos</span></li>
+          <li tabindex="0" data-note="<b>Vosotros habláis</b> muy rápido, pero os entiendo.">
+            <span class="pro">vosotros</span><span class="form"><span class="stem">habl</span>áis</span></li>
+          <li tabindex="0" data-note="<b>Ellos hablan</b> en el mercado cada sábado.">
+            <span class="pro">ellos / ellas</span><span class="form"><span class="stem">habl</span>an</span></li>
+        </ul>
+        <p class="conj-note" id="conj-note" aria-live="polite">Move through the forms. The red part is the stem. Only the ending changes with the person.</p>
+      </figure>
+    </div>
+
+    <!-- Levels -->
+    <section id="levels">
+      <div class="split">
+        <h2>Six people, one level, and a plan you can see.</h2>
+        <div>
+          <p class="lede" style="margin-bottom:36px">Everyone is placed with a 40-minute conversation, not a multiple-choice quiz. Groups are formed by level, and you can move up or down once per term.</p>
+          <table class="levels">
+            <thead>
+              <tr><th scope="col">Level</th><th scope="col">What you can do</th><th scope="col" class="len">Hours</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="code">A1</td><td class="can">Introduce yourself, order food, and ask for directions.<em>Starting from zero</em></td><td class="len">80</td></tr>
+              <tr><td class="code">A2</td><td class="can">Talk about work, family, and plans for the weekend.<em>Short, simple exchanges</em></td><td class="len">80</td></tr>
+              <tr><td class="code">B1</td><td class="can">Follow the main points of a conversation and give an opinion.<em>Most travel and daily life</em></td><td class="len">100</td></tr>
+              <tr><td class="code">B2</td><td class="can">Discuss a work problem, argue a position, and follow a film.<em>Fluent in most settings</em></td><td class="len">100</td></tr>
+              <tr><td class="code">C1</td><td class="can">Understand nuance, irony, and fast speech.<em>Professional and academic use</em></td><td class="len">120</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teachers -->
+    <section id="teachers">
+      <div class="split">
+        <h2>Taught by people who grew up speaking it.</h2>
+        <div class="teachers">
+          <article class="teacher">
+            <blockquote>"I don't correct every mistake. I wait until the mistake gets in the way of the meaning."</blockquote>
+            <p class="who"><strong>Marta Ruiz</strong>, from Valencia. Teaches A1 and A2. Eleven years of classroom work.</p>
+          </article>
+          <article class="teacher">
+            <blockquote>"Most people learn grammar in the wrong order. We start with what you need to say at a bar."</blockquote>
+            <p class="who"><strong>Diego Herrera</strong>, from Buenos Aires. Teaches B1 and B2. Former translator for a shipping firm.</p>
+          </article>
+          <article class="teacher">
+            <blockquote>"Spanish from Spain, Mexico, and the Andes all work. Pick one, then hear the rest."</blockquote>
+            <p class="who"><strong>Lucía Ortega</strong>, from Sevilla. Teaches B2 and C1. Runs our Friday conversation hour.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prices -->
+    <section id="prices">
+      <div class="split">
+        <h2>Pay for hours, not for a bundle you won't finish.</h2>
+        <div class="prices">
+          <div class="price">
+            <h3>Small group</h3>
+            <p>Six people maximum. Four hours a week, live online or in the school.</p>
+            <div class="amount">189 €<small>per month</small></div>
+          </div>
+          <div class="price">
+            <h3>Private lessons</h3>
+            <p>One teacher, your schedule, your goals. Good for business Spanish or a specific trip.</p>
+            <div class="amount">42 €<small>per hour</small></div>
+          </div>
+          <div class="price">
+            <h3>Two-week intensive</h3>
+            <p>Twenty hours a week, mornings. Ends with a conversation test and a written report.</p>
+            <div class="amount">690 €<small>two weeks</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="questions">
+      <div class="split">
+        <h2>Questions people ask before the first class.</h2>
+        <div>
+          <details>
+            <summary>Do I need any Spanish to start?</summary>
+            <p>No. Our placement conversation finds your level, including if you are starting from zero. Nobody is put in a group that is too advanced for them.</p>
+          </details>
+          <details>
+            <summary>Can I take the classes online?</summary>
+            <p>Yes. Online groups meet on video with the same teacher and the same six-person limit as the school. You can switch between the two formats at any time.</p>
+          </details>
+          <details>
+            <summary>What if my schedule changes?</summary>
+            <p>Missed a class? Recordings of every group session stay available for a week, and you can make up one session per month with another group at the same level.</p>
+          </details>
+          <details>
+            <summary>Is the free trial class really free?</summary>
+            <p>Yes. It is a full 50-minute class in your target level, with no card required. If it is not right for you, we will tell you which school or course fits better.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Booking -->
+<section id="book" class="book">
+  <div class="wrap">
+    <h2>Book your free trial class.</h2>
+    <p class="lede">Tell us your name and email. We reply within one working day with a time for your placement conversation.</p>
+
+    <form class="book-form" id="book-form" novalidate>
+      <div class="field">
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field full">
+        <label for="level">Your level, if you know it</label>
+        <select id="level" name="level">
+          <option value="">Not sure, I want a placement conversation</option>
+          <option>A1, starting from zero</option>
+          <option>A2, simple conversations</option>
+          <option>B1, everyday topics</option>
+          <option>B2, work and opinions</option>
+          <option>C1, nuance and fast speech</option>
+        </select>
+      </div>
+      <div class="field full">
+        <button class="btn btn-solid" type="submit">Reserve my trial class</button>
+        <p class="status" id="status" role="status"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Casa Verbo, Spanish classes in small groups.</span>
+    <span>Placeholder details. Replace with real address and contact.</span>
+  </div>
+</footer>
+
+<script>
+  // Conjugation table: the caption explains whichever form is under focus or hover
+  (function () {
+    var note = document.getElementById('conj-note');
+    var items = document.querySelectorAll('#conj-list li');
+    var default_note = note.textContent;
+    function show(li) { note.innerHTML = li.getAttribute('data-note'); }
+    items.forEach(function (li) {
+      li.addEventListener('mouseenter', function () { show(li); });
+      li.addEventListener('focus', function () { show(li); });
+      li.addEventListener('mouseleave', function () { note.textContent = default_note; });
+      li.addEventListener('blur', function () { note.textContent = default_note; });
+    });
+  })();
+
+  // Booking form: no backend here, so it only validates and confirms
+  (function () {
+    var form = document.getElementById('book-form');
+    var status = document.getElementById('status');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = form.name.value.trim();
+      var email = form.email.value.trim();
+      if (!name) { status.textContent = 'Add your name so we know who to write to.'; form.name.focus(); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.textContent = 'Enter an email address we can reply to.'; form.email.focus(); return; }
+      status.textContent = 'Got it, ' + name + '. We will email ' + email + ' within one working day.';
+      form.reset();
+    });
+  })();
+</script>
+</body>
+</html>

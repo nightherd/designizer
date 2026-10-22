@@ -1,0 +1,633 @@
+{
+  "ai-04": {
+    "label": "ai",
+    "split": "dev",
+    "score": 17,
+    "verdict": "ai",
+    "fired": [
+      "accent-word",
+      "eyebrow",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "type-scale",
+      "warm-editorial",
+      "faq",
+      "infinite-motion"
+    ],
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 7,
+        "fired": [
+          "italic-serif-display",
+          "oversized-h1",
+          "low-contrast",
+          "kicker-above-heading",
+          "numbered-section-labels",
+          "skipped-heading",
+          "cream-palette",
+          "pulsing-dot"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "hero_font_mix",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-08": {
+    "label": "ai",
+    "split": "dev",
+    "score": 3,
+    "verdict": "human",
+    "fired": [
+      "trendy-font",
+      "gradients"
+    ],
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "low-contrast",
+          "overused-font"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "gradients"
+        ]
+      }
+    }
+  },
+  "ai-12": {
+    "label": "ai",
+    "split": "dev",
+    "score": 17,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "warm-editorial",
+      "nested-cards",
+      "hero"
+    ],
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 5,
+        "fired": [
+          "italic-serif-display",
+          "low-contrast",
+          "kicker-above-heading",
+          "overused-font",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 21,
+        "fired": [
+          "slop_fonts",
+          "hero_font_mix",
+          "hero_eyebrow_pill"
+        ]
+      }
+    }
+  },
+  "ai-16": {
+    "label": "ai",
+    "split": "dev",
+    "score": 6,
+    "verdict": "human",
+    "fired": [
+      "accent-word",
+      "hero",
+      "faq",
+      "uniform-spacing"
+    ],
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "low-contrast",
+          "text-occlusion"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "perma_dark_mode",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-20": {
+    "label": "ai",
+    "split": "dev",
+    "score": 19,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "type-scale",
+      "warm-editorial",
+      "hero",
+      "icon-cards",
+      "faq",
+      "infinite-motion",
+      "emoji"
+    ],
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 7,
+        "fired": [
+          "low-contrast",
+          "italic-serif-display",
+          "blinking-cursor",
+          "icon-tile-stack",
+          "overused-font",
+          "skipped-heading",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 29,
+        "fired": [
+          "slop_fonts",
+          "hero_font_mix",
+          "hero_eyebrow_pill",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-24": {
+    "label": "ai",
+    "split": "dev",
+    "score": 16,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "type-scale",
+      "warm-editorial",
+      "stat-row"
+    ],
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 4,
+        "fired": [
+          "italic-serif-display",
+          "low-contrast",
+          "line-length",
+          "numbered-section-labels",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "hero_font_mix",
+          "stat_banner_row"
+        ]
+      }
+    }
+  },
+  "ai-28": {
+    "label": "ai",
+    "split": "dev",
+    "score": 16,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "mono-label",
+      "meta-string",
+      "purple",
+      "warm-editorial",
+      "card-kit",
+      "decor",
+      "stat-row",
+      "faq",
+      "infinite-motion",
+      "bounce"
+    ],
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 3,
+        "fired": [
+          "low-contrast",
+          "cream-palette",
+          "bounce-easing",
+          "marquee"
+        ]
+      },
+      "slopcop": {
+        "score": 29,
+        "fired": [
+          "purple_accent",
+          "stat_banner_row",
+          "hero_eyebrow_pill",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-32": {
+    "label": "ai",
+    "split": "dev",
+    "score": 15,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "mono-label",
+      "meta-string",
+      "type-scale",
+      "warm-editorial",
+      "faq",
+      "uniform-spacing"
+    ],
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 7,
+        "fired": [
+          "italic-serif-display",
+          "oversized-h1",
+          "low-contrast",
+          "kicker-above-heading",
+          "text-occlusion",
+          "skipped-heading",
+          "cream-palette",
+          "bounce-easing"
+        ]
+      },
+      "slopcop": {
+        "score": 21,
+        "fired": [
+          "slop_fonts",
+          "hero_font_mix",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-36": {
+    "label": "ai",
+    "split": "dev",
+    "score": 3,
+    "verdict": "human",
+    "fired": [
+      "accent-word",
+      "type-scale"
+    ],
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 3,
+        "fired": [
+          "italic-serif-display",
+          "oversized-h1",
+          "line-length"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "hero_font_mix"
+        ]
+      }
+    }
+  },
+  "ai-40": {
+    "label": "ai",
+    "split": "dev",
+    "score": 23,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "type-scale",
+      "warm-editorial",
+      "decor",
+      "stat-row",
+      "faq",
+      "broadsheet"
+    ],
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 7,
+        "fired": [
+          "low-contrast",
+          "hero-eyebrow-chip",
+          "italic-serif-display",
+          "kicker-above-heading",
+          "gray-on-color",
+          "numbered-section-labels",
+          "skipped-heading",
+          "cream-palette",
+          "repeating-stripes-gradient"
+        ]
+      },
+      "slopcop": {
+        "score": 21,
+        "fired": [
+          "hero_font_mix",
+          "numbered_steps",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "h-31": {
+    "label": "human",
+    "split": "dev",
+    "score": 9,
+    "verdict": "human",
+    "fired": [
+      "tracked-caps",
+      "mono-label",
+      "type-scale",
+      "dark-acid",
+      "glass",
+      "hero"
+    ],
+    "url": "https://how.studio/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "oversized-h1",
+          "low-contrast"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-32": {
+    "label": "human",
+    "split": "dev",
+    "score": 6,
+    "verdict": "human",
+    "fired": [
+      "arrow-links",
+      "type-scale",
+      "reveal",
+      "emoji"
+    ],
+    "url": "https://locomotive.ca/en",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 0,
+        "fired": []
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-33": {
+    "label": "human",
+    "split": "dev",
+    "score": 3,
+    "verdict": "human",
+    "fired": [
+      "default-sans",
+      "type-scale",
+      "hero"
+    ],
+    "url": "https://culturedcode.com/things/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "low-contrast",
+          "tight-leading"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "center_aligned_hero"
+        ]
+      }
+    }
+  },
+  "h-34": {
+    "label": "human",
+    "split": "dev",
+    "score": 3,
+    "verdict": "human",
+    "fired": [
+      "crushed-tracking",
+      "nested-cards",
+      "hero"
+    ],
+    "url": "https://mymind.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 3,
+        "fired": [
+          "low-contrast",
+          "gradient-text",
+          "nested-cards",
+          "bounce-easing"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "gradients",
+          "colored_glows"
+        ]
+      }
+    }
+  },
+  "h-35": {
+    "label": "human",
+    "split": "dev",
+    "score": 0,
+    "verdict": "human",
+    "fired": [
+      "card-kit"
+    ],
+    "url": "https://www.typotheque.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "low-contrast"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-36": {
+    "label": "human",
+    "split": "dev",
+    "score": 3,
+    "verdict": "human",
+    "fired": [
+      "mono-label",
+      "arrow-links",
+      "type-scale"
+    ],
+    "url": "https://ohnotype.co/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 0,
+        "fired": [
+          "em-dash-overuse"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-37": {
+    "label": "human",
+    "split": "dev",
+    "score": 0,
+    "verdict": "human",
+    "fired": [
+      "default-sans"
+    ],
+    "url": "https://99percentinvisible.org/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 5,
+        "fired": [
+          "low-contrast",
+          "tiny-text",
+          "undersized-ui-text",
+          "overused-font",
+          "skipped-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-38": {
+    "label": "human",
+    "split": "dev",
+    "score": 0,
+    "verdict": "human",
+    "fired": [
+      "hero"
+    ],
+    "url": "https://www.kinfolk.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "low-contrast",
+          "skipped-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-39": {
+    "label": "human",
+    "split": "dev",
+    "score": 4,
+    "verdict": "human",
+    "fired": [
+      "reveal",
+      "infinite-motion",
+      "bounce"
+    ],
+    "url": "https://takearecess.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "low-contrast",
+          "marquee"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "perma_dark_mode"
+        ]
+      }
+    }
+  },
+  "h-40": {
+    "label": "human",
+    "split": "dev",
+    "score": 4,
+    "verdict": "human",
+    "fired": [
+      "reveal",
+      "bounce",
+      "sparkles"
+    ],
+    "url": "https://www.joshwcomeau.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "line-length",
+          "first-viewport-column-overflow",
+          "bounce-easing"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  }
+}

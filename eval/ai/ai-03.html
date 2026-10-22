@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mile High Family Dental | Denver, CO</title>
+  <meta name="description" content="Gentle, family-focused dental care in Denver for kids, teens, and adults. Cleanings, exams, cosmetic work, clear aligners, and same-week emergency visits.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal-900: #0d3b3e;
+      --teal-700: #17666a;
+      --teal-500: #2a9097;
+      --teal-100: #e3f2f2;
+      --sun-500: #f2a541;
+      --sun-100: #fdf1de;
+      --ink: #1d2b2c;
+      --muted: #5b6b6c;
+      --line: #dfe8e8;
+      --paper: #fbfaf7;
+      --white: #ffffff;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(13, 59, 62, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: var(--teal-700); }
+    h1, h2, h3 { font-family: Fraunces, Georgia, serif; line-height: 1.15; margin: 0 0 0.5em; color: var(--teal-900); }
+    h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 600; }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 600; }
+    h3 { font-size: 1.25rem; font-weight: 600; }
+    p { margin: 0 0 1em; }
+    .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    section { padding: clamp(56px, 8vw, 96px) 0; }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal-700);
+      margin-bottom: 0.75rem;
+    }
+    .lede { font-size: 1.1rem; color: var(--muted); max-width: 60ch; }
+    .section-head { margin-bottom: 40px; }
+    .section-head.center { text-align: center; }
+    .section-head.center .lede { margin-left: auto; margin-right: auto; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      border: 2px solid transparent;
+      font: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--sun-500);
+      outline-offset: 2px;
+    }
+    .btn-primary { background: var(--teal-700); color: var(--white); }
+    .btn-primary:hover { background: var(--teal-900); }
+    .btn-ghost { border-color: var(--teal-700); color: var(--teal-700); background: transparent; }
+    .btn-ghost:hover { background: var(--teal-100); }
+    .btn-sun { background: var(--sun-500); color: var(--teal-900); }
+    .btn-sun:hover { background: #e8932a; }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(251, 250, 247, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--teal-900);
+      text-decoration: none;
+    }
+    .brand-mark {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--teal-700);
+      display: grid; place-items: center;
+      color: var(--white);
+    }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; margin: 0; padding: 0; }
+    .nav-links a { color: var(--ink); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+    .nav-links a:hover { color: var(--teal-700); }
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+    .nav-phone { font-weight: 600; color: var(--teal-900); text-decoration: none; white-space: nowrap; }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font: inherit;
+      color: var(--teal-900);
+      cursor: pointer;
+    }
+
+    /* Hero */
+    .hero {
+      padding: clamp(48px, 7vw, 88px) 0 clamp(56px, 8vw, 96px);
+      background:
+        radial-gradient(circle at 90% 10%, var(--sun-100) 0, transparent 40%),
+        linear-gradient(180deg, var(--teal-100) 0%, var(--paper) 100%);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .hero p.lede { margin-bottom: 28px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; font-size: 0.92rem; color: var(--muted); }
+    .hero-meta span::before { content: "\2713"; color: var(--teal-500); font-weight: 700; margin-right: 6px; }
+    .hero-card {
+      background: var(--white);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      border: 1px solid var(--line);
+    }
+    .hero-card h3 { margin-bottom: 4px; }
+    .hero-card .sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 20px; }
+    .next-slot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 12px;
+      background: var(--teal-100);
+      margin-bottom: 10px;
+    }
+    .next-slot strong { color: var(--teal-900); }
+    .next-slot small { color: var(--muted); display: block; }
+    .pill {
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--teal-700);
+      white-space: nowrap;
+    }
+    .hero-card .btn { width: 100%; margin-top: 12px; }
+
+    /* Trust strip */
+    .trust {
+      background: var(--teal-900);
+      color: var(--white);
+      padding: 28px 0;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+    .trust-grid strong {
+      display: block;
+      font-family: Fraunces, Georgia, serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--sun-500);
+    }
+    .trust-grid span { font-size: 0.92rem; opacity: 0.9; }
+
+    /* Services */
+    .services { background: var(--white); }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--teal-500);
+    }
+    .card:nth-child(3n+2)::before { background: var(--sun-500); }
+    .card:nth-child(3n)::before { background: var(--teal-700); }
+    .card p { color: var(--muted); font-size: 0.97rem; margin-bottom: 0; }
+    .card .tag {
+      font-size: 0.8rem;
+      color: var(--teal-700);
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* About / Doctors */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .about-copy ul {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0 0;
+      display: grid;
+      gap: 14px;
+    }
+    .about-copy li {
+      padding-left: 32px;
+      position: relative;
+    }
+    .about-copy li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 7px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--sun-500);
+      box-shadow: 0 0 0 4px var(--sun-100);
+    }
+    .team { display: grid; gap: 16px; }
+    .doctor {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .avatar {
+      flex: 0 0 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal-500), var(--teal-900));
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-family: Fraunces, Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+    .doctor h3 { margin: 0 0 2px; font-size: 1.1rem; }
+    .doctor .role { color: var(--teal-700); font-size: 0.9rem; font-weight: 500; margin: 0; }
+    .doctor .bio { color: var(--muted); font-size: 0.93rem; margin: 6px 0 0; }
+
+    /* Reviews */
+    .reviews { background: var(--teal-100); }
+    .quotes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .quote {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin: 0;
+    }
+    .stars { color: var(--sun-500); letter-spacing: 2px; margin-bottom: 12px; font-size: 1.05rem; }
+    .quote blockquote { margin: 0 0 16px; font-size: 1rem; color: var(--ink); }
+    .quote figcaption { font-size: 0.88rem; color: var(--muted); font-weight: 500; }
+
+    /* Process */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      counter-reset: step;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .steps li {
+      counter-increment: step;
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+    .steps li::before {
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--sun-100);
+      color: var(--teal-900);
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 14px;
+    }
+    .steps h3 { font-size: 1.05rem; }
+    .steps p { color: var(--muted); font-size: 0.93rem; margin: 0; }
+
+    /* Insurance */
+    .insurance-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .plan-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .plan-list span {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--teal-900);
+    }
+    .notice {
+      background: var(--sun-100);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .notice h3 { color: var(--teal-900); }
+    .notice p { color: var(--ink); margin: 0; }
+
+    /* Booking */
+    .booking { background: var(--teal-900); color: var(--white); }
+    .booking h2, .booking h3 { color: var(--white); }
+    .booking .eyebrow { color: var(--sun-500); }
+    .booking .lede { color: rgba(255, 255, 255, 0.82); }
+    .booking-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .contact-list { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 18px; }
+    .contact-list strong { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sun-500); margin-bottom: 2px; }
+    .contact-list a { color: var(--white); text-decoration: none; font-size: 1.15rem; font-weight: 500; }
+    .contact-list a:hover { text-decoration: underline; }
+    .form {
+      background: var(--white);
+      color: var(--ink);
+      border-radius: 24px;
+      padding: clamp(24px, 4vw, 36px);
+    }
+    .form h3 { color: var(--teal-900); margin-bottom: 4px; }
+    .form .sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 22px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .field label { font-size: 0.88rem; font-weight: 600; color: var(--teal-900); }
+    .field input, .field select, .field textarea {
+      font: inherit;
+      padding: 12px 14px;
+      border: 1px solid #c9d8d8;
+      border-radius: 10px;
+      background: var(--paper);
+      color: var(--ink);
+      width: 100%;
+    }
+    .field textarea { min-height: 84px; resize: vertical; }
+    .form .btn { width: 100%; margin-top: 6px; }
+    .form-note { font-size: 0.82rem; color: var(--muted); margin: 12px 0 0; text-align: center; }
+    .form-success {
+      display: none;
+      background: var(--teal-100);
+      color: var(--teal-900);
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 14px;
+      font-weight: 500;
+    }
+    .form-success.show { display: block; }
+
+    /* Location */
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: stretch;
+    }
+    .hours { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    .hours td { padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .hours td:last-child { text-align: right; font-weight: 500; }
+    .hours tr.today td { color: var(--teal-700); font-weight: 600; }
+    .map {
+      border-radius: var(--radius);
+      min-height: 320px;
+      background:
+        linear-gradient(135deg, rgba(42,144,151,0.15), rgba(242,165,65,0.18)),
+        repeating-linear-gradient(0deg, transparent 0 39px, rgba(13,59,62,0.07) 39px 40px),
+        repeating-linear-gradient(90deg, transparent 0 39px, rgba(13,59,62,0.07) 39px 40px),
+        var(--white);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 24px;
+    }
+    .map .pin {
+      width: 44px; height: 44px;
+      margin: 0 auto 12px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      background: var(--teal-700);
+      box-shadow: var(--shadow);
+    }
+    .map p { color: var(--teal-900); font-weight: 600; margin: 0; }
+    .map small { color: var(--muted); }
+
+    /* FAQ */
+    .faq { max-width: 780px; margin: 0 auto; }
+    details {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin-bottom: 12px;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--teal-900);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-size: 1.4rem; color: var(--teal-700); line-height: 1; }
+    details[open] summary::after { content: "\2212"; }
+    details p { color: var(--muted); margin: 12px 0 0; }
+
+    /* Footer */
+    .site-footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.75);
+      padding: 48px 0 32px;
+      font-size: 0.92rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+    .site-footer h4 { color: var(--white); font-size: 0.95rem; margin: 0 0 12px; font-family: Inter, sans-serif; }
+    .site-footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .site-footer a { color: rgba(255,255,255,0.75); text-decoration: none; }
+    .site-footer a:hover { color: var(--white); text-decoration: underline; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 20px;
+      font-size: 0.85rem;
+    }
+    .footer-brand { font-family: Fraunces, Georgia, serif; color: var(--white); font-size: 1.3rem; font-weight: 600; margin-bottom: 8px; }
+
+    /* Mobile */
+    @media (max-width: 960px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 72px; left: 0; right: 0;
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+        padding: 16px 16px 24px;
+        gap: 18px;
+        align-items: flex-start;
+      }
+      .menu-toggle { display: inline-block; }
+      .hero-grid, .about-grid, .insurance-wrap, .booking-grid, .location-grid { grid-template-columns: 1fr; gap: 36px; }
+      .cards, .quotes { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .trust-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-phone { display: none; }
+      .cards, .quotes, .steps { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .btn { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#top" class="brand" aria-label="Mile High Family Dental home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-1.7 0-2.9.6-4 1.3C6.9 3.9 5.4 3.5 4.2 4 2.4 4.8 2 7 2.4 9c.5 2.6 1.4 4.3 2 6.8.5 2 .8 6.2 2.4 6.2 1.6 0 1.8-3.7 2.5-5.5.3-.8.9-1.3 1.7-1.3s1.4.5 1.7 1.3c.7 1.8.9 5.5 2.5 5.5 1.6 0 1.9-4.2 2.4-6.2.6-2.5 1.5-4.2 2-6.8.4-2-.0-4.2-1.8-5-1.2-.5-2.7-.1-3.8.7C14.9 2.6 13.7 2 12 2z"/></svg>
+        </span>
+        Mile High Family Dental
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">Our Team</a></li>
+        <li><a href="#insurance">Insurance</a></li>
+        <li><a href="#visit">Visit Us</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <a href="tel:+13035550123" class="nav-phone">(303) 555-0123</a>
+        <a href="#book" class="btn btn-primary">Book a visit</a>
+        <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Family dentistry in Denver</span>
+          <h1>Healthy smiles for every age, from first tooth to golden years.</h1>
+          <p class="lede">
+            Gentle, unhurried care for your whole family. We see toddlers, teens, parents, and grandparents
+            under one roof, with a team that explains every option before anything is done.
+          </p>
+          <div class="hero-actions">
+            <a href="#book" class="btn btn-primary">Book your visit</a>
+            <a href="#services" class="btn btn-ghost">Explore services</a>
+          </div>
+          <div class="hero-meta">
+            <span>New patients welcome</span>
+            <span>Most PPO plans accepted</span>
+            <span>Same-week emergency visits</span>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Upcoming appointments">
+          <h3>Openings this week</h3>
+          <p class="sub">Choose a time that works for your family.</p>
+          <div class="next-slot">
+            <div><strong>Tomorrow, 8:30 AM</strong><small>Cleaning and exam</small></div>
+            <span class="pill">Open</span>
+          </div>
+          <div class="next-slot">
+            <div><strong>Thu, 1:15 PM</strong><small>Child checkup</small></div>
+            <span class="pill">Open</span>
+          </div>
+          <div class="next-slot">
+            <div><strong>Fri, 4:00 PM</strong><small>Emergency visit</small></div>
+            <span class="pill">Limited</span>
+          </div>
+          <a href="#book" class="btn btn-sun">See all times</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Trust -->
+    <div class="trust">
+      <div class="container trust-grid">
+        <div><strong>25+</strong><span>Years serving Denver families</span></div>
+        <div><strong>4,000+</strong><span>Patients in our practice</span></div>
+        <div><strong>4.9 / 5</strong><span>Average patient rating</span></div>
+        <div><strong>3</strong><span>Generations we care for</span></div>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <section class="services" id="services">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">What we do</span>
+          <h2>One dental home for the whole family</h2>
+          <p class="lede">Preventive care, restorative work, and cosmetic options, all handled by a team that knows your history.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <span class="tag">Preventive</span>
+            <h3>Cleanings &amp; exams</h3>
+            <p>Thorough cleanings, digital X-rays, and oral cancer screening. Most patients are in and out in under an hour.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Children</span>
+            <h3>Pediatric dentistry</h3>
+            <p>Patient, playful visits that start by age one. We help kids feel calm and build habits that last into adulthood.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Restorative</span>
+            <h3>Fillings &amp; crowns</h3>
+            <p>Tooth-colored fillings, crowns, and root canal therapy, with materials chosen to match your bite and budget.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Cosmetic</span>
+            <h3>Whitening &amp; veneers</h3>
+            <p>In-office and take-home whitening, plus veneers designed around the shape and color of your natural smile.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Orthodontics</span>
+            <h3>Clear aligners</h3>
+            <p>Discreet, removable aligners for teens and adults. Ask about our payment plans and free consultation.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Urgent</span>
+            <h3>Emergency care</h3>
+            <p>Toothache, chipped tooth, or lost filling? Call us first thing and we will do our best to see you the same day.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- About / Team -->
+    <section id="about">
+      <div class="container about-grid">
+        <div class="about-copy">
+          <span class="eyebrow">Why families stay with us</span>
+          <h2>Dentistry that feels like coming home</h2>
+          <p class="lede">
+            We opened in 2001 with one goal: make the dentist a place people trust. Today our office is still
+            family owned, and our hygienists and doctors have been with us for years.
+          </p>
+          <ul>
+            <li>Honest treatment plans with clear pricing before work begins</li>
+            <li>Sedation options and a quiet room for anxious patients</li>
+            <li>Digital X-rays with less radiation and instant results</li>
+            <li>Evening and Saturday hours for working parents</li>
+          </ul>
+        </div>
+
+        <div class="team">
+          <div class="doctor">
+            <div class="avatar" aria-hidden="true">SM</div>
+            <div>
+              <h3>Dr. Sarah Mendoza</h3>
+              <p class="role">Founder &middot; General &amp; Family Dentistry</p>
+              <p class="bio">Twenty-five years caring for Denver families. Loves hiking the Front Range on weekends.</p>
+            </div>
+          </div>
+          <div class="doctor">
+            <div class="avatar" aria-hidden="true">DO</div>
+            <div>
+              <h3>Dr. David Okafor</h3>
+              <p class="role">Pediatric &amp; Adolescent Dentistry</p>
+              <p class="bio">Known for making first visits fun. Certified in pediatric sedation and behavior guidance.</p>
+            </div>
+          </div>
+          <div class="doctor">
+            <div class="avatar" aria-hidden="true">LN</div>
+            <div>
+              <h3>Lena Nguyen, RDH</h3>
+              <p class="role">Lead Hygienist</p>
+              <p class="bio">Gentle cleanings and patient education. Ask her about flossing routines that actually stick.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="reviews" aria-labelledby="reviews-title">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">Patient stories</span>
+          <h2 id="reviews-title">Families who keep coming back</h2>
+        </div>
+
+        <div class="quotes">
+          <figure class="quote">
+            <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <blockquote>"My son used to cry at the dentist. Dr. Okafor had him giggling within five minutes. We have not missed a checkup since."</blockquote>
+            <figcaption>Jessica R., parent of two</figcaption>
+          </figure>
+          <figure class="quote">
+            <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <blockquote>"I was terrified of the dentist for twenty years. The team walked me through everything, and I finally got my crown without dread."</blockquote>
+            <figcaption>Marcus T., Capitol Hill</figcaption>
+          </figure>
+          <figure class="quote">
+            <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <blockquote>"Booked an emergency appointment on a Friday afternoon and was seen the same day. Fair pricing and no pressure. Highly recommend."</blockquote>
+            <figcaption>Priya S., Highlands Ranch</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section aria-labelledby="process-title">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">New patients</span>
+          <h2 id="process-title">Your first visit, step by step</h2>
+          <p class="lede">Most people are in and out in about 60 minutes. Bring a photo ID and your insurance card.</p>
+        </div>
+
+        <ol class="steps">
+          <li>
+            <h3>Book online or call</h3>
+            <p>Pick a time that works. We will confirm by text or email.</p>
+          </li>
+          <li>
+            <h3>Forms &amp; insurance</h3>
+            <p>Fill out health history online ahead of time. We verify your benefits for you.</p>
+          </li>
+          <li>
+            <h3>Exam &amp; X-rays</h3>
+            <p>Your dentist reviews your teeth, gums, and bite, and talks through what they see.</p>
+          </li>
+          <li>
+            <h3>Your plan</h3>
+            <p>You get a written treatment plan with costs. Nothing starts until you say yes.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Insurance -->
+    <section id="insurance" style="padding-top:0">
+      <div class="container insurance-wrap">
+        <div>
+          <span class="eyebrow">Insurance &amp; payment</span>
+          <h2>We work with the plans you already have</h2>
+          <p class="lede">We are in network with most major PPO plans and happily file out-of-network claims. No insurance? Our membership plan covers cleanings and exams for a flat monthly fee.</p>
+          <div class="plan-list" aria-label="Accepted insurance plans">
+            <span>Delta Dental</span>
+            <span>Cigna</span>
+            <span>Aetna</span>
+            <span>MetLife</span>
+            <span>Guardian</span>
+            <span>Principal</span>
+            <span>Medicaid (Child Health Plan Plus)</span>
+          </div>
+        </div>
+        <div class="notice">
+          <h3>Payment plans available</h3>
+          <p>Financing through CareCredit and in-house monthly plans for larger treatments. We will show you the estimate before you commit, and we accept HSA and FSA cards.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking -->
+    <section class="booking" id="book">
+      <div class="container booking-grid">
+        <div>
+          <span class="eyebrow">Book a visit</span>
+          <h2>Schedule your family's next appointment</h2>
+          <p class="lede">Tell us a bit about your visit and we will reply within one business day. For urgent pain, call us directly.</p>
+          <ul class="contact-list">
+            <li>
+              <strong>Phone</strong>
+              <a href="tel:+13035550123">(303) 555-0123</a>
+            </li>
+            <li>
+              <strong>Email</strong>
+              <a href="mailto:hello@milehighfamilydental.com">hello@milehighfamilydental.com</a>
+            </li>
+            <li>
+              <strong>Address</strong>
+              <span>1280 E Colfax Ave, Suite 200, Denver, CO 80218</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="form" id="booking-form">
+          <h3>Request an appointment</h3>
+          <p class="sub">No payment needed to book.</p>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="name">Full name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="reason">Reason for visit</label>
+              <select id="reason" name="reason" required>
+                <option value="">Choose one</option>
+                <option>New patient checkup</option>
+                <option>Cleaning</option>
+                <option>Child or teen visit</option>
+                <option>Emergency or toothache</option>
+                <option>Cosmetic consultation</option>
+                <option>Clear aligner consultation</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="when">Preferred time</label>
+              <select id="when" name="when">
+                <option>Weekday morning</option>
+                <option>Weekday afternoon</option>
+                <option>Evening (after 5 PM)</option>
+                <option>Saturday</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="notes">Anything we should know? <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+            <textarea id="notes" name="notes" placeholder="Children's names and ages, dental anxiety, insurance details, etc."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Request appointment</button>
+          <p class="form-note">We never share your information. Standard messaging rates may apply.</p>
+          <p class="form-success" id="form-success" role="status" aria-live="polite">Thanks! We received your request and will be in touch within one business day.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Location -->
+    <section id="visit">
+      <div class="container location-grid">
+        <div>
+          <span class="eyebrow">Visit us</span>
+          <h2>Easy to reach in Denver</h2>
+          <p class="lede">Free parking behind the building and a short walk from the Colfax light-rail station on the E Line.</p>
+          <table class="hours" aria-label="Office hours">
+            <tbody>
+              <tr><td>Monday</td><td>7:30 AM &ndash; 6:00 PM</td></tr>
+              <tr><td>Tuesday</td><td>7:30 AM &ndash; 6:00 PM</td></tr>
+              <tr><td>Wednesday</td><td>7:30 AM &ndash; 6:00 PM</td></tr>
+              <tr><td>Thursday</td><td>7:30 AM &ndash; 7:00 PM</td></tr>
+              <tr><td>Friday</td><td>8:00 AM &ndash; 3:00 PM</td></tr>
+              <tr><td>Saturday</td><td>9:00 AM &ndash; 1:00 PM</td></tr>
+              <tr><td>Sunday</td><td>Closed</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="map" role="img" aria-label="Map placeholder for 1280 East Colfax Avenue, Denver">
+          <div>
+            <div class="pin" aria-hidden="true"></div>
+            <p>1280 E Colfax Ave, Suite 200</p>
+            <small>Denver, CO 80218</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" style="padding-top:0">
+      <div class="container faq">
+        <div class="section-head center">
+          <span class="eyebrow">Questions</span>
+          <h2>Good to know</h2>
+        </div>
+
+        <details>
+          <summary>Do you see children under age 3?</summary>
+          <p>Yes. We recommend a first visit by your child's first birthday, or within six months of the first tooth. Our visits for little ones are short and focused on building comfort.</p>
+        </details>
+        <details>
+          <summary>Do you treat dental anxiety?</summary>
+          <p>Absolutely. We offer nitrous oxide, oral sedation for longer procedures, and a "stop anytime" approach where you control the pace. Let us know when you book.</p>
+        </details>
+        <details>
+          <summary>How often should I get a cleaning?</summary>
+          <p>Most people do well every six months. Some patients with gum disease or higher risk for cavities may need every three or four months. We will tell you what fits your mouth.</p>
+        </details>
+        <details>
+          <summary>What if I do not have dental insurance?</summary>
+          <p>Our in-house membership plan covers two cleanings, two exams, and X-rays each year for a flat monthly fee. We also offer self-pay rates and payment plans for larger treatment.</p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">Mile High Family Dental</div>
+          <p>Gentle, family-focused dental care in the heart of Denver.</p>
+        </div>
+        <div>
+          <h4>Practice</h4>
+          <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">Our Team</a></li>
+            <li><a href="#insurance">Insurance</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+13035550123">(303) 555-0123</a></li>
+            <li><a href="mailto:hello@milehighfamilydental.com">Email us</a></li>
+            <li><a href="#book">Book online</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Mile High Family Dental. All rights reserved. &middot; Notice of privacy practices &middot; Accessibility</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const toggle = document.getElementById('menu-toggle');
+    const links = document.getElementById('nav-links');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    links.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }));
+
+    // Highlight today's hours row
+    const dayIndex = new Date().getDay(); // 0 = Sunday
+    const rows = document.querySelectorAll('.hours tbody tr');
+    const rowIndex = dayIndex === 0 ? 6 : dayIndex - 1;
+    if (rows[rowIndex]) rows[rowIndex].classList.add('today');
+
+    // Booking form: no backend yet, so show a confirmation locally
+    document.getElementById('booking-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      e.target.reset();
+      document.getElementById('form-success').classList.add('show');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "designizer",
+  "version": "0.1.0",
+  "description": "Humanizer for UI: finds the default AI look in your interface and fixes it.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "scan": "node cli.mjs scan",
+    "eval": "node cli.mjs eval",
+    "generate": "node eval/generate.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "1.64.0"
+  }
+}

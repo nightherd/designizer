@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kessler &amp; Lund — Translators</title>
+<meta name="description" content="A small translation studio in Hamburg. Legal, medical and literary translation, read twice by people who know the subject.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f2eee5;
+    --paper-2: #e9e3d6;
+    --ink: #1d1b18;
+    --ink-2: #4a463f;
+    --ink-3: #7b756a;
+    --rule: #cbc3b2;
+    --red: #b8381c;
+    --serif: "Newsreader", Georgia, serif;
+    --sans: "IBM Plex Sans", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 16px/1.6 var(--sans);
+  }
+  a { color: inherit; }
+  img { max-width: 100%; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+  .mono { font-family: var(--mono); font-size: 12px; letter-spacing: .02em; }
+  .label { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); }
+
+  /* masthead */
+  .top {
+    border-bottom: 1px solid var(--ink);
+    padding: 18px 0 14px;
+  }
+  .top .wrap { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .brand { font-family: var(--serif); font-size: 26px; text-decoration: none; letter-spacing: -.01em; }
+  .brand em { color: var(--red); font-style: italic; }
+  .top nav { display: flex; gap: 26px; font-size: 14px; }
+  .top nav a { text-decoration: none; color: var(--ink-2); }
+  .top nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+  .top .phone { font-family: var(--mono); font-size: 13px; }
+  .subline { border-bottom: 1px solid var(--rule); padding: 7px 0; }
+  .subline .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--ink-3); }
+
+  /* hero */
+  .hero { padding: 72px 0 84px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: start; }
+  h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(46px, 7vw, 92px); line-height: .98; letter-spacing: -.025em;
+    margin: 0 0 28px;
+  }
+  h1 i { color: var(--red); }
+  .hero p.lede { font-size: 19px; line-height: 1.55; color: var(--ink-2); max-width: 30em; margin: 0 0 34px; }
+  .actions { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; background: var(--ink); color: var(--paper);
+    padding: 14px 22px; text-decoration: none; font-weight: 500; font-size: 15px;
+    border: 1px solid var(--ink);
+  }
+  .btn:hover { background: var(--red); border-color: var(--red); }
+  .link { font-size: 15px; text-underline-offset: 4px; }
+
+  /* proof sheet */
+  .proof {
+    background: #fbf9f4;
+    border: 1px solid var(--rule);
+    box-shadow: 6px 6px 0 var(--paper-2);
+    padding: 26px 28px 22px;
+    position: relative;
+    transform: rotate(.4deg);
+  }
+  .proof-head { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--rule); padding-bottom: 10px; margin-bottom: 18px; color: var(--ink-3); }
+  .proof .src { font-family: var(--serif); font-style: italic; color: var(--ink-3); font-size: 17px; margin: 0 0 18px; }
+  .proof .tgt { font-family: var(--serif); font-size: 23px; line-height: 1.75; margin: 0; }
+  .proof del { text-decoration-color: var(--red); text-decoration-thickness: 2px; color: var(--ink-3); }
+  .proof ins {
+    text-decoration: none; color: var(--red); font-style: italic;
+    position: relative; white-space: nowrap;
+  }
+  .proof.final del { display: none; }
+  .proof.final ins { color: var(--ink); font-style: normal; }
+  .proof.final .notes { opacity: .25; }
+  .notes { margin-top: 20px; border-top: 1px solid var(--rule); padding-top: 14px; display: grid; gap: 8px; transition: opacity .25s; }
+  .notes div { display: grid; grid-template-columns: 22px 1fr; color: var(--ink-2); font-family: var(--mono); font-size: 12px; line-height: 1.5; }
+  .notes b { color: var(--red); font-weight: 500; }
+  .proof-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; gap: 12px; flex-wrap: wrap; }
+  .toggle {
+    font: 500 12px var(--mono); background: none; border: 1px solid var(--ink); padding: 6px 10px; cursor: pointer; color: var(--ink);
+  }
+  .toggle:hover { background: var(--ink); color: var(--paper); }
+  .initials { font-family: var(--serif); font-style: italic; color: var(--red); font-size: 18px; }
+
+  /* desk strip */
+  .desk { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 20px 0; background: var(--paper-2); }
+  .desk .wrap { display: grid; grid-template-columns: 180px 1fr; gap: 24px; align-items: baseline; }
+  .desk p { margin: 0; font-family: var(--serif); font-size: 20px; line-height: 1.5; }
+
+  section.block { padding: 96px 0; }
+  .sec-head { display: grid; grid-template-columns: 180px 1fr; gap: 24px; margin-bottom: 48px; }
+  h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.05; letter-spacing: -.02em; margin: 0; max-width: 16em; }
+  h2 i { color: var(--red); }
+  .sec-head p { color: var(--ink-2); max-width: 36em; margin: 16px 0 0; font-size: 17px; }
+
+  /* services table */
+  .rates { width: 100%; border-collapse: collapse; }
+  .rates th { text-align: left; font: 500 12px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); padding: 0 16px 12px 0; border-bottom: 1px solid var(--ink); }
+  .rates td { padding: 22px 16px 22px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .rates tr:hover td { background: rgba(184,56,28,.04); }
+  .rates .name { font-family: var(--serif); font-size: 26px; line-height: 1.15; width: 26%; }
+  .rates .desc { color: var(--ink-2); width: 40%; }
+  .rates .num { font-family: var(--mono); font-size: 14px; white-space: nowrap; }
+  .rates .num small { display: block; color: var(--ink-3); font-size: 11px; }
+  .fine { color: var(--ink-3); font-size: 14px; margin-top: 18px; max-width: 52em; }
+
+  /* languages */
+  .langs { background: var(--ink); color: var(--paper); }
+  .langs .label { color: #9d968a; }
+  .langs h2 i { color: #e8826a; }
+  .langs .sec-head p { color: #c9c2b4; }
+  .lang-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #4a463f; }
+  .lang {
+    padding: 18px 16px 18px 0; border-bottom: 1px solid #4a463f;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+  }
+  .lang:not(:nth-child(4n)) { border-right: 1px solid #4a463f; }
+  .lang:not(:nth-child(4n+1)) { padding-left: 16px; }
+  .lang span:first-child { font-family: var(--serif); font-size: 24px; }
+  .lang span:last-child { font-family: var(--mono); font-size: 11px; color: #9d968a; text-align: right; }
+  .langs .fine { color: #9d968a; }
+
+  /* process */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--ink); }
+  .step { padding: 22px 24px 0 0; }
+  .step + .step { padding-left: 24px; border-left: 1px solid var(--rule); }
+  .step .n { font-family: var(--serif); font-style: italic; color: var(--red); font-size: 40px; line-height: 1; }
+  .step h3 { font-family: var(--serif); font-weight: 500; font-size: 21px; margin: 16px 0 8px; }
+  .step p { margin: 0; color: var(--ink-2); font-size: 15px; }
+  .step .t { margin-top: 14px; color: var(--ink-3); }
+
+  /* people */
+  .people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 32px; }
+  .person { border-top: 1px solid var(--ink); padding-top: 16px; }
+  .person .mono-av {
+    width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+    font-family: var(--serif); font-size: 26px; font-style: italic; background: var(--paper-2); border: 1px solid var(--rule); margin-bottom: 14px;
+  }
+  .person h3 { font-family: var(--serif); font-weight: 500; font-size: 22px; margin: 0; }
+  .person .pairs { font-family: var(--mono); font-size: 12px; color: var(--red); margin: 4px 0 10px; }
+  .person p { margin: 0; color: var(--ink-2); font-size: 15px; }
+
+  /* quote */
+  .quote { padding: 96px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .quote .wrap { display: grid; grid-template-columns: 180px 1fr; gap: 24px; }
+  blockquote { margin: 0; font-family: var(--serif); font-size: clamp(26px, 3.4vw, 40px); line-height: 1.25; letter-spacing: -.01em; max-width: 24em; }
+  blockquote::before { content: "“"; color: var(--red); margin-left: -.45em; }
+  .cite { margin-top: 24px; color: var(--ink-2); font-size: 15px; }
+
+  /* estimate */
+  .estimate .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+  form { display: grid; gap: 18px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { display: grid; gap: 6px; font-size: 13px; color: var(--ink-2); }
+  input, select, textarea {
+    font: 16px var(--sans); color: var(--ink); background: transparent;
+    border: 0; border-bottom: 1px solid var(--ink); padding: 8px 0; border-radius: 0; width: 100%;
+  }
+  select { appearance: none; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6' fill='%231d1b18'/%3E%3C/svg%3E") no-repeat right 4px center; padding-right: 20px; }
+  input:focus, select:focus, textarea:focus { outline: none; border-bottom: 2px solid var(--red); }
+  textarea { resize: vertical; min-height: 80px; }
+  .tally {
+    background: #fbf9f4; border: 1px solid var(--rule); padding: 28px; align-self: start;
+  }
+  .tally .big { font-family: var(--serif); font-size: 60px; line-height: 1; letter-spacing: -.02em; margin: 10px 0 6px; }
+  .tally dl { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; margin: 22px 0 0; padding-top: 16px; border-top: 1px dashed var(--rule); font-size: 14px; }
+  .tally dt { color: var(--ink-2); }
+  .tally dd { margin: 0; font-family: var(--mono); font-size: 13px; text-align: right; }
+  .tally .note { font-size: 13px; color: var(--ink-3); margin-top: 18px; }
+  .sent { color: var(--red); font-family: var(--mono); font-size: 13px; min-height: 1em; }
+
+  footer { background: var(--ink); color: #c9c2b4; padding: 56px 0 28px; font-size: 14px; }
+  footer .wrap { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+  footer .brand { color: var(--paper); font-size: 30px; }
+  footer h4 { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: #8d877b; margin: 0 0 10px; }
+  footer p { margin: 0 0 4px; }
+  footer a { text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .legal { grid-column: 1 / -1; border-top: 1px solid #4a463f; margin-top: 28px; padding-top: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #8d877b; }
+
+  @media (max-width: 900px) {
+    .hero .wrap, .estimate .wrap { grid-template-columns: 1fr; gap: 48px; }
+    .sec-head, .desk .wrap, .quote .wrap { grid-template-columns: 1fr; gap: 10px; }
+    .lang-grid { grid-template-columns: repeat(2, 1fr); }
+    .lang { padding: 16px 12px 16px 0 !important; border-right: 0 !important; }
+    .lang:nth-child(odd) { border-right: 1px solid #4a463f !important; }
+    .lang:nth-child(even) { padding-left: 12px !important; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .step:nth-child(3) { border-left: 0; padding-left: 0; }
+    .step { padding-bottom: 28px; }
+    .people { grid-template-columns: 1fr 1fr; }
+    footer .wrap { grid-template-columns: 1fr 1fr; }
+    blockquote::before { margin-left: 0; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 16px; }
+    .top nav { display: none; }
+    .hero { padding: 44px 0 60px; }
+    .proof { transform: none; padding: 20px 18px; }
+    .proof .tgt { font-size: 19px; }
+    .proof ins { white-space: normal; }
+    section.block, .quote { padding: 64px 0; }
+    .rates thead { display: none; }
+    .rates, .rates tbody, .rates tr, .rates td { display: block; width: 100% !important; }
+    .rates tr { border-bottom: 1px solid var(--rule); padding: 18px 0; }
+    .rates td { border: 0; padding: 4px 0; }
+    .rates td.num { display: inline-block; width: auto !important; margin-right: 24px; }
+    .steps, .people, .row { grid-template-columns: 1fr; }
+    .step, .step + .step { border-left: 0; padding-left: 0; border-bottom: 1px solid var(--rule); }
+    footer .wrap { grid-template-columns: 1fr; }
+    .lang span:first-child { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="top">
+    <div class="wrap">
+      <a class="brand" href="#">Kessler <em>&amp;</em> Lund</a>
+      <nav>
+        <a href="#work">What we translate</a>
+        <a href="#languages">Languages</a>
+        <a href="#people">People</a>
+        <a href="#estimate">Estimate</a>
+      </nav>
+      <span class="phone">+49 40 3192 0574</span>
+    </div>
+  </div>
+  <div class="subline">
+    <div class="wrap mono">
+      <span>Translation studio · Hamburg, Altona · since 2009</span>
+      <span>Office hours Mon–Fri 9–18 CET</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Every page is <i>read twice</i> before it leaves.</h1>
+        <p class="lede">We are eleven translators who specialise in contracts, clinical documents and books. One of us translates, another checks it against the source, line by line. It's slower than software and that is the point.</p>
+        <div class="actions">
+          <a class="btn" href="#estimate">Send us a document</a>
+          <a class="link" href="#work">See rates and turnaround</a>
+        </div>
+      </div>
+
+      <figure class="proof" id="proof" aria-label="Example of a reviewed translation">
+        <div class="proof-head mono"><span>Job 24-1187 · DE → EN</span><span>Revision 2 of 2</span></div>
+        <p class="src">„Die Frist ist gewahrt, wenn die Erklärung rechtzeitig abgesendet wird.“</p>
+        <p class="tgt">
+          The <del>deadline is preserved</del> <ins>time limit is observed</ins> if the declaration is <del>sent on time</del> <ins>dispatched in good time</ins>.
+        </p>
+        <div class="notes">
+          <div><b>1</b><span>“gewahrt” — use <em>observed</em>; matches the established English rendering of the BGB.</span></div>
+          <div><b>2</b><span>“absenden” is about dispatch, not receipt. Legally different. Flagged to client.</span></div>
+        </div>
+        <div class="proof-foot">
+          <button class="toggle" id="toggle" type="button">Show clean copy</button>
+          <span class="mono" style="color:var(--ink-3)">checked by <span class="initials">M.L.</span></span>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <div class="desk">
+    <div class="wrap">
+      <span class="label">On our desks this week</span>
+      <p>A Danish patient information leaflet, two Portuguese commercial leases, the subtitles for a Polish documentary, and a children's book from Korean that's taking longer than it should (rhymes).</p>
+    </div>
+  </div>
+
+  <section class="block" id="work">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">01 — Work</span>
+        <div>
+          <h2>Five kinds of text, <i>and we say no</i> to the rest.</h2>
+          <p>We'd rather refer you to a colleague than translate something we don't understand. Prices are per source word and include the second read.</p>
+        </div>
+      </div>
+
+      <table class="rates">
+        <thead>
+          <tr><th>Field</th><th>What that usually means</th><th>From</th><th>Typical turnaround</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">Legal &amp; contracts</td>
+            <td class="desc">Commercial agreements, court filings, articles of association, terms of service. Translated by people with a law degree or court accreditation.</td>
+            <td class="num">€0.16<small>per word</small></td>
+            <td class="num">3,000 words / 2 days</td>
+          </tr>
+          <tr>
+            <td class="name">Medical &amp; life sciences</td>
+            <td class="desc">Patient leaflets, clinical study protocols, informed consent forms, device IFUs. Terminology checked against EMA templates.</td>
+            <td class="num">€0.18<small>per word</small></td>
+            <td class="num">2,500 words / 2 days</td>
+          </tr>
+          <tr>
+            <td class="name">Certified documents</td>
+            <td class="desc">Birth and marriage certificates, diplomas, police records — sworn translations accepted by German authorities.</td>
+            <td class="num">€45<small>per page</small></td>
+            <td class="num">Next working day</td>
+          </tr>
+          <tr>
+            <td class="name">Books &amp; long-form</td>
+            <td class="desc">Fiction, non-fiction and catalogue essays for publishers and museums. Sample chapter first, always.</td>
+            <td class="num">On request</td>
+            <td class="num">We'll talk</td>
+          </tr>
+          <tr>
+            <td class="name">Technical</td>
+            <td class="desc">Operating manuals, safety data sheets, software UI strings. We work in your CAT memory if you have one.</td>
+            <td class="num">€0.13<small>per word</small></td>
+            <td class="num">5,000 words / 3 days</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="fine">Minimum charge €60. Rush jobs (same or next day, above certified documents) add 40%. Repeated segments from your translation memory are billed at a third.</p>
+    </div>
+  </section>
+
+  <section class="block langs" id="languages">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">02 — Languages</span>
+        <div>
+          <h2>Sixteen languages, <i>each into the translator's own.</i></h2>
+          <p>We only translate into a native language. A German speaker never writes your English — the reverse goes for German.</p>
+        </div>
+      </div>
+      <div class="lang-grid">
+        <div class="lang"><span>English</span><span>4 translators</span></div>
+        <div class="lang"><span>Deutsch</span><span>3 translators</span></div>
+        <div class="lang"><span>Français</span><span>2</span></div>
+        <div class="lang"><span>Español</span><span>2</span></div>
+        <div class="lang"><span>Italiano</span><span>1</span></div>
+        <div class="lang"><span>Português</span><span>1 · BR &amp; PT</span></div>
+        <div class="lang"><span>Nederlands</span><span>1</span></div>
+        <div class="lang"><span>Dansk</span><span>1</span></div>
+        <div class="lang"><span>Svenska</span><span>partner</span></div>
+        <div class="lang"><span>Polski</span><span>1</span></div>
+        <div class="lang"><span>Čeština</span><span>partner</span></div>
+        <div class="lang"><span>Türkçe</span><span>1</span></div>
+        <div class="lang"><span>العربية</span><span>1</span></div>
+        <div class="lang"><span>Українська</span><span>1</span></div>
+        <div class="lang"><span>日本語</span><span>partner</span></div>
+        <div class="lang"><span>한국어</span><span>1</span></div>
+      </div>
+      <p class="fine">“Partner” means a freelance translator we've worked with for at least three years. Not listed? Ask anyway — we know people.</p>
+    </div>
+  </section>
+
+  <section class="block" id="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">03 — Process</span>
+        <div><h2>What happens after you send a file.</h2></div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="n">i.</div>
+          <h3>We read it first</h3>
+          <p>Before quoting, someone actually opens your document. If it's outside what we know, we tell you and suggest who might.</p>
+          <div class="t mono">within 2 hours</div>
+        </div>
+        <div class="step">
+          <div class="n">ii.</div>
+          <h3>A fixed quote</h3>
+          <p>One number, one date. No “from” prices after the fact, no surprise formatting fees for PDFs.</p>
+          <div class="t mono">same day</div>
+        </div>
+        <div class="step">
+          <div class="n">iii.</div>
+          <h3>Translate, then revise</h3>
+          <p>A second translator compares every sentence to the source. Questions go to you in one list, not twelve emails.</p>
+          <div class="t mono">as quoted</div>
+        </div>
+        <div class="step">
+          <div class="n">iv.</div>
+          <h3>Delivered, with notes</h3>
+          <p>You get the file in its original format, plus a short note on any choices you should know about.</p>
+          <div class="t mono">+ 30 days of free fixes</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote">
+    <div class="wrap">
+      <span class="label">From a client</span>
+      <div>
+        <blockquote>They sent back our distribution agreement with four questions in the margin. Two of them turned out to be mistakes in our German original.</blockquote>
+        <div class="cite">Head of Legal, a mid-sized machinery manufacturer in Bremen — client since 2016</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="people">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">04 — People</span>
+        <div>
+          <h2>You'll know who <i>translated it.</i></h2>
+          <p>Every delivery is signed by the translator and the reviser. A few of the people in the studio:</p>
+        </div>
+      </div>
+      <div class="people">
+        <div class="person">
+          <div class="mono-av">AK</div>
+          <h3>Anke Kessler</h3>
+          <div class="pairs">EN → DE · FR → DE</div>
+          <p>Co-founder. Sworn translator at the Hamburg Regional Court. Spent eight years in-house at a shipping law firm before starting the studio.</p>
+        </div>
+        <div class="person">
+          <div class="mono-av">ML</div>
+          <h3>Mads Lund</h3>
+          <div class="pairs">DE → EN · DA → EN</div>
+          <p>Co-founder. Grew up between Aarhus and Manchester. Handles most of our contract and corporate work into English.</p>
+        </div>
+        <div class="person">
+          <div class="mono-av">SO</div>
+          <h3>Seo-yeon Oh</h3>
+          <div class="pairs">EN → KO · DE → KO</div>
+          <p>Literary translator with six published titles. Currently losing a fight with a picture book written entirely in rhyming couplets.</p>
+        </div>
+        <div class="person">
+          <div class="mono-av">RC</div>
+          <h3>Rafael Costa</h3>
+          <div class="pairs">EN → PT · DE → PT</div>
+          <p>Trained as a pharmacist in Coimbra. Our first call for clinical trial documents and anything with a dosage table.</p>
+        </div>
+        <div class="person">
+          <div class="mono-av">OH</div>
+          <h3>Olena Hrytsenko</h3>
+          <div class="pairs">DE → UK · EN → UK</div>
+          <p>Certified documents and public-sector work. Probably the fastest reader of handwritten Soviet-era birth certificates in Hamburg.</p>
+        </div>
+        <div class="person">
+          <div class="mono-av">JB</div>
+          <h3>Julien Bertrand</h3>
+          <div class="pairs">EN → FR · DE → FR</div>
+          <p>Technical documentation and software localisation. Will gently ask why your UI string is 90 characters long.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block estimate" id="estimate" style="border-top:1px solid var(--ink)">
+    <div class="wrap">
+      <div>
+        <span class="label">05 — Estimate</span>
+        <h2 style="margin:12px 0 14px">Roughly how much, <i>and by when.</i></h2>
+        <p style="color:var(--ink-2);margin:0 0 32px;max-width:32em">A ballpark you can take to your budget meeting. Send the file and we'll come back with a fixed price within two hours during office hours.</p>
+        <form id="form">
+          <div class="row">
+            <label>From
+              <select id="from">
+                <option>German</option><option selected>English</option><option>French</option><option>Spanish</option><option>Danish</option><option>Korean</option><option>Other</option>
+              </select>
+            </label>
+            <label>Into
+              <select id="to">
+                <option selected>German</option><option>English</option><option>French</option><option>Portuguese</option><option>Ukrainian</option><option>Other</option>
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Kind of text
+              <select id="field">
+                <option value="0.16">Legal &amp; contracts</option>
+                <option value="0.18">Medical &amp; life sciences</option>
+                <option value="0.13">Technical</option>
+              </select>
+            </label>
+            <label>Word count
+              <input id="words" type="number" min="0" step="100" value="2400" inputmode="numeric">
+            </label>
+          </div>
+          <label style="display:flex;gap:10px;align-items:center;font-size:14px">
+            <input id="rush" type="checkbox" style="width:auto;margin:0;accent-color:var(--red)"> I need it faster than standard (+40%)
+          </label>
+          <div class="row">
+            <label>Your name<input type="text" required autocomplete="name"></label>
+            <label>Email<input type="email" required autocomplete="email"></label>
+          </div>
+          <label>Anything we should know? (Audience, glossary, where it'll be published)
+            <textarea></textarea>
+          </label>
+          <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+            <button class="btn" type="submit" style="cursor:pointer">Request a fixed quote</button>
+            <span class="sent" id="sent"></span>
+          </div>
+        </form>
+      </div>
+
+      <aside class="tally" aria-live="polite">
+        <span class="label">Ballpark</span>
+        <div class="big" id="total">€384</div>
+        <div class="mono" style="color:var(--ink-3)" id="pair">English → German</div>
+        <dl>
+          <dt>Translation + second read</dt><dd id="base">€384</dd>
+          <dt>Rush surcharge</dt><dd id="rushfee">—</dd>
+          <dt>Ready by</dt><dd id="date">—</dd>
+        </dl>
+        <p class="note">Excludes VAT. Translation-memory matches usually bring this down by 10–30%.</p>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#">Kessler <em style="color:#e8826a">&amp;</em> Lund</a>
+      <p style="margin-top:12px;max-width:22em">Translators for legal, medical and literary work. Read twice since 2009.</p>
+    </div>
+    <div>
+      <h4>Studio</h4>
+      <p>Große Bergstraße 211</p>
+      <p>22767 Hamburg</p>
+      <p>Germany</p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <p><a href="tel:+494031920574">+49 40 3192 0574</a></p>
+      <p><a href="mailto:post@kessler-lund.example">post@kessler-lund.example</a></p>
+    </div>
+    <div>
+      <h4>Elsewhere</h4>
+      <p><a href="#">LinkedIn</a></p>
+      <p><a href="#">Newsletter (four a year)</a></p>
+    </div>
+    <div class="legal mono">
+      <span>© 2026 Kessler &amp; Lund GbR</span>
+      <span><a href="#">Impressum</a> · <a href="#">Datenschutz</a> · <a href="#">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Proof sheet: toggle between marked-up and clean copy
+  const proof = document.getElementById('proof');
+  const toggle = document.getElementById('toggle');
+  toggle.addEventListener('click', () => {
+    const clean = proof.classList.toggle('final');
+    toggle.textContent = clean ? 'Show corrections' : 'Show clean copy';
+  });
+
+  // Estimate
+  const $ = id => document.getElementById(id);
+  const eur = n => '€' + Math.round(n).toLocaleString('en-GB');
+  const perDay = { '0.16': 1500, '0.18': 1250, '0.13': 1700 };
+
+  function addWorkdays(d, n) {
+    const out = new Date(d);
+    while (n > 0) {
+      out.setDate(out.getDate() + 1);
+      if (out.getDay() !== 0 && out.getDay() !== 6) n--;
+    }
+    return out;
+  }
+
+  function update() {
+    const rate = $('field').value;
+    const words = Math.max(0, +$('words').value || 0);
+    const rush = $('rush').checked;
+    const base = Math.max(60, words * +rate);
+    const fee = rush ? base * 0.4 : 0;
+    let days = Math.max(1, Math.ceil(words / perDay[rate]));
+    if (rush) days = Math.max(1, Math.ceil(days / 2));
+
+    $('base').textContent = eur(base);
+    $('rushfee').textContent = rush ? eur(fee) : '—';
+    $('total').textContent = eur(base + fee);
+    $('pair').textContent = $('from').value + ' → ' + $('to').value;
+    $('date').textContent = words
+      ? addWorkdays(new Date(), days).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
+      : '—';
+  }
+  ['from', 'to', 'field', 'words', 'rush'].forEach(id => $(id).addEventListener('input', update));
+  update();
+
+  $('form').addEventListener('submit', e => {
+    e.preventDefault();
+    $('sent').textContent = 'Thanks — this is a demo form, nothing was sent.';
+  });
+</script>
+</body>
+</html>

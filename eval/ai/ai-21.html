@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tsukimi Kyoto — A Boutique Hotel in Higashiyama</title>
+  <meta name="description" content="Tsukimi is a fifteen-room boutique hotel in Kyoto's Higashiyama district, blending machiya architecture with quiet, contemporary comfort.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f6f1e8;
+      --paper-deep: #ece3d3;
+      --ink: #1f1b16;
+      --ink-soft: #5b5247;
+      --moss: #4d5a45;
+      --vermilion: #b5452f;
+      --line: rgba(31, 27, 22, 0.14);
+      --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+      --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --gutter: clamp(1rem, 4vw, 2.5rem);
+      --max: 1180px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --paper: #161310;
+        --paper-deep: #1f1b16;
+        --ink: #ede6da;
+        --ink-soft: #a89e90;
+        --moss: #9bb08f;
+        --vermilion: #e07a5f;
+        --line: rgba(237, 230, 218, 0.14);
+      }
+    }
+    :root[data-theme="dark"] {
+      --paper: #161310;
+      --paper-deep: #1f1b16;
+      --ink: #ede6da;
+      --ink-soft: #a89e90;
+      --moss: #9bb08f;
+      --vermilion: #e07a5f;
+      --line: rgba(237, 230, 218, 0.14);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+    h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; letter-spacing: -0.01em; }
+    .eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--vermilion); font-weight: 500; margin-bottom: 1rem; display: block;
+    }
+    .btn {
+      display: inline-block; padding: 0.95rem 1.8rem; font: inherit; font-size: 0.85rem;
+      letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+      border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+      transition: background 0.25s, color 0.25s, border-color 0.25s; cursor: pointer;
+    }
+    .btn:hover { background: transparent; color: var(--ink); }
+    .btn.ghost { background: transparent; color: var(--ink); }
+    .btn.ghost:hover { background: var(--ink); color: var(--paper); }
+    .btn:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, button:focus-visible {
+      outline: 2px solid var(--vermilion); outline-offset: 3px;
+    }
+
+    /* Header */
+    header {
+      position: fixed; inset: 0 0 auto 0; z-index: 10;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    header.scrolled {
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 1px 0 var(--line);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      font-family: var(--serif); font-size: 1.5rem; text-decoration: none;
+      letter-spacing: 0.02em; color: #fff;
+      transition: color 0.3s;
+    }
+    header.scrolled .logo { color: var(--ink); }
+    .nav ul { display: flex; gap: 2rem; list-style: none; }
+    .nav ul a {
+      font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+      text-decoration: none; color: #fff; transition: color 0.3s;
+    }
+    header.scrolled .nav ul a { color: var(--ink); }
+    .nav ul a:hover { color: var(--vermilion); }
+    .menu-toggle {
+      display: none; background: none; border: 0; cursor: pointer;
+      color: #fff; font: inherit; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    header.scrolled .menu-toggle { color: var(--ink); }
+
+    /* Hero */
+    .hero {
+      position: relative; min-height: 100vh; min-height: 100svh;
+      display: flex; align-items: flex-end; color: #fbf7ef;
+      background:
+        radial-gradient(circle at 72% 28%, rgba(255, 214, 170, 0.55) 0 6%, transparent 6.5%),
+        linear-gradient(180deg, #2c3a4a 0%, #4a4a52 38%, #7a5a4a 70%, #3a2c26 100%);
+      overflow: hidden;
+    }
+    .hero::before {
+      /* Abstract hillside silhouette standing in for a photograph */
+      content: ""; position: absolute; inset: auto 0 0 0; height: 46%;
+      background:
+        linear-gradient(180deg, rgba(20, 22, 26, 0) 0%, rgba(20, 22, 26, 0.85) 100%),
+        repeating-linear-gradient(90deg, transparent 0 58px, rgba(0,0,0,0.12) 58px 60px);
+      clip-path: polygon(0 60%, 12% 42%, 24% 55%, 38% 30%, 52% 50%, 66% 36%, 80% 52%, 92% 40%, 100% 48%, 100% 100%, 0 100%);
+      opacity: 0.9;
+    }
+    .hero-inner { position: relative; padding-bottom: clamp(4rem, 12vh, 7rem); width: 100%; }
+    .hero .eyebrow { color: #f2c9a6; }
+    .hero h1 {
+      font-size: clamp(3rem, 9vw, 7.5rem); font-weight: 400; max-width: 11ch;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em { font-style: italic; color: #f2c9a6; }
+    .hero p.lede { max-width: 36rem; font-size: 1.1rem; opacity: 0.9; margin-bottom: 2.5rem; }
+    .hero .btn { background: #fbf7ef; color: #1f1b16; border-color: #fbf7ef; }
+    .hero .btn:hover { background: transparent; color: #fbf7ef; }
+    .hero .btn.ghost { background: transparent; color: #fbf7ef; border-color: rgba(251,247,239,0.6); margin-left: 0.75rem; }
+    .hero .btn.ghost:hover { background: #fbf7ef; color: #1f1b16; }
+    .scroll-cue {
+      position: absolute; right: var(--gutter); bottom: 2.5rem; z-index: 1;
+      writing-mode: vertical-rl; font-size: 0.7rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: rgba(251,247,239,0.7);
+    }
+
+    /* Sections */
+    section { padding: clamp(5rem, 12vw, 9rem) 0; }
+    .section-head { max-width: 40rem; margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+    .section-head h2 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
+    .section-head p { color: var(--ink-soft); margin-top: 1rem; }
+
+    /* About */
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+    .about-visual {
+      aspect-ratio: 4 / 5; position: relative;
+      background: linear-gradient(160deg, #d9c6a5 0%, #b98f6c 45%, #5e4636 100%);
+    }
+    .about-visual::after {
+      content: "Machiya facade, 1912"; position: absolute; left: 1.25rem; bottom: 1.25rem;
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: #fbf7ef;
+    }
+    .about-visual::before {
+      content: ""; position: absolute; inset: 1.25rem 1.25rem auto 1.25rem; height: 55%;
+      border: 1px solid rgba(251,247,239,0.5);
+      background: repeating-linear-gradient(180deg, transparent 0 22px, rgba(0,0,0,0.12) 22px 24px);
+    }
+    .about-copy h2 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); margin-bottom: 1.5rem; }
+    .about-copy p + p { margin-top: 1rem; }
+    .about-copy p { color: var(--ink-soft); font-size: 1.02rem; }
+    .stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+    .stats div { font-family: var(--serif); font-size: 2.6rem; line-height: 1; }
+    .stats span { display: block; font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); margin-top: 0.5rem; }
+
+    /* Rooms */
+    .rooms { background: var(--paper-deep); }
+    .room-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .room {
+      background: var(--paper); border: 1px solid var(--line);
+      display: flex; flex-direction: column;
+    }
+    .room-art { aspect-ratio: 5 / 4; position: relative; }
+    .room-art.a { background: linear-gradient(135deg, #c9b79c, #8a7158); }
+    .room-art.b { background: linear-gradient(135deg, #a9b5a0, #4d5a45); }
+    .room-art.c { background: linear-gradient(135deg, #d8a48f, #7b4a3c); }
+    .room-art::after {
+      content: ""; position: absolute; left: 50%; top: 50%; width: 36%; aspect-ratio: 1;
+      border-radius: 50%; transform: translate(-50%, -50%);
+      background: rgba(251,247,239,0.35);
+    }
+    .room-body { padding: 1.75rem 1.75rem 2rem; display: flex; flex-direction: column; flex: 1; }
+    .room-body h3 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .room-meta { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--moss); margin-bottom: 1rem; }
+    .room-body p { color: var(--ink-soft); font-size: 0.95rem; flex: 1; }
+    .room-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+    .price { font-family: var(--serif); font-size: 1.5rem; }
+    .price small { font-family: var(--sans); font-size: 0.75rem; color: var(--ink-soft); }
+    .link-arrow { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+
+    /* Experiences */
+    .experiences { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line); }
+    .exp { padding: 2rem 1.5rem 0 0; border-right: 1px solid var(--line); margin-right: 1.5rem; }
+    .exp:last-child { border-right: 0; margin-right: 0; }
+    .exp .num { font-family: var(--serif); font-style: italic; color: var(--vermilion); font-size: 1.1rem; }
+    .exp h3 { font-size: 1.6rem; margin: 0.75rem 0; }
+    .exp p { color: var(--ink-soft); font-size: 0.93rem; }
+
+    /* Dining quote band */
+    .band {
+      background: var(--moss); color: #f6f1e8; text-align: center;
+      padding: clamp(5rem, 12vw, 8rem) 0;
+    }
+    .band blockquote {
+      font-family: var(--serif); font-style: italic; font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1.3; max-width: 26ch; margin: 0 auto 1.5rem;
+    }
+    .band cite { font-style: normal; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.8; }
+
+    /* Booking */
+    .booking-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
+    .booking-copy h2 { font-size: clamp(2.2rem, 5vw, 3.6rem); margin-bottom: 1.25rem; }
+    .booking-copy p { color: var(--ink-soft); }
+    .contact-list { list-style: none; margin-top: 2rem; display: grid; gap: 1rem; }
+    .contact-list li { font-size: 0.95rem; }
+    .contact-list strong { display: block; font-weight: 500; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.2rem; }
+    form.book {
+      border: 1px solid var(--line); padding: clamp(1.5rem, 4vw, 2.5rem);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+      background: var(--paper);
+    }
+    form.book label { display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
+    form.book .full { grid-column: 1 / -1; }
+    form.book input, form.book select {
+      font: inherit; font-size: 1rem; letter-spacing: normal; text-transform: none;
+      color: var(--ink); background: transparent; border: 0; border-bottom: 1px solid var(--line);
+      padding: 0.5rem 0; border-radius: 0; color-scheme: light dark;
+    }
+    form.book select option { background: var(--paper); color: var(--ink); }
+    form.book .btn { grid-column: 1 / -1; justify-self: start; }
+    form.book .note { grid-column: 1 / -1; font-size: 0.85rem; color: var(--ink-soft); min-height: 1.4em; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--line); padding: 3.5rem 0 2.5rem; font-size: 0.9rem; color: var(--ink-soft); }
+    .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+    .foot-grid .logo { color: var(--ink); font-size: 1.8rem; display: inline-block; margin-bottom: 0.75rem; }
+    .foot-grid h4 { font-weight: 500; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.9rem; }
+    .foot-grid ul { list-style: none; display: grid; gap: 0.45rem; }
+    .foot-grid a { text-decoration: none; }
+    .foot-grid a:hover { color: var(--vermilion); }
+    .fine { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .about, .booking-grid { grid-template-columns: 1fr; }
+      .room-grid { grid-template-columns: 1fr 1fr; }
+      .experiences { grid-template-columns: 1fr 1fr; }
+      .exp:nth-child(2) { border-right: 0; margin-right: 0; }
+      .exp:nth-child(-n+2) { padding-bottom: 2rem; }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 720px) {
+      .nav ul {
+        position: fixed; top: 72px; left: 0; right: 0; flex-direction: column; gap: 0;
+        background: var(--paper); box-shadow: 0 1px 0 var(--line);
+        display: none;
+      }
+      .nav ul.open { display: flex; }
+      .nav ul li { border-bottom: 1px solid var(--line); }
+      .nav ul a { display: block; padding: 1rem var(--gutter); color: var(--ink) !important; }
+      .menu-toggle { display: block; }
+      .room-grid, .experiences { grid-template-columns: 1fr; }
+      .exp, .exp:nth-child(2) { border-right: 0; margin-right: 0; padding-bottom: 1.5rem; }
+      form.book { grid-template-columns: 1fr; }
+      .hero .btn.ghost { margin-left: 0; margin-top: 0.75rem; display: inline-block; }
+      .scroll-cue { display: none; }
+      .stats { gap: 1.5rem; }
+      .foot-grid { grid-template-columns: 1fr; }
+      .fine { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="top-bar">
+    <nav class="wrap nav" aria-label="Primary">
+      <a href="#top" class="logo">Tsukimi</a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="menu">Menu</button>
+      <ul id="menu">
+        <li><a href="#about">The House</a></li>
+        <li><a href="#rooms">Rooms</a></li>
+        <li><a href="#experiences">Experiences</a></li>
+        <li><a href="#book">Reserve</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <div class="hero" id="top">
+      <div class="wrap hero-inner">
+        <span class="eyebrow">Higashiyama, Kyoto</span>
+        <h1>Sleep beneath the <em>moon</em> of old Kyoto.</h1>
+        <p class="lede">Fifteen rooms inside a restored 1912 machiya, a short walk from the temples of Gion and the lantern-lit lanes of Ninenzaka.</p>
+        <div>
+          <a href="#book" class="btn">Check availability</a>
+          <a href="#rooms" class="btn ghost">View rooms</a>
+        </div>
+      </div>
+      <span class="scroll-cue" aria-hidden="true">Scroll</span>
+    </div>
+
+    <!-- About -->
+    <section id="about">
+      <div class="wrap about">
+        <div class="about-visual reveal" role="img" aria-label="Placeholder for machiya facade photograph"></div>
+        <div class="about-copy reveal">
+          <span class="eyebrow">The House</span>
+          <h2>A townhouse, quietly reimagined.</h2>
+          <p>Tsukimi began as a merchant's townhouse with a tiled roof and a courtyard garden. We kept its timber bones, its sliding shoji and its deep eaves, and fitted it with the things a modern traveller needs: heated floors, a proper bed, and silence after dark.</p>
+          <p>Every morning, our team serves breakfast in the courtyard. Every evening, the garden lamps come on, and the street falls still.</p>
+          <div class="stats">
+            <div>15<span>Rooms</span></div>
+            <div>1912<span>Built</span></div>
+            <div>4<span>Min to Yasaka</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rooms -->
+    <section id="rooms" class="rooms">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Rooms &amp; Suites</span>
+          <h2>Three ways to stay.</h2>
+          <p>Each room is named for a season and furnished with local craft: indigo-dyed linen, hinoki bathing tubs, and tatami that smells faintly of rain.</p>
+        </div>
+        <div class="room-grid">
+          <article class="room reveal">
+            <div class="room-art a" role="img" aria-label="Placeholder image for Kaede room"></div>
+            <div class="room-body">
+              <h3>Kaede</h3>
+              <div class="room-meta">Garden view &middot; 28 m&sup2;</div>
+              <p>A tatami-floored room opening onto the courtyard maple. Futon or queen bed on request.</p>
+              <div class="room-foot">
+                <div class="price">¥68,000 <small>/ night</small></div>
+                <a href="#book" class="link-arrow">Reserve</a>
+              </div>
+            </div>
+          </article>
+          <article class="room reveal">
+            <div class="room-art b" role="img" aria-label="Placeholder image for Matsu room"></div>
+            <div class="room-body">
+              <h3>Matsu</h3>
+              <div class="room-meta">Street view &middot; 34 m&sup2;</div>
+              <p>A corner room with a deep window seat over the lane, and a soaking tub of Kiso hinoki.</p>
+              <div class="room-foot">
+                <div class="price">¥84,000 <small>/ night</small></div>
+                <a href="#book" class="link-arrow">Reserve</a>
+              </div>
+            </div>
+          </article>
+          <article class="room reveal">
+            <div class="room-art c" role="img" aria-label="Placeholder image for Tsukimi suite"></div>
+            <div class="room-body">
+              <h3>Tsukimi Suite</h3>
+              <div class="room-meta">Private terrace &middot; 62 m&sup2;</div>
+              <p>Our largest room, with a private terrace, a sunken bath and a view of the hills to the east.</p>
+              <div class="room-foot">
+                <div class="price">¥165,000 <small>/ night</small></div>
+                <a href="#book" class="link-arrow">Reserve</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experiences -->
+    <section id="experiences">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Experiences</span>
+          <h2>Kyoto, at its own pace.</h2>
+        </div>
+        <div class="experiences">
+          <div class="exp reveal">
+            <div class="num">i.</div>
+            <h3>Morning walk</h3>
+            <p>An unhurried stroll through Kiyomizu-dera and the Sannenzaka slopes before the crowds arrive.</p>
+          </div>
+          <div class="exp reveal">
+            <div class="num">ii.</div>
+            <h3>Tea ceremony</h3>
+            <p>A private chado session in our tea room, led by a teacher from a Gion family of tea masters.</p>
+          </div>
+          <div class="exp reveal">
+            <div class="num">iii.</div>
+            <h3>Kaiseki supper</h3>
+            <p>Seasonal multi-course dinners, served in your room or in the courtyard pavilion.</p>
+          </div>
+          <div class="exp reveal">
+            <div class="num">iv.</div>
+            <h3>Night lanterns</h3>
+            <p>Guided evening visits to the Gion lanes and Yasaka Shrine, when the lanterns are lit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote band -->
+    <div class="band">
+      <div class="wrap reveal">
+        <blockquote>&ldquo;The best part of staying here was the quiet we found at the end of each day.&rdquo;</blockquote>
+        <cite>Guest review, autumn 2025</cite>
+      </div>
+    </div>
+
+    <!-- Booking -->
+    <section id="book">
+      <div class="wrap booking-grid">
+        <div class="booking-copy reveal">
+          <span class="eyebrow">Reservations</span>
+          <h2>Reserve your stay.</h2>
+          <p>Direct bookings receive our best rate, a welcome tea on arrival, and a complimentary garden breakfast for two.</p>
+          <ul class="contact-list">
+            <li><strong>Address</strong>Higashiyama-ku, Kyoto 605-0000, Japan</li>
+            <li><strong>Telephone</strong>+81 75 000 0000</li>
+            <li><strong>Email</strong>stay@tsukimi-kyoto.example</li>
+          </ul>
+        </div>
+        <form class="book reveal" id="booking-form">
+          <label>Arrival
+            <input type="date" name="arrive" required>
+          </label>
+          <label>Departure
+            <input type="date" name="depart" required>
+          </label>
+          <label>Guests
+            <select name="guests">
+              <option>1 guest</option>
+              <option selected>2 guests</option>
+              <option>3 guests</option>
+              <option>4 guests</option>
+            </select>
+          </label>
+          <label>Room
+            <select name="room">
+              <option>Any available</option>
+              <option>Kaede</option>
+              <option>Matsu</option>
+              <option>Tsukimi Suite</option>
+            </select>
+          </label>
+          <label class="full">Full name
+            <input type="text" name="name" autocomplete="name" required>
+          </label>
+          <label class="full">Email
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <button class="btn" type="submit">Request booking</button>
+          <div class="note" id="form-note" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <a href="#top" class="logo">Tsukimi</a>
+          <p>A boutique machiya hotel in Higashiyama, Kyoto.</p>
+        </div>
+        <div>
+          <h4>Visit</h4>
+          <ul>
+            <li><a href="#about">The House</a></li>
+            <li><a href="#rooms">Rooms</a></li>
+            <li><a href="#experiences">Experiences</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Plan</h4>
+          <ul>
+            <li><a href="#book">Reserve</a></li>
+            <li><a href="#book">Gift vouchers</a></li>
+            <li><a href="#book">Group stays</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Follow</h4>
+          <ul>
+            <li><a href="#top">Instagram</a></li>
+            <li><a href="#top">Journal</a></li>
+            <li><a href="#top">Newsletter</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="fine">
+        <span>&copy; 2026 Tsukimi Kyoto. All rights reserved.</span>
+        <span>Check-in 15:00 &middot; Check-out 11:00</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Header state on scroll
+    const header = document.getElementById('top-bar');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Mobile menu
+    const toggle = document.querySelector('.menu-toggle');
+    const menu = document.getElementById('menu');
+    toggle.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }));
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach(el => io.observe(el));
+    } else {
+      reveals.forEach(el => el.classList.add('in'));
+    }
+
+    // Booking form: validate dates, then show a confirmation (no backend)
+    const form = document.getElementById('booking-form');
+    const note = document.getElementById('form-note');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const arrive = new Date(form.arrive.value);
+      const depart = new Date(form.depart.value);
+      if (!(depart > arrive)) {
+        note.textContent = 'Departure must be after arrival.';
+        return;
+      }
+      const nights = Math.round((depart - arrive) / 86400000);
+      note.textContent = `Thank you, ${form.name.value.split(' ')[0]}. We have received your request for ${nights} night${nights > 1 ? 's' : ''} and will confirm by email shortly.`;
+      form.reset();
+    });
+  </script>
+</body>
+</html>

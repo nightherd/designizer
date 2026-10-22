@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hearth — HR & Payroll for Small Businesses</title>
+<meta name="description" content="Hearth runs payroll, benefits, time off and compliance for small teams, so you can get back to running your business.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14261f;
+    --ink-soft: #3d5149;
+    --muted: #6b7c75;
+    --paper: #f7f3ea;
+    --paper-2: #efe8d9;
+    --card: #fffdf8;
+    --line: #ddd4c2;
+    --green: #1f4d3d;
+    --green-2: #2f6b55;
+    --mint: #cfe6d8;
+    --marigold: #f2b441;
+    --coral: #e8735a;
+    --radius: 18px;
+    --shadow: 0 1px 0 rgba(20,38,31,.04), 0 12px 32px -12px rgba(20,38,31,.18);
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Manrope", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em; line-height: 1.08; margin: 0; }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); }
+  h3 { font-size: 1.3rem; letter-spacing: -0.01em; }
+  p { margin: 0; }
+  .eyebrow {
+    display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--green-2); margin-bottom: 16px;
+  }
+  .lede { color: var(--ink-soft); font-size: 1.15rem; max-width: 34em; }
+  section { padding: 104px 0; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+    font: 600 1rem/1 var(--sans); text-decoration: none; cursor: pointer;
+    padding: 15px 22px; border-radius: 999px; border: 1.5px solid transparent;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:focus-visible, a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--marigold); outline-offset: 3px; }
+  .btn-primary { background: var(--green); color: #fff; box-shadow: 0 8px 20px -8px rgba(31,77,61,.6); }
+  .btn-primary:hover { background: var(--green-2); }
+  .btn-ghost { border-color: var(--ink); color: var(--ink); background: transparent; }
+  .btn-ghost:hover { background: var(--ink); color: var(--paper); }
+
+  /* Nav */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(247,243,234,.82); backdrop-filter: saturate(1.4) blur(12px);
+    border-bottom: 1px solid transparent; transition: border-color .2s;
+  }
+  header.scrolled { border-bottom-color: var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-size: 1.5rem; font-weight: 600; text-decoration: none; }
+  .logo-mark { width: 30px; height: 30px; }
+  .nav-links { display: flex; gap: 32px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a { text-decoration: none; font-weight: 500; color: var(--ink-soft); font-size: .95rem; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { display: flex; gap: 12px; align-items: center; }
+  .nav-cta .signin { text-decoration: none; font-weight: 600; font-size: .95rem; }
+  .nav-cta .btn { padding: 11px 18px; font-size: .95rem; }
+  .menu-btn { display: none; background: none; border: 0; padding: 8px; cursor: pointer; color: var(--ink); }
+
+  /* Hero */
+  .hero { padding: 72px 0 96px; position: relative; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+  .hero h1 { font-size: clamp(2.7rem, 6vw, 4.6rem); margin-bottom: 24px; }
+  .hero h1 em { font-style: italic; color: var(--green-2); }
+  .hero .lede { margin-bottom: 36px; }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+  .hero-note { display: flex; gap: 20px; flex-wrap: wrap; color: var(--muted); font-size: .92rem; }
+  .hero-note span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-note svg { color: var(--green-2); }
+
+  .mock { position: relative; }
+  .mock-blob {
+    position: absolute; inset: -40px -60px -40px 10%; z-index: 0;
+    background: radial-gradient(closest-side, var(--mint), transparent 70%),
+                radial-gradient(closest-side at 80% 80%, rgba(242,180,65,.35), transparent 70%);
+    filter: blur(10px);
+  }
+  .panel {
+    position: relative; z-index: 1; background: var(--card); border: 1px solid var(--line);
+    border-radius: 22px; box-shadow: var(--shadow); padding: 24px;
+  }
+  .panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .panel-head small { color: var(--muted); font-weight: 600; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
+  .pill { font-size: .78rem; font-weight: 700; padding: 5px 10px; border-radius: 999px; background: var(--mint); color: var(--green); }
+  .big-num { font-family: var(--serif); font-size: 2.6rem; font-weight: 500; letter-spacing: -0.02em; line-height: 1; }
+  .big-num-sub { color: var(--muted); font-size: .9rem; margin: 6px 0 20px; }
+  .bar { display: flex; height: 10px; border-radius: 99px; overflow: hidden; margin-bottom: 10px; }
+  .bar i { display: block; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: .8rem; color: var(--ink-soft); margin-bottom: 22px; }
+  .legend span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; background: var(--c); }
+  .people { border-top: 1px solid var(--line); }
+  .person { display: grid; grid-template-columns: 36px 1fr auto; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .person:last-child { border-bottom: 0; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: .82rem; color: var(--ink); }
+  .person b { display: block; font-size: .95rem; }
+  .person small { color: var(--muted); font-size: .8rem; }
+  .person .amt { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .run-btn { width: 100%; margin-top: 16px; }
+  .float-card {
+    position: absolute; z-index: 2; background: var(--ink); color: var(--paper);
+    border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow);
+    display: flex; gap: 12px; align-items: center; font-size: .88rem;
+  }
+  .float-card .dot { width: 34px; height: 34px; border-radius: 10px; background: var(--marigold); display: grid; place-items: center; color: var(--ink); flex: none; }
+  .float-card small { display: block; opacity: .7; font-size: .76rem; }
+  .fc-1 { left: -36px; bottom: 64px; animation: bob 6s ease-in-out infinite; }
+  .fc-2 { right: -20px; top: -22px; background: var(--card); color: var(--ink); border: 1px solid var(--line); animation: bob 7s ease-in-out -2s infinite; }
+  .fc-2 .dot { background: var(--mint); color: var(--green); }
+  @keyframes bob { 50% { transform: translateY(-8px); } }
+
+  /* Logos */
+  .trust { padding: 0 0 24px; }
+  .trust p { text-align: center; color: var(--muted); font-size: .9rem; margin-bottom: 22px; }
+  .logos { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; opacity: .65; }
+  .logos span { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
+  .logos span:nth-child(2n) { font-family: var(--sans); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 1rem; align-self: center; }
+
+  /* Features */
+  .section-head { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 56px; flex-wrap: wrap; }
+  .section-head h2 { max-width: 14em; }
+  .section-head .lede { max-width: 26em; }
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .feature {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 30px; transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .feature:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .feature .icon { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 22px; background: var(--bg); color: var(--fg); }
+  .feature h3 { margin-bottom: 10px; }
+  .feature p { color: var(--ink-soft); font-size: .98rem; }
+  .feature.wide { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; background: var(--green); color: var(--paper); border-color: var(--green); }
+  .feature.wide p { color: #cfe0d7; }
+  .feature.wide .icon { background: rgba(255,255,255,.12); color: var(--marigold); }
+  .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; font-size: .75rem; text-align: center; }
+  .calendar b { font-weight: 600; opacity: .55; padding-bottom: 4px; }
+  .calendar span { aspect-ratio: 1; display: grid; place-items: center; border-radius: 8px; background: rgba(255,255,255,.06); }
+  .calendar .pay { background: var(--marigold); color: var(--ink); font-weight: 700; }
+  .calendar .tax { background: var(--mint); color: var(--green); font-weight: 700; }
+  .calendar .off { opacity: .3; }
+
+  /* Steps */
+  .steps-sec { background: var(--paper-2); }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; counter-reset: step; }
+  .step { border-top: 2px solid var(--ink); padding-top: 24px; }
+  .step::before {
+    counter-increment: step; content: "0" counter(step);
+    font-family: var(--serif); font-size: 3.2rem; color: var(--green-2); display: block; line-height: 1; margin-bottom: 20px;
+  }
+  .step h3 { margin-bottom: 10px; }
+  .step p { color: var(--ink-soft); }
+
+  /* Calculator */
+  .calc { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .calc-box { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 36px; box-shadow: var(--shadow); }
+  .calc-row { margin-bottom: 28px; }
+  .calc-row label { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 12px; }
+  .calc-row label output { font-family: var(--serif); font-size: 1.4rem; font-weight: 500; }
+  input[type=range] { width: 100%; accent-color: var(--green); height: 6px; cursor: pointer; }
+  .seg { display: flex; background: var(--paper-2); border-radius: 999px; padding: 4px; }
+  .seg button {
+    flex: 1; border: 0; background: transparent; padding: 10px 8px; border-radius: 999px;
+    font: 600 .9rem var(--sans); color: var(--ink-soft); cursor: pointer;
+  }
+  .seg button[aria-pressed=true] { background: var(--card); color: var(--ink); box-shadow: 0 2px 6px rgba(20,38,31,.12); }
+  .calc-out { border-top: 1px dashed var(--line); padding-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .calc-out div small { display: block; color: var(--muted); font-size: .85rem; margin-bottom: 4px; }
+  .calc-out div strong { font-family: var(--serif); font-size: 2rem; font-weight: 500; letter-spacing: -0.02em; }
+  .calc-out .save strong { color: var(--green-2); }
+  .calc-fine { color: var(--muted); font-size: .8rem; margin-top: 16px; }
+
+  /* Testimonial */
+  .quote-sec { background: var(--ink); color: var(--paper); }
+  .quote { display: grid; grid-template-columns: auto 1fr; gap: 56px; align-items: center; }
+  .quote-photo {
+    width: 240px; height: 300px; border-radius: 140px 140px 20px 20px;
+    background: linear-gradient(160deg, var(--marigold), var(--coral));
+    display: grid; place-items: end center; overflow: hidden;
+  }
+  blockquote { margin: 0; }
+  blockquote p { font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2.3rem); line-height: 1.25; letter-spacing: -0.015em; margin-bottom: 28px; }
+  blockquote footer b { display: block; }
+  blockquote footer span { color: #a9bab2; font-size: .95rem; }
+  .stats { display: flex; gap: 48px; margin-top: 40px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,.15); flex-wrap: wrap; }
+  .stats strong { font-family: var(--serif); font-size: 2.2rem; font-weight: 500; color: var(--marigold); display: block; line-height: 1.1; }
+  .stats span { color: #a9bab2; font-size: .9rem; }
+
+  /* Pricing */
+  .pricing-head { text-align: center; margin-bottom: 48px; }
+  .pricing-head .lede { margin: 16px auto 28px; }
+  .bill-toggle { display: inline-flex; width: 280px; }
+  .save-tag { font-size: .72rem; background: var(--marigold); color: var(--ink); padding: 2px 7px; border-radius: 99px; margin-left: 4px; }
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+  .plan { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 34px; display: flex; flex-direction: column; }
+  .plan.featured { background: var(--green); color: var(--paper); border-color: var(--green); position: relative; transform: translateY(-10px); box-shadow: var(--shadow); }
+  .plan.featured .plan-desc, .plan.featured .per, .plan.featured li { color: #d3e3da; }
+  .plan.featured li svg { color: var(--marigold); }
+  .plan.featured .btn-primary { background: var(--marigold); color: var(--ink); box-shadow: none; }
+  .badge { position: absolute; top: -13px; left: 34px; background: var(--marigold); color: var(--ink); font-size: .75rem; font-weight: 700; padding: 5px 12px; border-radius: 99px; }
+  .plan h3 { font-size: 1.5rem; margin-bottom: 6px; }
+  .plan-desc { color: var(--ink-soft); font-size: .95rem; min-height: 3em; }
+  .price { margin: 24px 0 4px; display: flex; align-items: baseline; gap: 4px; }
+  .price strong { font-family: var(--serif); font-size: 3rem; font-weight: 500; letter-spacing: -0.03em; line-height: 1; }
+  .per { color: var(--muted); font-size: .88rem; margin-bottom: 26px; }
+  .plan ul { list-style: none; padding: 0; margin: 0 0 30px; display: grid; gap: 12px; flex: 1; }
+  .plan li { display: flex; gap: 10px; font-size: .95rem; color: var(--ink-soft); }
+  .plan li svg { flex: none; margin-top: 4px; color: var(--green-2); }
+
+  /* FAQ */
+  .faq { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; }
+  details { border-bottom: 1px solid var(--line); }
+  details:first-child { border-top: 1px solid var(--line); }
+  summary {
+    list-style: none; cursor: pointer; padding: 22px 0; font-weight: 600; font-size: 1.08rem;
+    display: flex; justify-content: space-between; gap: 20px; align-items: center;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--serif); font-size: 1.6rem; font-weight: 400; transition: transform .2s; line-height: 1; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { color: var(--ink-soft); padding: 0 0 22px; max-width: 40em; }
+
+  /* CTA */
+  .cta { padding: 0 0 104px; }
+  .cta-box {
+    background: var(--marigold); border-radius: 32px; padding: 72px 56px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-box::before, .cta-box::after { content: ""; position: absolute; border-radius: 50%; border: 2px solid rgba(20,38,31,.12); }
+  .cta-box::before { width: 420px; height: 420px; left: -140px; top: -160px; }
+  .cta-box::after { width: 300px; height: 300px; right: -90px; bottom: -150px; }
+  .cta-box h2 { max-width: 13em; margin: 0 auto 18px; position: relative; }
+  .cta-box p { max-width: 30em; margin: 0 auto 32px; color: var(--ink-soft); position: relative; }
+  .cta-form { display: flex; gap: 10px; max-width: 480px; margin: 0 auto; position: relative; }
+  .cta-form input {
+    flex: 1; min-width: 0; padding: 15px 20px; border-radius: 999px; border: 1.5px solid var(--ink);
+    font: 500 1rem var(--sans); background: var(--card); color: var(--ink);
+  }
+  .form-msg { margin-top: 14px; font-weight: 600; min-height: 1.6em; position: relative; }
+
+  /* Footer */
+  footer.site { border-top: 1px solid var(--line); padding: 64px 0 40px; font-size: .93rem; }
+  .foot-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 40px; margin-bottom: 48px; }
+  .foot-grid p { color: var(--muted); max-width: 22em; margin-top: 14px; }
+  .foot-grid h4 { font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; margin: 0 0 16px; color: var(--muted); }
+  .foot-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .foot-grid a { text-decoration: none; color: var(--ink-soft); }
+  .foot-grid a:hover { color: var(--ink); text-decoration: underline; }
+  .foot-bottom { display: flex; justify-content: space-between; color: var(--muted); font-size: .85rem; flex-wrap: wrap; gap: 12px; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .fc-1, .fc-2 { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* Responsive */
+  @media (max-width: 980px) {
+    .hero-grid, .calc, .faq { grid-template-columns: 1fr; gap: 48px; }
+    .features { grid-template-columns: 1fr 1fr; }
+    .feature.wide { grid-column: span 2; }
+    .plans { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    .plan.featured { transform: none; }
+    .quote { grid-template-columns: 1fr; gap: 36px; }
+    .quote-photo { width: 160px; height: 200px; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    .fc-1 { left: -8px; }
+    .fc-2 { right: -4px; }
+  }
+  @media (max-width: 760px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 16px; }
+    section { padding: 72px 0; }
+    .nav-links, .nav-cta .signin { display: none; }
+    .menu-btn { display: block; }
+    .nav-links.open {
+      display: grid; gap: 4px; position: absolute; top: 72px; left: 0; right: 0;
+      background: var(--paper); padding: 12px 16px 20px; border-bottom: 1px solid var(--line);
+    }
+    .nav-links.open a { display: block; padding: 10px 0; font-size: 1.05rem; }
+    .hero { padding: 40px 0 64px; }
+    .features, .steps { grid-template-columns: 1fr; }
+    .feature.wide { grid-column: auto; grid-template-columns: 1fr; }
+    .calc-box { padding: 24px; }
+    .cta-box { padding: 52px 22px; border-radius: 24px; }
+    .cta-form { flex-direction: column; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    .foot-grid > div:first-child { grid-column: span 2; }
+    .float-card { display: none; }
+    .logos { gap: 28px; }
+    .stats { gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="check" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header id="top">
+  <nav class="wrap nav" aria-label="Main">
+    <a href="#top" class="logo" aria-label="Hearth home">
+      <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="9" fill="#1f4d3d"/>
+        <path d="M16 7c3 4 6 6.5 6 11a6 6 0 0 1-12 0c0-2.5 1.2-4 2.6-5.4.2 2 1.2 3 2.4 3.4C14.4 13 14.8 10 16 7z" fill="#f2b441"/>
+      </svg>
+      Hearth
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#features">Product</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="signin">Sign in</a>
+      <a href="#start" class="btn btn-primary">Start free</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">HR & payroll for teams of 1–100</span>
+        <h1>Payday, handled. <em>Every single time.</em></h1>
+        <p class="lede">Hearth runs payroll, files your taxes, manages benefits and keeps your team records tidy — so you can spend Friday on your business, not your spreadsheets.</p>
+        <div class="hero-actions">
+          <a href="#start" class="btn btn-primary">Start your free 30 days
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="#how" class="btn btn-ghost">See how it works</a>
+        </div>
+        <div class="hero-note">
+          <span><svg width="16" height="16"><use href="#check"/></svg>No credit card</span>
+          <span><svg width="16" height="16"><use href="#check"/></svg>Switch mid-year free</span>
+          <span><svg width="16" height="16"><use href="#check"/></svg>Cancel anytime</span>
+        </div>
+      </div>
+
+      <div class="mock" aria-label="Preview of the Hearth payroll dashboard" role="img">
+        <div class="mock-blob"></div>
+        <div class="panel">
+          <div class="panel-head">
+            <small>Payroll · Oct 31</small>
+            <span class="pill">Ready to run</span>
+          </div>
+          <div class="big-num">$18,420.56</div>
+          <div class="big-num-sub">Total cost for 8 people · debits Oct 29</div>
+          <div class="bar">
+            <i style="width:72%;background:#1f4d3d"></i>
+            <i style="width:16%;background:#f2b441"></i>
+            <i style="width:12%;background:#e8735a"></i>
+          </div>
+          <div class="legend">
+            <span style="--c:#1f4d3d">Net pay $13,262</span>
+            <span style="--c:#f2b441">Taxes $2,947</span>
+            <span style="--c:#e8735a">Benefits $2,211</span>
+          </div>
+          <div class="people">
+            <div class="person">
+              <div class="avatar" style="background:#cfe6d8">MR</div>
+              <div><b>Maya Romero</b><small>Head baker · Salary</small></div>
+              <div class="amt">$2,310.00</div>
+            </div>
+            <div class="person">
+              <div class="avatar" style="background:#f8dca3">JO</div>
+              <div><b>Jonah Okafor</b><small>Barista · 62.5 hrs</small></div>
+              <div class="amt">$1,187.50</div>
+            </div>
+            <div class="person">
+              <div class="avatar" style="background:#f4c4b8">PL</div>
+              <div><b>Priya Lal</b><small>Contractor · Invoice</small></div>
+              <div class="amt">$1,450.00</div>
+            </div>
+          </div>
+          <div class="btn btn-primary run-btn" aria-hidden="true">Run payroll</div>
+        </div>
+        <div class="float-card fc-1">
+          <div class="dot"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9.5l3 3 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div>Q3 941 filed<small>Automatically · 2 min ago</small></div>
+        </div>
+        <div class="float-card fc-2">
+          <div class="dot"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="12" height="11" rx="2"/><path d="M3 8h12M7 2v3M11 2v3"/></svg></div>
+          <div>Jonah requested PTO<small>Nov 12 – 14 · Approve?</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust -->
+  <div class="trust">
+    <div class="wrap">
+      <p>Trusted by 12,000+ independent businesses across all 50 states</p>
+      <div class="logos" aria-label="Customer logos">
+        <span>Fernwood</span><span>Brightside</span><span>Oak &amp; Ember</span><span>Tidewell</span><span>Little Kiln</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Everything in one place</span>
+          <h2>The whole back office, without the back office.</h2>
+        </div>
+        <p class="lede">From the offer letter to the W-2, Hearth covers every part of looking after your people — built for owners who'd rather not become HR experts.</p>
+      </div>
+
+      <div class="features">
+        <article class="feature wide reveal">
+          <div>
+            <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <h3>Autopilot payroll</h3>
+            <p style="margin-top:10px">Set your schedule once. Hearth calculates hours, deductions and withholdings, pays your team by direct deposit, and files federal, state and local taxes for you — with an accuracy guarantee.</p>
+          </div>
+          <div class="calendar" aria-label="Sample month showing paydays and tax filing dates">
+            <b>S</b><b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b>
+            <span class="off">28</span><span class="off">29</span><span class="off">30</span><span>1</span><span>2</span><span>3</span><span>4</span>
+            <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+            <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span class="pay">17</span><span>18</span>
+            <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
+            <span>26</span><span>27</span><span>28</span><span>29</span><span class="tax">30</span><span class="pay">31</span><span class="off">1</span>
+          </div>
+        </article>
+
+        <article class="feature reveal" style="--bg:#f8dca3;--fg:#7a5412">
+          <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6C19 16.5 12 21 12 21z"/></svg></div>
+          <h3>Benefits that compete</h3>
+          <p>Offer health, dental, vision and 401(k) plans usually reserved for big companies — with deductions synced straight into payroll.</p>
+        </article>
+
+        <article class="feature reveal" style="--bg:#cfe6d8;--fg:#1f4d3d">
+          <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Time &amp; time off</h3>
+          <p>Clock-ins from any phone, overtime rules built in, and PTO requests your team can submit — and you can approve — in a tap.</p>
+        </article>
+
+        <article class="feature reveal" style="--bg:#f4c4b8;--fg:#8a3220">
+          <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></div>
+          <h3>Hiring &amp; onboarding</h3>
+          <p>Send offer letters, collect I-9s and W-4s, and set up direct deposit before a new hire's first day. Paperwork? Already done.</p>
+        </article>
+
+        <article class="feature reveal" style="--bg:#dfe3f2;--fg:#34407a">
+          <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>Compliance alerts</h3>
+          <p>Minimum wage changes, new-hire reporting, required posters — Hearth tracks the rules in every state you hire in and tells you what to do.</p>
+        </article>
+
+        <article class="feature reveal" style="--bg:#efe8d9;--fg:#14261f">
+          <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
+          <h3>Reports that make sense</h3>
+          <p>Labor cost by location, payroll history, PTO balances — clean reports your accountant will love, and one-click sync to your books.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how" class="steps-sec">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">How it works</span>
+          <h2>Up and running before lunch.</h2>
+        </div>
+        <p class="lede">Most businesses run their first payroll on Hearth in under an hour. Switching from another provider? We'll move your history for you.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <h3>Tell us about your business</h3>
+          <p>Answer a few questions about your company, locations and pay schedule. We'll register you with state tax agencies if needed.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Invite your team</h3>
+          <p>Employees and contractors enter their own details, sign documents and add bank info from their phone. No chasing.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Press run</h3>
+          <p>Review the totals, click once, and you're done. Pay arrives, taxes get filed, and year-end forms are generated automatically.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calculator -->
+  <section>
+    <div class="wrap calc">
+      <div class="reveal">
+        <span class="eyebrow">Do the math</span>
+        <h2>See what you'd save.</h2>
+        <p class="lede" style="margin-top:20px">Business owners tell us they spend hours every pay period on payroll and HR admin. Slide to see what that time is worth — and what Hearth costs instead.</p>
+      </div>
+
+      <div class="calc-box reveal" aria-live="polite">
+        <div class="calc-row">
+          <label for="emp">Team size <output id="empOut">10</output></label>
+          <input type="range" id="emp" min="1" max="100" value="10">
+        </div>
+        <div class="calc-row">
+          <label for="hrs">Hours on admin per pay run <output id="hrsOut">4</output></label>
+          <input type="range" id="hrs" min="1" max="16" value="4">
+        </div>
+        <div class="calc-row">
+          <label>Pay schedule</label>
+          <div class="seg" id="sched">
+            <button type="button" data-runs="52" aria-pressed="false">Weekly</button>
+            <button type="button" data-runs="26" aria-pressed="true">Biweekly</button>
+            <button type="button" data-runs="12" aria-pressed="false">Monthly</button>
+          </div>
+        </div>
+        <div class="calc-out">
+          <div><small>Hearth Core, per year</small><strong id="cost">$0</strong></div>
+          <div class="save"><small>Hours back per year</small><strong id="saved">0</strong></div>
+        </div>
+        <p class="calc-fine">Assumes Hearth cuts admin time by ~80% and annual billing on the Core plan.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="quote-sec">
+    <div class="wrap">
+      <div class="quote reveal">
+        <div class="quote-photo" aria-hidden="true">
+          <svg width="200" height="230" viewBox="0 0 200 230"><circle cx="100" cy="86" r="44" fill="#14261f" opacity=".85"/><path d="M20 230c0-50 36-86 80-86s80 36 80 86z" fill="#14261f" opacity=".85"/></svg>
+        </div>
+        <div>
+          <blockquote>
+            <p>“I used to dread the 15th and the 30th. Now payroll takes me four minutes on my phone between morning rushes. Hearth gave me my weekends back.”</p>
+            <footer><b>Dana Whitfield</b><span>Owner, Little Kiln Coffee · 14 employees</span></footer>
+          </blockquote>
+          <div class="stats">
+            <div><strong>99.98%</strong><span>on-time payroll</span></div>
+            <div><strong>4.9 / 5</strong><span>average support rating</span></div>
+            <div><strong>&lt; 2 min</strong><span>median chat response</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="wrap">
+      <div class="pricing-head reveal">
+        <span class="eyebrow">Pricing</span>
+        <h2>Simple pricing that grows with you.</h2>
+        <p class="lede">One base fee plus a small per-person charge. No setup fees, no surprise add-ons, no long contracts.</p>
+        <div class="seg bill-toggle" id="billing">
+          <button type="button" data-bill="monthly" aria-pressed="false">Monthly</button>
+          <button type="button" data-bill="annual" aria-pressed="true">Annual <span class="save-tag">−15%</span></button>
+        </div>
+      </div>
+
+      <div class="plans">
+        <div class="plan reveal">
+          <h3>Starter</h3>
+          <p class="plan-desc">For new businesses running their first payroll.</p>
+          <div class="price"><strong data-m="29" data-a="25">$25</strong>/mo</div>
+          <p class="per">+ <span data-m="6" data-a="5">$5</span> per person / month</p>
+          <ul>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Unlimited payroll runs</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Automatic tax filing</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Contractor payments &amp; 1099s</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Employee self-service app</li>
+          </ul>
+          <a href="#start" class="btn btn-ghost">Start free trial</a>
+        </div>
+
+        <div class="plan featured reveal">
+          <span class="badge">Most popular</span>
+          <h3>Core</h3>
+          <p class="plan-desc">Payroll plus the HR tools growing teams need.</p>
+          <div class="price"><strong data-m="59" data-a="50">$50</strong>/mo</div>
+          <p class="per">+ <span data-m="9" data-a="8">$8</span> per person / month</p>
+          <ul>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Everything in Starter</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Time tracking &amp; PTO policies</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Hiring &amp; onboarding workflows</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Benefits administration</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Multi-state payroll</li>
+          </ul>
+          <a href="#start" class="btn btn-primary">Start free trial</a>
+        </div>
+
+        <div class="plan reveal">
+          <h3>Plus</h3>
+          <p class="plan-desc">Dedicated support and advanced compliance.</p>
+          <div class="price"><strong data-m="99" data-a="84">$84</strong>/mo</div>
+          <p class="per">+ <span data-m="14" data-a="12">$12</span> per person / month</p>
+          <ul>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Everything in Core</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Named HR advisor</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Performance reviews</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Custom roles &amp; permissions</li>
+            <li><svg width="16" height="16"><use href="#check"/></svg>Priority phone support</li>
+          </ul>
+          <a href="#start" class="btn btn-ghost">Start free trial</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="steps-sec">
+    <div class="wrap faq">
+      <div class="reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions, answered.</h2>
+        <p class="lede" style="margin-top:20px">Can't find what you need? Our support team is real people, based in the US, and they answer fast.</p>
+      </div>
+      <div class="reveal">
+        <details open>
+          <summary>Can I switch to Hearth in the middle of the year?</summary>
+          <p>Yes. We import your year-to-date payroll history from your previous provider so your tax filings and W-2s stay accurate. Our onboarding team handles the migration at no extra cost.</p>
+        </details>
+        <details>
+          <summary>What happens if there's a tax filing mistake?</summary>
+          <p>If we make an error on a filing, we'll fix it and cover any resulting penalties and interest. That's our accuracy guarantee, included on every plan.</p>
+        </details>
+        <details>
+          <summary>Do you support contractors as well as employees?</summary>
+          <p>Absolutely. Pay contractors by direct deposit, collect W-9s during onboarding, and we'll generate and file 1099-NEC forms automatically at year end.</p>
+        </details>
+        <details>
+          <summary>How fast do employees get paid?</summary>
+          <p>Standard direct deposit arrives in two business days. Core and Plus plans include next-day deposit, so you can run payroll later in the week.</p>
+        </details>
+        <details>
+          <summary>Is my data secure?</summary>
+          <p>Hearth uses bank-level 256-bit encryption, SOC 2 Type II audited infrastructure, and two-factor authentication for every account.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="start" style="padding-top:104px">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <h2>Your next payday could be your easiest one.</h2>
+        <p>Try Hearth free for 30 days. Run real payroll, invite your team, and see the difference before you pay a cent.</p>
+        <form class="cta-form" id="ctaForm" novalidate>
+          <label for="email" class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Work email</label>
+          <input type="email" id="email" placeholder="you@yourbusiness.com" autocomplete="email" required>
+          <button class="btn btn-primary" type="submit">Get started</button>
+        </form>
+        <p class="form-msg" id="formMsg" role="status"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#top" class="logo">
+          <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#1f4d3d"/><path d="M16 7c3 4 6 6.5 6 11a6 6 0 0 1-12 0c0-2.5 1.2-4 2.6-5.4.2 2 1.2 3 2.4 3.4C14.4 13 14.8 10 16 7z" fill="#f2b441"/></svg>
+          Hearth
+        </a>
+        <p>Payroll, benefits and HR for the small businesses that keep our neighborhoods running.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul><li><a href="#features">Payroll</a></li><li><a href="#features">Benefits</a></li><li><a href="#features">Time tracking</a></li><li><a href="#pricing">Pricing</a></li></ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Partners</a></li><li><a href="#">Press</a></li></ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul><li><a href="#">Help center</a></li><li><a href="#">Payroll calculator</a></li><li><a href="#">State guides</a></li><li><a href="#">Security</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> Hearth Inc. All rights reserved.</span>
+      <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Accessibility</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Sticky header border
+  const header = document.querySelector('header');
+  addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 8), { passive: true });
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  navLinks.addEventListener('click', e => {
+    if (e.target.tagName === 'A') { navLinks.classList.remove('open'); menuBtn.setAttribute('aria-expanded', false); }
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Segmented controls
+  function segmented(el, onChange) {
+    el.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      el.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+      onChange(b);
+    });
+  }
+
+  // Savings calculator (Core plan, annual billing)
+  const emp = document.getElementById('emp'), hrs = document.getElementById('hrs');
+  const fmt = n => '$' + Math.round(n).toLocaleString();
+  let runs = 26;
+  function calc() {
+    document.getElementById('empOut').textContent = emp.value;
+    document.getElementById('hrsOut').textContent = hrs.value;
+    const cost = (50 + 8 * emp.value) * 12;
+    const saved = hrs.value * runs * 0.8;
+    document.getElementById('cost').textContent = fmt(cost);
+    document.getElementById('saved').textContent = Math.round(saved).toLocaleString() + ' hrs';
+  }
+  emp.addEventListener('input', calc);
+  hrs.addEventListener('input', calc);
+  segmented(document.getElementById('sched'), b => { runs = +b.dataset.runs; calc(); });
+  calc();
+
+  // Billing toggle
+  segmented(document.getElementById('billing'), b => {
+    const key = b.dataset.bill === 'annual' ? 'a' : 'm';
+    document.querySelectorAll('[data-m]').forEach(el => el.textContent = '$' + el.dataset[key]);
+  });
+
+  // CTA form
+  document.getElementById('ctaForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('email');
+    const msg = document.getElementById('formMsg');
+    if (!email.value || !email.checkValidity()) {
+      msg.textContent = 'Please enter a valid email address.';
+      email.focus();
+      return;
+    }
+    msg.textContent = '🎉 You’re in! Check ' + email.value + ' to set up your account.';
+    email.value = '';
+  });
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

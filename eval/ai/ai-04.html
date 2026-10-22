@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spillway — leaked credential monitoring</title>
+<meta name="description" content="Spillway watches stealer logs, combo lists and breach dumps for your company's credentials, and tells you which accounts to reset — usually within the hour.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3f0e8;
+    --paper-2: #ebe7dc;
+    --ink: #161513;
+    --ink-2: #4a4740;
+    --ink-3: #7a766c;
+    --rule: #16151326;
+    --rule-strong: #161513;
+    --signal: #c8371a;
+    --signal-soft: #c8371a14;
+    --ok: #2f6b3a;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --sans: "IBM Plex Sans", system-ui, sans-serif;
+    --serif: "Source Serif 4", Georgia, serif;
+    --wrap: 1180px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #12110f;
+      --paper-2: #1b1a17;
+      --ink: #ebe6da;
+      --ink-2: #b5afa2;
+      --ink-3: #847e72;
+      --rule: #ebe6da22;
+      --rule-strong: #ebe6da;
+      --signal: #ff6a45;
+      --signal-soft: #ff6a4518;
+      --ok: #7fbf87;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 17px/1.55 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  ::selection { background: var(--signal); color: var(--paper); }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 28px; }
+  .mono { font-family: var(--mono); }
+  .redact { background: var(--ink); color: var(--ink); border-radius: 1px; padding: 0 .15em; }
+
+  /* ---------- status strip ---------- */
+  .strip {
+    border-bottom: 1px solid var(--rule);
+    font: 400 12.5px/1 var(--mono);
+    color: var(--ink-2);
+  }
+  .strip .wrap { display: flex; gap: 28px; padding-top: 10px; padding-bottom: 10px; overflow: hidden; white-space: nowrap; }
+  .strip .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); margin-right: 8px; vertical-align: 1px; animation: pulse 2.4s infinite; }
+  @keyframes pulse { 50% { opacity: .35; } }
+  .strip span b { color: var(--ink); font-weight: 500; }
+  @media (max-width: 720px) { .strip .hide-sm { display: none; } }
+
+  /* ---------- nav ---------- */
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 22px; padding-bottom: 22px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 600 19px/1 var(--sans); letter-spacing: -.01em; }
+  .logo svg { width: 22px; height: 22px; }
+  nav ul { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; font-size: 15px; }
+  nav ul a { text-decoration: none; color: var(--ink-2); }
+  nav ul a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+  .nav-cta { display: flex; gap: 18px; align-items: center; font-size: 15px; }
+  .nav-cta a { text-decoration: none; }
+  @media (max-width: 860px) { nav ul { display: none; } }
+
+  .btn {
+    display: inline-block; font: 500 15px/1 var(--sans); text-decoration: none;
+    padding: 13px 18px; border: 1px solid var(--rule-strong); background: var(--ink); color: var(--paper);
+    cursor: pointer; border-radius: 2px;
+  }
+  .btn:hover { background: var(--signal); border-color: var(--signal); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 56px 0 84px; border-bottom: 1px solid var(--rule-strong); }
+  .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 64px; align-items: start; }
+  .eyebrow { font: 500 12.5px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--signal); margin: 0 0 22px; }
+  h1 {
+    font: 400 clamp(40px, 5.6vw, 72px)/1.02 var(--serif);
+    letter-spacing: -.025em; margin: 0 0 28px;
+  }
+  h1 em { font-style: italic; color: var(--signal); }
+  .lede { font-size: 19px; color: var(--ink-2); max-width: 34em; margin: 0 0 36px; }
+
+  .check { max-width: 520px; }
+  .check label { display: block; font: 500 13px/1 var(--mono); color: var(--ink-2); margin-bottom: 10px; }
+  .check-row { display: flex; border: 1px solid var(--rule-strong); background: var(--paper); }
+  .check-row span { font: 400 16px/1 var(--mono); color: var(--ink-3); padding: 16px 0 16px 14px; }
+  .check input {
+    flex: 1; min-width: 0; border: 0; background: transparent; color: var(--ink);
+    font: 400 16px/1 var(--mono); padding: 16px 10px 16px 4px; outline: none;
+  }
+  .check button { border: 0; border-left: 1px solid var(--rule-strong); border-radius: 0; }
+  .check small { display: block; margin-top: 10px; font-size: 13px; color: var(--ink-3); }
+  #result { margin-top: 18px; font: 400 14px/1.6 var(--mono); min-height: 1em; }
+  #result .line { opacity: 0; animation: in .25s forwards; }
+  #result .hit { color: var(--signal); }
+  @keyframes in { to { opacity: 1; } }
+
+  /* alert card */
+  .alert {
+    border: 1px solid var(--rule-strong); background: var(--paper);
+    font: 400 13.5px/1.6 var(--mono); position: relative;
+    box-shadow: 8px 8px 0 var(--ink);
+    margin-top: 8px;
+  }
+  .alert header { display: flex; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--rule-strong); background: var(--paper-2); }
+  .alert header b { color: var(--signal); font-weight: 500; }
+  .alert dl { margin: 0; padding: 14px; display: grid; grid-template-columns: 112px 1fr; row-gap: 6px; }
+  .alert dt { color: var(--ink-3); }
+  .alert dd { margin: 0; word-break: break-word; }
+  .alert footer { border-top: 1px dashed var(--rule); padding: 12px 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .alert footer span { border: 1px solid var(--rule-strong); padding: 3px 8px; font-size: 12px; }
+  .alert footer span.on { background: var(--ink); color: var(--paper); }
+  .alert-note { font: 400 italic 14px/1.45 var(--serif); color: var(--ink-3); margin: 22px 0 0 2px; max-width: 30em; }
+  .alert-note::before { content: "↑ "; font-style: normal; }
+
+  @media (max-width: 960px) {
+    .hero .wrap { grid-template-columns: 1fr; gap: 56px; }
+    .alert { box-shadow: 5px 5px 0 var(--ink); }
+  }
+
+  /* ---------- sections ---------- */
+  section { padding: 96px 0; border-bottom: 1px solid var(--rule); }
+  .sec-head { display: grid; grid-template-columns: 200px 1fr; gap: 40px; margin-bottom: 52px; }
+  .sec-num { font: 500 12.5px/1.8 var(--mono); color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+  h2 { font: 400 clamp(30px, 3.6vw, 44px)/1.1 var(--serif); letter-spacing: -.02em; margin: 0 0 16px; max-width: 18em; }
+  .sec-head p { color: var(--ink-2); margin: 0; max-width: 38em; }
+  .indent { margin-left: 240px; }
+  @media (max-width: 860px) {
+    .sec-head { grid-template-columns: 1fr; gap: 10px; }
+    .indent { margin-left: 0; }
+    section { padding: 72px 0; }
+  }
+
+  /* problem: numbers */
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--rule-strong); }
+  .fact { padding: 26px 28px 8px 0; border-right: 1px solid var(--rule); }
+  .fact + .fact { padding-left: 28px; }
+  .fact:last-child { border-right: 0; }
+  .fact .n { font: 400 54px/1 var(--serif); letter-spacing: -.03em; }
+  .fact .n sup { font-size: .4em; vertical-align: top; position: relative; top: .3em; margin-left: 2px; }
+  .fact p { color: var(--ink-2); font-size: 15.5px; margin: 14px 0 0; }
+  @media (max-width: 760px) {
+    .facts { grid-template-columns: 1fr; }
+    .fact, .fact + .fact { padding: 22px 0; border-right: 0; border-bottom: 1px solid var(--rule); }
+  }
+
+  /* sources table */
+  table { width: 100%; border-collapse: collapse; font-size: 15.5px; }
+  thead th { text-align: left; font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); padding: 0 16px 14px 0; border-bottom: 1px solid var(--rule-strong); }
+  tbody td { padding: 18px 16px 18px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  tbody td:first-child { font-weight: 500; width: 24%; }
+  td.lag { font-family: var(--mono); font-size: 14px; white-space: nowrap; width: 14%; }
+  td.note { color: var(--ink-2); }
+  .bar { display: inline-block; height: 6px; background: var(--ink); vertical-align: middle; margin-right: 8px; }
+  .table-foot { font-size: 14px; color: var(--ink-3); margin-top: 18px; }
+  @media (max-width: 700px) {
+    thead { display: none; }
+    tbody tr { display: block; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+    tbody td { display: block; border: 0; padding: 2px 0; width: auto !important; }
+  }
+
+  /* how it works */
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+  .steps li { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 40px; padding: 30px 0; border-top: 1px solid var(--rule); counter-increment: s; }
+  .steps li:last-child { border-bottom: 1px solid var(--rule); }
+  .steps li::before { content: "0" counter(s); font: 400 40px/1 var(--serif); color: var(--signal); }
+  .steps h3 { font: 600 19px/1.3 var(--sans); margin: 0; }
+  .steps p { margin: 0; color: var(--ink-2); }
+  .steps code { font: 400 14px var(--mono); background: var(--paper-2); padding: 1px 5px; }
+  @media (max-width: 860px) { .steps li { grid-template-columns: 1fr; gap: 10px; } }
+
+  /* integrations / payload */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--rule-strong); }
+  .split > div { padding: 26px; min-width: 0; }
+  .split > div + div { border-left: 1px solid var(--rule-strong); }
+  .split h4 { font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); margin: 0 0 18px; }
+  pre { margin: 0; font: 400 13px/1.65 var(--mono); overflow-x: auto; color: var(--ink); }
+  pre .k { color: var(--ink-3); }
+  pre .s { color: var(--signal); }
+  .chat { font-size: 15px; }
+  .chat .who { display: flex; gap: 10px; align-items: baseline; margin-bottom: 6px; }
+  .chat .who b { font-weight: 600; }
+  .chat .who small { color: var(--ink-3); font-size: 12px; }
+  .chat .msg { border-left: 3px solid var(--signal); padding: 2px 0 2px 14px; color: var(--ink-2); }
+  .chat .msg p { margin: 0 0 10px; }
+  .chat .msg code { font: 400 13.5px var(--mono); color: var(--ink); }
+  .chat .reply { margin-top: 22px; padding-top: 18px; border-top: 1px dashed var(--rule); }
+  .chat .reply .msg { border-left-color: var(--rule-strong); }
+  .logos { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 28px; font: 400 14px var(--mono); color: var(--ink-2); }
+  .logos span::before { content: "+ "; color: var(--ink-3); }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } .split > div + div { border-left: 0; border-top: 1px solid var(--rule-strong); } }
+
+  /* principles */
+  .nots { display: grid; grid-template-columns: 1fr 1fr; gap: 0 56px; }
+  .nots div { padding: 22px 0; border-top: 1px solid var(--rule); }
+  .nots h3 { font: 600 17px/1.35 var(--sans); margin: 0 0 6px; }
+  .nots h3 s { text-decoration-color: var(--signal); text-decoration-thickness: 2px; color: var(--ink-3); font-weight: 400; }
+  .nots p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+  @media (max-width: 760px) { .nots { grid-template-columns: 1fr; } }
+
+  /* quote */
+  .quote { padding: 110px 0; background: var(--ink); color: var(--paper); border: 0; }
+  .quote blockquote { margin: 0; font: 400 clamp(26px, 3.2vw, 40px)/1.25 var(--serif); letter-spacing: -.015em; max-width: 26em; }
+  .quote blockquote::before { content: "“"; color: var(--signal); }
+  .quote blockquote::after { content: "”"; color: var(--signal); }
+  .quote cite { display: block; margin-top: 30px; font: 400 14px/1.5 var(--mono); font-style: normal; color: color-mix(in srgb, var(--paper) 65%, transparent); }
+
+  /* pricing */
+  .plans { border-top: 1px solid var(--rule-strong); }
+  .plan { display: grid; grid-template-columns: 200px 180px 1fr 170px; gap: 40px; padding: 30px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+  .plan h3 { font: 600 19px/1.2 var(--sans); margin: 0; }
+  .plan .tag { display: inline-block; margin-top: 8px; font: 500 11.5px/1 var(--mono); color: var(--signal); text-transform: uppercase; letter-spacing: .05em; }
+  .plan .price { font: 400 36px/1 var(--serif); letter-spacing: -.02em; }
+  .plan .price small { display: block; font: 400 13px/1.4 var(--sans); color: var(--ink-3); margin-top: 8px; letter-spacing: 0; }
+  .plan ul { margin: 0; padding: 0 0 0 18px; color: var(--ink-2); font-size: 15.5px; }
+  .plan li { margin-bottom: 4px; }
+  .plan .btn { width: 100%; text-align: center; }
+  @media (max-width: 960px) { .plan { grid-template-columns: 1fr 1fr; gap: 18px 30px; } }
+  @media (max-width: 560px) { .plan { grid-template-columns: 1fr; } }
+
+  /* faq */
+  details { border-top: 1px solid var(--rule); }
+  details:last-of-type { border-bottom: 1px solid var(--rule); }
+  summary { cursor: pointer; list-style: none; padding: 22px 40px 22px 0; font: 500 18px/1.4 var(--sans); position: relative; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; position: absolute; right: 4px; top: 18px; font: 300 26px/1 var(--mono); color: var(--ink-3); }
+  details[open] summary::after { content: "–"; color: var(--signal); }
+  details p { margin: -6px 0 24px; color: var(--ink-2); max-width: 44em; }
+
+  /* closing */
+  .closing { padding: 110px 0; border-bottom: 1px solid var(--rule-strong); }
+  .closing h2 { font-size: clamp(36px, 5vw, 64px); max-width: 14em; margin-bottom: 30px; }
+  .closing .row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .closing .row small { color: var(--ink-3); font-size: 14px; margin-left: 6px; }
+
+  footer.site { padding: 44px 0 60px; font-size: 14px; color: var(--ink-3); }
+  footer.site .wrap { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 30px; }
+  footer.site h5 { font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ink); margin: 0 0 14px; }
+  footer.site ul { list-style: none; margin: 0; padding: 0; }
+  footer.site li { margin-bottom: 6px; }
+  footer.site a { text-decoration: none; }
+  footer.site a:hover { color: var(--ink); }
+  footer.site .fine { grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: 20px; margin-top: 10px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-family: var(--mono); font-size: 12.5px; }
+  @media (max-width: 760px) { footer.site .wrap { grid-template-columns: 1fr 1fr; } }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
+    .check-row { flex-wrap: wrap; }
+    .check button { width: 100%; border-left: 0; border-top: 1px solid var(--rule-strong); }
+    .alert dl { grid-template-columns: 92px 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } #result .line { opacity: 1; } }
+</style>
+</head>
+<body>
+
+<div class="strip" aria-label="Ingest status">
+  <div class="wrap">
+    <span><i class="dot"></i>Ingest running</span>
+    <span>Last batch parsed <b id="ago">4 min</b> ago</span>
+    <span class="hide-sm">This week: <b>1,927</b> stealer logs · <b>38</b> combo lists · <b>6</b> breach dumps</span>
+    <span class="hide-sm">Median time-to-alert (30d): <b>41 min</b></span>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 6h20M2 12h13M2 18h7" stroke="currentColor" stroke-width="2.4"/><circle cx="19.5" cy="17.5" r="2.5" fill="var(--signal)"/></svg>
+      Spillway
+    </a>
+    <ul>
+      <li><a href="#sources">Coverage</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#">Docs</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#">Sign in</a>
+      <a class="btn" href="#start">Start monitoring</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Leaked credential monitoring</p>
+      <h1>Some of your team's passwords are <em>already for&nbsp;sale.</em> We'll tell you whose.</h1>
+      <p class="lede">Spillway reads stealer logs, combo lists and breach dumps as they surface, matches them against your domains, and sends you a short list of accounts to reset. Not a risk score. A list.</p>
+
+      <form class="check" id="check" autocomplete="off">
+        <label for="domain">See what we've already got on file</label>
+        <div class="check-row">
+          <span>@</span>
+          <input id="domain" name="domain" placeholder="yourcompany.com" spellcheck="false" inputmode="url" required>
+          <button class="btn" type="submit">Check domain</button>
+        </div>
+        <small>Counts only. Full results need a DNS TXT record to prove it's your domain.</small>
+        <div id="result" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <div>
+      <div class="alert" aria-label="Example alert">
+        <header><span>alert #48211</span><b>● reset recommended</b></header>
+        <dl>
+          <dt>account</dt><dd>m.okafor@northbeam-freight.com</dd>
+          <dt>password</dt><dd>Nb<span class="redact">xxxxxx</span>24! <span style="color:var(--ink-3)">(matches current AD hash)</span></dd>
+          <dt>source</dt><dd>stealer log · Lumma variant</dd>
+          <dt>infected host</dt><dd>DESKTOP-7Q2… · Win 11 · personal device</dd>
+          <dt>also in log</dt><dd>okta, vpn.northbeam…, 31 personal sites</dd>
+          <dt>first seen</dt><dd>today 09:12 UTC · posted 08:31</dd>
+        </dl>
+        <footer>
+          <span class="on">Force reset</span><span>Revoke sessions</span><span>Mark handled</span>
+        </footer>
+      </div>
+      <p class="alert-note">A real alert, with the name and company changed. Note the personal laptop — that's where most of these come from now.</p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">01 — The problem</div>
+      <div>
+        <h2>Your password policy can't help if the password was stolen off someone's home PC.</h2>
+        <p>Infostealer malware grabs saved browser passwords, session cookies and autofill data, then ships it off in a neat folder. Those folders get sold in bulk, often for a few dollars each. Your MFA and rotation rules never get a say.</p>
+      </div>
+    </div>
+    <div class="facts indent">
+      <div class="fact"><div class="n">63<sup>%</sup></div><p>of the corporate logins we matched last quarter came from stealer logs, not breaches.</p></div>
+      <div class="fact"><div class="n">9<sup>days</sup></div><p>median gap between a stealer log being posted and the first login attempt we could correlate.</p></div>
+      <div class="fact"><div class="n">1 in 4</div><p>logs included a live session cookie, which means MFA wouldn't have stopped anyone.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">02 — Coverage</div>
+      <div>
+        <h2>What we actually watch, and how fast.</h2>
+        <p>Plenty of vendors say "dark web monitoring" and leave it at that. Here's the real breakdown, lag times included.</p>
+      </div>
+    </div>
+    <div class="indent">
+      <table>
+        <thead><tr><th>Source</th><th>Typical lag</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Stealer log channels</td><td class="lag"><i class="bar" style="width:14px"></i>&lt; 1 hr</td><td class="note">Telegram and private log shops. Most of our signal comes from here. We parse the full log, so you see which other internal apps were exposed too.</td></tr>
+          <tr><td>Combo lists</td><td class="lag"><i class="bar" style="width:30px"></i>1–6 hrs</td><td class="note">Mostly recycled. We dedupe against our history, so a 2019 password resurfacing doesn't turn into a fresh alert.</td></tr>
+          <tr><td>Breach dumps</td><td class="lag"><i class="bar" style="width:48px"></i>hours–days</td><td class="note">Depends on when a dump goes public or gets traded. We check hash formats and crack only what's needed to compare.</td></tr>
+          <tr><td>Paste sites &amp; repos</td><td class="lag"><i class="bar" style="width:14px"></i>&lt; 15 min</td><td class="note">Public pastes, plus leaked <code style="font-family:var(--mono);font-size:14px">.env</code> files and keys in public GitHub/GitLab commits.</td></tr>
+          <tr><td>Closed forums</td><td class="lag"><i class="bar" style="width:64px"></i>varies</td><td class="note">Read-only access, run by our research team. We don't pay threat actors, and we won't claim coverage we don't have.</td></tr>
+        </tbody>
+      </table>
+      <p class="table-foot">Lag = time from first public appearance to alert, where we can measure it. Updated monthly.</p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">03 — How it works</div>
+      <div><h2>About twenty minutes to set up. Then you mostly forget about it.</h2></div>
+    </div>
+    <ol class="steps">
+      <li><h3>Verify your domains</h3><p>Add a TXT record for each domain you own. Subsidiaries and old acquired domains count too, and that's often where the forgotten accounts are.</p></li>
+      <li><h3>Connect your directory (optional)</h3><p>Hook up Entra ID, Okta or Google Workspace and we'll check leaked passwords against <em>current</em> hashes. Matching happens locally via our agent, and plaintext never leaves your network.</p></li>
+      <li><h3>Get the backlog</h3><p>Your first report covers everything already on file, usually a few hundred entries. We sort it by "still works" vs. "already rotated", so you only deal with the first group.</p></li>
+      <li><h3>Act on new alerts</h3><p>New hits arrive in Slack, Teams, email, or a webhook. Connect your IdP and you can force a reset with one click, or automatically with <code>auto_reset: true</code>.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">04 — Where alerts go</div>
+      <div>
+        <h2>Shows up wherever your team already looks.</h2>
+        <p>Every alert is the same small JSON object. Route it into your SIEM, or send it straight to the person on call.</p>
+      </div>
+    </div>
+    <div class="split">
+      <div>
+        <h4>Webhook payload</h4>
+<pre>{
+  <span class="k">"id"</span>: <span class="s">"alt_48211"</span>,
+  <span class="k">"account"</span>: <span class="s">"m.okafor@northbeam-freight.com"</span>,
+  <span class="k">"source_type"</span>: <span class="s">"stealer_log"</span>,
+  <span class="k">"family"</span>: <span class="s">"lumma"</span>,
+  <span class="k">"password_matches_current"</span>: true,
+  <span class="k">"session_cookies"</span>: [<span class="s">"okta"</span>],
+  <span class="k">"host"</span>: { <span class="k">"os"</span>: <span class="s">"win11"</span>, <span class="k">"managed"</span>: false },
+  <span class="k">"posted_at"</span>: <span class="s">"2026-10-22T08:31:00Z"</span>,
+  <span class="k">"seen_at"</span>: <span class="s">"2026-10-22T09:12:04Z"</span>,
+  <span class="k">"recommended"</span>: [<span class="s">"reset"</span>, <span class="s">"revoke_sessions"</span>]
+}</pre>
+      </div>
+      <div class="chat">
+        <h4>#sec-alerts</h4>
+        <div class="who"><b>Spillway</b><small>9:12 AM</small></div>
+        <div class="msg">
+          <p><strong>1 account needs a reset.</strong> <code>m.okafor@</code> showed up in a stealer log posted 41 min ago. The password still matches AD, and there's a live Okta session cookie.</p>
+          <p>Host looks like a personal Windows laptop, not one of yours.</p>
+        </div>
+        <div class="reply">
+          <div class="who"><b>Dana R.</b><small>9:14 AM</small></div>
+          <div class="msg"><p>reset + sessions killed. pinging her about the laptop</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="logos">
+      <span>Slack</span><span>Microsoft Teams</span><span>PagerDuty</span><span>Splunk</span><span>Sentinel</span><span>Okta</span><span>Entra ID</span><span>Google Workspace</span><span>Webhooks</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">05 — Ground rules</div>
+      <div><h2>Things we decided not to do.</h2></div>
+    </div>
+    <div class="nots indent">
+      <div><h3><s>Store plaintext passwords</s></h3><p>We hash on ingest. Your dashboard shows the first and last two characters, which is enough for a human to recognise the password and nothing more.</p></div>
+      <div><h3><s>Pay criminals for data</s></h3><p>No purchases from threat actors and no "buying back" your data. Everything we hold was publicly posted or traded, or collected through lawful research access.</p></div>
+      <div><h3><s>Sell a risk score</s></h3><p>A 72/100 doesn't tell you what to do. We give you account names, what was exposed, and the one action we'd take.</p></div>
+      <div><h3><s>Scare you into a demo</s></h3><p>The domain check above is real, and so are the counts. If there's nothing to worry about, we'll say so.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="quote">
+  <div class="wrap">
+    <blockquote>We'd done the password manager rollout, the phishing training, all of it. The first Spillway report had 14 working logins in it, and every one came from a kid's gaming PC or a shared family laptop.</blockquote>
+    <cite>— Head of IT, 340-person logistics company<br>(name withheld at their request)</cite>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">06 — Pricing</div>
+      <div>
+        <h2>Priced per monitored domain, not per seat.</h2>
+        <p>No "contact us" just to find out what it costs. Annual billing gets you two months free.</p>
+      </div>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <div><h3>Watch</h3></div>
+        <div class="price">$0<small>1 domain, forever</small></div>
+        <ul><li>Weekly digest email</li><li>Breach dumps &amp; combo lists</li><li>Backlog report on signup</li></ul>
+        <a class="btn ghost" href="#start">Start free</a>
+      </div>
+      <div class="plan">
+        <div><h3>Team</h3><span class="tag">Most teams pick this</span></div>
+        <div class="price">$340<small>per month · up to 5 domains</small></div>
+        <ul><li>Real-time alerts, stealer logs included</li><li>Slack / Teams / webhook</li><li>Directory hash matching</li><li>One-click reset &amp; session revoke</li></ul>
+        <a class="btn" href="#start">Start 14-day trial</a>
+      </div>
+      <div class="plan">
+        <div><h3>Programme</h3></div>
+        <div class="price">from $1.9k<small>per month · unlimited domains</small></div>
+        <ul><li>Everything in Team</li><li>Customer &amp; vendor domain watchlists</li><li>SIEM connectors, SSO, audit log</li><li>Named analyst, 1-hr escalation SLA</li></ul>
+        <a class="btn ghost" href="#">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">07 — Questions</div>
+      <div><h2>Things people ask on the first call.</h2></div>
+    </div>
+    <div class="indent">
+      <details><summary>How is this different from Have I Been Pwned?</summary><p>HIBP is great, and we use it ourselves. It focuses on public breaches, though, and works per email address. Most of what we alert on comes from stealer logs, which HIBP mostly doesn't cover. We also check whether the leaked password still works on your directory, so you're not chasing ones that were rotated years ago.</p></details>
+      <details><summary>Do you need access to our password hashes?</summary><p>No. Directory matching runs in a small agent on your network. It receives k-anonymised hash prefixes from us and does the comparison locally. We only ever learn "match" or "no match".</p></details>
+      <details><summary>What about customers' accounts, not just employees?</summary><p>On Programme you can watch any domain you can prove a relationship with, which covers customer login domains too. Most people use this to spot account-takeover risk before it reaches support.</p></details>
+      <details><summary>What happens when the infected device isn't ours?</summary><p>That's the usual case. We tell you what we can (OS, approximate infection date, which other corporate apps were in the log) so you can have a useful conversation with the employee. We don't de-anonymise anyone or do anything to the device.</p></details>
+      <details><summary>Where is data stored?</summary><p>EU (Frankfurt) or US (Virginia), your choice, and fixed at signup. SOC 2 Type II report available on request under NDA.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="closing" id="start">
+  <div class="wrap">
+    <h2>Find out what's already out there before somebody else uses it.</h2>
+    <div class="row">
+      <a class="btn" href="#">Verify a domain — free</a>
+      <a class="btn ghost" href="#">Book a 20-min walkthrough</a>
+      <small>No card. Backlog report in about an hour.</small>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div>
+      <a class="logo" href="#" style="margin-bottom:14px">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 6h20M2 12h13M2 18h7" stroke="currentColor" stroke-width="2.4"/><circle cx="19.5" cy="17.5" r="2.5" fill="var(--signal)"/></svg>
+        <span style="color:var(--ink)">Spillway</span>
+      </a>
+      <p style="max-width:22em;margin:0">Leaked credential monitoring for teams who'd rather find out first.<br>Rotterdam &amp; Pittsburgh.</p>
+    </div>
+    <div><h5>Product</h5><ul><li><a href="#sources">Coverage</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#">Changelog</a></li><li><a href="#">API docs</a></li></ul></div>
+    <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Research notes</a></li><li><a href="#">Careers (2)</a></li></ul></div>
+    <div><h5>Trust</h5><ul><li><a href="#">Security</a></li><li><a href="#">Data handling</a></li><li><a href="#">Responsible disclosure</a></li><li><a href="#">Privacy</a></li></ul></div>
+    <div class="fine"><span>© 2026 Spillway B.V.</span><span>security@spillway.example · PGP 4A1F 9C02 …</span></div>
+  </div>
+</footer>
+
+<script>
+  // "last batch" ticker
+  (function () {
+    var m = 4, el = document.getElementById('ago');
+    setInterval(function () { m = m >= 9 ? 1 : m + 1; el.textContent = m + ' min'; }, 60000);
+  })();
+
+  // domain check demo: deterministic counts from the domain string
+  (function () {
+    var form = document.getElementById('check'), out = document.getElementById('result');
+    function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var d = document.getElementById('domain').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^@/, '').split('/')[0];
+      if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(d)) { out.innerHTML = '<div class="line hit">That doesn\'t look like a domain.</div>'; return; }
+      var h = hash(d), total = 20 + (h % 480), stealer = Math.round(total * (0.35 + (h >> 8) % 40 / 100)), recent = (h >> 4) % 23;
+      var lines = [
+        '→ searching 14.2B records for @' + d + ' …',
+        '  ' + total.toLocaleString() + ' credential entries on file',
+        '  ' + stealer.toLocaleString() + ' from stealer logs',
+        recent ? '<span class="hit">  ' + recent + ' posted in the last 30 days</span>' : '  none posted in the last 30 days',
+        '→ verify ownership to see which still work.'
+      ];
+      out.innerHTML = '';
+      lines.forEach(function (l, i) {
+        setTimeout(function () { var div = document.createElement('div'); div.className = 'line'; div.innerHTML = l; out.appendChild(div); }, i * 380);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

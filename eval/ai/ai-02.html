@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fieldnote Coffee Roasters — Fresh-roasted subscriptions</title>
+<meta name="description" content="Small-batch specialty coffee, roasted to order and delivered on your schedule. Pause or cancel anytime.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f0e6; --bg2:#ece3d3; --ink:#1f1712; --muted:#6b5d50;
+  --accent:#b4471f; --accent-ink:#fff; --dark:#201710; --dark-ink:#f6f0e6;
+  --line:rgba(31,23,18,.14); --card:#fffaf1;
+  --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);line-height:1.08;letter-spacing:-.02em;font-weight:600}
+h1{font-size:clamp(2.6rem,6.5vw,5rem)}
+h2{font-size:clamp(2rem,4vw,3rem)}
+h3{font-size:1.35rem}
+.eyebrow{font:600 .78rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.btn{display:inline-block;padding:14px 26px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:600;text-decoration:none;border:0;cursor:pointer;font-size:1rem;font-family:inherit;transition:transform .15s,background .15s}
+.btn:hover{background:#963a17;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--bg)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* nav */
+header{position:sticky;top:0;z-index:10;background:rgba(246,240,230,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font:700 1.3rem var(--serif);text-decoration:none;display:flex;gap:10px;align-items:center}
+.logo i{width:12px;height:12px;border-radius:50%;background:var(--accent);display:inline-block}
+nav ul{display:flex;gap:28px;list-style:none;padding:0}
+nav ul a{text-decoration:none;font-size:.95rem;font-weight:500;color:var(--muted)}
+nav ul a:hover{color:var(--ink)}
+nav .btn{padding:10px 20px;font-size:.92rem}
+
+/* hero */
+.hero{padding:88px 0 96px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.hero p.lead{font-size:1.2rem;color:var(--muted);max-width:30em;margin:24px 0 36px}
+.hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero small{display:block;margin-top:20px;color:var(--muted);font-size:.9rem}
+.bag{position:relative;aspect-ratio:4/5;background:var(--bg2);border-radius:28px;display:grid;place-items:center;overflow:hidden}
+.bag::before{content:"";position:absolute;inset:auto -20% -30% -20%;height:70%;background:radial-gradient(closest-side,rgba(180,71,31,.35),transparent);}
+.pack{position:relative;width:56%;aspect-ratio:3/4.3;background:var(--dark);color:var(--dark-ink);border-radius:14px 14px 20px 20px;padding:22px 18px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 30px 50px -20px rgba(0,0,0,.5);transform:rotate(-4deg)}
+.pack::before{content:"";position:absolute;top:0;left:0;right:0;height:18px;background:repeating-linear-gradient(90deg,#3a2c20 0 6px,#2a1f16 6px 12px);border-radius:14px 14px 0 0}
+.pack b{font:700 1.15rem var(--serif);margin-top:14px}
+.pack span{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.pack .dot{width:44px;height:44px;border-radius:50%;background:var(--accent)}
+.stamp{position:absolute;right:24px;top:24px;background:var(--card);border-radius:999px;padding:8px 14px;font-size:.8rem;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.1)}
+
+/* marquee facts */
+.facts{border-block:1px solid var(--line);padding:22px 0;background:var(--bg2)}
+.facts .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-weight:500;font-size:.95rem}
+.facts span::before{content:"✦ ";color:var(--accent)}
+
+section{padding:104px 0}
+.head{max-width:620px;margin-bottom:56px}
+.head p{color:var(--muted);margin-top:16px}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:s}
+.step{padding:32px;border:1px solid var(--line);border-radius:20px;background:var(--card)}
+.step::before{counter-increment:s;content:"0" counter(s);font:600 1rem var(--serif);color:var(--accent)}
+.step h3{margin:14px 0 10px}
+.step p{color:var(--muted);font-size:.98rem}
+
+/* coffees */
+.alt{background:var(--bg2)}
+.coffees{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.coffee{background:var(--card);border-radius:20px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column}
+.coffee .swatch{height:140px;display:flex;align-items:flex-end;padding:16px;color:#fff;font:600 .78rem var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.coffee .body{padding:24px;display:flex;flex-direction:column;gap:10px;flex:1}
+.coffee .origin{font-size:.85rem;color:var(--muted)}
+.notes{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.notes span{font-size:.8rem;padding:4px 12px;border-radius:999px;background:var(--bg2)}
+
+/* pricing */
+.toggle{display:inline-flex;background:var(--bg2);border-radius:999px;padding:4px;margin-bottom:40px}
+.toggle button{border:0;background:none;padding:10px 20px;border-radius:999px;font:600 .92rem var(--sans);cursor:pointer;color:var(--muted)}
+.toggle button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
+.plan{padding:36px 32px;border-radius:24px;border:1px solid var(--line);background:var(--card);display:flex;flex-direction:column;gap:14px;position:relative}
+.plan.pop{background:var(--dark);color:var(--dark-ink);border-color:var(--dark)}
+.plan.pop .muted,.plan.pop li{color:rgba(246,240,230,.8)}
+.plan .tag{position:absolute;top:-13px;left:32px;background:var(--accent);color:#fff;font-size:.75rem;font-weight:600;padding:5px 14px;border-radius:999px}
+.price{font:600 3rem var(--serif);letter-spacing:-.03em}
+.price small{font:400 1rem var(--sans);opacity:.7;letter-spacing:0}
+.muted{color:var(--muted);font-size:.95rem}
+.plan ul{list-style:none;padding:0;display:grid;gap:10px;margin:8px 0 20px;font-size:.96rem}
+.plan li::before{content:"✓";color:var(--accent);font-weight:700;margin-right:10px}
+.plan .btn{margin-top:auto;text-align:center}
+.plan.pop .btn{background:var(--dark-ink);color:var(--dark)}
+.plan.pop .btn:hover{background:#fff}
+
+/* story */
+.story{background:var(--dark);color:var(--dark-ink)}
+.story .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.story p{color:rgba(246,240,230,.78);margin-top:20px}
+.story .eyebrow{color:#e9946f}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.stats div{border-top:1px solid rgba(246,240,230,.25);padding-top:18px}
+.stats b{display:block;font:600 2.6rem var(--serif);letter-spacing:-.03em}
+.stats span{font-size:.9rem;opacity:.7}
+
+/* reviews */
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+blockquote{padding:32px;border-radius:20px;background:var(--card);border:1px solid var(--line);font:400 1.1rem/1.5 var(--serif)}
+blockquote footer{font:500 .88rem var(--sans);color:var(--muted);margin-top:18px}
+
+/* faq */
+.faq{max-width:760px}
+details{border-bottom:1px solid var(--line);padding:22px 0}
+summary{font:600 1.2rem var(--serif);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.5rem;line-height:1;color:var(--accent);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--muted);margin-top:12px}
+
+/* final cta */
+.final{text-align:center;background:var(--accent);color:#fff;padding:96px 0}
+.final h2{max-width:14em;margin:0 auto 20px}
+.final p{opacity:.9;margin-bottom:32px}
+.final form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.final input{padding:14px 22px;border-radius:999px;border:0;font:inherit;min-width:min(320px,100%)}
+.final .btn{background:var(--dark);color:var(--dark-ink)}
+.final .btn:hover{background:#000}
+.final .ok{margin-top:16px;font-weight:600;min-height:1.6em}
+
+footer.site{padding:48px 0;font-size:.9rem;color:var(--muted)}
+footer.site .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+
+@media (max-width:860px){
+  nav ul{display:none}
+  .hero .wrap,.story .wrap{grid-template-columns:1fr}
+  .steps,.coffees,.plans,.quotes{grid-template-columns:1fr}
+  .bag{max-width:420px}
+  section{padding:72px 0}
+  .hero{padding:56px 0 72px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="logo" href="#top"><i></i>Fieldnote</a>
+      <ul>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#coffees">Coffees</a></li>
+        <li><a href="#plans">Plans</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a class="btn" href="#plans">Subscribe</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Small-batch · Roasted to order</p>
+      <h1>Coffee that’s never older than a week.</h1>
+      <p class="lead">We roast every bag the day before it ships, from farms we visit ourselves. Pick your taste, set your pace, and a better morning arrives on your doorstep.</p>
+      <div class="cta">
+        <a class="btn" href="#plans">Start your subscription</a>
+        <a class="btn ghost" href="#coffees">Meet this month’s coffees</a>
+      </div>
+      <small>Free shipping · Skip, pause or cancel anytime</small>
+    </div>
+    <div class="bag" aria-hidden="true">
+      <div class="stamp">Roasted Tue · Ships Wed</div>
+      <div class="pack"><span>Fieldnote · 340g</span><div><div class="dot"></div><b>Huila<br>Washed</b></div><span>Cherry · Cacao · Panela</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="facts">
+  <div class="wrap">
+    <span>Roasted within 24h of shipping</span>
+    <span>Direct-trade, paid above Fairtrade</span>
+    <span>Compostable packaging</span>
+    <span>4.9 / 5 from 3,200+ subscribers</span>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">How it works</p>
+      <h2>Three steps to a fuller cup.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Tell us how you brew</h3><p>Espresso, pour-over, French press or moka pot. Answer four quick questions and we’ll match you with coffees you’ll love, ground to suit your method.</p></div>
+      <div class="step"><h3>We roast on your schedule</h3><p>Weekly, every two weeks or monthly. Your bag is roasted the day before it ships, so it arrives at peak flavor.</p></div>
+      <div class="step"><h3>Change anything, anytime</h3><p>Swap origins, skip a delivery or pause while you’re away, all in two clicks. No calls, no guilt.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="coffees" class="alt">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">This month’s lineup</p>
+      <h2>Three coffees, one roaster’s obsession.</h2>
+      <p>Our rotating menu follows the harvest. Subscribers get first pick of every limited lot.</p>
+    </div>
+    <div class="coffees">
+      <article class="coffee">
+        <div class="swatch" style="background:linear-gradient(135deg,#7a2e17,#b4471f)">Light roast</div>
+        <div class="body"><h3>Huila Washed</h3><p class="origin">Colombia · Finca La Esperanza · 1,750 m</p><p>Juicy and clean, with a caramel finish that makes it dangerously easy to drink.</p><div class="notes"><span>Red cherry</span><span>Cacao</span><span>Panela</span></div></div>
+      </article>
+      <article class="coffee">
+        <div class="swatch" style="background:linear-gradient(135deg,#3f4a2a,#7d8a4a)">Light–medium</div>
+        <div class="body"><h3>Guji Natural</h3><p class="origin">Ethiopia · Hambela Cooperative · 2,100 m</p><p>Bright and floral, sun-dried for a berry sweetness that stands out in a pour-over.</p><div class="notes"><span>Blueberry</span><span>Jasmine</span><span>Honey</span></div></div>
+      </article>
+      <article class="coffee">
+        <div class="swatch" style="background:linear-gradient(135deg,#2a1c14,#5a3a26)">Medium–dark</div>
+        <div class="body"><h3>House Espresso</h3><p class="origin">Brazil + Guatemala blend</p><p>Thick, sweet and balanced. Built for milk, forgiving on any machine, and our best-seller for six years.</p><div class="notes"><span>Toffee</span><span>Hazelnut</span><span>Dark choc</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="plans">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Plans</p>
+      <h2>Pick a pace. Save up to 15%.</h2>
+      <p>Every plan includes free shipping and the freedom to change your mind.</p>
+    </div>
+    <div class="toggle" role="group" aria-label="Billing frequency">
+      <button type="button" data-freq="monthly" aria-pressed="false">Monthly</button>
+      <button type="button" data-freq="biweekly" aria-pressed="true">Every 2 weeks</button>
+      <button type="button" data-freq="weekly" aria-pressed="false">Weekly</button>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Solo</h3><p class="muted">One 340g bag per delivery. Ideal for one daily drinker.</p>
+        <div class="price" data-base="19">$<span>19</span><small> / delivery</small></div>
+        <ul><li>1 bag, your choice of roast</li><li>Whole bean or ground</li><li>Free shipping</li></ul>
+        <a class="btn ghost" href="#join">Choose Solo</a>
+      </div>
+      <div class="plan pop">
+        <span class="tag">Most popular</span>
+        <h3>Duo</h3><p class="muted">Two bags, so you can mix an espresso with a filter roast.</p>
+        <div class="price" data-base="36">$<span>36</span><small> / delivery</small></div>
+        <ul><li>2 bags, mix and match</li><li>First access to limited lots</li><li>Free shipping and a free tasting card</li></ul>
+        <a class="btn" href="#join">Choose Duo</a>
+      </div>
+      <div class="plan">
+        <h3>Office</h3><p class="muted">1 kg bags for teams who go through coffee fast.</p>
+        <div class="price" data-base="58">$<span>58</span><small> / delivery</small></div>
+        <ul><li>2 × 500g or 1 × 1 kg</li><li>Brew-guide poster included</li><li>Invoicing available</li></ul>
+        <a class="btn ghost" href="#join">Choose Office</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Our story</p>
+      <h2>We started with one drum roaster and a stubborn idea.</h2>
+      <p>Fieldnote began in a garage in 2017, with the belief that great coffee shouldn’t be a weekend splurge. We pay farmers well above market, roast in small batches and ship fast, because coffee is at its best in its first few weeks.</p>
+    </div>
+    <div class="stats">
+      <div><b>38</b><span>partner farms across 9 countries</span></div>
+      <div><b>+27%</b><span>average premium over Fairtrade</span></div>
+      <div><b>5 days</b><span>from roaster to your door</span></div>
+      <div><b>100%</b><span>compostable bags and mailers</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">Kind words</p><h2>Subscribers stay for the coffee.</h2></div>
+    <div class="quotes">
+      <blockquote>“I used to drive across town for good beans. Now the Guji shows up at my door and it’s better than what I was buying.”<footer>Maya R. · Subscriber since 2022</footer></blockquote>
+      <blockquote>“Skipping a week takes ten seconds. That’s why I haven’t cancelled in three years.”<footer>Daniel O. · Subscriber since 2021</footer></blockquote>
+      <blockquote>“The office went from instant to Fieldnote and nobody has asked to go back.”<footer>Priya S. · Office plan</footer></blockquote>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="alt">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">Questions</p><h2>Good to know.</h2></div>
+    <div class="faq">
+      <details><summary>Can I skip or pause deliveries?</summary><p>Yes. Skip a single delivery, pause for up to six months, or cancel from your account page. We never charge you for a delivery you’ve skipped.</p></details>
+      <details><summary>How fresh will my coffee be?</summary><p>Every bag is roasted the day before it ships and carries its roast date on the label. Most orders arrive within 2 to 4 days.</p></details>
+      <details><summary>Do you grind the coffee?</summary><p>Whole bean is the default. If you prefer, choose a grind for espresso, filter, French press or moka pot.</p></details>
+      <details><summary>Where do you ship?</summary><p>Across the US today, with Canada and the UK coming soon. Shipping is free on every plan.</p></details>
+      <details><summary>What if I don’t like a coffee?</summary><p>Tell us within 14 days and we’ll replace it or refund it, no returns needed.</p></details>
+    </div>
+  </div>
+</section>
+
+<div class="final" id="join">
+  <div class="wrap">
+    <h2>Your first bag ships this week.</h2>
+    <p>Get 20% off your first delivery. Leave your email and we’ll set up your taste profile.</p>
+    <form id="join-form">
+      <label class="sr" for="email" style="position:absolute;left:-9999px">Email address</label>
+      <input id="email" type="email" required placeholder="you@email.com" autocomplete="email">
+      <button class="btn" type="submit">Claim 20% off</button>
+    </form>
+    <p class="ok" role="status" id="ok"></p>
+  </div>
+</div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 Fieldnote Coffee Roasters</span>
+    <span>Shipping · Wholesale · Contact · Instagram</span>
+  </div>
+</footer>
+
+<script>
+const mult={weekly:.85,biweekly:.9,monthly:1};
+const buttons=document.querySelectorAll('.toggle button');
+function setFreq(f){
+  buttons.forEach(b=>b.setAttribute('aria-pressed',b.dataset.freq===f));
+  document.querySelectorAll('.price').forEach(p=>{
+    p.querySelector('span').textContent=Math.round(p.dataset.base*mult[f]);
+  });
+}
+buttons.forEach(b=>b.addEventListener('click',()=>setFreq(b.dataset.freq)));
+setFreq('biweekly');
+document.getElementById('join-form').addEventListener('submit',e=>{
+  e.preventDefault();
+  document.getElementById('ok').textContent='Thanks! Check your inbox for your 20% code.';
+  e.target.reset();
+});
+</script>
+</body>
+</html>

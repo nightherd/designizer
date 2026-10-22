@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Halfway Signal — Tech Recruitment</title>
+<meta name="description" content="Halfway Signal places senior engineers, data and product people at teams that ship. Shortlists in 7 days, no retainers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --surface: #fbf9f4;
+    --ink: #15140f;
+    --ink-2: #4a473f;
+    --ink-3: #7d796e;
+    --line: #d9d4c7;
+    --accent: #ff5a1f;
+    --accent-ink: #ffffff;
+    --signal: #c8f031;
+    --dark: #15140f;
+    --dark-ink: #f4f1ea;
+    --radius: 14px;
+    --serif: "Instrument Serif", Georgia, serif;
+    --sans: "Inter Tight", system-ui, -apple-system, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12110e; --surface: #1b1a16; --ink: #f1ede3; --ink-2: #bdb8ab; --ink-3: #8a8578;
+      --line: #2f2d27; --accent: #ff6a33; --dark: #1f1d18; --dark-ink: #f1ede3;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12110e; --surface: #1b1a16; --ink: #f1ede3; --ink-2: #bdb8ab; --ink-3: #8a8578;
+    --line: #2f2d27; --accent: #ff6a33; --dark: #1f1d18; --dark-ink: #f1ede3;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; }
+  img, svg { display: block; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  .mono { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--ink-3); }
+  .eyebrow::before { content: ""; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+  h1, h2, h3 { font-weight: 400; }
+  .serif { font-family: var(--serif); }
+  em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font: 600 15px var(--sans); text-decoration: none; border: 1px solid transparent; cursor: pointer; transition: transform .15s ease, background .15s ease; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-ghost { border-color: var(--line); color: var(--ink); background: transparent; }
+  .btn-ghost:hover { background: var(--surface); }
+  .btn .arr { transition: transform .15s ease; }
+  .btn:hover .arr { transform: translateX(3px); }
+
+  /* Nav */
+  header.nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: -.01em; text-decoration: none; }
+  .logo-mark { width: 26px; height: 26px; border-radius: 7px; background: var(--ink); position: relative; overflow: hidden; }
+  .logo-mark::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 50%; background: var(--accent); }
+  .nav ul { display: flex; gap: 30px; list-style: none; }
+  .nav ul a { text-decoration: none; color: var(--ink-2); font-size: 15px; font-weight: 500; }
+  .nav ul a:hover { color: var(--ink); }
+  .nav-cta { display: flex; gap: 10px; align-items: center; }
+  .nav .btn { padding: 10px 18px; font-size: 14px; }
+  .menu-btn { display: none; background: none; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; font: 500 14px var(--sans); color: var(--ink); cursor: pointer; }
+
+  /* Hero */
+  .hero { padding: 84px 0 64px; }
+  .hero-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items: end; }
+  .hero h1 { font-size: clamp(48px, 7.4vw, 104px); line-height: .95; letter-spacing: -.035em; font-weight: 600; margin: 22px 0 28px; }
+  .hero h1 em { letter-spacing: -.01em; font-size: 1.08em; color: var(--accent); }
+  .hero p.lede { font-size: 20px; color: var(--ink-2); max-width: 560px; }
+  .hero-actions { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+
+  .board { background: var(--dark); color: var(--dark-ink); border-radius: 20px; padding: 22px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.35); }
+  .board-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .live { display: inline-flex; align-items: center; gap: 8px; color: var(--signal); }
+  .live i { width: 7px; height: 7px; background: var(--signal); border-radius: 50%; animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .25 } }
+  .board-row { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .board-row:last-child { border-bottom: 0; padding-bottom: 4px; }
+  .board-row b { font-weight: 600; font-size: 15px; }
+  .board-row span { color: rgba(241,237,227,.55); font-size: 13px; }
+  .board-row .stage { grid-row: span 2; align-self: center; font-family: var(--mono); font-size: 11px; padding: 5px 9px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); white-space: nowrap; }
+  .stage.offer { background: var(--signal); color: #15140f; border-color: var(--signal); }
+  .stage.final { color: #ffb08f; border-color: #ff8a5c55; }
+
+  /* Logos */
+  .logos { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 26px 0; overflow: hidden; }
+  .logos .wrap { display: flex; align-items: center; gap: 40px; }
+  .logos .mono { color: var(--ink-3); flex-shrink: 0; }
+  .marquee { flex: 1; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .marquee-track { display: flex; gap: 56px; width: max-content; animation: slide 38s linear infinite; }
+  .marquee-track span { font-size: 22px; font-weight: 600; letter-spacing: -.02em; color: var(--ink-2); white-space: nowrap; }
+  .marquee-track span:nth-child(3n) { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 25px; }
+  .marquee-track span:nth-child(4n) { font-family: var(--mono); font-size: 18px; font-weight: 500; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* Sections */
+  section { padding: 110px 0; }
+  .sec-head { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 56px; }
+  .sec-head h2 { font-size: clamp(36px, 4.6vw, 60px); line-height: 1.02; letter-spacing: -.03em; font-weight: 600; margin-top: 16px; }
+  .sec-head p { color: var(--ink-2); font-size: 18px; max-width: 460px; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); }
+  .stat { padding: 26px 24px 0 0; }
+  .stat + .stat { padding-left: 24px; border-left: 1px solid var(--line); }
+  .stat .num { font-size: clamp(44px, 5vw, 68px); letter-spacing: -.04em; font-weight: 600; line-height: 1; }
+  .stat .num sup { font-size: .45em; color: var(--accent); vertical-align: top; margin-left: 2px; }
+  .stat p { color: var(--ink-2); margin-top: 10px; font-size: 15px; }
+
+  /* Audience tabs */
+  .tabs { display: inline-flex; padding: 5px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); margin-bottom: 40px; }
+  .tabs button { border: 0; background: none; padding: 10px 20px; border-radius: 999px; font: 600 14px var(--sans); color: var(--ink-2); cursor: pointer; }
+  .tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .steps[hidden] { display: none; }
+  .step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; min-height: 250px; display: flex; flex-direction: column; }
+  .step .mono { color: var(--accent); }
+  .step h3 { font-size: 22px; font-weight: 600; letter-spacing: -.02em; margin: 40px 0 10px; }
+  .step p { color: var(--ink-2); font-size: 15px; }
+  .step .when { margin-top: auto; padding-top: 18px; color: var(--ink-3); }
+
+  /* Specialisms */
+  .dark-sec { background: var(--dark); color: var(--dark-ink); }
+  .dark-sec .sec-head p, .dark-sec .eyebrow { color: rgba(241,237,227,.6); }
+  .spec-list { border-top: 1px solid rgba(255,255,255,.15); }
+  .spec { display: grid; grid-template-columns: 70px 1.2fr 1.4fr auto; gap: 24px; align-items: center; padding: 30px 0; border-bottom: 1px solid rgba(255,255,255,.15); transition: padding .25s ease; }
+  .spec:hover { padding-left: 14px; }
+  .spec:hover h3 { color: var(--signal); }
+  .spec .mono { color: rgba(241,237,227,.45); }
+  .spec h3 { font-size: clamp(28px, 3.4vw, 44px); letter-spacing: -.03em; font-weight: 600; transition: color .2s; }
+  .spec p { color: rgba(241,237,227,.65); font-size: 15px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 260px; }
+  .chip { font-family: var(--mono); font-size: 11px; padding: 5px 9px; border-radius: 999px; border: 1px solid rgba(255,255,255,.2); color: rgba(241,237,227,.8); }
+
+  /* Roles */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .filters button { border: 1px solid var(--line); background: transparent; color: var(--ink-2); padding: 8px 16px; border-radius: 999px; font: 500 14px var(--sans); cursor: pointer; }
+  .filters button.on { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .roles { border-top: 1px solid var(--ink); }
+  .role { display: grid; grid-template-columns: 2fr 1.2fr 1fr 1fr 40px; gap: 20px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--line); text-decoration: none; transition: background .15s; }
+  .role:hover { background: var(--surface); }
+  .role b { font-size: 19px; font-weight: 600; letter-spacing: -.01em; display: block; }
+  .role small { color: var(--ink-3); font-size: 14px; }
+  .role .cell { color: var(--ink-2); font-size: 15px; }
+  .role .pay { font-family: var(--mono); font-size: 14px; color: var(--ink); }
+  .role .go { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; transition: background .15s, color .15s; }
+  .role:hover .go { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .role[hidden] { display: none; }
+  .roles-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; color: var(--ink-3); flex-wrap: wrap; gap: 16px; }
+
+  /* Testimonials */
+  .quotes { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
+  .quote { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 36px; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; }
+  .quote blockquote { font-family: var(--serif); font-size: clamp(26px, 2.6vw, 36px); line-height: 1.15; letter-spacing: -.01em; }
+  .quote.big { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .quote.big blockquote { font-size: clamp(30px, 3.4vw, 46px); }
+  .quote-side { display: grid; gap: 16px; }
+  .quote-side .quote blockquote { font-size: 24px; }
+  .who { display: flex; align-items: center; gap: 14px; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 15px; background: var(--ink); color: var(--bg); }
+  .quote.big .avatar { background: #fff; color: var(--accent); }
+  .who b { display: block; font-size: 15px; }
+  .who span { font-size: 14px; opacity: .7; }
+
+  /* Pricing */
+  .terms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .term { border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; display: flex; flex-direction: column; }
+  .term.feat { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .term .mono { color: var(--ink-3); }
+  .term.feat .mono { color: var(--signal); }
+  .term .price { font-size: 56px; letter-spacing: -.04em; font-weight: 600; margin: 26px 0 4px; line-height: 1; }
+  .term .price small { font-size: 16px; letter-spacing: 0; font-weight: 500; opacity: .6; }
+  .term > p { opacity: .75; font-size: 15px; }
+  .term ul { list-style: none; margin: 24px 0 30px; display: grid; gap: 10px; font-size: 15px; }
+  .term li { display: flex; gap: 10px; }
+  .term li::before { content: "→"; color: var(--accent); }
+  .term .btn { margin-top: auto; justify-content: center; }
+  .term.feat .btn-ghost { color: var(--bg); border-color: rgba(255,255,255,.25); }
+  .term.feat .btn-ghost:hover { background: rgba(255,255,255,.08); }
+
+  /* CTA / form */
+  .cta { padding: 0 0 110px; }
+  .cta-box { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .cta-box h2 { font-size: clamp(40px, 5vw, 68px); line-height: .98; letter-spacing: -.035em; font-weight: 600; margin: 16px 0 20px; }
+  .cta-box > div > p { color: var(--ink-2); }
+  .contact-line { margin-top: 32px; display: grid; gap: 8px; color: var(--ink-2); font-size: 15px; }
+  .contact-line a { color: var(--ink); font-weight: 600; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+  form { display: grid; gap: 14px; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .seg label { border: 1px solid var(--line); border-radius: 10px; padding: 14px; cursor: pointer; font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+  .seg input { accent-color: var(--accent); }
+  .seg label:has(input:checked) { border-color: var(--ink); background: var(--bg); }
+  .field label { display: block; font-size: 13px; color: var(--ink-3); margin-bottom: 6px; font-weight: 500; }
+  .field input, .field textarea, .field select { width: 100%; padding: 13px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); font: 16px var(--sans); }
+  .field textarea { resize: vertical; min-height: 96px; }
+  .field input:focus, .field textarea:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  form .btn { justify-content: center; margin-top: 6px; }
+  .form-ok { display: none; padding: 40px 0; }
+  .form-ok h3 { font-size: 34px; font-family: var(--serif); margin-bottom: 8px; }
+  .form-ok p { color: var(--ink-2); }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--line); padding: 56px 0 40px; }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+  .foot-grid p { color: var(--ink-2); font-size: 15px; max-width: 320px; margin-top: 16px; }
+  .foot-grid h4 { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); font-weight: 500; margin-bottom: 14px; }
+  .foot-grid ul { list-style: none; display: grid; gap: 8px; }
+  .foot-grid ul a { text-decoration: none; color: var(--ink-2); font-size: 15px; }
+  .foot-grid ul a:hover { color: var(--ink); }
+  .foot-word { font-size: clamp(64px, 15vw, 210px); font-weight: 700; letter-spacing: -.06em; line-height: .8; margin-top: 64px; color: var(--ink); white-space: nowrap; overflow: hidden; }
+  .foot-word em { color: var(--accent); }
+  .foot-base { display: flex; justify-content: space-between; margin-top: 28px; color: var(--ink-3); flex-wrap: wrap; gap: 12px; }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .marquee-track, .live i { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* Responsive */
+  @media (max-width: 980px) {
+    .hero-grid, .sec-head, .cta-box, .quotes { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat:nth-child(3) { border-left: 0; padding-left: 0; }
+    .stat { padding-bottom: 26px; }
+    .terms { grid-template-columns: 1fr; }
+    .spec { grid-template-columns: 50px 1fr; }
+    .spec p, .spec .chips { grid-column: 2; justify-content: flex-start; max-width: none; }
+    .role { grid-template-columns: 1fr auto; }
+    .role .cell { display: none; }
+    .role .pay { grid-row: 2; }
+    .role .go { grid-row: span 2; grid-column: 2; grid-row-start: 1; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    .foot-grid > div:first-child { grid-column: 1 / -1; }
+  }
+  @media (max-width: 760px) {
+    .wrap { padding: 0 16px; }
+    .nav ul, .nav-cta .btn-ghost { display: none; }
+    .menu-btn { display: inline-block; }
+    .nav.open ul { display: flex; flex-direction: column; gap: 0; position: absolute; top: 68px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 16px 16px; }
+    .nav.open ul a { display: block; padding: 12px 0; font-size: 17px; }
+    section { padding: 80px 0; }
+    .hero { padding: 56px 0 48px; }
+    .steps { grid-template-columns: 1fr; }
+    .step { min-height: 0; }
+    .step h3 { margin-top: 24px; }
+    .cta-box { padding: 28px 20px; }
+    .row2 { grid-template-columns: 1fr; }
+    .logos .mono { display: none; }
+    .quote { padding: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#" class="logo"><span class="logo-mark"></span>Halfway Signal</a>
+    <ul>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#specialisms">Specialisms</a></li>
+      <li><a href="#roles">Open roles</a></li>
+      <li><a href="#terms">Fees</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#roles" class="btn btn-ghost">Find a job</a>
+      <a href="#contact" class="btn btn-primary">Hire with us</a>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false">Menu</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="mono eyebrow">Tech recruitment · London · Berlin · Remote</span>
+        <h1>Engineers who <em>ship,</em> hired in weeks — not quarters.</h1>
+        <p class="lede">We're a team of former engineers and engineering managers who recruit for the roles we used to do. Vetted shortlists in 7 days. You only pay when someone starts.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Start a search <span class="arr">→</span></a>
+          <a href="#roles" class="btn btn-ghost">Browse 48 open roles</a>
+        </div>
+      </div>
+      <aside class="board" aria-label="Live pipeline snapshot">
+        <div class="board-head">
+          <span class="mono">Pipeline · this week</span>
+          <span class="mono live"><i></i>Live</span>
+        </div>
+        <div class="board-row"><b>Staff Backend Engineer</b><span class="stage offer">OFFER SIGNED</span><span>Fintech · Series C · Go, Postgres</span></div>
+        <div class="board-row"><b>ML Platform Lead</b><span class="stage final">FINAL ROUND</span><span>Healthtech · Remote EU · Python, k8s</span></div>
+        <div class="board-row"><b>Senior iOS Engineer</b><span class="stage">SHORTLIST · 4</span><span>Consumer · Berlin · Swift, SwiftUI</span></div>
+        <div class="board-row"><b>Head of Data</b><span class="stage">SOURCING</span><span>Climate · London hybrid · dbt, Snowflake</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <div class="logos">
+    <div class="wrap">
+      <span class="mono">Trusted by teams at</span>
+      <div class="marquee">
+        <div class="marquee-track">
+          <span>Northwind</span><span>Ledgerline</span><span>parallax</span><span>KITE/OS</span><span>Fernhill Bio</span><span>orbital</span><span>Quanta Pay</span><span>Meridian</span>
+          <span>Northwind</span><span>Ledgerline</span><span>parallax</span><span>KITE/OS</span><span>Fernhill Bio</span><span>orbital</span><span>Quanta Pay</span><span>Meridian</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="stats reveal">
+        <div class="stat"><div class="num">7<sup>days</sup></div><p>Median time from brief to a vetted shortlist.</p></div>
+        <div class="stat"><div class="num">94<sup>%</sup></div><p>Of our placements still in seat after 12 months.</p></div>
+        <div class="stat"><div class="num">3.2<sup>:1</sup></div><p>Interviews to offer — we don't flood your inbox.</p></div>
+        <div class="stat"><div class="num">620<sup>+</sup></div><p>Engineers, data and product people placed since 2019.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <span class="mono eyebrow">How it works</span>
+          <h2>A recruiter who can <em>read a PR.</em></h2>
+        </div>
+        <p>Every search is run by someone who has done the job. We screen on real technical depth, not keyword matches — so the people you meet are people worth meeting.</p>
+      </div>
+      <div class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-tab="companies">For companies</button>
+        <button role="tab" aria-selected="false" data-tab="candidates">For candidates</button>
+      </div>
+      <div class="steps reveal" data-panel="companies">
+        <div class="step"><span class="mono">01 — Brief</span><h3>A 45-min deep dive</h3><p>We meet your hiring manager, learn the stack, the team and what "great" really looks like for this role.</p><span class="mono when">Day 1</span></div>
+        <div class="step"><span class="mono">02 — Source</span><h3>Targeted outreach</h3><p>Our network of 40k engineers, plus direct headhunting. No job-board blasts, no recycled CVs.</p><span class="mono when">Days 2–5</span></div>
+        <div class="step"><span class="mono">03 — Vet</span><h3>Technical screen</h3><p>A 60-minute conversation with an ex-engineer on our side. You get written notes, not just a CV.</p><span class="mono when">Days 4–7</span></div>
+        <div class="step"><span class="mono">04 — Close</span><h3>Offer & onboarding</h3><p>We handle comp benchmarking, negotiation and stay in touch through the first 90 days.</p><span class="mono when">Weeks 3–5</span></div>
+      </div>
+      <div class="steps" data-panel="candidates" hidden>
+        <div class="step"><span class="mono">01 — Talk</span><h3>An honest chat</h3><p>Tell us what you want next — and what you never want again. We'll be straight about the market.</p><span class="mono when">30 min</span></div>
+        <div class="step"><span class="mono">02 — Match</span><h3>Only real fits</h3><p>We share roles that match your stack, level and salary floor. Nothing goes out without your yes.</p><span class="mono when">Same week</span></div>
+        <div class="step"><span class="mono">03 — Prep</span><h3>Interview coaching</h3><p>Insider notes on every company's process, interviewers and system design expectations.</p><span class="mono when">Before each round</span></div>
+        <div class="step"><span class="mono">04 — Negotiate</span><h3>Get paid properly</h3><p>We benchmark against live offers, not stale surveys, and negotiate on your behalf. Always free for you.</p><span class="mono when">At offer</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark-sec" id="specialisms">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <span class="mono eyebrow">Specialisms</span>
+          <h2>Five desks. <em>Deep</em> networks.</h2>
+        </div>
+        <p>Each desk is led by a practitioner from that field, so we know who's good — and who's quietly open to a move.</p>
+      </div>
+      <div class="spec-list">
+        <div class="spec reveal"><span class="mono">01</span><h3>Backend & Platform</h3><p>Distributed systems, APIs, infra and SRE for high-scale products.</p><div class="chips"><span class="chip">Go</span><span class="chip">Rust</span><span class="chip">Java</span><span class="chip">k8s</span></div></div>
+        <div class="spec reveal"><span class="mono">02</span><h3>Data & ML</h3><p>Data engineers, ML engineers and applied scientists who ship models to production.</p><div class="chips"><span class="chip">Python</span><span class="chip">LLMs</span><span class="chip">dbt</span><span class="chip">Spark</span></div></div>
+        <div class="spec reveal"><span class="mono">03</span><h3>Frontend & Mobile</h3><p>Product-minded engineers building interfaces people actually enjoy.</p><div class="chips"><span class="chip">TypeScript</span><span class="chip">React</span><span class="chip">Swift</span><span class="chip">Kotlin</span></div></div>
+        <div class="spec reveal"><span class="mono">04</span><h3>Security</h3><p>AppSec, cloud security and detection engineering for regulated industries.</p><div class="chips"><span class="chip">AppSec</span><span class="chip">AWS</span><span class="chip">SOC2</span></div></div>
+        <div class="spec reveal"><span class="mono">05</span><h3>Engineering Leadership</h3><p>EMs, Heads of, VPs and CTOs — retained, confidential searches.</p><div class="chips"><span class="chip">EM</span><span class="chip">VP Eng</span><span class="chip">CTO</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="roles">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <span class="mono eyebrow">Open roles</span>
+          <h2>Hand-picked. <em>Salary</em> always listed.</h2>
+        </div>
+        <p>A selection of live searches. Many of our best roles are never advertised — register and we'll tell you about them first.</p>
+      </div>
+      <div class="filters" id="filters">
+        <button class="on" data-f="all">All</button>
+        <button data-f="backend">Backend</button>
+        <button data-f="data">Data & ML</button>
+        <button data-f="frontend">Frontend & Mobile</button>
+        <button data-f="leadership">Leadership</button>
+      </div>
+      <div class="roles">
+        <a href="#contact" class="role" data-cat="backend"><div><b>Staff Platform Engineer</b><small>Payments infrastructure · Series D</small></div><span class="cell">Go, Kafka, AWS</span><span class="cell">London · Hybrid</span><span class="pay">£140–165k</span><span class="go">→</span></a>
+        <a href="#contact" class="role" data-cat="data"><div><b>Senior ML Engineer, LLMs</b><small>Legal tech · Series B</small></div><span class="cell">Python, PyTorch</span><span class="cell">Remote · EU</span><span class="pay">€110–135k</span><span class="go">→</span></a>
+        <a href="#contact" class="role" data-cat="frontend"><div><b>Senior Product Engineer</b><small>Developer tools · Seed+</small></div><span class="cell">TypeScript, React</span><span class="cell">Berlin · On-site</span><span class="pay">€90–115k</span><span class="go">→</span></a>
+        <a href="#contact" class="role" data-cat="leadership"><div><b>VP Engineering</b><small>Climate data · Series C</small></div><span class="cell">40-person org</span><span class="cell">London · Hybrid</span><span class="pay">£190–220k</span><span class="go">→</span></a>
+        <a href="#contact" class="role" data-cat="data"><div><b>Analytics Engineer</b><small>Marketplace · Scale-up</small></div><span class="cell">dbt, Snowflake</span><span class="cell">Remote · UK</span><span class="pay">£75–90k</span><span class="go">→</span></a>
+        <a href="#contact" class="role" data-cat="backend"><div><b>Senior Rust Engineer</b><small>Trading systems · Profitable</small></div><span class="cell">Rust, Linux</span><span class="cell">Amsterdam · Hybrid</span><span class="pay">€120–150k</span><span class="go">→</span></a>
+        <a href="#contact" class="role" data-cat="frontend"><div><b>Lead Android Engineer</b><small>Health app · Series B</small></div><span class="cell">Kotlin, Compose</span><span class="cell">Remote · EU</span><span class="pay">€100–125k</span><span class="go">→</span></a>
+      </div>
+      <div class="roles-foot">
+        <span class="mono" id="roleCount">Showing 7 of 48 live roles</span>
+        <a href="#contact" class="btn btn-ghost">Register as a candidate <span class="arr">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <span class="mono eyebrow">What people say</span>
+          <h2>Fewer interviews. <em>Better</em> hires.</h2>
+        </div>
+      </div>
+      <div class="quotes reveal">
+        <figure class="quote big">
+          <blockquote>“We'd spent five months trying to hire a staff engineer. Halfway Signal sent three people in a week — we hired two of them.”</blockquote>
+          <figcaption class="who"><span class="avatar">PR</span><div><b>Priya Raman</b><span>CTO, Ledgerline</span></div></figcaption>
+        </figure>
+        <div class="quote-side">
+          <figure class="quote">
+            <blockquote>“The first recruiter who actually understood what a platform team does.”</blockquote>
+            <figcaption class="who"><span class="avatar">TM</span><div><b>Tomás Medina</b><span>Head of Infra, Kite/OS</span></div></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>“They negotiated 18% above the initial offer. Zero pressure, all the way.”</blockquote>
+            <figcaption class="who"><span class="avatar">JA</span><div><b>Jo Adeyemi</b><span>Senior ML Engineer, placed 2026</span></div></figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="terms" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <span class="mono eyebrow">Fees</span>
+          <h2>Simple terms. <em>No</em> retainers.</h2>
+        </div>
+        <p>Pick the model that suits the role. Every placement includes a 90-day free replacement guarantee.</p>
+      </div>
+      <div class="terms reveal">
+        <div class="term">
+          <span class="mono">Contingent</span>
+          <div class="price">18<small>% of base</small></div>
+          <p>For individual contributor roles, paid only on start.</p>
+          <ul><li>Shortlist in 7 days</li><li>Technical screen notes</li><li>90-day guarantee</li></ul>
+          <a href="#contact" class="btn btn-ghost">Start a search</a>
+        </div>
+        <div class="term feat">
+          <span class="mono">Embedded · most popular</span>
+          <div class="price">£6.5k<small> / month</small></div>
+          <p>A dedicated recruiter inside your team for scale-up hiring.</p>
+          <ul><li>Unlimited roles, no placement fees</li><li>Employer brand & process design</li><li>Weekly pipeline reporting</li></ul>
+          <a href="#contact" class="btn btn-primary">Talk to us <span class="arr">→</span></a>
+        </div>
+        <div class="term">
+          <span class="mono">Executive</span>
+          <div class="price">25<small>% of package</small></div>
+          <p>Retained, confidential searches for leadership roles.</p>
+          <ul><li>Market map & longlist</li><li>Referencing & assessment</li><li>6-month guarantee</li></ul>
+          <a href="#contact" class="btn btn-ghost">Discuss a role</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta" id="contact">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <div>
+          <span class="mono eyebrow">Get in touch</span>
+          <h2>Let's find your <em>next</em> great hire.</h2>
+          <p>Tell us a little about what you need. A specialist from the relevant desk will reply within one working day.</p>
+          <div class="contact-line">
+            <span>Email — <a href="mailto:hello@halfwaysignal.example">hello@halfwaysignal.example</a></span>
+            <span>Phone — <a href="tel:+442000000000">+44 20 0000 0000</a></span>
+          </div>
+        </div>
+        <div>
+          <form id="form">
+            <div class="seg">
+              <label><input type="radio" name="type" value="hire" checked> I'm hiring</label>
+              <label><input type="radio" name="type" value="job"> I'm looking</label>
+            </div>
+            <div class="row2">
+              <div class="field"><label for="name">Name</label><input id="name" required autocomplete="name"></div>
+              <div class="field"><label for="email">Work email</label><input id="email" type="email" required autocomplete="email"></div>
+            </div>
+            <div class="field"><label for="area">Area</label>
+              <select id="area"><option>Backend & Platform</option><option>Data & ML</option><option>Frontend & Mobile</option><option>Security</option><option>Engineering Leadership</option></select>
+            </div>
+            <div class="field"><label for="msg" id="msgLabel">What role are you hiring for?</label><textarea id="msg"></textarea></div>
+            <button class="btn btn-primary" type="submit">Send <span class="arr">→</span></button>
+          </form>
+          <div class="form-ok" id="formOk">
+            <h3>Thanks — we're on it.</h3>
+            <p>A specialist will get back to you within one working day.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="logo"><span class="logo-mark"></span>Halfway Signal</a>
+        <p>Technical recruitment run by people who've written the code, led the teams and sat on both sides of the interview table.</p>
+      </div>
+      <div><h4>Companies</h4><ul><li><a href="#how">How it works</a></li><li><a href="#terms">Fees</a></li><li><a href="#specialisms">Specialisms</a></li></ul></div>
+      <div><h4>Candidates</h4><ul><li><a href="#roles">Open roles</a></li><li><a href="#contact">Register</a></li><li><a href="#how">Salary guide</a></li></ul></div>
+      <div><h4>Offices</h4><ul><li><a href="#contact">London</a></li><li><a href="#contact">Berlin</a></li><li><a href="#contact">Remote-first</a></li></ul></div>
+    </div>
+    <div class="foot-word" aria-hidden="true">halfway<em>signal</em></div>
+    <div class="foot-base mono"><span>© 2026 Halfway Signal Ltd.</span><span>Privacy · Terms · Modern slavery statement</span></div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const nav = document.getElementById('nav'), menuBtn = document.getElementById('menuBtn');
+  menuBtn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+    menuBtn.textContent = open ? 'Close' : 'Menu';
+  });
+  nav.querySelectorAll('ul a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open'); menuBtn.textContent = 'Menu'; menuBtn.setAttribute('aria-expanded', false);
+  }));
+
+  // Audience tabs
+  document.querySelectorAll('[data-tab]').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-tab]').forEach(b => b.setAttribute('aria-selected', b === btn));
+    document.querySelectorAll('[data-panel]').forEach(p => {
+      p.hidden = p.dataset.panel !== btn.dataset.tab;
+      p.classList.add('in');
+    });
+  }));
+
+  // Role filters
+  const roles = document.querySelectorAll('.role');
+  document.getElementById('filters').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    document.querySelectorAll('#filters button').forEach(x => x.classList.toggle('on', x === b));
+    let n = 0;
+    roles.forEach(r => { const show = b.dataset.f === 'all' || r.dataset.cat === b.dataset.f; r.hidden = !show; if (show) n++; });
+    document.getElementById('roleCount').textContent = `Showing ${n} of 48 live roles`;
+  });
+
+  // Form
+  const form = document.getElementById('form'), msgLabel = document.getElementById('msgLabel');
+  form.querySelectorAll('input[name="type"]').forEach(r => r.addEventListener('change', () => {
+    msgLabel.textContent = r.value === 'hire' && r.checked ? 'What role are you hiring for?' : 'What are you looking for next?';
+  }));
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    form.style.display = 'none';
+    document.getElementById('formOk').style.display = 'block';
+  });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

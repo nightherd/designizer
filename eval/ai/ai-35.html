@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alder County Food Bank</title>
+<meta name="description" content="Free groceries for anyone in Alder County who needs them. Find a pickup, give, or volunteer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#24402F; --beet:#9B1F4B; --squash:#F4B63A; --turnip:#F3EFF5; --ink:#241A2B;
+  --wood:#C9A26B; --wood-dk:#9A7442;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,sans-serif;
+  --gutter:clamp(20px,5vw,64px);
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font:400 1.0625rem/1.6 var(--body);color:var(--ink);background:var(--turnip);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--beet);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1200px;margin-inline:auto;padding-inline:var(--gutter)}
+h1,h2,h3{font-family:var(--display);line-height:1.02;letter-spacing:-.02em}
+h1{font-size:clamp(2.8rem,7vw,5.6rem);font-weight:800;font-stretch:90%}
+h2{font-size:clamp(2rem,4.2vw,3.2rem);font-weight:700}
+h3{font-size:1.35rem;font-weight:700;line-height:1.15}
+p{max-width:62ch}
+
+/* header */
+header{padding-block:22px}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font:800 1.3rem/1 var(--display);text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo i{width:26px;height:26px;border-radius:50% 50% 50% 0;background:var(--beet);display:block;transform:rotate(-45deg)}
+nav{display:flex;gap:26px;font-weight:500}
+nav a{text-decoration:none;padding-block:4px;border-bottom:2px solid transparent}
+nav a:hover{border-color:var(--beet)}
+@media(max-width:700px){nav a:not(.keep){display:none}}
+
+/* buttons */
+.btn{display:inline-block;font:700 1.05rem/1 var(--display);padding:16px 26px;border-radius:999px;text-decoration:none;border:0;cursor:pointer;background:var(--beet);color:#fff;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.alt{background:var(--squash);color:var(--ink)}
+.btn.line{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
+
+/* hero */
+.hero{padding-block:clamp(28px,6vw,72px) clamp(56px,8vw,110px)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,5vw,72px);align-items:center}
+.hero p.lede{font-size:1.25rem;margin-top:26px;max-width:46ch}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}}
+
+/* crate */
+.give{background:#fff;border-radius:28px;padding:clamp(20px,3vw,32px);box-shadow:0 2px 0 rgba(36,26,43,.08)}
+.crate{position:relative;border-radius:10px 10px 14px 14px;background:linear-gradient(var(--turnip),#e6dfea);padding:14px 14px 0;border:6px solid var(--wood);border-bottom:0;overflow:hidden;aspect-ratio:6/4.2}
+.crate .slots{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,1fr);gap:6px;height:100%;padding-bottom:70px}
+.crate::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62px;background:
+  repeating-linear-gradient(90deg,transparent 0 calc(100% - 2px),rgba(0,0,0,.12) 0),
+  linear-gradient(var(--wood),var(--wood-dk));border-top:4px solid var(--wood-dk)}
+.slot{display:grid;place-items:center}
+.item{width:78%;aspect-ratio:1;transform:scale(0) translateY(-30px);opacity:0;transition:transform .35s cubic-bezier(.3,1.5,.5,1),opacity .2s}
+.slot.on .item{transform:none;opacity:1}
+.item.beet{background:var(--beet);border-radius:50% 50% 55% 55%}
+.item.can{background:var(--green);border-radius:6px;box-shadow:inset 0 -9px 0 var(--squash),inset 0 9px 0 var(--squash)}
+.item.carrot{background:#E8702A;clip-path:polygon(50% 100%,0 8%,100% 8%);}
+.item.loaf{background:var(--wood);border-radius:50% 50% 12% 12%/70% 70% 12% 12%;height:70%;aspect-ratio:auto;margin-top:12%}
+.item.squash{background:var(--squash);border-radius:45%}
+.readout{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:22px}
+.readout b{font:800 clamp(2.4rem,5vw,3.4rem)/1 var(--display);letter-spacing:-.03em}
+.readout span{font-size:.95rem}
+input[type=range]{width:100%;margin-top:18px;accent-color:var(--beet);height:32px;cursor:pointer}
+.presets{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.presets button{font:600 .95rem var(--body);padding:8px 16px;border-radius:999px;border:2px solid var(--ink);background:transparent;cursor:pointer}
+.presets button[aria-pressed=true]{background:var(--ink);color:#fff}
+.give .btn{width:100%;text-align:center;margin-top:18px}
+.give small{display:block;margin-top:12px;font-size:.85rem;opacity:.75}
+
+/* get food */
+.getfood{background:var(--green);color:var(--turnip);padding-block:clamp(56px,8vw,100px)}
+.getfood .wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(32px,6vw,80px)}
+.getfood p{margin-top:20px;font-size:1.15rem}
+.getfood .promises{margin-top:28px;display:grid;gap:10px;list-style:none;padding:0}
+.getfood .promises li{padding-left:34px;position:relative}
+.getfood .promises li::before{content:"";position:absolute;left:0;top:.35em;width:18px;height:10px;border-left:4px solid var(--squash);border-bottom:4px solid var(--squash);transform:rotate(-45deg)}
+table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--turnip);border-radius:20px;overflow:hidden}
+caption{text-align:left;font:700 1.35rem var(--display);color:var(--turnip);padding-bottom:14px}
+th,td{text-align:left;padding:16px 20px;vertical-align:top}
+thead th{background:var(--squash);font:700 .95rem var(--body)}
+tbody tr+tr{border-top:1px solid rgba(36,26,43,.15)}
+td:first-child{font-weight:600}
+td small{display:block;opacity:.75}
+@media(max-width:900px){.getfood .wrap{grid-template-columns:1fr}}
+@media(max-width:560px){th,td{padding:12px}}
+
+/* where it goes */
+.money{padding-block:clamp(56px,8vw,100px)}
+.money .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:center}
+.money p{margin-top:18px}
+.bar{display:flex;height:84px;border-radius:16px;overflow:hidden;font:700 1rem var(--display);color:#fff}
+.bar div{display:flex;align-items:flex-end;padding:10px 14px}
+.bar .a{flex:88;background:var(--beet)} .bar .b{flex:8;background:var(--green)} .bar .c{flex:4;background:var(--ink)}
+.legend{list-style:none;padding:0;margin-top:16px;display:grid;gap:8px}
+.legend li{display:flex;gap:12px}
+.legend b{min-width:3.2ch;font-family:var(--display)}
+@media(max-width:900px){.money .wrap{grid-template-columns:1fr}}
+
+/* volunteer */
+.vol{background:var(--squash);padding-block:clamp(56px,8vw,100px)}
+.vol .wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(32px,6vw,80px)}
+.shifts{list-style:none;padding:0;display:grid;gap:10px}
+.shifts li{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--turnip);border-radius:16px;padding:18px 22px}
+.shifts strong{font:700 1.15rem var(--display)}
+.shifts a{font-weight:600;white-space:nowrap}
+.vol p{margin-top:18px}
+@media(max-width:900px){.vol .wrap{grid-template-columns:1fr}}
+
+/* quote */
+.quote{padding-block:clamp(56px,8vw,110px)}
+blockquote{font:700 clamp(1.6rem,3.6vw,2.7rem)/1.15 var(--display);letter-spacing:-.015em;max-width:24em}
+blockquote+p{margin-top:20px}
+
+footer{background:var(--ink);color:var(--turnip);padding-block:48px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:28px}
+footer p{font-size:.95rem;opacity:.85}
+footer a{text-underline-offset:3px}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#"><i aria-hidden="true"></i>Alder County Food Bank</a>
+    <nav aria-label="Main">
+      <a href="#get-food">Get food</a>
+      <a href="#where">Where gifts go</a>
+      <a href="#volunteer">Volunteer</a>
+      <a class="keep" href="#give"><strong>Give</strong></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>No one in Alder County goes to bed hungry.</h1>
+      <p class="lede">We hand out free groceries six days a week at 14 pickup sites. Last year that was 2.1 million meals, and most of it was fresh food from local farms.</p>
+      <div class="actions">
+        <a class="btn" href="#get-food">Find a pickup near you</a>
+        <a class="btn line" href="#volunteer">Sign up to volunteer</a>
+      </div>
+    </div>
+
+    <form class="give" id="give" onsubmit="return false" aria-labelledby="give-title">
+      <h2 id="give-title" class="sr" style="position:absolute;left:-9999px">Fill the crate</h2>
+      <div class="crate" aria-hidden="true"><div class="slots" id="slots"></div></div>
+      <div class="readout" aria-live="polite">
+        <b id="meals">200</b>
+        <span>meals from a gift of <strong id="amt">$50</strong></span>
+      </div>
+      <label for="range" style="position:absolute;left:-9999px">Gift amount in dollars</label>
+      <input id="range" type="range" min="5" max="120" step="5" value="50">
+      <div class="presets" role="group" aria-label="Quick amounts">
+        <button type="button" data-v="25">$25</button>
+        <button type="button" data-v="50">$50</button>
+        <button type="button" data-v="100">$100</button>
+      </div>
+      <a class="btn" id="giveBtn" href="#">Give $50</a>
+      <small>Every dollar buys four meals through our farm and wholesale partners.</small>
+    </form>
+  </div>
+</section>
+
+<section class="getfood" id="get-food">
+  <div class="wrap">
+    <div>
+      <h2>Need groceries? Come as you are.</h2>
+      <p>Pick a site below and walk in during open hours. You don't need to sign up first.</p>
+      <ul class="promises">
+        <li>No ID or proof of income</li>
+        <li>Free, with no limit on visits</li>
+        <li>Halal, kosher, gluten-free and baby items on request</li>
+        <li>Can't travel? Call 555-0142 and we'll arrange delivery</li>
+      </ul>
+    </div>
+    <table>
+      <caption>Open pickup sites</caption>
+      <thead><tr><th scope="col">Site</th><th scope="col">Hours</th></tr></thead>
+      <tbody>
+        <tr><td>Main warehouse<small>410 Mill Street</small></td><td>Mon–Sat, 9am–5pm</td></tr>
+        <tr><td>Eastside Community Church<small>88 Birch Avenue</small></td><td>Tue and Thu, 4pm–7pm</td></tr>
+        <tr><td>Riverbend Library<small>12 Water Street</small></td><td>Wed, 10am–1pm</td></tr>
+        <tr><td>Hollis Elementary lot<small>301 School Road</small></td><td>Fri, 3pm–6pm</td></tr>
+        <tr><td>Mobile market<small>Moves weekly, see the schedule</small></td><td>Sat, 8am–noon</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="money" id="where">
+  <div class="wrap">
+    <div>
+      <h2>88 cents of every dollar becomes food.</h2>
+      <p>We run lean. Volunteers do most of the sorting and driving, and local growers donate part of what we hand out. Our audited financials are public.</p>
+      <p><a href="#">Read the annual report</a></p>
+    </div>
+    <div>
+      <div class="bar" role="img" aria-label="88 percent food and distribution, 8 percent fundraising, 4 percent administration">
+        <div class="a">88%</div><div class="b"></div><div class="c"></div>
+      </div>
+      <ul class="legend">
+        <li><b>88%</b> Food, trucks and pickup sites</li>
+        <li><b>8%</b> Fundraising</li>
+        <li><b>4%</b> Administration</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="vol" id="volunteer">
+  <div class="wrap">
+    <div>
+      <h2>Give us a few hours. We'll handle the rest.</h2>
+      <p>You don't need experience. A shift lead shows you what to do, and you'll be on your feet and lifting up to 20 pounds. Under 16s are welcome with an adult.</p>
+    </div>
+    <ul class="shifts">
+      <li><span><strong>Sort and pack boxes</strong><br>Mon, Wed, Fri · 9am–noon</span><a href="#">Reserve a spot</a></li>
+      <li><span><strong>Run a pickup site</strong><br>Tue and Thu · 3pm–7pm</span><a href="#">Reserve a spot</a></li>
+      <li><span><strong>Drive deliveries</strong><br>Sat · 8am–noon, own car</span><a href="#">Reserve a spot</a></li>
+      <li><span><strong>Glean at partner farms</strong><br>Sun · 8am–11am, seasonal</span><a href="#">Reserve a spot</a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="quote">
+  <div class="wrap">
+    <blockquote>“After the plant closed, I was embarrassed to walk in. A volunteer asked if I liked squash and handed me the best one in the bin.”</blockquote>
+    <p>Denise, Eastside pickup regular since 2023</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong style="font:800 1.2rem var(--display)">Alder County Food Bank</strong>
+      <p>410 Mill Street, Alder Falls · 555-0142 · help@alderfoodbank.example</p>
+    </div>
+    <p>Registered 501(c)(3), EIN 00-0000000. Gifts are tax-deductible.<br><a href="#">Privacy</a> · <a href="#">Annual report</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var kinds=['beet','can','carrot','loaf','squash','can','beet','squash'];
+  var slots=document.getElementById('slots');
+  var els=[];
+  for(var i=0;i<24;i++){
+    var s=document.createElement('div');s.className='slot';
+    var it=document.createElement('div');it.className='item '+kinds[(i*5)%kinds.length];
+    s.appendChild(it);slots.appendChild(s);els.push(s);
+  }
+  var range=document.getElementById('range'),meals=document.getElementById('meals'),
+      amt=document.getElementById('amt'),btn=document.getElementById('giveBtn'),
+      presets=document.querySelectorAll('.presets button');
+  function update(){
+    var v=+range.value;
+    amt.textContent='$'+v;meals.textContent=(v*4).toLocaleString();
+    btn.textContent='Give $'+v;
+    var n=Math.round(v/5); // 24 items at $120
+    els.forEach(function(e,i){e.classList.toggle('on',i<n)});
+    presets.forEach(function(b){b.setAttribute('aria-pressed',String(+b.dataset.v===v))});
+  }
+  range.addEventListener('input',update);
+  presets.forEach(function(b){b.addEventListener('click',function(){range.value=b.dataset.v;update()})});
+  update();
+})();
+</script>
+</body>
+</html>

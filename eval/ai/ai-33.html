@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quayline Freight Forwarding: Ocean, Air and Customs</title>
+<meta name="description" content="Ocean, air and road freight forwarding with in-house customs brokerage. One all-in rate, and a named forwarder on every shipment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F3F0E8;
+    --paper-2: #E8E3D3;
+    --ink: #17202A;
+    --ink-2: #4B5561;
+    --rule: #C9C2AE;
+    --signal: #E4572E;
+    --cleared: #2E6A4E;
+    --hold: #8A5F0C;
+    --gutter: clamp(16px, 4vw, 48px);
+    --max: 1200px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 17px/1.55 "IBM Plex Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 {
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-stretch: 76%;
+    font-weight: 700;
+    line-height: 0.96;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  p { margin: 0; }
+  a { color: inherit; }
+  img, svg { display: block; }
+
+  .mono {
+    font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-bottom: 20px;
+  }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* Header */
+  .top { border-bottom: 1px solid var(--ink); }
+  .top .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px; gap: 24px;
+  }
+  .mark {
+    display: flex; align-items: center; gap: 10px; text-decoration: none;
+    font-family: Archivo, Arial, sans-serif; font-stretch: 76%; font-weight: 800;
+    font-size: 20px; text-transform: uppercase; letter-spacing: 0.02em;
+  }
+  .top nav { display: flex; align-items: center; gap: 28px; }
+  .top nav a {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none;
+  }
+  .top nav a:hover { color: var(--signal); }
+  .clock { color: var(--ink-2); font-size: 12px; white-space: nowrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 20px; border: 1px solid var(--ink);
+    background: var(--ink); color: var(--paper);
+    font: 500 14px/1 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: 0.08em;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn:hover { background: var(--signal); border-color: var(--signal); color: var(--ink); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* Hero */
+  .hero { padding: 72px 0 96px; border-bottom: 1px solid var(--ink); }
+  .hero .wrap {
+    display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 64px; align-items: start;
+  }
+  .hero h1 {
+    font-size: clamp(52px, 7.4vw, 108px);
+    margin-bottom: 32px;
+  }
+  .hero h1 em { font-style: normal; color: var(--signal-ink, #B93C17); }
+  .lede { font-size: 19px; color: var(--ink-2); max-width: 36ch; margin-bottom: 36px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .facts {
+    display: grid; grid-template-columns: repeat(3, auto); justify-content: start;
+    gap: 40px; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--rule);
+  }
+  .facts b {
+    display: block; font-family: Archivo, Arial, sans-serif; font-stretch: 76%;
+    font-size: 40px; font-weight: 700; line-height: 1;
+  }
+  .facts span { font-size: 13px; color: var(--ink-2); }
+
+  /* Shipment board */
+  .board {
+    position: relative; border: 1px solid var(--ink); background: #FBFAF6;
+    margin-top: 8px;
+  }
+  .board-head {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--ink); color: var(--paper); padding: 12px 16px;
+    text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px;
+  }
+  .board ul { list-style: none; margin: 0; padding: 0; }
+  .board li {
+    display: grid; grid-template-columns: 1fr auto; gap: 4px 16px;
+    padding: 16px; border-top: 1px solid var(--rule);
+  }
+  .board .ref { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-2); }
+  .board .route { font-family: Archivo, Arial, sans-serif; font-stretch: 84%; font-weight: 600; font-size: 19px; }
+  .board .detail { font-size: 13px; color: var(--ink-2); grid-column: 1; }
+  .board .eta { grid-column: 2; grid-row: 1 / span 3; text-align: right; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-2); }
+  .board .eta b { display: block; color: var(--ink); font-size: 14px; font-weight: 500; }
+  .status {
+    display: inline-block; justify-self: start; margin-top: 6px; padding: 3px 8px;
+    font: 500 11px/1.4 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: 0.08em;
+    border: 1px solid currentColor;
+  }
+  .s-transit { color: var(--ink); }
+  .s-hold { color: var(--hold); }
+  .s-cleared { color: var(--cleared); }
+  .s-origin { color: var(--ink-2); }
+  .stamp {
+    position: absolute; right: 22px; bottom: 26px; transform: rotate(-6deg);
+    border: 2px solid var(--cleared); color: var(--cleared); padding: 6px 12px;
+    font: 500 12px/1 "IBM Plex Mono", monospace; letter-spacing: 0.14em; text-transform: uppercase;
+    opacity: 0.85; pointer-events: none; background: rgba(251, 250, 246, 0.6);
+  }
+  .board-foot {
+    padding: 14px 16px 18px; border-top: 1px solid var(--rule);
+    font-size: 13px; color: var(--ink-2); min-height: 74px;
+  }
+
+  /* Sections */
+  section { padding: 104px 0; border-bottom: 1px solid var(--ink); }
+  .sec-head {
+    display: grid; grid-template-columns: 1fr 1.6fr; gap: 48px; margin-bottom: 56px; align-items: end;
+  }
+  .sec-head h2 { font-size: clamp(40px, 5vw, 68px); }
+  .sec-head p { color: var(--ink-2); max-width: 52ch; }
+
+  /* Services ledger */
+  .ledger { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+  .ledger li {
+    display: grid; grid-template-columns: 90px 1.2fr 2fr 1fr; gap: 32px;
+    padding: 28px 0; border-bottom: 1px solid var(--rule); align-items: baseline;
+  }
+  .ledger .n { color: var(--signal-ink, #B93C17); }
+  .ledger h3 { font-size: 30px; }
+  .ledger p { color: var(--ink-2); }
+  .ledger .meta { color: var(--ink-2); font-size: 12px; line-height: 1.8; text-align: right; }
+
+  /* Process */
+  .process-bg { background: var(--paper-2); }
+  .steps {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    position: relative; list-style: none; padding: 0; margin: 0;
+  }
+  .steps::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 17px;
+    border-top: 1px dashed var(--ink);
+  }
+  .steps li { position: relative; padding-right: 32px; }
+  .steps .dot {
+    width: 35px; height: 35px; background: var(--paper-2); border: 1px solid var(--ink);
+    display: grid; place-items: center; font: 500 13px "IBM Plex Mono", monospace; margin-bottom: 28px;
+    position: relative; z-index: 1;
+  }
+  .steps li:first-child .dot { background: var(--signal); border-color: var(--signal); }
+  .steps h3 { font-size: 30px; margin-bottom: 14px; }
+  .steps p { color: var(--ink-2); font-size: 15px; max-width: 30ch; }
+  .steps .mono { display: block; margin-top: 16px; color: var(--ink); font-size: 12px; }
+
+  /* Lanes table */
+  .table-wrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+  table { width: 100%; border-collapse: collapse; min-width: 640px; }
+  th, td { text-align: left; padding: 18px 16px 18px 0; border-bottom: 1px solid var(--rule); vertical-align: baseline; }
+  th {
+    font: 500 12px "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--ink-2); padding-top: 14px;
+  }
+  td.lane { font-family: Archivo, Arial, sans-serif; font-stretch: 84%; font-weight: 600; font-size: 19px; }
+  td.lane i { font-style: normal; color: var(--signal-ink, #B93C17); padding: 0 6px; }
+  td.num { font-family: "IBM Plex Mono", monospace; font-size: 14px; white-space: nowrap; }
+  .table-note { margin-top: 18px; font-size: 13px; color: var(--ink-2); }
+
+  /* Testimonial */
+  .quote-block { display: grid; grid-template-columns: 1fr 2.4fr; gap: 48px; align-items: start; }
+  .quote-block blockquote { margin: 0; }
+  .quote-block p {
+    font-family: Archivo, Arial, sans-serif; font-stretch: 84%; font-weight: 500;
+    font-size: clamp(26px, 3vw, 40px); line-height: 1.18; letter-spacing: -0.01em;
+  }
+  .quote-block cite {
+    display: block; margin-top: 28px; font-style: normal;
+    font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--ink-2);
+  }
+
+  /* Quote form */
+  .contact { background: var(--ink); color: var(--paper); border-bottom: none; }
+  .contact .eyebrow { color: #A9A597; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; }
+  .contact h2 { font-size: clamp(44px, 5.4vw, 80px); margin-bottom: 28px; }
+  .contact .lede { color: #B7B3A6; margin-bottom: 0; }
+  .contact-points { list-style: none; padding: 0; margin: 40px 0 0; }
+  .contact-points li { padding: 14px 0; border-top: 1px solid #39424D; color: #B7B3A6; font-size: 15px; }
+  .contact-points li b { color: var(--paper); font-weight: 500; }
+
+  form.quote { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 24px; }
+  form.quote .full { grid-column: 1 / -1; }
+  form.quote label {
+    display: block; font: 500 11px "IBM Plex Mono", monospace; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #A9A597; margin-bottom: 8px;
+  }
+  form.quote input, form.quote select {
+    width: 100%; background: transparent; color: var(--paper);
+    border: 0; border-bottom: 1px solid #5B6571; border-radius: 0;
+    padding: 10px 0; font: 400 17px "IBM Plex Sans", sans-serif;
+    appearance: none; -webkit-appearance: none;
+  }
+  form.quote select {
+    background-image: linear-gradient(45deg, transparent 50%, #A9A597 50%), linear-gradient(135deg, #A9A597 50%, transparent 50%);
+    background-position: calc(100% - 8px) 55%, calc(100% - 3px) 55%;
+    background-size: 5px 5px; background-repeat: no-repeat;
+  }
+  form.quote option { color: var(--ink); }
+  form.quote input::placeholder { color: #6F7885; }
+  form.quote input:focus, form.quote select:focus { outline: none; border-bottom-color: var(--signal); }
+  form.quote input:focus-visible, form.quote select:focus-visible { outline: 1px solid var(--signal); outline-offset: 4px; }
+  form.quote .btn { background: var(--signal); border-color: var(--signal); color: var(--ink); justify-self: start; }
+  form.quote .btn:hover { background: var(--paper); border-color: var(--paper); }
+  .form-status { font-size: 14px; color: #B7B3A6; min-height: 22px; }
+
+  /* Footer */
+  footer { padding: 64px 0 40px; }
+  .foot-grid {
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 56px;
+  }
+  .foot-grid h4 {
+    margin: 0 0 14px; font: 500 12px "IBM Plex Mono", monospace; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--ink-2);
+  }
+  .foot-grid p, .foot-grid a { font-size: 15px; display: block; margin-bottom: 6px; }
+  .foot-grid a { text-decoration: none; }
+  .foot-grid a:hover { color: var(--signal-ink, #B93C17); text-decoration: underline; }
+  .foot-small {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    padding-top: 24px; border-top: 1px solid var(--ink); color: var(--ink-2); font-size: 12px;
+  }
+
+  :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .hero .wrap, .sec-head, .contact-grid, .quote-block { grid-template-columns: 1fr; gap: 48px; }
+    .top nav a:not(.btn) { display: none; }
+    .steps { grid-template-columns: 1fr 1fr; row-gap: 56px; }
+    .steps::before { display: none; }
+    .steps li { padding-right: 16px; }
+    .ledger li { grid-template-columns: 56px 1fr; gap: 8px 20px; }
+    .ledger li p { grid-column: 2; }
+    .ledger .meta { grid-column: 2; text-align: left; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 72px 0; }
+    .hero { padding: 48px 0 64px; }
+    .facts { grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .facts b { font-size: 30px; }
+    .clock { display: none; }
+    .steps { grid-template-columns: 1fr; }
+    form.quote { grid-template-columns: 1fr; }
+    .board li { padding: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="Quayline Freight Forwarding, home">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+        <rect x="0.5" y="0.5" width="21" height="21" fill="none" stroke="#17202A"/>
+        <rect x="0.5" y="13" width="21" height="8.5" fill="#E4572E"/>
+      </svg>
+      Quayline
+    </a>
+    <nav aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#lanes">Lanes</a>
+      <a href="#how">Process</a>
+      <span class="clock mono" id="clock" aria-live="off">UTC --:--:--</span>
+      <a class="btn" href="#quote">Request a rate</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Ocean · Air · Road · Customs brokerage</p>
+        <h1>Freight that lands when the paperwork says it will.</h1>
+        <p class="lede">We book the space, file the entries and chase the vessel so you do not have to. One all-in price, and the same named forwarder from pickup to proof of delivery.</p>
+        <div class="cta-row">
+          <a class="btn" href="#quote">Request a rate &rarr;</a>
+          <a class="btn ghost" href="#lanes">See our lanes</a>
+        </div>
+        <div class="facts">
+          <div><b>31</b><span>ports served directly</span></div>
+          <div><b>4 h</b><span>median quote turnaround</span></div>
+          <div><b>1</b><span>forwarder per shipment</span></div>
+        </div>
+      </div>
+
+      <aside class="board" aria-label="Example shipment board">
+        <div class="board-head mono">
+          <span>Shipment board</span>
+          <span>14 open</span>
+        </div>
+        <ul>
+          <li>
+            <span class="ref">QLF-20418</span>
+            <span class="eta">ETA<b>03 NOV</b></span>
+            <span class="route">SHA &rarr; RTM</span>
+            <span class="detail">Ocean FCL, 2 &times; 40' &middot; Housewares</span>
+            <span class="status s-transit">In transit</span>
+          </li>
+          <li>
+            <span class="ref">QLF-20422</span>
+            <span class="eta">ETA<b>24 OCT</b></span>
+            <span class="route">ORD &rarr; FRA</span>
+            <span class="detail">Air, 1.2 t chargeable &middot; Medical devices</span>
+            <span class="status s-cleared">Customs cleared</span>
+          </li>
+          <li>
+            <span class="ref">QLF-20427</span>
+            <span class="eta">ETA<b>11 NOV</b></span>
+            <span class="route">LGB &rarr; YOK</span>
+            <span class="detail">Ocean LCL, 6.4 CBM &middot; Bicycle parts</span>
+            <span class="status s-hold">Hold: docs requested</span>
+          </li>
+          <li>
+            <span class="ref">QLF-20431</span>
+            <span class="eta">ETA<b>23 OCT</b></span>
+            <span class="route">MTY &rarr; DFW</span>
+            <span class="detail">Road FTL, 26 pallets &middot; Packaging</span>
+            <span class="status s-transit">On road</span>
+          </li>
+        </ul>
+        <div class="board-foot">
+          Last update 06:40 UTC. Each line is tied to a bill of lading and a named forwarder.
+        </div>
+        <div class="stamp" aria-hidden="true">Released</div>
+      </aside>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">01 &mdash; Services</p>
+          <h2>Six ways to move a box, and one person to call about it.</h2>
+        </div>
+        <p>We run our own bookings desk and our own customs team. When a carrier rolls your cargo, you hear from us before you hear from the carrier.</p>
+      </div>
+
+      <ol class="ledger">
+        <li>
+          <span class="n mono">01</span>
+          <h3>Ocean, full container</h3>
+          <p>Dedicated space on weekly sailings, with equipment and VGM handled. We rebook within hours when a vessel is blanked.</p>
+          <span class="meta mono">Shanghai / Busan / Rotterdam</span>
+        </li>
+        <li>
+          <span class="n mono">02</span>
+          <h3>Ocean, consolidated</h3>
+          <p>LCL cargo consolidated at origin and deconsolidated at destination, with pallet-level tracking inside the container.</p>
+          <span class="meta mono">Shenzhen / Hamburg / Yokohama</span>
+        </li>
+        <li>
+          <span class="n mono">03</span>
+          <h3>Air freight</h3>
+          <p>Scheduled and charter capacity for time-critical loads, including temperature-controlled and dangerous goods with the right certificates.</p>
+          <span class="meta mono">Chicago / Frankfurt / Dubai</span>
+        </li>
+        <li>
+          <span class="n mono">04</span>
+          <h3>Customs brokerage</h3>
+          <p>Import and export entries filed by licensed brokers in-house. Classification, duty drawback and ACE or ICS filings, reviewed before submission.</p>
+          <span class="meta mono">Entries / Bonds / Drawback</span>
+        </li>
+        <li>
+          <span class="n mono">05</span>
+          <h3>Road and rail</h3>
+          <p>Full and part truckload across the Americas and Europe, plus intermodal rail where the lane allows it. Live status at every handover.</p>
+          <span class="meta mono">Monterrey / Dallas / Duisburg</span>
+        </li>
+        <li>
+          <span class="n mono">06</span>
+          <h3>Warehousing and cross-dock</h3>
+          <p>Bonded and general warehousing near the port, with pick, pack and relabel. Stock moves on the day it lands, not the day after.</p>
+          <span class="meta mono">Oakland / Rotterdam / Laredo</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="how" class="process-bg">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">02 &mdash; Process</p>
+          <h2>Four steps, and no surprise on the final invoice.</h2>
+        </div>
+        <p>Most freight problems start with a missing document or a wrong classification. We check both before the cargo leaves the dock.</p>
+      </div>
+
+      <ol class="steps">
+        <li>
+          <div class="dot">1</div>
+          <h3>Brief</h3>
+          <p>We ask the questions that move money: HS codes, Incoterms, dimensions, gross weight and the date the goods are ready.</p>
+          <span class="mono">Same day</span>
+        </li>
+        <li>
+          <div class="dot">2</div>
+          <h3>Quote</h3>
+          <p>One rate, all-in. Origin charges, freight, surcharges and destination fees are listed separately, with the assumptions stated.</p>
+          <span class="mono">Within 4 hours</span>
+        </li>
+        <li>
+          <div class="dot">3</div>
+          <h3>Book and file</h3>
+          <p>We confirm space, issue the booking and prepare the bill of lading, commercial invoice, packing list and origin certificate.</p>
+          <span class="mono">Documents checked twice</span>
+        </li>
+        <li>
+          <div class="dot">4</div>
+          <h3>Deliver and close</h3>
+          <p>You get live milestones, proof of delivery and a duty reconciliation. Any variance from the quote is explained line by line.</p>
+          <span class="mono">Closed within 5 days</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="lanes">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">03 &mdash; Lanes</p>
+          <h2>The routes we run every week.</h2>
+        </div>
+        <p>Transit times are port-to-port estimates from recent sailings. Schedules change, so we confirm the current departure before you commit.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Lane</th>
+              <th scope="col">Mode</th>
+              <th scope="col">Transit</th>
+              <th scope="col">Departures / week</th>
+              <th scope="col">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="lane">Shanghai <i>&rarr;</i> Rotterdam</td>
+              <td class="num">Ocean FCL</td>
+              <td class="num">31&ndash;36 days</td>
+              <td class="num">3</td>
+              <td>Transshipment via Singapore on two services</td>
+            </tr>
+            <tr>
+              <td class="lane">Shenzhen <i>&rarr;</i> Los Angeles</td>
+              <td class="num">Ocean FCL</td>
+              <td class="num">16&ndash;20 days</td>
+              <td class="num">5</td>
+              <td>Direct to port, with rail onward to Chicago</td>
+            </tr>
+            <tr>
+              <td class="lane">Chicago ORD <i>&rarr;</i> Frankfurt FRA</td>
+              <td class="num">Air</td>
+              <td class="num">1&ndash;2 days</td>
+              <td class="num">Daily</td>
+              <td>Pharma and temperature-controlled capacity</td>
+            </tr>
+            <tr>
+              <td class="lane">Busan <i>&rarr;</i> Houston</td>
+              <td class="num">Ocean FCL</td>
+              <td class="num">30&ndash;34 days</td>
+              <td class="num">1</td>
+              <td>Reefer and open-top available on request</td>
+            </tr>
+            <tr>
+              <td class="lane">Hamburg <i>&rarr;</i> Jebel Ali</td>
+              <td class="num">Ocean FCL</td>
+              <td class="num">24&ndash;28 days</td>
+              <td class="num">2</td>
+              <td>Project cargo surveyed before loading</td>
+            </tr>
+            <tr>
+              <td class="lane">Monterrey <i>&rarr;</i> Dallas</td>
+              <td class="num">Road FTL</td>
+              <td class="num">2 days</td>
+              <td class="num">Daily</td>
+              <td>Cross-border entries filed at the crossing</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note mono">Lanes not listed? Ask. We have moved cargo to 31 ports directly and to a further 60 by partner.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap quote-block">
+      <p class="eyebrow" style="margin:0">04 &mdash; Clients</p>
+      <blockquote>
+        <p>&ldquo;They told us on a Tuesday that our reefer would miss the vessel. It missed it. They had the next sailing booked before we finished the call, and the customs entry was already waiting for the broker.&rdquo;</p>
+        <cite>Operations Director, kitchenware importer, Ohio</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="contact" id="quote">
+    <div class="wrap contact-grid">
+      <div>
+        <p class="eyebrow">05 &mdash; Request a rate</p>
+        <h2>Tell us what is moving. We will reply with a number.</h2>
+        <p class="lede">Send the basics. A forwarder who knows your lane will reply within one business day, usually within the same afternoon.</p>
+        <ul class="contact-points">
+          <li><b>Named contact.</b> The forwarder who quotes you also runs the shipment.</li>
+          <li><b>No minimums on air.</b> Pallets, parcels and single crates are all welcome.</li>
+          <li><b>Written terms.</b> Liability, demurrage and free time are in the quote, not a footnote.</li>
+        </ul>
+      </div>
+
+      <form class="quote" id="quote-form" novalidate>
+        <div>
+          <label for="origin">Origin</label>
+          <input id="origin" name="origin" type="text" placeholder="City or port" required autocomplete="off">
+        </div>
+        <div>
+          <label for="destination">Destination</label>
+          <input id="destination" name="destination" type="text" placeholder="City or port" required autocomplete="off">
+        </div>
+        <div>
+          <label for="mode">Mode</label>
+          <select id="mode" name="mode" required>
+            <option value="">Select</option>
+            <option>Ocean full container</option>
+            <option>Ocean consolidated</option>
+            <option>Air freight</option>
+            <option>Road or rail</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div>
+          <label for="weight">Gross weight (kg)</label>
+          <input id="weight" name="weight" type="number" inputmode="decimal" min="1" placeholder="e.g. 4200">
+        </div>
+        <div>
+          <label for="ready">Ready date</label>
+          <input id="ready" name="ready" type="date">
+        </div>
+        <div>
+          <label for="email">Work email</label>
+          <input id="email" name="email" type="email" placeholder="you@company.com" required autocomplete="email">
+        </div>
+        <div class="full">
+          <button class="btn" type="submit">Send request &rarr;</button>
+        </div>
+        <p class="full form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p class="mark" style="margin-bottom:14px">Quayline</p>
+        <p style="color:var(--ink-2);max-width:32ch">Freight forwarders and customs brokers. Founded in 1987 and still run by the people who answer the phone.</p>
+      </div>
+      <div>
+        <h4>Offices</h4>
+        <p>Rotterdam, NL</p>
+        <p>Oakland, CA</p>
+        <p>Hamburg, DE</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:quotes@quayline.example">quotes@quayline.example</a>
+        <a href="tel:+15555550142">+1 (555) 555-0142</a>
+        <p>Mon&ndash;Fri, 06:00&ndash;20:00 local</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#services">Services</a>
+        <a href="#lanes">Lanes</a>
+        <a href="#how">Process</a>
+        <a href="#quote">Request a rate</a>
+      </div>
+    </div>
+    <div class="foot-small">
+      <span>&copy; 2026 Quayline Freight Forwarding. All rights reserved.</span>
+      <span class="mono">Terms of carriage &middot; Privacy &middot; Accessibility</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // UTC clock in the header. Hidden on small screens via CSS.
+  (function () {
+    var el = document.getElementById('clock');
+    function tick() {
+      el.textContent = 'UTC ' + new Date().toISOString().slice(11, 19);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  // Quote form: validate, then show a confirmation. No backend is wired up.
+  (function () {
+    var form = document.getElementById('quote-form');
+    var status = document.getElementById('form-status');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var required = form.querySelectorAll('[required]');
+      var missing = null;
+      required.forEach(function (field) {
+        var empty = !field.value.trim();
+        if (empty && !missing) missing = field;
+      });
+      if (missing) {
+        status.textContent = 'Add ' + missing.previousElementSibling.textContent.toLowerCase() + ' to continue.';
+        missing.focus();
+        return;
+      }
+      status.textContent = 'Received. A forwarder will reply to ' + form.email.value.trim() + ' within one business day.';
+      form.reset();
+    });
+  })();
+</script>
+</body>
+</html>

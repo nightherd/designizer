@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estúdio Pátio — Yoga in Graça, Lisbon</title>
+<meta name="description" content="A small yoga studio on the top floor of an old Graça building. Twelve mats, wooden floors, light from the river side. Classes in English and Português.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --chalk:#f1ebdf;
+    --chalk-2:#e8dfcd;
+    --ink:#1f2a33;
+    --tagus:#27466b;
+    --clay:#b6542f;
+    --ochre:#d9a441;
+    --moss:#5d6b4a;
+    --line:rgba(31,42,51,.22);
+    --serif:'Young Serif',Georgia,serif;
+    --sans:'Hanken Grotesk',system-ui,sans-serif;
+    --mono:'DM Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--chalk);color:var(--ink);
+    font-family:var(--sans);font-size:18px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* paper grain */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.35;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .35  0 0 0 0 .25  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  .mono{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
+
+  /* nav */
+  header{padding:22px 0;border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;justify-content:space-between;align-items:baseline;gap:20px}
+  .logo{font-family:var(--serif);font-size:22px;text-decoration:none}
+  .logo i{font-style:normal;color:var(--clay)}
+  nav{display:flex;gap:28px}
+  nav a{text-decoration:none;font-size:15px;border-bottom:1px solid transparent}
+  nav a:hover{border-color:var(--ink)}
+
+  /* hero */
+  .hero{position:relative;padding:70px 0 90px;overflow:hidden}
+  .hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:end}
+  .hero h1{
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(46px,7.4vw,104px);line-height:.98;letter-spacing:-.02em;
+  }
+  .hero h1 em{font-style:normal;color:var(--clay)}
+  .hero h1 span{display:block;padding-left:1.1em}
+  .hero-side{padding-bottom:10px}
+  .hero-side p{max-width:34ch;margin-bottom:26px}
+  .btn{
+    display:inline-block;background:var(--ink);color:var(--chalk);
+    padding:14px 26px;text-decoration:none;font-weight:500;font-size:16px;
+    border-radius:999px 999px 999px 4px;transition:background .2s,transform .2s;
+  }
+  .btn:hover{background:var(--clay);transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);margin-left:10px}
+  .btn.ghost:hover{background:var(--ink);color:var(--chalk)}
+  .sun{
+    position:absolute;right:-90px;top:-110px;width:420px;height:420px;border-radius:50%;
+    background:var(--ochre);opacity:.9;z-index:-1;
+  }
+  .tileband{height:56px;margin-top:70px;background:var(--tagus)}
+  .meta-row{display:flex;gap:34px;flex-wrap:wrap;margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:#4a5560}
+
+  /* sections */
+  section{padding:96px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:grid;grid-template-columns:200px 1fr;gap:40px;margin-bottom:56px}
+  .sec-head .mono{padding-top:14px;color:var(--clay)}
+  h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.4vw,56px);line-height:1.08;max-width:18ch}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:200px 1fr 1fr;gap:40px}
+  .about-grid p + p{margin-top:1em}
+  .about-grid .big{font-family:var(--serif);font-size:26px;line-height:1.3}
+  .room{
+    margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--ink);
+  }
+  .room div{padding:22px 24px;border-right:1px solid var(--ink)}
+  .room div:last-child{border-right:0}
+  .room b{display:block;font-family:var(--serif);font-weight:400;font-size:40px;line-height:1;margin-bottom:6px}
+
+  /* schedule */
+  .sched{width:100%;border-collapse:collapse}
+  .sched th{font:500 12.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;text-align:left;padding:0 12px 14px 0;color:#4a5560}
+  .sched td{padding:15px 12px 15px 0;border-top:1px solid var(--line);vertical-align:top;font-size:16px}
+  .sched td:first-child{font-family:var(--mono);font-size:14px;white-space:nowrap}
+  .sched .c{display:block;font-weight:600}
+  .sched .t{display:block;font-size:14px;color:#4a5560}
+  .sched .full{color:var(--clay)}
+  .note{margin-top:22px;color:#4a5560;font-size:15px}
+
+  /* classes */
+  .classes{display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
+  .cl{padding:28px 0;border-top:1px solid var(--ink)}
+  .cl h3{font-family:var(--serif);font-weight:400;font-size:28px;display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+  .cl h3 small{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--moss);white-space:nowrap}
+  .cl p{margin-top:8px;max-width:44ch}
+
+  /* teachers */
+  .teachers{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .t{padding-top:0}
+  .portrait{
+    aspect-ratio:4/5;margin-bottom:16px;position:relative;overflow:hidden;
+  }
+  .portrait svg{width:100%;height:100%;display:block}
+  .t h3{font-family:var(--serif);font-weight:400;font-size:24px}
+  .t .mono{color:var(--clay);display:block;margin:2px 0 8px}
+  .t p{font-size:16px}
+  .t:nth-child(2){margin-top:48px}
+
+  /* pricing */
+  .prices{max-width:760px;margin-left:240px}
+  .prices li{list-style:none;display:flex;align-items:baseline;gap:14px;padding:16px 0}
+  .prices li .dots{flex:1;border-bottom:2px dotted var(--line);transform:translateY(-5px)}
+  .prices .n{font-family:var(--serif);font-size:22px}
+  .prices .n small{display:block;font:400 14px var(--sans);color:#4a5560}
+  .prices .p{font-family:var(--serif);font-size:26px}
+  .prices .hl .n{color:var(--clay)}
+
+  /* quote */
+  .quote{background:var(--tagus);color:var(--chalk);border:0}
+  .quote blockquote{font-family:var(--serif);font-size:clamp(26px,3.6vw,46px);line-height:1.2;max-width:26ch}
+  .quote cite{display:block;margin-top:26px;font-style:normal;color:var(--ochre)}
+
+  /* visit */
+  .visit-grid{display:grid;grid-template-columns:200px 1fr 1fr;gap:40px}
+  .visit-grid h3{font:500 12.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--clay);margin-bottom:10px}
+  .visit-grid p{margin-bottom:22px}
+  form{display:grid;gap:14px}
+  label{font:500 12.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;display:grid;gap:6px}
+  input,select{
+    font:400 17px var(--sans);padding:12px 0;border:0;border-bottom:1.5px solid var(--ink);
+    background:transparent;color:var(--ink);border-radius:0;
+  }
+  input:focus,select:focus{outline:0;border-color:var(--clay)}
+  form .btn{border:0;cursor:pointer;justify-self:start;margin-top:10px;font-family:var(--sans)}
+
+  footer{padding:40px 0 60px;color:#4a5560;font-size:15px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+
+  @media (max-width:880px){
+    body{font-size:17px}
+    .hero .wrap,.sec-head,.about-grid,.visit-grid,.classes,.teachers{grid-template-columns:1fr}
+    .sec-head,.about-grid,.visit-grid{gap:18px}
+    .sec-head{margin-bottom:34px}
+    .sec-head .mono{padding-top:0}
+    .prices{margin-left:0}
+    .t:nth-child(2){margin-top:0}
+    .room{grid-template-columns:1fr}
+    .room div{border-right:0;border-bottom:1px solid var(--ink)}
+    .room div:last-child{border-bottom:0}
+    nav{gap:16px}nav a:nth-child(n+4){display:none}
+    .sun{width:260px;height:260px;right:-80px;top:-70px}
+    .btn.ghost{margin-left:0;margin-top:10px}
+    .sched{font-size:15px}
+    .sched th:nth-child(n+4),.sched td:nth-child(n+4){display:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#">Estúdio Pátio<i>.</i></a>
+    <nav>
+      <a href="#horario">Timetable</a>
+      <a href="#aulas">Classes</a>
+      <a href="#professores">Teachers</a>
+      <a href="#precos">Prices</a>
+      <a href="#visitar">Find us</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="hero">
+  <div class="sun" aria-hidden="true"></div>
+  <div class="wrap">
+    <h1>
+      Slow down<br>
+      <span>on the <em>top floor</em></span>
+      <span>of an old building.</span>
+    </h1>
+    <div class="hero-side">
+      <p>Twelve mats, creaky pine floors and afternoon light off the river. A yoga studio in Graça, up four flights of stairs. Worth it.</p>
+      <a class="btn" href="#visitar">Book a first class — €10</a>
+      <a class="btn ghost" href="#horario">See the week</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="meta-row mono">
+      <span>Rua da Graça, Lisboa</span>
+      <span>Classes in English &amp; Português</span>
+      <span>Mon – Sat, 07:30 – 21:00</span>
+    </div>
+  </div>
+  <div class="tileband" aria-hidden="true">
+    <svg width="100%" height="56" role="presentation">
+      <defs>
+        <pattern id="az" width="56" height="56" patternUnits="userSpaceOnUse">
+          <rect width="56" height="56" fill="#27466b"/>
+          <path d="M28 4 C36 14 44 20 52 28 C44 36 36 42 28 52 C20 42 12 36 4 28 C12 20 20 14 28 4Z" fill="none" stroke="#f1ebdf" stroke-width="1.6"/>
+          <circle cx="28" cy="28" r="6" fill="#d9a441"/>
+          <circle cx="0" cy="0" r="5" fill="#f1ebdf"/><circle cx="56" cy="0" r="5" fill="#f1ebdf"/>
+          <circle cx="0" cy="56" r="5" fill="#f1ebdf"/><circle cx="56" cy="56" r="5" fill="#f1ebdf"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="56" fill="url(#az)"/>
+    </svg>
+  </div>
+</div>
+
+<section id="sobre">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="mono" style="color:var(--clay);padding-top:8px">01 — The place</div>
+      <p class="big">We opened in 2019 after Marta got tired of teaching in rented rooms with someone else's furniture.</p>
+      <div>
+        <p>The studio is a former seamstress's workshop. We kept the tall windows, the tiled stove nobody can use, and the slightly sloping floor, which you will notice in tree pose and then stop noticing.</p>
+        <p>We keep classes small on purpose. Twelve people means the teacher actually sees you, and nobody has to be anonymous in the back row. No mirrors, no playlists with lyrics, no incense. There's tea afterwards.</p>
+      </div>
+    </div>
+    <div class="room">
+      <div><b>12</b>mats per class, never more</div>
+      <div><b>4th</b>floor, no lift, lovely view of the Tejo</div>
+      <div><b>6</b>teachers, all of whom you can name by week two</div>
+    </div>
+  </div>
+</section>
+
+<section id="horario">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="mono">02 — Timetable</div>
+      <h2>A normal week at Pátio</h2>
+    </div>
+    <table class="sched">
+      <thead><tr><th>Time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead>
+      <tbody>
+        <tr><td>07:30</td><td><span class="c">Vinyasa</span><span class="t">Marta</span></td><td></td><td><span class="c">Vinyasa</span><span class="t">Marta</span></td><td></td><td><span class="c">Vinyasa</span><span class="t">Marta</span></td><td></td></tr>
+        <tr><td>09:30</td><td></td><td><span class="c">Hatha</span><span class="t">Inês</span></td><td></td><td><span class="c">Hatha</span><span class="t">Inês</span></td><td></td><td><span class="c">Slow flow</span><span class="t">Tomás</span></td></tr>
+        <tr><td>12:30</td><td><span class="c">Lunch stretch</span><span class="t">30 min · Tomás</span></td><td></td><td><span class="c">Lunch stretch</span><span class="t">30 min · Tomás</span></td><td></td><td><span class="c">Lunch stretch</span><span class="t">30 min · Tomás</span></td><td></td></tr>
+        <tr><td>18:30</td><td><span class="c">Hatha</span><span class="t">Inês</span></td><td><span class="c">Vinyasa</span><span class="t">Dara</span></td><td><span class="c">Iyengar-ish</span><span class="t">Joaquim</span></td><td><span class="c">Vinyasa</span><span class="t">Dara</span></td><td><span class="c full">Mobility</span><span class="t">Joaquim</span></td><td></td></tr>
+        <tr><td>20:00</td><td><span class="c">Yin</span><span class="t">Marta</span></td><td></td><td><span class="c">Yin</span><span class="t">Dara</span></td><td><span class="c">Nidra</span><span class="t">Inês</span></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <p class="note">Tuesday and Thursday 18:30 are in English by default. Everything else is whichever language the room needs. Book through the form below — we'll email you back by the next morning.</p>
+  </div>
+</section>
+
+<section id="aulas">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="mono">03 — What we teach</div>
+      <h2>Five kinds of class, none of them mysterious</h2>
+    </div>
+    <div class="classes">
+      <div class="cl"><h3>Vinyasa <small>All levels · 60 min</small></h3><p>Breath-linked movement with a clear shape. Mornings are gentler, Tuesday evenings with Dara get sweaty. Modifications are always offered, never announced.</p></div>
+      <div class="cl"><h3>Hatha <small>Beginners welcome · 75 min</small></h3><p>Fewer poses held longer, with plenty of explanation. If you've never done yoga, start with Inês on a Tuesday.</p></div>
+      <div class="cl"><h3>Yin <small>Evenings · 75 min</small></h3><p>Floor-based, long holds, props everywhere. Less stretching than it sounds, more lying down than you'd expect. Good after a bad week.</p></div>
+      <div class="cl"><h3>Iyengar-ish <small>Some experience · 90 min</small></h3><p>Joaquim trained in the Iyengar tradition and teaches a looser version. Blocks, belts, walls, and a lot of attention to alignment.</p></div>
+      <div class="cl"><h3>Nidra <small>Thursday night · 45 min</small></h3><p>Guided rest, lying down under a blanket. People fall asleep. That's fine, that's allowed.</p></div>
+      <div class="cl"><h3>Lunch stretch <small>30 min</small></h3><p>For people who work nearby and have a laptop-shaped back. Come in your office clothes. We'll have you out by 13:05.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="professores">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="mono">04 — Teachers</div>
+      <h2>Three of the six, so you know who's who</h2>
+    </div>
+    <div class="teachers">
+      <div class="t">
+        <div class="portrait"><svg viewBox="0 0 200 250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustrated placeholder for Marta"><rect width="200" height="250" fill="#b6542f"/><circle cx="100" cy="95" r="38" fill="#f1ebdf"/><path d="M20 250 C20 170 60 140 100 140 C140 140 180 170 180 250Z" fill="#1f2a33"/><circle cx="160" cy="40" r="22" fill="#d9a441"/></svg></div>
+        <h3>Marta Figueiredo</h3><span class="mono">Founder · Vinyasa, Yin</span>
+        <p>Former architect. Teaches like she's drawing a floor plan: where you are, where you're going, and the shortest honest route.</p>
+      </div>
+      <div class="t">
+        <div class="portrait"><svg viewBox="0 0 200 250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustrated placeholder for Inês"><rect width="200" height="250" fill="#5d6b4a"/><circle cx="100" cy="100" r="36" fill="#e8dfcd"/><path d="M10 250 C10 175 55 148 100 148 C145 148 190 175 190 250Z" fill="#27466b"/><rect x="26" y="26" width="34" height="34" fill="#d9a441" transform="rotate(14 43 43)"/></svg></div>
+        <h3>Inês Calado</h3><span class="mono">Hatha, Nidra</span>
+        <p>Physiotherapist by day. Calm, funny, will correct your wrists before you know they're wrong. The one to see if you're new.</p>
+      </div>
+      <div class="t">
+        <div class="portrait"><svg viewBox="0 0 200 250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustrated placeholder for Joaquim"><rect width="200" height="250" fill="#27466b"/><circle cx="100" cy="92" r="36" fill="#f1ebdf"/><path d="M15 250 C15 168 58 138 100 138 C142 138 185 168 185 250Z" fill="#d9a441"/><circle cx="38" cy="200" r="30" fill="#b6542f"/></svg></div>
+        <h3>Joaquim Neves</h3><span class="mono">Iyengar-ish, Mobility</span>
+        <p>Twenty years on the mat, from Pune to Porto. Precise and patient. He owns more blocks than anyone should.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="precos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="mono">05 — Prices</div>
+      <h2>Simple, and no contracts</h2>
+    </div>
+    <ul class="prices">
+      <li class="hl"><span class="n">First class<small>Once per person, any class</small></span><span class="dots"></span><span class="p">€10</span></li>
+      <li><span class="n">Drop-in<small>Book up to 2 hours before</small></span><span class="dots"></span><span class="p">€16</span></li>
+      <li><span class="n">Ten classes<small>Valid six months, shareable</small></span><span class="dots"></span><span class="p">€130</span></li>
+      <li><span class="n">Monthly, unlimited<small>Cancel any time, no questions</small></span><span class="dots"></span><span class="p">€95</span></li>
+      <li><span class="n">Lunch stretch, ten pack<small>30 min sessions</small></span><span class="dots"></span><span class="p">€60</span></li>
+    </ul>
+    <p class="note" style="margin-left:240px">Students and under-26s: take €2 off any class. Mats are free to borrow, towels aren't.</p>
+  </div>
+</section>
+
+<section class="quote">
+  <div class="wrap">
+    <blockquote>“I came for my back and stayed because it's the only room in Lisbon where my phone doesn't exist.”</blockquote>
+    <cite class="mono">— Rita, Tuesday regular since 2021</cite>
+  </div>
+</section>
+
+<section id="visitar" style="border-bottom:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="mono">06 — Find us</div>
+      <h2>Up the stairs, past the blue door</h2>
+    </div>
+    <div class="visit-grid">
+      <div></div>
+      <div>
+        <h3>Address</h3>
+        <p>Rua da Graça 000, 4.º andar<br>1170-000 Lisboa</p>
+        <h3>Getting here</h3>
+        <p>Tram 28E to Graça (it's packed, walk if you can). Or 20 minutes uphill from Martim Moniz — arrive early and stretch on arrival, you've earned it.</p>
+        <h3>Contact</h3>
+        <p>ola@estudiopatio.example<br>+351 000 000 000</p>
+      </div>
+      <form onsubmit="event.preventDefault();this.querySelector('button').textContent='Obrigado — we will write soon';">
+        <label>Name<input required name="name" autocomplete="name"></label>
+        <label>Email<input required type="email" name="email" autocomplete="email"></label>
+        <label>Which class?
+          <select name="class">
+            <option>Not sure — help me choose</option>
+            <option>Hatha (Tue 09:30)</option>
+            <option>Vinyasa (Mon 07:30)</option>
+            <option>Yin (Mon 20:00)</option>
+            <option>Nidra (Thu 20:00)</option>
+          </select>
+        </label>
+        <button class="btn" type="submit">Reserve my €10 class</button>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Estúdio Pátio, Lda. Feito em Lisboa.</span>
+    <span>Instagram · Privacy</span>
+  </div>
+</footer>
+
+</body>
+</html>

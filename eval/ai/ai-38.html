@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alba — Clean Skincare</title>
+<meta name="description" content="Alba makes minimal, dermatologist-tested skincare with ingredients you can pronounce.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f4ef; --surface:#fff; --ink:#1f2a24; --muted:#6b756e;
+    --accent:#4a6b57; --soft:#e6ece6; --line:#e3ded5; --sand:#efe8dc;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:300;line-height:1.1;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:500}
+  .btn{display:inline-block;padding:14px 28px;border-radius:999px;background:var(--ink);color:#fff;font-size:.9rem;font-weight:500;transition:.2s;border:1px solid var(--ink)}
+  .btn:hover{background:var(--accent);border-color:var(--accent)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:#fff}
+
+  header{position:sticky;top:0;z-index:10;background:rgba(247,244,239,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{font-family:Fraunces,serif;font-size:1.6rem;letter-spacing:.04em}
+  nav ul{display:flex;gap:32px;list-style:none;font-size:.9rem;color:var(--muted)}
+  nav ul a:hover{color:var(--ink)}
+  .nav-cta{padding:9px 20px;font-size:.85rem}
+
+  .hero{padding:80px 0 96px}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem);margin:18px 0 24px}
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero p.lead{font-size:1.1rem;color:var(--muted);max-width:30em;margin-bottom:36px}
+  .hero .actions{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-art{aspect-ratio:4/5;border-radius:200px 200px 24px 24px;background:linear-gradient(160deg,var(--soft),var(--sand));position:relative;display:grid;place-items:center;overflow:hidden}
+  .bottle{width:34%;aspect-ratio:1/3;background:linear-gradient(90deg,#f4f1ea,#fff 40%,#e8e3d8);border-radius:14px 14px 10px 10px;position:relative;box-shadow:0 30px 50px -20px rgba(31,42,36,.35)}
+  .bottle::before{content:"";position:absolute;left:50%;top:-16%;width:46%;height:18%;transform:translateX(-50%);background:var(--ink);border-radius:6px 6px 2px 2px}
+  .bottle::after{content:"ALBA\A Serum";white-space:pre;position:absolute;inset:38% 0 auto;text-align:center;font-family:Fraunces,serif;font-size:clamp(.7rem,1.4vw,1rem);letter-spacing:.2em;color:var(--accent)}
+  .orb{position:absolute;border-radius:50%;background:rgba(255,255,255,.6)}
+  .orb.a{width:140px;height:140px;top:12%;right:10%}
+  .orb.b{width:70px;height:70px;bottom:14%;left:12%}
+
+  .trust{border-block:1px solid var(--line);padding:22px 0;font-size:.85rem;color:var(--muted)}
+  .trust .wrap{display:flex;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;justify-content:center}
+  .trust span::before{content:"✓ ";color:var(--accent)}
+
+  section{padding:104px 0}
+  .head{max-width:34em;margin-bottom:56px}
+  .head h2{font-size:clamp(2rem,4vw,3rem);margin:12px 0 16px}
+  .head p{color:var(--muted)}
+
+  .products{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;transition:.25s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(31,42,36,.3)}
+  .card .img{aspect-ratio:1;border-radius:14px;display:grid;place-items:center;margin-bottom:20px}
+  .card:nth-child(1) .img{background:var(--soft)}
+  .card:nth-child(2) .img{background:var(--sand)}
+  .card:nth-child(3) .img{background:#e9eef0}
+  .mini{width:28%;aspect-ratio:1/2.4;border-radius:10px;background:linear-gradient(90deg,#f4f1ea,#fff 45%,#e8e3d8);box-shadow:0 14px 24px -12px rgba(31,42,36,.35)}
+  .card:nth-child(2) .mini{aspect-ratio:1/1;width:42%;border-radius:12px}
+  .card:nth-child(3) .mini{border-radius:10px 10px 10px 10px;width:24%;aspect-ratio:1/2.8}
+  .card h3{font-size:1.4rem;margin-bottom:4px}
+  .card .tag{font-size:.8rem;color:var(--muted);margin-bottom:14px}
+  .card .row{display:flex;justify-content:space-between;align-items:center}
+  .price{font-weight:500}
+  .add{font-size:.82rem;border:1px solid var(--line);padding:8px 16px;border-radius:999px;background:none;cursor:pointer;font:inherit;font-size:.82rem;transition:.2s}
+  .add:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  .philosophy{background:var(--sand)}
+  .philosophy .wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:72px;align-items:start}
+  .philosophy h2{font-size:clamp(2rem,4vw,3rem);margin-top:12px}
+  .points{display:grid;gap:28px}
+  .point{display:grid;grid-template-columns:48px 1fr;gap:18px;padding-bottom:28px;border-bottom:1px solid rgba(31,42,36,.12)}
+  .point:last-child{border:0}
+  .point .n{font-family:Fraunces,serif;font-size:1.5rem;color:var(--accent)}
+  .point h3{font-size:1.3rem;margin-bottom:6px}
+  .point p{color:var(--muted);font-size:.95rem}
+
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  blockquote{padding:32px;border:1px solid var(--line);border-radius:20px;background:var(--surface)}
+  blockquote p{font-family:Fraunces,serif;font-size:1.15rem;font-weight:300;margin-bottom:20px}
+  blockquote cite{font-style:normal;font-size:.82rem;color:var(--muted)}
+  .stars{color:var(--accent);letter-spacing:3px;font-size:.85rem;margin-bottom:14px}
+
+  .cta{padding:0 0 104px}
+  .cta-box{background:var(--accent);color:#fff;border-radius:32px;padding:72px 32px;text-align:center}
+  .cta-box h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:14px}
+  .cta-box p{opacity:.85;margin-bottom:32px}
+  form{display:flex;gap:10px;max-width:440px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+  input{flex:1 1 220px;padding:14px 22px;border-radius:999px;border:0;font:inherit;font-size:.9rem;background:#fff;color:var(--ink)}
+  input:focus-visible,.btn:focus-visible,.add:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .cta-box .btn{background:var(--ink);border-color:var(--ink)}
+  .cta-box .btn:hover{background:#fff;color:var(--ink)}
+  .note{margin-top:16px;font-size:.85rem;min-height:1.4em}
+
+  footer{border-top:1px solid var(--line);padding:48px 0;font-size:.85rem;color:var(--muted)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;align-items:center}
+  footer ul{display:flex;gap:24px;list-style:none}
+
+  @media (max-width:860px){
+    nav ul{display:none}
+    .hero .wrap,.philosophy .wrap{grid-template-columns:1fr;gap:40px}
+    .hero{padding:48px 0 64px}
+    .hero-art{max-width:420px}
+    .products,.quotes{grid-template-columns:1fr}
+    section{padding:72px 0}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#" class="logo">Alba</a>
+    <ul>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+    </ul>
+    <a href="#shop" class="btn nav-cta">Shop now</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Clean · Minimal · Effective</span>
+        <h1>Skin care, <em>simplified.</em></h1>
+        <p class="lead">Three thoughtfully formulated essentials, made with ingredients you can pronounce and results you can see. Nothing extra. Nothing hidden.</p>
+        <div class="actions">
+          <a href="#shop" class="btn">Shop the routine</a>
+          <a href="#philosophy" class="btn ghost">Our philosophy</a>
+        </div>
+      </div>
+      <div class="hero-art" role="img" aria-label="Alba serum bottle">
+        <div class="orb a"></div><div class="orb b"></div>
+        <div class="bottle"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust">
+    <div class="wrap">
+      <span>Dermatologist tested</span>
+      <span>Fragrance free</span>
+      <span>Vegan &amp; cruelty free</span>
+      <span>Recyclable glass</span>
+    </div>
+  </div>
+
+  <section id="shop">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">The essentials</span>
+        <h2>A routine in three steps.</h2>
+        <p>Cleanse, treat, protect. Each formula works alone or together, and is gentle enough for sensitive skin.</p>
+      </div>
+      <div class="products">
+        <article class="card">
+          <div class="img"><div class="mini"></div></div>
+          <h3>Soft Gel Cleanser</h3>
+          <p class="tag">Removes impurities without stripping · 150 ml</p>
+          <div class="row"><span class="price">$24</span><button class="add">Add to bag</button></div>
+        </article>
+        <article class="card">
+          <div class="img"><div class="mini"></div></div>
+          <h3>Barrier Cream</h3>
+          <p class="tag">Ceramides + squalane for lasting moisture · 50 ml</p>
+          <div class="row"><span class="price">$38</span><button class="add">Add to bag</button></div>
+        </article>
+        <article class="card">
+          <div class="img"><div class="mini"></div></div>
+          <h3>Glow Serum</h3>
+          <p class="tag">10% niacinamide + hyaluronic acid · 30 ml</p>
+          <div class="row"><span class="price">$42</span><button class="add">Add to bag</button></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="philosophy" class="philosophy">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Our philosophy</span>
+        <h2>Less in the bottle. More for your skin.</h2>
+      </div>
+      <div class="points">
+        <div class="point"><span class="n">01</span><div><h3>Short ingredient lists</h3><p>Every formula has fewer than twelve ingredients, and each one has a job. We publish the purpose and percentage of all of them.</p></div></div>
+        <div class="point"><span class="n">02</span><div><h3>Proven actives</h3><p>We use clinically studied ingredients at effective concentrations, not trendy extras sprinkled in for the label.</p></div></div>
+        <div class="point"><span class="n">03</span><div><h3>Kind to the planet</h3><p>Refillable glass, responsibly sourced botanicals, and carbon-neutral shipping on every order.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Loved by skin</span>
+        <h2>Real people, real results.</h2>
+      </div>
+      <div class="quotes">
+        <blockquote><div class="stars" aria-label="5 stars">★★★★★</div><p>“My sensitive skin finally feels calm. Eight weeks in and my redness has faded.”</p><cite>Maya R., verified buyer</cite></blockquote>
+        <blockquote><div class="stars" aria-label="5 stars">★★★★★</div><p>“Three products, zero fuss. It's the first routine I've actually stuck with.”</p><cite>Daniel K., verified buyer</cite></blockquote>
+        <blockquote><div class="stars" aria-label="5 stars">★★★★★</div><p>“The serum absorbs instantly and my skin looks plump all day. Worth every penny.”</p><cite>Priya S., verified buyer</cite></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <div class="wrap">
+      <div class="cta-box">
+        <h2>Get 15% off your first order.</h2>
+        <p>Join the Alba list for skin tips, early access and offers.</p>
+        <form id="signup">
+          <input type="email" required placeholder="Your email address" aria-label="Email address">
+          <button class="btn" type="submit">Subscribe</button>
+        </form>
+        <p class="note" id="note" role="status"></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="logo" style="font-size:1.2rem">Alba</span>
+    <ul><li><a href="#shop">Shop</a></li><li><a href="#philosophy">About</a></li><li><a href="#">Contact</a></li><li><a href="#">Instagram</a></li></ul>
+    <span>© 2026 Alba Skincare</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('signup').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('note').textContent = 'Thank you! Check your inbox for your code.';
+    e.target.reset();
+  });
+  document.querySelectorAll('.add').forEach(b => b.addEventListener('click', () => {
+    b.textContent = 'Added ✓';
+    setTimeout(() => b.textContent = 'Add to bag', 1600);
+  }));
+</script>
+</body>
+</html>

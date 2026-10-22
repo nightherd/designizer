@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sunline Solar | Residential Solar Installation</title>
+  <meta name="description" content="Go solar with Sunline. Free home energy assessments, expert installation, and clear savings estimates for homeowners." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fbf8f2;
+      --surface: #ffffff;
+      --ink: #14213d;
+      --muted: #5b6478;
+      --line: #e8e2d6;
+      --sun: #f5a623;
+      --sun-deep: #d9830a;
+      --leaf: #2f7d5b;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(20, 33, 61, 0.08);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f1628;
+        --surface: #172039;
+        --ink: #f3f0e8;
+        --muted: #aab2c5;
+        --line: #26324f;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0f1628;
+      --surface: #172039;
+      --ink: #f3f0e8;
+      --muted: #aab2c5;
+      --line: #26324f;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
+    h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); }
+    h2 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); }
+    h3 { font-size: 1.25rem; }
+    p { color: var(--muted); }
+    .container { width: min(1140px, 100% - 32px); margin-inline: auto; }
+    section { padding: clamp(64px, 9vw, 112px) 0; }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sun-deep);
+      margin-bottom: 12px;
+    }
+    .section-head { max-width: 640px; margin-bottom: 48px; }
+    .section-head p { margin-top: 14px; font-size: 1.05rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 1rem;
+      text-decoration: none; border: 2px solid transparent; cursor: pointer;
+      transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, button:focus-visible {
+      outline: 3px solid var(--sun); outline-offset: 2px;
+    }
+    .btn-primary { background: var(--sun); color: #1b1300; box-shadow: 0 8px 20px rgba(245, 166, 35, 0.35); }
+    .btn-primary:hover { background: #ffb53d; }
+    .btn-ghost { border-color: currentColor; background: transparent; color: var(--ink); }
+    .btn-ghost:hover { background: rgba(127, 127, 127, 0.08); }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: saturate(160%) blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: "Fraunces", serif; font-weight: 700; font-size: 1.35rem; }
+    .logo-mark { width: 34px; height: 34px; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 0.95rem; font-weight: 500; color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta { padding: 10px 18px; font-size: 0.95rem; }
+    .menu-toggle {
+      display: none; background: none; border: 0; color: var(--ink); cursor: pointer; padding: 8px;
+    }
+
+    /* Hero */
+    .hero { padding: clamp(56px, 8vw, 96px) 0 clamp(64px, 9vw, 110px); position: relative; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
+    .hero h1 em { font-style: italic; color: var(--sun-deep); }
+    .hero-lead { font-size: 1.15rem; margin: 22px 0 32px; max-width: 520px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+    .hero-trust { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 40px; font-size: 0.9rem; color: var(--muted); }
+    .hero-trust strong { display: block; font-family: "Fraunces", serif; font-size: 1.5rem; color: var(--ink); }
+    .hero-art {
+      position: relative; aspect-ratio: 1 / 1; max-width: 480px; width: 100%; justify-self: center;
+    }
+    .hero-art .sun-glow {
+      position: absolute; inset: 8%; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 166, 35, 0.55), rgba(245, 166, 35, 0) 70%);
+      animation: pulse 6s ease-in-out infinite;
+    }
+    @keyframes pulse { 50% { transform: scale(1.06); } }
+    .house-card {
+      position: absolute; inset: 14% 10% 10%; background: var(--surface);
+      border-radius: 28px; box-shadow: var(--shadow); padding: 28px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .stat-row { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px dashed var(--line); padding: 12px 0; font-size: 0.95rem; }
+    .stat-row:last-child { border-bottom: 0; }
+    .stat-row span { color: var(--muted); }
+    .stat-row b { font-family: "Fraunces", serif; font-size: 1.3rem; }
+    .badge {
+      position: absolute; background: var(--surface); border-radius: 14px; box-shadow: var(--shadow);
+      padding: 12px 16px; font-size: 0.85rem; font-weight: 600; display: flex; gap: 10px; align-items: center;
+    }
+    .badge.one { top: 4%; right: -2%; }
+    .badge.two { bottom: 2%; left: -4%; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--leaf); }
+
+    /* Trust bar */
+    .logos { border-block: 1px solid var(--line); padding: 26px 0; }
+    .logos ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px 32px; color: var(--muted); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.04em; text-transform: uppercase; }
+
+    /* Benefits */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .icon {
+      width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center;
+      background: rgba(245, 166, 35, 0.15); color: var(--sun-deep); margin-bottom: 18px;
+    }
+    .icon svg { width: 24px; height: 24px; }
+    .card p { margin-top: 8px; font-size: 0.97rem; }
+
+    /* Process */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; counter-reset: step; list-style: none; }
+    .steps li { position: relative; padding-top: 14px; border-top: 2px solid var(--line); }
+    .steps li::before {
+      counter-increment: step; content: "0" counter(step);
+      font-family: "Fraunces", serif; font-size: 2rem; font-weight: 700; color: var(--sun);
+      display: block; margin-bottom: 10px;
+    }
+    .steps h3 { margin-bottom: 8px; }
+    .steps p { font-size: 0.95rem; }
+
+    /* Calculator */
+    .calc-wrap { background: var(--ink); color: #f3f0e8; border-radius: 28px; padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .calc-wrap h2 { color: #fff; }
+    .calc-wrap p { color: #c7cde0; }
+    .calc-wrap .eyebrow { color: var(--sun); }
+    .field { margin-top: 24px; }
+    .field label { display: flex; justify-content: space-between; font-weight: 600; font-size: 0.95rem; margin-bottom: 10px; }
+    .field output { color: var(--sun); font-family: "Fraunces", serif; font-size: 1.2rem; }
+    input[type="range"] { width: 100%; accent-color: var(--sun); }
+    .select-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .select-row select {
+      width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid #3a4769;
+      background: #1d2947; color: #fff; font: inherit;
+    }
+    .results { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 28px; display: grid; gap: 18px; align-content: start; }
+    .result-item small { display: block; color: #aab2c5; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .result-item strong { font-family: "Fraunces", serif; font-size: 2.2rem; color: #fff; line-height: 1.2; }
+    .result-item strong.accent { color: var(--sun); }
+    .disclaimer { font-size: 0.8rem; color: #8d97b0 !important; margin-top: 4px; }
+
+    /* Products */
+    .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .plan { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 36px 30px; display: flex; flex-direction: column; }
+    .plan.featured { border: 2px solid var(--sun); box-shadow: var(--shadow); position: relative; }
+    .plan .tag { position: absolute; top: -13px; left: 30px; background: var(--sun); color: #1b1300; font-size: 0.75rem; font-weight: 700; padding: 5px 12px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .price { font-family: "Fraunces", serif; font-size: 2.6rem; margin: 12px 0 4px; color: var(--ink); }
+    .price small { font-family: "Inter", sans-serif; font-size: 0.95rem; color: var(--muted); font-weight: 500; }
+    .plan ul { list-style: none; margin: 22px 0 30px; display: grid; gap: 12px; flex: 1; }
+    .plan li { position: relative; padding-left: 26px; color: var(--muted); font-size: 0.97rem; }
+    .plan li::before {
+      content: ""; position: absolute; left: 0; top: 7px; width: 14px; height: 8px;
+      border-left: 2.5px solid var(--leaf); border-bottom: 2.5px solid var(--leaf); transform: rotate(-45deg);
+    }
+    .plan .btn { width: 100%; }
+
+    /* Reviews */
+    .reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .review { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; display: flex; flex-direction: column; gap: 18px; }
+    .stars { color: var(--sun); letter-spacing: 3px; font-size: 1rem; }
+    .review blockquote { font-family: "Fraunces", serif; font-size: 1.12rem; line-height: 1.5; color: var(--ink); }
+    .review cite { font-style: normal; font-size: 0.9rem; color: var(--muted); margin-top: auto; }
+    .review cite strong { color: var(--ink); display: block; }
+
+    /* FAQ */
+    .faq-layout { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; align-items: start; }
+    .faq-list { display: grid; gap: 12px; }
+    details { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; }
+    details[open] { box-shadow: var(--shadow); }
+    summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-size: 1.4rem; color: var(--sun-deep); transition: transform 0.2s ease; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { margin-top: 12px; font-size: 0.97rem; }
+
+    /* Contact */
+    .contact { background: linear-gradient(135deg, #fbe3b0 0%, #f5a623 100%); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .contact h2 { color: #1b1300; }
+    .contact .section-head p, .contact .lead { color: #3a2a06; }
+    .contact-points { list-style: none; margin-top: 28px; display: grid; gap: 12px; color: #2b1f05; font-weight: 500; }
+    .form {
+      background: var(--surface); border-radius: 22px; padding: clamp(24px, 4vw, 40px); box-shadow: 0 20px 50px rgba(120, 70, 0, 0.2);
+      display: grid; gap: 16px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form label { display: grid; gap: 6px; font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+    .form input, .form select, .form textarea {
+      font: inherit; font-weight: 400; color: var(--ink); background: var(--bg);
+      border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; width: 100%;
+    }
+    .form textarea { resize: vertical; min-height: 90px; }
+    .form .btn { width: 100%; margin-top: 4px; }
+    .form small { color: var(--muted); font-size: 0.82rem; text-align: center; }
+    .form-thanks { display: none; text-align: center; padding: 30px 10px; }
+    .form-thanks h3 { margin-bottom: 8px; }
+    .form-thanks.show { display: block; }
+    .form.sent .fields { display: none; }
+
+    /* Footer */
+    footer { padding: 56px 0 36px; border-top: 1px solid var(--line); font-size: 0.92rem; }
+    .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+    .foot-grid h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink); margin-bottom: 14px; font-family: "Inter", sans-serif; }
+    .foot-grid ul { list-style: none; display: grid; gap: 8px; }
+    .foot-grid a { text-decoration: none; color: var(--muted); }
+    .foot-grid a:hover { color: var(--ink); }
+    .copy { margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 0.85rem; }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid, .calc-wrap, .faq-layout, .contact-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
+      .plans, .reviews { grid-template-columns: 1fr; }
+      .plans .plan.featured { order: -1; }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+      .hero-art { max-width: 380px; }
+    }
+    @media (max-width: 720px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0;
+        background: var(--bg); padding: 20px 16px 28px; border-bottom: 1px solid var(--line); gap: 18px;
+      }
+      .nav-links.open a { font-size: 1.05rem; }
+      .menu-toggle { display: block; }
+      .steps { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .badge.two { left: 0; }
+      .badge.one { right: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <a href="#top" class="logo" aria-label="Sunline Solar home">
+        <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="9" fill="#f5a623"/>
+          <g stroke="#f5a623" stroke-width="3" stroke-linecap="round">
+            <line x1="20" y1="2" x2="20" y2="7"/><line x1="20" y1="33" x2="20" y2="38"/>
+            <line x1="2" y1="20" x2="7" y2="20"/><line x1="33" y1="20" x2="38" y2="20"/>
+            <line x1="7" y1="7" x2="10.5" y2="10.5"/><line x1="29.5" y1="29.5" x2="33" y2="33"/>
+            <line x1="33" y1="7" x2="29.5" y2="10.5"/><line x1="10.5" y1="29.5" x2="7" y2="33"/>
+          </g>
+        </svg>
+        Sunline
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#benefits">Why solar</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#calculator">Savings calculator</a></li>
+        <li><a href="#pricing">Packages</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="#quote" class="btn btn-primary nav-cta">Get free quote</a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Residential solar, done right</span>
+          <h1>Power your home with <em>sunshine</em>, not utility bills.</h1>
+          <p class="hero-lead">Sunline designs, permits, and installs rooftop solar systems for homeowners. Lock in predictable energy costs and add value to your home, with one crew from first survey to final switch-on.</p>
+          <div class="hero-actions">
+            <a href="#quote" class="btn btn-primary">Book a free assessment</a>
+            <a href="#calculator" class="btn btn-ghost">Estimate my savings</a>
+          </div>
+          <div class="hero-trust">
+            <div><strong>4,800+</strong>systems installed</div>
+            <div><strong>25-yr</strong>panel performance warranty</div>
+            <div><strong>4.9 / 5</strong>average homeowner rating</div>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="sun-glow"></div>
+          <div class="house-card">
+            <div>
+              <p style="font-size:0.8rem;text-transform:uppercase;letter-spacing:.1em;">Sample system</p>
+              <h3 style="margin-top:6px;">8.2 kW rooftop array</h3>
+            </div>
+            <div>
+              <div class="stat-row"><span>Annual production</span><b>11,900 kWh</b></div>
+              <div class="stat-row"><span>Bill offset</span><b>~92%</b></div>
+              <div class="stat-row"><span>Payback period</span><b>6.8 yrs</b></div>
+              <div class="stat-row"><span>Panels</span><b>20 × 410 W</b></div>
+            </div>
+          </div>
+          <div class="badge one"><span class="dot"></span>Producing now</div>
+          <div class="badge two">☀️ Net metering ready</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logos / trust -->
+    <div class="logos">
+      <div class="container">
+        <ul>
+          <li>NABCEP Certified</li>
+          <li>Fully Licensed &amp; Insured</li>
+          <li>Tier-1 Panel Partners</li>
+          <li>BBB A+ Rated</li>
+          <li>Local Permitting Team</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Benefits -->
+    <section id="benefits">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Why go solar</span>
+          <h2>A smarter, steadier way to power your home.</h2>
+          <p>Rising utility rates are not going away. Solar gives you control over a meaningful share of your energy spending for decades.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <h3>Lower monthly bills</h3>
+            <p>Most of our customers offset the majority of their electricity use from day one, with savings that compound as utility rates rise.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></div>
+            <h3>Higher home value</h3>
+            <p>Owned solar systems are widely associated with higher resale value, and they make your home easier to sell as an energy-efficient property.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg></div>
+            <h3>Energy independence</h3>
+            <p>Generate your own power on your own roof, and protect your household from future price spikes and supply disruptions.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.5 0 9-4 9-9 0-6-6-11-9-11S3 7 3 13c0 5 3.5 9 9 9z"/><path d="M12 18v-6"/></svg></div>
+            <h3>Cleaner footprint</h3>
+            <p>A typical residential system can prevent several tons of carbon emissions per year compared with grid electricity from fossil fuels.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section id="process" style="padding-top:0;">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">How it works</span>
+          <h2>From first call to first kilowatt in four steps.</h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <h3>Free assessment</h3>
+            <p>An engineer visits your home, reviews your roof, shading, and usage history, and maps out the best layout.</p>
+          </li>
+          <li>
+            <h3>Custom design</h3>
+            <p>You receive a detailed proposal with system size, production estimates, financing options, and a clear price.</p>
+          </li>
+          <li>
+            <h3>Permits &amp; install</h3>
+            <p>We handle utility paperwork, permits, and inspections. Most installs are completed by our crew in 1–2 days.</p>
+          </li>
+          <li>
+            <h3>Switch on &amp; save</h3>
+            <p>After utility approval, your system goes live. Track production anytime from your phone with our app.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Calculator -->
+    <section id="calculator" style="padding-top:0;">
+      <div class="container">
+        <div class="calc-wrap">
+          <div>
+            <span class="eyebrow">Savings calculator</span>
+            <h2>See what solar could do for your home.</h2>
+            <p style="margin-top:14px;">Move the slider to match your typical monthly electric bill. This is a rough estimate. Your free assessment will give you exact numbers based on your roof and local rates.</p>
+
+            <div class="field">
+              <label for="bill">Average monthly bill <output id="bill-out" for="bill">$180</output></label>
+              <input type="range" id="bill" min="60" max="600" step="5" value="180" />
+            </div>
+            <div class="field">
+              <label for="rate">Electricity rate ($/kWh)</label>
+              <div class="select-row">
+                <select id="rate" aria-label="Electricity rate">
+                  <option value="0.13">Low: $0.13</option>
+                  <option value="0.18" selected>Average: $0.18</option>
+                  <option value="0.26">High: $0.26</option>
+                </select>
+              </div>
+            </div>
+            <p class="disclaimer" style="margin-top:20px;">Assumes 90% bill offset, ~1,400 kWh per kW per year, $2.90/W installed cost, and a 30% federal tax credit. Confirm current incentives with your advisor.</p>
+          </div>
+
+          <div class="results" aria-live="polite">
+            <div class="result-item">
+              <small>Recommended system size</small>
+              <strong id="r-size">6.1 kW</strong>
+            </div>
+            <div class="result-item">
+              <small>Estimated system cost (before credit)</small>
+              <strong id="r-cost">$17,690</strong>
+            </div>
+            <div class="result-item">
+              <small>Estimated annual savings</small>
+              <strong class="accent" id="r-save">$1,550</strong>
+            </div>
+            <div class="result-item">
+              <small>Estimated payback period</small>
+              <strong id="r-payback">7.8 yrs</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages -->
+    <section id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Packages</span>
+          <h2>Simple options for every roof and budget.</h2>
+          <p>Every package includes design, permitting, installation, monitoring, and a 25-year workmanship guarantee.</p>
+        </div>
+
+        <div class="plans">
+          <article class="plan">
+            <h3>Starter</h3>
+            <p>Ideal for smaller homes or partial offset.</p>
+            <div class="price">$12,900 <small>before incentives</small></div>
+            <ul>
+              <li>Up to 5 kW system</li>
+              <li>Premium panels &amp; microinverters</li>
+              <li>Basic production monitoring</li>
+              <li>10-year labor warranty</li>
+            </ul>
+            <a href="#quote" class="btn btn-ghost">Choose Starter</a>
+          </article>
+
+          <article class="plan featured">
+            <span class="tag">Most popular</span>
+            <h3>Homeowner</h3>
+            <p>Full offset for most family homes.</p>
+            <div class="price">$21,400 <small>before incentives</small></div>
+            <ul>
+              <li>6–9 kW system sized to your usage</li>
+              <li>Tier-1 panels with 25-year warranty</li>
+              <li>Battery-ready wiring</li>
+              <li>Real-time app monitoring</li>
+              <li>25-year workmanship guarantee</li>
+            </ul>
+            <a href="#quote" class="btn btn-primary">Get my proposal</a>
+          </article>
+
+          <article class="plan">
+            <h3>Power Plus</h3>
+            <p>Backup power and maximum independence.</p>
+            <div class="price">$34,800 <small>before incentives</small></div>
+            <ul>
+              <li>10 kW+ system with storage</li>
+              <li>Battery backup for essential circuits</li>
+              <li>EV charger integration</li>
+              <li>Priority service &amp; annual check-up</li>
+            </ul>
+            <a href="#quote" class="btn btn-ghost">Choose Power Plus</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section style="padding-top:0;">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Homeowner stories</span>
+          <h2>Trusted by neighbors across the county.</h2>
+        </div>
+        <div class="reviews">
+          <figure class="review">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“The team explained every line of the proposal. Our first bill after install was under $20. I wish we had done this years ago.”</blockquote>
+            <cite><strong>Maria G.</strong>Homeowner, Riverside</cite>
+          </figure>
+          <figure class="review">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“They handled the HOA approval and utility paperwork so I didn't have to. The crew was tidy, on time, and friendly with our kids.”</blockquote>
+            <cite><strong>David & Priya S.</strong>Homeowners, Oakwood Hills</cite>
+          </figure>
+          <figure class="review">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <blockquote>“Our monitoring app shows exactly how much we're producing. It's oddly satisfying to watch the numbers climb on sunny afternoons.”</blockquote>
+            <cite><strong>James T.</strong>Homeowner, Maple Creek</cite>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" style="padding-top:0;">
+      <div class="container faq-layout">
+        <div>
+          <span class="eyebrow">Questions</span>
+          <h2>Everything you want to know before going solar.</h2>
+          <p style="margin-top:14px;">Can't find your answer? Our energy advisors are happy to talk it through.</p>
+        </div>
+        <div class="faq-list">
+          <details open>
+            <summary>How long does installation take?</summary>
+            <p>Most residential installs take 1 to 2 days on-site. Permitting and utility approval typically add a few weeks before your system is switched on.</p>
+          </details>
+          <details>
+            <summary>Will solar work on my roof?</summary>
+            <p>Most pitched and flat roofs in good condition are suitable. During your free assessment we check roof age, orientation, shading, and structural capacity.</p>
+          </details>
+          <details>
+            <summary>What happens on cloudy days or at night?</summary>
+            <p>Solar panels still produce power on cloudy days, though at reduced output. At night, you draw from the grid as usual. Net metering credits your excess daytime production back to your account where available.</p>
+          </details>
+          <details>
+            <summary>What incentives are available?</summary>
+            <p>Many homeowners qualify for federal tax credits and state or utility rebates. Your proposal will show the incentives that apply to your address.</p>
+          </details>
+          <details>
+            <summary>Do I need to replace my roof first?</summary>
+            <p>If your roof is near the end of its life, we recommend replacing it before installing panels, since removing them later costs extra. We can coordinate with a roofing partner.</p>
+          </details>
+          <details>
+            <summary>What maintenance does a system need?</summary>
+            <p>Very little. Panels are self-cleaning in most climates, and we recommend an annual inspection. Your monitoring app will alert you if production drops unexpectedly.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="quote">
+      <div class="container contact-grid">
+        <div>
+          <span class="eyebrow" style="color:#5c3b00;">Free, no-obligation</span>
+          <h2>Get your free solar assessment.</h2>
+          <p class="lead" style="margin-top:14px;font-size:1.05rem;">Share a few details and an energy advisor will call within one business day to schedule your roof review and prepare a custom proposal.</p>
+          <ul class="contact-points">
+            <li>✓ No pressure, no obligation</li>
+            <li>✓ Itemized quote within 7 days</li>
+            <li>✓ Financing options from 0% APR</li>
+          </ul>
+        </div>
+
+        <form class="form" id="lead-form" novalidate>
+          <div class="fields">
+            <div class="form-row">
+              <label>First name
+                <input type="text" name="first" autocomplete="given-name" required />
+              </label>
+              <label>Last name
+                <input type="text" name="last" autocomplete="family-name" required />
+              </label>
+            </div>
+            <div class="form-row">
+              <label>Email
+                <input type="email" name="email" autocomplete="email" required />
+              </label>
+              <label>Phone
+                <input type="tel" name="phone" autocomplete="tel" />
+              </label>
+            </div>
+            <label>Street address
+              <input type="text" name="address" autocomplete="street-address" required />
+            </label>
+            <div class="form-row">
+              <label>Home ownership
+                <select name="owner" required>
+                  <option value="">Select…</option>
+                  <option>I own my home</option>
+                  <option>I'm a renter</option>
+                  <option>Other</option>
+                </select>
+              </label>
+              <label>Average monthly bill
+                <select name="bill">
+                  <option value="">Select…</option>
+                  <option>Under $100</option>
+                  <option>$100–$200</option>
+                  <option>$200–$300</option>
+                  <option>$300+</option>
+                </select>
+              </label>
+            </div>
+            <label>Anything else we should know? <span style="font-weight:400;color:var(--muted);">(optional)</span>
+              <textarea name="notes" rows="3"></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary">Request my free assessment</button>
+            <small>We'll never sell your information. Unsubscribe anytime.</small>
+          </div>
+
+          <div class="form-thanks" id="thanks" role="status">
+            <h3>Thank you!</h3>
+            <p>An energy advisor will reach out within one business day to schedule your assessment.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div>
+          <a href="#top" class="logo" style="font-size:1.2rem;">
+            <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true" style="width:28px;height:28px;">
+              <circle cx="20" cy="20" r="9" fill="#f5a623"/>
+            </svg>
+            Sunline Solar
+          </a>
+          <p style="margin-top:14px;max-width:320px;">Residential solar design and installation for homeowners who want clean, reliable, and affordable power.</p>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#benefits">About</a></li>
+            <li><a href="#process">How it works</a></li>
+            <li><a href="#pricing">Packages</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#calculator">Savings calculator</a></li>
+            <li><a href="#">Financing</a></li>
+            <li><a href="#">Incentives guide</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+15555550123">(555) 555-0123</a></li>
+            <li><a href="mailto:hello@sunline.example">hello@sunline.example</a></li>
+            <li>Mon–Sat, 8am–6pm</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copy">
+        <span>© <span id="year">2026</span> Sunline Solar. All rights reserved.</span>
+        <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Licenses</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    (function () {
+      const toggle = document.getElementById('menu-toggle');
+      const links = document.getElementById('nav-links');
+      toggle.addEventListener('click', () => {
+        const open = links.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+      links.querySelectorAll('a').forEach((a) =>
+        a.addEventListener('click', () => {
+          links.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        })
+      );
+    })();
+
+    // Savings calculator
+    (function () {
+      const bill = document.getElementById('bill');
+      const billOut = document.getElementById('bill-out');
+      const rate = document.getElementById('rate');
+      const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+      const KWH_PER_KW_YEAR = 1400; // typical annual yield per installed kW
+      const COST_PER_W = 2.9;       // installed cost before incentives
+      const OFFSET = 0.9;           // share of usage offset by solar
+      const TAX_CREDIT = 0.3;       // federal credit assumption
+
+      function update() {
+        const monthly = Number(bill.value);
+        const r = Number(rate.value);
+        billOut.textContent = money.format(monthly);
+
+        const annualKwh = (monthly / r) * 12;
+        const kw = Math.max(1, Math.round((annualKwh * OFFSET) / KWH_PER_KW_YEAR * 10) / 10);
+        const grossCost = kw * 1000 * COST_PER_W;
+        const netCost = grossCost * (1 - TAX_CREDIT);
+        const annualSavings = annualKwh * OFFSET * r;
+        const payback = netCost / annualSavings;
+
+        document.getElementById('r-size').textContent = kw.toFixed(1) + ' kW';
+        document.getElementById('r-cost').textContent = money.format(grossCost);
+        document.getElementById('r-save').textContent = money.format(annualSavings);
+        document.getElementById('r-payback').textContent = payback.toFixed(1) + ' yrs';
+      }
+
+      bill.addEventListener('input', update);
+      rate.addEventListener('change', update);
+      update();
+    })();
+
+    // Lead form (client-side only; wire to your CRM or endpoint)
+    (function () {
+      const form = document.getElementById('lead-form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        form.classList.add('sent');
+        document.getElementById('thanks').classList.add('show');
+      });
+    })();
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

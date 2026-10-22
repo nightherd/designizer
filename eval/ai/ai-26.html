@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallmark – Furniture from Nordic timber</title>
+<meta name="description" content="Tallmark makes chairs, tables and shelves from Swedish pine, ash and birch, joined without screws and made to be repaired.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --snow:#E8ECEC;
+  --paper:#F3F5F4;
+  --ink:#1D2C37;
+  --ink-soft:#4A5963;
+  --lingon:#A2352F;
+  --line:#B9C3C6;
+  --wood:#D8BE92;           /* set by finish picker */
+  --wood-edge:#B89E72;
+  --display:"Familjen Grotesk",system-ui,sans-serif;
+  --text:"Newsreader",Georgia,serif;
+  --gutter:clamp(20px,5vw,72px);
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--snow);color:var(--ink);font-family:var(--text);font-size:1.125rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--lingon);outline-offset:3px}
+.wrap{padding-inline:var(--gutter);max-width:1360px;margin-inline:auto}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.02;letter-spacing:-.025em}
+h2{font-size:clamp(2rem,4.4vw,3.6rem);max-width:16ch}
+p{max-width:58ch}
+
+/* header */
+header{display:flex;justify-content:space-between;align-items:center;padding-block:22px}
+.logo{font-family:var(--display);font-weight:700;font-size:1.35rem;letter-spacing:-.03em;text-decoration:none}
+.logo i{font-style:normal;color:var(--lingon)}
+nav{display:flex;gap:clamp(16px,3vw,36px);font-family:var(--display);font-size:1rem;font-weight:500}
+nav a{text-decoration:none;padding-block:4px;border-bottom:2px solid transparent}
+nav a:hover{border-color:var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,5vw,80px);align-items:center;padding-block:clamp(24px,5vw,64px) clamp(56px,8vw,112px)}
+.hero h1{font-size:clamp(3rem,7.6vw,6.6rem);margin-bottom:28px}
+.hero p{font-size:1.3rem;color:var(--ink-soft);margin-bottom:36px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;font-family:var(--display);font-weight:600;font-size:1.05rem;padding:15px 26px;text-decoration:none;background:var(--ink);color:var(--snow);border:2px solid var(--ink);border-radius:2px;transition:background .2s,color .2s}
+.btn:hover{background:var(--lingon);border-color:var(--lingon)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--snow)}
+
+.drawing{background:var(--paper);border:1px solid var(--line);padding:clamp(8px,2vw,24px);position:relative}
+.drawing svg{display:block;width:100%;height:auto}
+.drawing figcaption{font-family:var(--display);font-size:.9rem;color:var(--ink-soft);padding:8px 4px 0;display:flex;justify-content:space-between;gap:12px}
+.d-line{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.d-fill{fill:var(--wood);opacity:0}
+.d-dim{fill:none;stroke:var(--lingon);stroke-width:1.2}
+.d-txt{font-family:var(--display);font-size:15px;font-weight:500;fill:var(--lingon)}
+.d-floor{stroke:var(--line);stroke-width:1.5}
+.d-line,.d-dim{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.6s cubic-bezier(.6,.1,.2,1) forwards}
+.d-dim{animation-delay:1.6s;animation-duration:1.4s}
+.d-txt{opacity:0;animation:show .6s 2.6s forwards}
+.d-fill{animation:show .9s 2s forwards}
+.d-line.l2{animation-delay:.25s}.d-line.l3{animation-delay:.5s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes show{to{opacity:1}}
+.d-fill{--o:.55}
+@keyframes fillin{to{opacity:.55}}
+.d-fill{animation:fillin .9s 2s forwards}
+
+/* sections */
+section{padding-block:clamp(64px,9vw,128px)}
+.intro{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,6vw,96px);align-items:end;margin-bottom:clamp(32px,5vw,64px)}
+.intro p{color:var(--ink-soft)}
+
+/* collection */
+.collection{background:var(--paper);border-block:1px solid var(--line)}
+.finish{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-bottom:36px;font-family:var(--display);font-weight:500}
+.finish fieldset{border:0;padding:0;display:flex;gap:10px;flex-wrap:wrap}
+.finish legend{float:left;margin-right:16px;padding:0;line-height:44px}
+.finish label{cursor:pointer}
+.finish input{position:absolute;opacity:0;pointer-events:none}
+.finish span{display:flex;align-items:center;gap:10px;padding:8px 16px 8px 8px;border:1.5px solid var(--line);border-radius:999px;transition:border-color .15s,background .15s}
+.finish span::before{content:"";width:26px;height:26px;border-radius:50%;background:var(--sw);border:1px solid rgba(0,0,0,.2)}
+.finish input:checked+span{border-color:var(--ink);background:var(--snow)}
+.finish input:focus-visible+span{outline:3px solid var(--lingon);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(14px,2vw,28px)}
+.item{display:flex;flex-direction:column;background:var(--snow);border:1px solid var(--line);text-decoration:none}
+.item:nth-child(1){grid-column:span 5}
+.item:nth-child(2){grid-column:span 7}
+.item:nth-child(3){grid-column:span 7}
+.item:nth-child(4){grid-column:span 5}
+.item .art{flex:1;display:grid;place-items:center;padding:clamp(24px,4vw,56px);min-height:300px}
+.item svg{width:100%;max-width:420px;height:auto}
+.item .w{fill:var(--wood);stroke:var(--ink);stroke-width:2;stroke-linejoin:round;transition:fill .35s}
+.item .ink{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.item .meta{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:16px 20px;border-top:1px solid var(--line);font-family:var(--display)}
+.item h3{font-size:1.4rem;letter-spacing:-.02em}
+.item .size{font-size:.95rem;color:var(--ink-soft);font-weight:400}
+.item .price{font-weight:600;white-space:nowrap}
+.item:hover h3{color:var(--lingon)}
+
+/* joinery */
+.joinery{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,7vw,112px);align-items:start}
+.joinery dl{display:grid;gap:0}
+.joinery dt{font-family:var(--display);font-weight:600;font-size:1.35rem;letter-spacing:-.02em;padding-top:24px;border-top:1px solid var(--ink)}
+.joinery dd{padding:6px 0 24px;color:var(--ink-soft);max-width:52ch}
+.joinery .big{position:sticky;top:24px}
+.joinery .big p{margin-top:24px;color:var(--ink-soft)}
+
+/* quote */
+.quote{background:var(--ink);color:var(--snow)}
+.quote blockquote{font-family:var(--text);font-style:italic;font-weight:400;font-size:clamp(1.7rem,3.8vw,3.1rem);line-height:1.25;max-width:26ch;letter-spacing:-.01em}
+.quote cite{display:block;margin-top:28px;font-style:normal;font-family:var(--display);font-size:1rem;color:#A9B8C1}
+
+/* visit */
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px)}
+.visit address{font-style:normal;margin-top:24px}
+.visit table{border-collapse:collapse;font-family:var(--display);width:100%;max-width:420px;margin-top:8px}
+.visit td{padding:12px 0;border-bottom:1px solid var(--line)}
+.visit td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+form{display:grid;gap:14px;max-width:460px}
+label.f{font-family:var(--display);font-weight:500;display:grid;gap:6px}
+input[type=email]{font:inherit;font-size:1.1rem;padding:14px 16px;border:1.5px solid var(--ink);background:var(--paper);border-radius:2px;color:var(--ink)}
+.note{font-size:.95rem;color:var(--ink-soft)}
+.ok{font-family:var(--display);font-weight:600;color:var(--ink);min-height:1.5em}
+
+footer{padding-block:32px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--display);font-size:.95rem;color:var(--ink-soft)}
+
+@media (max-width:860px){
+  .hero,.intro,.joinery,.visit{grid-template-columns:1fr}
+  .item:nth-child(n){grid-column:span 12}
+  .joinery .big{position:static}
+  nav a:nth-child(n+3){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .d-line,.d-dim{stroke-dashoffset:0}.d-txt{opacity:1}.d-fill{opacity:.55}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <a class="logo" href="#top">Tallmark<i>.</i></a>
+  <nav aria-label="Main">
+    <a href="#collection">Collection</a>
+    <a href="#joinery">How we build</a>
+    <a href="#visit">Visit the workshop</a>
+  </nav>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div>
+    <h1>Built to be sat in for fifty years.</h1>
+    <p>Chairs, tables and shelves from Swedish pine, ash and birch. Joined without screws, finished with oil, and repaired in our workshop for as long as you own them.</p>
+    <div class="btns">
+      <a class="btn" href="#collection">See the collection</a>
+      <a class="btn ghost" href="#visit">Book a workshop visit</a>
+    </div>
+  </div>
+
+  <figure class="drawing">
+    <svg viewBox="0 0 600 720" role="img" aria-labelledby="dt dd">
+      <title id="dt">Side elevation of the Ro dining chair</title>
+      <desc id="dd">Measured drawing: 880 mm high, 450 mm seat height, 410 mm seat depth.</desc>
+      <line class="d-floor" x1="40" y1="640" x2="560" y2="640"/>
+      <!-- seat fill -->
+      <path class="d-fill" d="M175 380 H425 V402 H175Z"/>
+      <path class="d-fill" d="M232 130 L250 130 L214 380 L196 380Z"/>
+      <!-- back leg + backrest post -->
+      <path class="d-line" pathLength="1" d="M168 640 L196 402 L232 130 L252 133 L218 402 L192 640Z"/>
+      <!-- front leg -->
+      <path class="d-line l2" pathLength="1" d="M392 402 L396 640 L418 640 L412 402"/>
+      <!-- seat -->
+      <path class="d-line l2" pathLength="1" d="M175 380 H425 V402 H175Z"/>
+      <!-- back rails -->
+      <path class="d-line l3" pathLength="1" d="M228 190 L246 192 M222 240 L241 242 M217 290 L236 292"/>
+      <!-- stretcher -->
+      <path class="d-line l3" pathLength="1" d="M196 540 H394 M196 556 H394"/>
+      <!-- dimension: total height -->
+      <path class="d-dim" pathLength="1" d="M500 130 V640 M490 130 H510 M490 640 H510"/>
+      <text class="d-txt" x="514" y="392">880</text>
+      <!-- seat height -->
+      <path class="d-dim" pathLength="1" d="M70 380 V640 M60 380 H80 M60 640 H80"/>
+      <text class="d-txt" x="36" y="516" transform="rotate(-90 36 516)" text-anchor="middle">450 seat height</text>
+      <!-- seat depth -->
+      <path class="d-dim" pathLength="1" d="M175 340 H425 M175 330 V350 M425 330 V350"/>
+      <text class="d-txt" x="300" y="326" text-anchor="middle">410 seat depth</text>
+      <text class="d-txt" x="514" y="412" style="font-size:12px">mm</text>
+      <text class="d-txt" x="300" y="690" text-anchor="middle" style="fill:#4A5963">Ro chair, ash, 1:6</text>
+    </svg>
+  </figure>
+</div>
+</main>
+</div>
+
+<section class="collection" id="collection">
+  <div class="wrap">
+    <div class="intro">
+      <h2>Four pieces we make every week.</h2>
+      <p>Each one is cut, joined and oiled in the same workshop in Småland. Pick a timber and every piece below shows it.</p>
+    </div>
+
+    <div class="finish">
+      <fieldset>
+        <legend>Timber</legend>
+        <label><input type="radio" name="finish" value="birch" checked><span style="--sw:#E3CFA6">Birch</span></label>
+        <label><input type="radio" name="finish" value="ash"><span style="--sw:#C9AE82">Ash</span></label>
+        <label><input type="radio" name="finish" value="pine"><span style="--sw:#D3A864">Pine</span></label>
+        <label><input type="radio" name="finish" value="smoked"><span style="--sw:#5E4A3A">Smoked oak</span></label>
+      </fieldset>
+    </div>
+
+    <div class="grid" id="pieces">
+      <a class="item" href="#visit">
+        <div class="art">
+          <svg viewBox="0 0 300 340" aria-hidden="true">
+            <path class="w" d="M70 20 L82 20 L72 190 L60 190Z"/>
+            <path class="w" d="M60 190 H230 V208 H60Z"/>
+            <path class="w" d="M215 208 L219 320 L232 320 L228 208Z"/>
+            <path class="w" d="M62 208 L50 320 L64 320 L76 208Z"/>
+            <path class="ink" d="M64 70 L78 70 M62 110 L76 110 M60 150 L75 150"/>
+            <path class="ink" d="M20 320 H280" style="stroke:#B9C3C6"/>
+          </svg>
+        </div>
+        <div class="meta"><div><h3>Ro chair</h3><span class="size">45 × 41 × 88 cm</span></div><span class="price">3 900 kr</span></div>
+      </a>
+
+      <a class="item" href="#visit">
+        <div class="art">
+          <svg viewBox="0 0 520 280" aria-hidden="true">
+            <path class="w" d="M20 70 H500 V92 H20Z"/>
+            <path class="w" d="M60 92 H80 V250 H60Z"/>
+            <path class="w" d="M440 92 H460 V250 H440Z"/>
+            <path class="w" d="M80 100 H440 V114 H80Z"/>
+            <path class="ink" d="M20 250 H500" style="stroke:#B9C3C6"/>
+          </svg>
+        </div>
+        <div class="meta"><div><h3>Kök table</h3><span class="size">180 × 90 × 74 cm, seats six</span></div><span class="price">11 500 kr</span></div>
+      </a>
+
+      <a class="item" href="#visit">
+        <div class="art">
+          <svg viewBox="0 0 520 300" aria-hidden="true">
+            <rect class="w" x="60" y="20" width="14" height="260"/>
+            <rect class="w" x="446" y="20" width="14" height="260"/>
+            <rect class="w" x="60" y="20" width="400" height="12"/>
+            <rect class="w" x="60" y="110" width="400" height="12"/>
+            <rect class="w" x="60" y="200" width="400" height="12"/>
+            <rect class="w" x="60" y="268" width="400" height="12"/>
+            <path class="ink" d="M260 32 V110 M260 122 V200"/>
+          </svg>
+        </div>
+        <div class="meta"><div><h3>Hylla shelf</h3><span class="size">120 × 30 × 180 cm</span></div><span class="price">7 200 kr</span></div>
+      </a>
+
+      <a class="item" href="#visit">
+        <div class="art">
+          <svg viewBox="0 0 320 240" aria-hidden="true">
+            <path class="w" d="M20 110 H300 V132 H20Z"/>
+            <path class="w" d="M50 132 H70 V210 H50Z"/>
+            <path class="w" d="M250 132 H270 V210 H250Z"/>
+            <path class="w" d="M70 176 H250 V188 H70Z"/>
+            <path class="ink" d="M10 210 H310" style="stroke:#B9C3C6"/>
+          </svg>
+        </div>
+        <div class="meta"><div><h3>Bänk bench</h3><span class="size">110 × 34 × 45 cm</span></div><span class="price">3 400 kr</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="joinery">
+  <div class="wrap joinery">
+    <div class="big">
+      <h2>No screws. No flat-pack. Nothing you can't fix.</h2>
+      <p>Furniture fails at the joints. So we spend our time there.</p>
+    </div>
+    <dl>
+      <dt>Wedged through-tenons</dt>
+      <dd>The chair legs pass through the seat and are locked with a hardwood wedge. When the timber settles, the joint tightens.</dd>
+      <dt>Timber from within 200 km</dt>
+      <dd>Slow-grown pine, ash and birch from certified forests in Götaland, air-dried for at least a year before it reaches a saw.</dd>
+      <dt>Hard-wax oil, not lacquer</dt>
+      <dd>A scratch is sanded and re-oiled in ten minutes at home. We send the oil for free, and the instructions with it.</dd>
+      <dt>Lifetime repair</dt>
+      <dd>Loose joint, cracked rail, wobbling table: post it to the workshop. We repair it for the cost of the return shipping.</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="quote">
+  <div class="wrap">
+    <blockquote>“Our dining chairs are sixteen years old and they are still the stiffest thing in the house.”</blockquote>
+    <cite>Ingrid Sandell, Gothenburg, bought four Ro chairs in 2010</cite>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="wrap visit">
+    <div>
+      <h2>Sit in everything before you buy.</h2>
+      <address>Tallmark workshop<br>Sågvägen 14, 342 30 Alvesta<br>Småland, Sweden</address>
+      <table aria-label="Opening hours">
+        <tr><td>Tuesday to Friday</td><td>10:00–17:00</td></tr>
+        <tr><td>Saturday</td><td>10:00–14:00</td></tr>
+        <tr><td>Sunday and Monday</td><td>Closed</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3 style="font-size:1.8rem;margin-bottom:12px">Get the winter catalogue</h3>
+      <p class="note" style="margin-bottom:20px">New pieces and workshop days, four emails a year.</p>
+      <form id="signup" novalidate>
+        <label class="f" for="email">Email address
+          <input id="email" type="email" required autocomplete="email" placeholder="you@example.com">
+        </label>
+        <button class="btn" type="submit">Send me the catalogue</button>
+        <p class="ok" id="msg" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <span>Tallmark AB, Alvesta</span>
+    <span>Delivery across the Nordics. Returns within 30 days.</span>
+  </footer>
+</div>
+
+<script>
+const finishes={birch:["#E3CFA6","#B89E72"],ash:["#C9AE82","#9C8358"],pine:["#D3A864","#A9803F"],smoked:["#5E4A3A","#3E2F24"]};
+document.querySelectorAll('input[name=finish]').forEach(r=>r.addEventListener('change',()=>{
+  document.documentElement.style.setProperty('--wood',finishes[r.value][0]);
+  document.documentElement.style.setProperty('--wood-edge',finishes[r.value][1]);
+}));
+const f=document.getElementById('signup'),m=document.getElementById('msg'),e=document.getElementById('email');
+f.addEventListener('submit',ev=>{
+  ev.preventDefault();
+  if(!e.value||!e.checkValidity()){m.style.color='#A2352F';m.textContent='Enter an email address like name@example.com.';e.focus();return}
+  m.style.color='';m.textContent='Sent. The catalogue is on its way to '+e.value+'.';f.reset();
+});
+</script>
+</body>
+</html>

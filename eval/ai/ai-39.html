@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kizuna Small Journeys — Small-Group Tours in Japan</title>
+  <meta name="description" content="Small-group tours of Japan, capped at eight travelers. Local guides, considered pacing, and the kind of days you remember.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f7f2ea;
+      --paper-2: #efe7da;
+      --ink: #1d1b19;
+      --ink-soft: #5b554d;
+      --line: #d9cfbf;
+      --accent: #b8432f;
+      --accent-ink: #ffffff;
+      --indigo: #23324a;
+      --radius: 14px;
+      --maxw: 1140px;
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "Inter", system-ui, -apple-system, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --paper: #161513;
+        --paper-2: #1f1d1a;
+        --ink: #f1ebe1;
+        --ink-soft: #b4ab9e;
+        --line: #37332d;
+        --accent: #e0765f;
+        --accent-ink: #161513;
+        --indigo: #1d2638;
+      }
+    }
+    :root[data-theme="dark"] {
+      --paper: #161513;
+      --paper-2: #1f1d1a;
+      --ink: #f1ebe1;
+      --ink-soft: #b4ab9e;
+      --line: #37332d;
+      --accent: #e0765f;
+      --accent-ink: #161513;
+      --indigo: #1d2638;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.1; margin: 0; letter-spacing: -0.01em; }
+    p { margin: 0 0 1em; }
+    .wrap { width: min(var(--maxw), calc(100% - 32px)); margin-inline: auto; }
+    section { padding: clamp(64px, 9vw, 112px) 0; }
+    .eyebrow {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: block;
+    }
+    .lead { font-size: 1.12rem; color: var(--ink-soft); max-width: 60ch; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 22px; border-radius: 999px; border: 1px solid transparent;
+      font: inherit; font-weight: 600; font-size: 0.95rem; text-decoration: none; cursor: pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: var(--accent-ink); }
+    .btn-ghost { border-color: var(--ink); color: var(--ink); background: transparent; }
+    .btn:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--accent); outline-offset: 3px;
+    }
+
+    /* Header */
+    header.site {
+      position: sticky; top: 0; z-index: 20;
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .brand { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .brand-mark { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); position: relative; }
+    .brand-mark::after { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: var(--paper); }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { text-decoration: none; font-size: 0.93rem; color: var(--ink-soft); }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-toggle { display: none; background: none; border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; color: var(--ink); font: inherit; cursor: pointer; }
+
+    /* Hero */
+    .hero { padding: clamp(56px, 10vw, 120px) 0 clamp(56px, 8vw, 96px); }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+    .hero h1 { font-size: clamp(3rem, 7vw, 5.4rem); margin-bottom: 24px; }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 32px 0 40px; }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 32px; border-top: 1px solid var(--line); padding-top: 24px; }
+    .hero-stats strong { display: block; font-family: var(--serif); font-size: 2rem; font-weight: 600; line-height: 1; }
+    .hero-stats span { font-size: 0.85rem; color: var(--ink-soft); }
+    .hero-art {
+      aspect-ratio: 4 / 5; border-radius: 240px 240px var(--radius) var(--radius);
+      background:
+        radial-gradient(circle at 50% 38%, var(--accent) 0 19%, transparent 19.5%),
+        linear-gradient(180deg, #e9c9b0 0%, #d98b6f 46%, var(--indigo) 46.2%, #151d2d 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero-art::before {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 36%;
+      background:
+        linear-gradient(0deg, rgba(0,0,0,.35), transparent),
+        repeating-linear-gradient(90deg, transparent 0 22px, rgba(255,255,255,.06) 22px 23px);
+      clip-path: polygon(0 60%, 12% 40%, 22% 52%, 35% 20%, 48% 48%, 60% 30%, 74% 55%, 86% 35%, 100% 50%, 100% 100%, 0 100%);
+      background-color: #0f1626;
+    }
+    .hero-caption {
+      position: absolute; left: 20px; bottom: 20px; right: 20px;
+      color: #fff; font-size: 0.85rem; background: rgba(0,0,0,.35);
+      padding: 12px 14px; border-radius: 10px; backdrop-filter: blur(6px);
+    }
+
+    /* Values */
+    .values { background: var(--paper-2); border-block: 1px solid var(--line); }
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .value { padding: 28px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); }
+    .value h3 { font-size: 1.6rem; margin-bottom: 10px; }
+    .value p { color: var(--ink-soft); margin: 0; font-size: 0.97rem; }
+    .num { font-family: var(--serif); font-size: 0.95rem; color: var(--accent); font-style: italic; display: block; margin-bottom: 14px; }
+
+    /* Tours */
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+    .section-head h2 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); max-width: 16ch; }
+    .tours { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .tour {
+      background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius);
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    .tour-art { height: 180px; position: relative; }
+    .tour-body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+    .tour-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .tag {
+      font-size: 0.78rem; padding: 4px 10px; border-radius: 999px;
+      border: 1px solid var(--line); color: var(--ink-soft);
+    }
+    .tour h3 { font-size: 1.9rem; margin-bottom: 8px; }
+    .tour > .tour-body > p { color: var(--ink-soft); font-size: 0.96rem; }
+    .tour ul { list-style: none; padding: 0; margin: 16px 0 24px; font-size: 0.93rem; }
+    .tour li { padding: 7px 0; border-top: 1px dashed var(--line); display: flex; justify-content: space-between; gap: 12px; }
+    .tour li span:last-child { color: var(--ink-soft); text-align: right; }
+    .tour-foot { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .price { font-family: var(--serif); font-size: 1.9rem; font-weight: 600; line-height: 1; }
+    .price small { font-family: var(--sans); font-size: 0.8rem; color: var(--ink-soft); font-weight: 400; display: block; margin-top: 4px; }
+    .tour .btn-ghost { padding: 10px 16px; font-size: 0.88rem; }
+
+    .art-kyoto { background: linear-gradient(160deg, #c9785c 0%, #6b3b4a 55%, #241b2e 100%); }
+    .art-kyoto::after { content: ""; position: absolute; left: 50%; top: 52%; width: 90px; height: 90px; margin-left: -45px; border-radius: 50%; background: #f6d9b8; opacity: .85; }
+    .art-alps { background: linear-gradient(180deg, #a9c3c9 0%, #dfe9e6 45%, #3e5a52 46%, #1f3530 100%); }
+    .art-alps::after { content: ""; position: absolute; left: -10%; right: -10%; bottom: 0; height: 60%; background: #2d4a43; clip-path: polygon(0 100%, 18% 35%, 34% 70%, 52% 10%, 70% 62%, 85% 30%, 100% 100%); }
+    .art-tohoku { background: linear-gradient(180deg, #f0d4c9 0%, #c8d4cf 50%, #2f4b45 51%, #17302b 100%); }
+    .art-tohoku::after { content: ""; position: absolute; right: 22%; top: 28%; width: 60px; height: 60px; border-radius: 50%; background: var(--accent); }
+
+    /* Itinerary */
+    .itin { background: var(--indigo); color: #efe7da; }
+    .itin .eyebrow { color: #e9a08c; }
+    .itin .lead { color: #bfc6d4; }
+    .itin-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
+    .days { display: grid; gap: 0; }
+    .day {
+      display: grid; grid-template-columns: 84px 1fr; gap: 20px;
+      padding: 24px 0; border-top: 1px solid rgba(239,231,218,.18);
+    }
+    .day:last-child { border-bottom: 1px solid rgba(239,231,218,.18); }
+    .day-n { font-family: var(--serif); font-size: 2.2rem; line-height: 1; color: #e9a08c; font-style: italic; }
+    .day h3 { font-size: 1.6rem; margin-bottom: 6px; color: #fff; }
+    .day p { margin: 0; color: #bfc6d4; font-size: 0.96rem; }
+    .itin-side h2 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); margin-bottom: 20px; }
+    .itin-side .lead { margin-bottom: 28px; }
+    .checklist { list-style: none; padding: 0; margin: 0 0 32px; display: grid; gap: 12px; }
+    .checklist li { padding-left: 30px; position: relative; color: #dfe4ec; }
+    .checklist li::before {
+      content: ""; position: absolute; left: 0; top: 7px; width: 16px; height: 16px; border-radius: 50%;
+      background: #e9a08c; box-shadow: inset 0 0 0 4px var(--indigo);
+    }
+
+    /* How it works */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line); }
+    .step { padding: 32px 24px 0 0; }
+    .step h3 { font-size: 1.5rem; margin: 12px 0 8px; }
+    .step p { color: var(--ink-soft); font-size: 0.95rem; margin: 0; }
+    .step .k { font-family: var(--serif); font-style: italic; color: var(--accent); font-size: 1.1rem; }
+
+    /* Testimonials */
+    .quotes { background: var(--paper-2); border-block: 1px solid var(--line); }
+    .quote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .quote { margin: 0; padding: 32px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column; }
+    .quote blockquote { margin: 0 0 24px; font-family: var(--serif); font-size: 1.35rem; line-height: 1.35; font-style: italic; }
+    .quote figcaption { margin-top: auto; font-size: 0.88rem; color: var(--ink-soft); }
+    .quote figcaption strong { color: var(--ink); display: block; font-weight: 600; }
+
+    /* FAQ */
+    .faq-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(32px, 6vw, 88px); }
+    .faq-grid h2 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); }
+    details { border-bottom: 1px solid var(--line); padding: 20px 0; }
+    details:first-child { border-top: 1px solid var(--line); }
+    summary {
+      cursor: pointer; list-style: none; font-weight: 600; font-size: 1.05rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-size: 1.5rem; font-weight: 300; color: var(--accent); transition: transform .2s; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { margin: 12px 0 0; color: var(--ink-soft); max-width: 62ch; }
+
+    /* Booking */
+    .book { padding-bottom: clamp(72px, 10vw, 120px); }
+    .book-card {
+      display: grid; grid-template-columns: 1fr 1fr; background: var(--ink); color: var(--paper);
+      border-radius: 20px; overflow: hidden;
+    }
+    .book-copy { padding: clamp(32px, 5vw, 64px); }
+    .book-copy h2 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); margin-bottom: 16px; }
+    .book-copy p { color: color-mix(in srgb, var(--paper) 72%, transparent); }
+    .book-copy .contact { margin-top: 28px; font-size: 0.93rem; }
+    .book-copy .contact a { text-decoration: underline; text-underline-offset: 3px; }
+    form.book-form { padding: clamp(32px, 5vw, 64px); background: var(--paper); color: var(--ink); display: grid; gap: 16px; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-size: 0.85rem; font-weight: 600; }
+    .field input, .field select, .field textarea {
+      font: inherit; font-size: 0.95rem; padding: 12px 14px; border-radius: 10px;
+      border: 1px solid var(--line); background: var(--paper-2); color: var(--ink); width: 100%;
+    }
+    .field textarea { min-height: 88px; resize: vertical; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-note { font-size: 0.82rem; color: var(--ink-soft); margin: 0; }
+    .form-status { font-size: 0.93rem; margin: 0; color: var(--accent); min-height: 1.2em; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--line); padding: 40px 0 56px; font-size: 0.9rem; color: var(--ink-soft); }
+    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: center; }
+    .foot nav { display: flex; gap: 20px; flex-wrap: wrap; }
+    .foot a { text-decoration: none; }
+    .foot a:hover { color: var(--ink); }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid, .itin-grid, .faq-grid, .book-card { grid-template-columns: 1fr; }
+      .hero-art { aspect-ratio: 16 / 11; border-radius: var(--radius); }
+      .tours, .values-grid, .quote-grid { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .step { padding-bottom: 32px; }
+    }
+    @media (max-width: 680px) {
+      .nav-toggle { display: inline-block; }
+      .nav-links {
+        display: none; position: absolute; top: 72px; left: 0; right: 0;
+        flex-direction: column; align-items: flex-start; gap: 0;
+        background: var(--paper); border-bottom: 1px solid var(--line); padding: 8px 16px 16px;
+      }
+      .nav-links a { padding: 10px 0; width: 100%; font-size: 1rem; }
+      .nav-links.open { display: flex; }
+      header.site { position: sticky; }
+      .nav { position: relative; }
+      .tours, .values-grid, .quote-grid, .steps { grid-template-columns: 1fr; }
+      .row-2 { grid-template-columns: 1fr; }
+      .day { grid-template-columns: 56px 1fr; gap: 14px; }
+      .hero-cta .btn { width: 100%; justify-content: center; }
+      .hero-stats { gap: 24px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Kizuna Small Journeys home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Kizuna
+      </a>
+      <nav class="nav-links" id="nav-links" aria-label="Primary">
+        <a href="#tours">Tours</a>
+        <a href="#itinerary">A sample week</a>
+        <a href="#how">How it works</a>
+        <a href="#stories">Stories</a>
+        <a href="#faq">FAQ</a>
+        <a href="#book" class="btn btn-primary" style="padding:10px 18px">Reserve a spot</a>
+      </nav>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menu</button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">Small-group tours of Japan</span>
+          <h1>Eight travelers. <em>Two weeks.</em> One country, seen slowly.</h1>
+          <p class="lead">We take Japan at the pace of its neighborhoods. Every group is capped at eight, every day is guided by someone who grew up nearby, and nothing is rushed onto a bus we don't need to be on.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#tours">Browse departures</a>
+            <a class="btn btn-ghost" href="#itinerary">See a sample week</a>
+          </div>
+          <div class="hero-stats">
+            <div><strong>8</strong><span>travelers, maximum</span></div>
+            <div><strong>1:4</strong><span>guide-to-guest ratio</span></div>
+            <div><strong>14 yrs</strong><span>running trips in Japan</span></div>
+          </div>
+        </div>
+        <div class="hero-art" role="img" aria-label="Stylized illustration of a Japanese sunset over mountains and a red torii gate">
+          <div class="hero-caption">Spring departures sell out first. Autumn is the quiet favorite.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values -->
+    <section class="values">
+      <div class="wrap">
+        <span class="eyebrow">What we do differently</span>
+        <h2 style="font-size:clamp(2.2rem,4.5vw,3.4rem);max-width:20ch">Fewer people. More time in each place.</h2>
+        <div class="values-grid">
+          <article class="value">
+            <span class="num">i.</span>
+            <h3>Small enough to talk to</h3>
+            <p>Eight people is the most we will take on a trip. Small enough that the guide learns your name by the second day, and the ryokan staff can actually accommodate a dietary request.</p>
+          </article>
+          <article class="value">
+            <span class="num">ii.</span>
+            <h3>Guides from where you're going</h3>
+            <p>Our leads are based in Kyoto, Sendai, Kanazawa and Naha. They are chosen for local knowledge, not for reciting a script, and they will tell you where they eat on their day off.</p>
+          </article>
+          <article class="value">
+            <span class="num">iii.</span>
+            <h3>Slow days on purpose</h3>
+            <p>Each itinerary keeps at least one unscheduled afternoon in every city. Free time is part of the plan, not something left over from it.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tours -->
+    <section id="tours">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Departures 2027</span>
+            <h2>Choose a route. We'll handle the rest.</h2>
+          </div>
+          <p class="lead" style="margin:0">All prices are per person, twin share, and include lodging, rail passes, guided days, and most meals. International flights are not included.</p>
+        </div>
+
+        <div class="tours">
+          <article class="tour">
+            <div class="tour-art art-kyoto" aria-hidden="true"></div>
+            <div class="tour-body">
+              <div class="tour-meta">
+                <span class="tag">10 days</span>
+                <span class="tag">Max 8</span>
+                <span class="tag">Kansai &amp; Chūbu</span>
+              </div>
+              <h3>Kyoto to the Coast</h3>
+              <p>Temples at dawn, a tea-house evening in Gion, then the Sea of Japan and the fishing towns of the Noto Peninsula.</p>
+              <ul>
+                <li><span>Departures</span><span>Mar 28, Apr 11, Oct 17</span></li>
+                <li><span>Pace</span><span>Moderate walking</span></li>
+                <li><span>Stays</span><span>Machiya and one ryokan</span></li>
+              </ul>
+              <div class="tour-foot">
+                <div class="price">$4,890<small>per person</small></div>
+                <a class="btn btn-ghost" href="#book">Request dates</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="tour">
+            <div class="tour-art art-alps" aria-hidden="true"></div>
+            <div class="tour-body">
+              <div class="tour-meta">
+                <span class="tag">12 days</span>
+                <span class="tag">Max 8</span>
+                <span class="tag">Nagano &amp; Tokyo</span>
+              </div>
+              <h3>Alps, Onsen &amp; Edo</h3>
+              <p>Hike the Nakasendō highway between post towns, soak in hot springs, and finish with a slow week in old Tokyo neighborhoods.</p>
+              <ul>
+                <li><span>Departures</span><span>May 9, Jun 6, Sep 26</span></li>
+                <li><span>Pace</span><span>Active, some hiking</span></li>
+                <li><span>Stays</span><span>Minshuku and ryokan</span></li>
+              </ul>
+              <div class="tour-foot">
+                <div class="price">$5,420<small>per person</small></div>
+                <a class="btn btn-ghost" href="#book">Request dates</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="tour">
+            <div class="tour-art art-tohoku" aria-hidden="true"></div>
+            <div class="tour-body">
+              <div class="tour-meta">
+                <span class="tag">8 days</span>
+                <span class="tag">Max 6</span>
+                <span class="tag">Tōhoku</span>
+              </div>
+              <h3>Off the Map North</h3>
+              <p>Sake breweries, lacquerware workshops and the autumn colour of the north, far from the usual crowds.</p>
+              <ul>
+                <li><span>Departures</span><span>Oct 3, Oct 24</span></li>
+                <li><span>Pace</span><span>Relaxed, rural</span></li>
+                <li><span>Stays</span><span>Family-run inns</span></li>
+              </ul>
+              <div class="tour-foot">
+                <div class="price">$4,240<small>per person</small></div>
+                <a class="btn btn-ghost" href="#book">Request dates</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Itinerary -->
+    <section class="itin" id="itinerary">
+      <div class="wrap itin-grid">
+        <div>
+          <span class="eyebrow">A sample week · Kyoto to the Coast</span>
+          <h2 style="font-size:clamp(2.2rem,4.5vw,3.4rem);margin-bottom:20px">What a day actually looks like.</h2>
+          <p class="lead">Mornings are for the things that are best before the crowds. Afternoons are yours. Evenings are often shared, around one long table.</p>
+        </div>
+        <div class="days">
+          <div class="day">
+            <div class="day-n">01</div>
+            <div>
+              <h3>Arrive Kyoto, walk Higashiyama</h3>
+              <p>Meet your guide at the hotel for a slow evening stroll through Gion, ending with dinner in a small kaiseki counter.</p>
+            </div>
+          </div>
+          <div class="day">
+            <div class="day-n">03</div>
+            <div>
+              <h3>Fushimi Inari before sunrise</h3>
+              <p>Walk the torii tunnels with the first trains and the morning light. Breakfast is wherever your guide's cousin runs a bakery.</p>
+            </div>
+          </div>
+          <div class="day">
+            <div class="day-n">05</div>
+            <div>
+              <h3>Train north to the Sea of Japan</h3>
+              <p>A limited express ride, then a free afternoon in Kanazawa's old geisha district. Dinner is at a fishmonger's counter, with the fish cut that morning.</p>
+            </div>
+          </div>
+          <div class="day">
+            <div class="day-n">07</div>
+            <div>
+              <h3>Noto Peninsula at its own pace</h3>
+              <p>Salt-kiln workshop, a coastal drive with stops whenever someone says stop, and a night in a family-run inn with its own onsen.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">How it works</span>
+            <h2>From first email to the platform at Narita.</h2>
+          </div>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <span class="k">Step one</span>
+            <h3>Tell us about your group</h3>
+            <p>Dates, interests, pace, and anyone who needs accessible rooms or a vegetarian kitchen. A call is optional but we usually like one.</p>
+          </div>
+          <div class="step">
+            <span class="k">Step two</span>
+            <h3>Reserve with a deposit</h3>
+            <p>Secure your place with 20% down. Every booking includes free cancellation until 90 days before departure.</p>
+          </div>
+          <div class="step">
+            <span class="k">Step three</span>
+            <h3>Receive your guide's notes</h3>
+            <p>About six weeks out you'll get a personal packing list, train timings, and a short note from your lead guide about the places they love.</p>
+          </div>
+          <div class="step">
+            <span class="k">Step four</span>
+            <h3>Go, and come home changed</h3>
+            <p>We meet you at arrival, handle the trains and check-ins, and stay in touch after you land home.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="quotes" id="stories">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Travelers' words</span>
+            <h2>Eight strangers, one very good trip.</h2>
+          </div>
+        </div>
+        <div class="quote-grid">
+          <figure class="quote">
+            <blockquote>"Our guide noticed I was quiet on the bullet train and simply handed me the best rice ball I've ever eaten. That was the whole trip in one moment."</blockquote>
+            <figcaption><strong>Maren L.</strong>Kyoto to the Coast, spring</figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>"I expected to be herded. Instead we had three free afternoons and a guide who knew which ramen counter had a line worth waiting in."</blockquote>
+            <figcaption><strong>Daniel and Priya R.</strong>Alps, Onsen &amp; Edo, autumn</figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>"Traveling alone at 68 was a worry. The group was small enough that I was never left standing on a platform wondering where everyone went."</blockquote>
+            <figcaption><strong>Ruth A.</strong>Off the Map North, October</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="wrap faq-grid">
+        <div>
+          <span class="eyebrow">Questions</span>
+          <h2>Before you book.</h2>
+          <p class="lead" style="margin-top:20px">Anything not answered here, write to us and a real person will reply within a working day.</p>
+        </div>
+        <div>
+          <details>
+            <summary>Do I need to speak Japanese?</summary>
+            <p>No. Your guide handles restaurant ordering, train platforms, and anything that requires a phone call. We will send a short phrase sheet, but it is there for fun, not survival.</p>
+          </details>
+          <details>
+            <summary>What happens if I travel alone?</summary>
+            <p>Most of our guests do. You are matched with a room of your own at no single supplement on our shared-room departures, and a roommate is only assigned if you ask for one.</p>
+          </details>
+          <details>
+            <summary>How physically demanding are the tours?</summary>
+            <p>Each tour page lists its pace. Expect 6 to 10 km of walking on most days, with stairs at temples and shrines. We can arrange seated alternatives at many sites on request.</p>
+          </details>
+          <details>
+            <summary>Is travel insurance included?</summary>
+            <p>No, but we strongly recommend a policy that covers trip cancellation and medical care abroad. We will provide a list of providers that cover Japan.</p>
+          </details>
+          <details>
+            <summary>Can you accommodate dietary needs?</summary>
+            <p>Yes. Vegetarian, vegan, halal and most allergy requirements are workable with notice. Please tell us early; some ryokan kitchens need a few weeks to plan.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking -->
+    <section class="book" id="book">
+      <div class="wrap">
+        <div class="book-card">
+          <div class="book-copy">
+            <span class="eyebrow" style="color:#e9a08c">Reserve your place</span>
+            <h2>Tell us when you'd like to go.</h2>
+            <p>Send a few details and we'll reply with availability, a rough budget, and any questions we need answered. There is no obligation and no hard sell.</p>
+            <p class="contact">Prefer to talk? Call <a href="tel:+18005550142">+1 (800) 555-0142</a> or write to <a href="mailto:hello@kizunajourneys.example">hello@kizunajourneys.example</a>.</p>
+          </div>
+          <form class="book-form" id="book-form">
+            <div class="row-2">
+              <div class="field">
+                <label for="name">Full name</label>
+                <input id="name" name="name" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required>
+              </div>
+            </div>
+            <div class="row-2">
+              <div class="field">
+                <label for="tour">Tour</label>
+                <select id="tour" name="tour">
+                  <option>Kyoto to the Coast</option>
+                  <option>Alps, Onsen &amp; Edo</option>
+                  <option>Off the Map North</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="size">Travelers</label>
+                <select id="size" name="size">
+                  <option>1</option><option selected>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="dates">Preferred months</label>
+              <input id="dates" name="dates" placeholder="e.g. April or late October">
+            </div>
+            <div class="field">
+              <label for="notes">Anything we should know?</label>
+              <textarea id="notes" name="notes" placeholder="Interests, accessibility, dietary needs, past trips to Japan…"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit" style="justify-self:start">Request availability</button>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+            <p class="form-note">We use your details only to reply to this enquiry.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <strong style="font-family:var(--serif);font-size:1.3rem;color:var(--ink)">Kizuna Small Journeys</strong><br>
+        Small-group tours of Japan since 2012.
+      </div>
+      <nav aria-label="Footer">
+        <a href="#tours">Tours</a>
+        <a href="#faq">FAQ</a>
+        <a href="#book">Contact</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+      </nav>
+      <div>&copy; 2026 Kizuna Small Journeys. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var toggle = document.getElementById('nav-toggle');
+      var links = document.getElementById('nav-links');
+      toggle.addEventListener('click', function () {
+        var open = links.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+      links.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A') {
+          links.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      var form = document.getElementById('book-form');
+      var status = document.getElementById('form-status');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        status.textContent = 'Thank you. We have your enquiry and will reply within one working day.';
+        form.reset();
+      });
+    })();
+  </script>
+</body>
+</html>

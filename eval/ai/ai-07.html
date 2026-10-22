@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loopers Coding Club</title>
+<meta name="description" content="Loopers is an after-school coding club for kids aged 7–12. Mondays and Wednesdays at Eastside Library.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght,BNCE,INFM@0,300..800,-100..100,0..100&family=Atkinson+Hyperlegible+Next:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EAF4EE;
+    --grid: #CFE3D6;
+    --ink: #1B2244;
+    --ink-soft: #4A5274;
+    --motion: #3A66F5;
+    --loop: #F5A524;
+    --event: #F0507E;
+    --go: #1E9E62;
+    --white: #FFFFFF;
+
+    --hand: "Shantell Sans", "Comic Neue", system-ui, sans-serif;
+    --body: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, sans-serif;
+
+    /* type scale (≈ 1.25 ratio) */
+    --t-sm: 0.875rem;
+    --t-base: 1.0625rem;
+    --t-md: 1.3125rem;
+    --t-lg: 1.75rem;
+    --t-xl: 2.5rem;
+    --t-hero: clamp(2.6rem, 6.4vw, 5rem);
+
+    --gutter: clamp(16px, 4vw, 48px);
+    --max: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+    font-family: var(--body);
+    font-size: var(--t-base);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--hand);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+    text-wrap: balance;
+  }
+  h2 { font-size: var(--t-xl); font-variation-settings: "INFM" 40, "BNCE" 20; }
+  h3 { font-size: var(--t-md); }
+  p { margin: 0; max-width: 62ch; }
+  a { color: var(--motion); text-underline-offset: 3px; }
+
+  :focus-visible {
+    outline: 3px solid var(--event);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .wrap {
+    max-width: var(--max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* ---------- header ---------- */
+  .site-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 20px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--hand);
+    font-weight: 800;
+    font-size: var(--t-md);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .site-head nav { display: flex; gap: 24px; align-items: center; }
+  .site-head nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .site-head nav a:hover { text-decoration: underline; }
+  @media (max-width: 720px) { .site-head nav .hide-sm { display: none; } }
+
+  .btn {
+    display: inline-block;
+    font-family: var(--hand);
+    font-weight: 700;
+    font-size: var(--t-base);
+    padding: 12px 22px;
+    border-radius: 10px;
+    border: 2px solid var(--ink);
+    background: var(--go);
+    color: var(--white);
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--ink);
+    transition: transform .08s, box-shadow .08s;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 5px 0 var(--ink); }
+  .btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--ink); }
+  .btn.small { padding: 8px 16px; font-size: var(--t-sm); box-shadow: 0 3px 0 var(--ink); }
+  .site-head nav a.btn { color: var(--white); text-decoration: none; }
+  .link-plain { font-weight: 700; color: var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+    padding-block: clamp(32px, 6vw, 72px) clamp(56px, 8vw, 104px);
+  }
+  .hero h1 {
+    font-size: var(--t-hero);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    font-variation-settings: "INFM" 70, "BNCE" 40;
+  }
+  .hero .lede {
+    margin-top: 24px;
+    font-size: var(--t-md);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 34ch;
+  }
+  .hero .actions {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+  }
+  .hero .note {
+    margin-top: 20px;
+    font-size: var(--t-sm);
+    color: var(--ink-soft);
+  }
+
+  /* the demo stage */
+  .stage {
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    box-shadow: 8px 8px 0 var(--ink);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    overflow: hidden;
+  }
+  .stage-code {
+    padding: 20px 18px;
+    border-right: 2px solid var(--ink);
+    background: #F6F8FD;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .stage-canvas {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background-color: var(--white);
+    background-image:
+      linear-gradient(#EEF1F8 1px, transparent 1px),
+      linear-gradient(90deg, #EEF1F8 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .stage-canvas canvas { width: 100%; height: 100%; display: block; }
+  .stage-caption {
+    grid-column: 1 / -1;
+    border-top: 2px solid var(--ink);
+    padding: 12px 18px;
+    font-size: var(--t-sm);
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .stage-caption output { font-family: var(--hand); font-weight: 700; color: var(--ink); }
+
+  /* ---------- code blocks ---------- */
+  .blocks { font-family: var(--hand); font-weight: 600; font-size: 0.95rem; color: var(--white); }
+  .block {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    width: fit-content;
+    min-width: 150px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: var(--c);
+    box-shadow: inset 0 -3px 0 rgb(0 0 0 / .15);
+  }
+  /* the connector nub below every stackable block */
+  .block::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    bottom: -5px;
+    width: 20px;
+    height: 6px;
+    border-radius: 0 0 5px 5px;
+    background: var(--c);
+    z-index: 1;
+  }
+  .block.last::after { display: none; }
+  .block + .block, .block + .c-block, .c-block + .block { margin-top: 2px; }
+  .hat {
+    border-radius: 18px 18px 6px 6px;
+    padding-top: 12px;
+  }
+  .motion { --c: var(--motion); }
+  .control { --c: var(--loop); color: var(--ink); }
+  .event { --c: var(--event); }
+
+  .c-block { --c: var(--loop); color: var(--ink); width: fit-content; min-width: 170px; }
+  .c-block > .block { border-radius: 6px 6px 0 6px; }
+  .c-body {
+    border-left: 16px solid var(--c);
+    padding: 4px 0 4px 0;
+  }
+  .c-foot {
+    position: relative;
+    height: 14px;
+    width: 100%;
+    background: var(--c);
+    border-radius: 0 0 6px 6px;
+    box-shadow: inset 0 -3px 0 rgb(0 0 0 / .15);
+  }
+  .c-foot::after {
+    content: "";
+    position: absolute;
+    left: 14px; bottom: -5px;
+    width: 20px; height: 6px;
+    border-radius: 0 0 5px 5px;
+    background: var(--c);
+  }
+  .c-block.last .c-foot::after { display: none; }
+
+  .slot {
+    display: inline-block;
+    background: var(--white);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 0 10px;
+    min-width: 2.2em;
+    text-align: center;
+    font-weight: 700;
+  }
+  .control .slot { background: #FFF3DC; }
+
+  /* the interactive pieces of the demo */
+  .picker { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; border: 0; }
+  .picker legend { font-family: var(--body); font-size: var(--t-sm); color: var(--ink-soft); margin-bottom: 6px; padding: 0; }
+  .picker label {
+    position: relative;
+    font-family: var(--hand);
+    font-weight: 700;
+    min-width: 40px;
+    text-align: center;
+    padding: 4px 10px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    background: var(--white);
+    cursor: pointer;
+  }
+  .picker input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .picker label:has(input:checked) { background: var(--loop); }
+  .picker label:has(input:focus-visible) { outline: 3px solid var(--event); outline-offset: 2px; }
+
+  .toggle {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: var(--t-sm);
+    color: var(--ink);
+    cursor: pointer;
+    line-height: 1.35;
+  }
+  .toggle input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--loop); flex: none; }
+
+  .outer-wrap .c-outer { display: none; }
+  .outer-wrap.nested .c-outer { display: block; }
+
+  .run-row { display: flex; gap: 10px; align-items: center; margin-top: auto; }
+  .run-btn { background: var(--go); }
+
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero .lede { max-width: 46ch; }
+  }
+  @media (max-width: 560px) {
+    .stage { grid-template-columns: 1fr; box-shadow: 5px 5px 0 var(--ink); }
+    .stage-code { border-right: 0; border-bottom: 2px solid var(--ink); }
+  }
+
+  /* ---------- sections ---------- */
+  .section { padding-block: clamp(56px, 8vw, 104px); }
+  .section-head { max-width: 40rem; margin-bottom: 40px; }
+  .section-head p { margin-top: 14px; color: var(--ink-soft); font-size: var(--t-md); line-height: 1.5; }
+
+  .band {
+    background: var(--white);
+    border-block: 2px solid var(--ink);
+  }
+
+  /* afternoon program */
+  .afternoon {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: start;
+  }
+  .afternoon .section-head { margin-bottom: 0; }
+  .program { font-size: 1.05rem; }
+  .program .block { min-width: min(100%, 360px); padding: 12px 16px; }
+  .program .c-block { min-width: min(100%, 400px); }
+  .program time { font-weight: 800; margin-right: 6px; }
+  .program .step-note {
+    display: block;
+    width: 100%;
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: var(--t-sm);
+    opacity: .92;
+  }
+  @media (max-width: 820px) { .afternoon { grid-template-columns: 1fr; } }
+
+  /* tracks */
+  .tracks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 2px solid var(--ink);
+  }
+  .track { padding: 32px 40px 8px 0; }
+  .track + .track { padding-left: 40px; border-left: 2px dashed var(--ink-soft); }
+  .track .ages {
+    font-family: var(--hand);
+    font-size: var(--t-lg);
+    font-weight: 800;
+    font-variation-settings: "INFM" 60, "BNCE" 30;
+  }
+  .track .ages span {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border-radius: 4px;
+    margin-right: 10px;
+    vertical-align: 2px;
+    border: 2px solid var(--ink);
+  }
+  .track p { margin-top: 12px; }
+  .track ul { margin: 20px 0 0; padding-left: 1.2em; }
+  .track li { margin-bottom: 8px; max-width: 52ch; }
+  .track li::marker { color: var(--ink-soft); }
+  @media (max-width: 760px) {
+    .tracks { grid-template-columns: 1fr; }
+    .track { padding-right: 0; }
+    .track + .track { padding-left: 0; border-left: 0; border-top: 2px dashed var(--ink-soft); margin-top: 24px; }
+  }
+
+  /* details */
+  .details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 48px;
+    margin: 0;
+  }
+  .details div { border-top: 2px solid var(--ink); padding-top: 14px; }
+  .details dt { font-family: var(--hand); font-weight: 700; font-size: var(--t-md); }
+  .details dd { margin: 6px 0 0; color: var(--ink-soft); max-width: 34ch; }
+  @media (max-width: 820px) { .details { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .details { grid-template-columns: 1fr; } }
+
+  /* FAQ */
+  .faq { max-width: 46rem; }
+  .faq details { border-bottom: 2px solid var(--ink); }
+  .faq details:first-of-type { border-top: 2px solid var(--ink); }
+  .faq summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 18px 40px 18px 0;
+    position: relative;
+    font-family: var(--hand);
+    font-weight: 700;
+    font-size: var(--t-md);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: "+";
+    position: absolute;
+    right: 6px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.6rem;
+    transition: transform .2s;
+  }
+  .faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+  .faq details p { padding-bottom: 20px; color: var(--ink-soft); }
+  @media (prefers-reduced-motion: reduce) { .faq summary::after { transition: none; } }
+
+  /* signup */
+  .signup {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: start;
+  }
+  .signup .section-head { margin-bottom: 0; }
+  form.trial {
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    box-shadow: 8px 8px 0 var(--ink);
+    padding: clamp(20px, 3vw, 32px);
+    display: grid;
+    gap: 18px;
+  }
+  .field { display: grid; gap: 6px; }
+  .field label { font-weight: 700; }
+  .field .hint { font-size: var(--t-sm); color: var(--ink-soft); }
+  .field input, .field select {
+    font: inherit;
+    color: var(--ink);
+    padding: 11px 12px;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    background: #F6F8FD;
+    width: 100%;
+  }
+  .field input:focus-visible, .field select:focus-visible { outline-offset: 1px; }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-msg {
+    display: none;
+    border-radius: 10px;
+    padding: 14px 16px;
+    background: #E3F5EC;
+    border: 2px solid var(--go);
+  }
+  .form-msg.show { display: block; }
+  .form-msg strong { font-family: var(--hand); font-size: var(--t-md); display: block; }
+  @media (max-width: 820px) { .signup { grid-template-columns: 1fr; } }
+  @media (max-width: 420px) { .row-2 { grid-template-columns: 1fr; } }
+
+  .site-foot {
+    padding-block: 40px;
+    font-size: var(--t-sm);
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-top: 2px solid var(--ink);
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap site-head">
+  <a class="logo" href="#top" aria-label="Loopers Coding Club, home">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+      <path d="M17 4 L28 11 L28 23 L17 30 L6 23 L6 11 Z" fill="none" stroke="#1B2244" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M13 13 L21 17 L13 21 Z" fill="#F0507E" stroke="#1B2244" stroke-width="2" stroke-linejoin="round"/>
+    </svg>
+    Loopers
+  </a>
+  <nav aria-label="Main">
+    <a class="hide-sm" href="#afternoon">A typical day</a>
+    <a class="hide-sm" href="#details">Times &amp; cost</a>
+    <a class="btn small" href="#trial">Book a trial</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <div>
+      <h1 id="hero-title">Kids write the code. The turtle draws it.</h1>
+      <p class="lede">Loopers is an after-school coding club for ages 7 to 12. Twice a week, kids build games, art and small robots, and learn to fix their own bugs.</p>
+      <div class="actions">
+        <a class="btn" href="#trial">Book a free trial session</a>
+        <a class="link-plain" href="#details">See times and cost</a>
+      </div>
+      <p class="note">Mondays and Wednesdays, 3:30–5:00 pm at Eastside Library. Winter term starts January 11.</p>
+    </div>
+
+    <div class="stage" role="group" aria-labelledby="demo-label">
+      <div class="stage-code">
+        <div class="blocks outer-wrap" id="program">
+          <div class="block event hat">when Run is pressed</div>
+          <div class="c-block c-outer">
+            <div class="block control">repeat <span class="slot">12</span></div>
+            <div class="c-body">
+              <div class="c-block" id="inner-loop">
+                <div class="block control">repeat <span class="slot" id="slot-sides">4</span></div>
+                <div class="c-body">
+                  <div class="block motion">move <span class="slot">100</span> steps</div>
+                  <div class="block motion last">turn ↻ <span class="slot" id="slot-turn">90</span>°</div>
+                </div>
+                <div class="c-foot"></div>
+              </div>
+              <div class="block motion last">turn ↻ <span class="slot">30</span>°</div>
+            </div>
+            <div class="c-foot"></div>
+          </div>
+          <!-- shown when not nested -->
+          <div class="c-block c-inner-solo last" id="inner-solo">
+            <div class="block control">repeat <span class="slot" id="slot-sides-2">4</span></div>
+            <div class="c-body">
+              <div class="block motion">move <span class="slot">100</span> steps</div>
+              <div class="block motion last">turn ↻ <span class="slot" id="slot-turn-2">90</span>°</div>
+            </div>
+            <div class="c-foot"></div>
+          </div>
+        </div>
+
+        <fieldset class="picker" id="sides-picker">
+          <legend>How many times to repeat?</legend>
+          <label><input type="radio" name="sides" value="3">3</label>
+          <label><input type="radio" name="sides" value="4" checked>4</label>
+          <label><input type="radio" name="sides" value="5">5</label>
+          <label><input type="radio" name="sides" value="6">6</label>
+          <label><input type="radio" name="sides" value="8">8</label>
+        </fieldset>
+
+        <label class="toggle"><input type="checkbox" id="nest"> Put it inside another loop</label>
+
+        <div class="run-row">
+          <button class="btn small run-btn" id="run" type="button">Run</button>
+        </div>
+      </div>
+
+      <div class="stage-canvas">
+        <canvas id="turtle" aria-label="Drawing made by the turtle" role="img"></canvas>
+      </div>
+
+      <div class="stage-caption">
+        <span id="demo-label">Try it: pick a number, then press Run.</span>
+        <output id="shape-name" aria-live="polite">A square</output>
+      </div>
+    </div>
+  </section>
+
+  <section class="band section" id="afternoon" aria-labelledby="afternoon-title">
+    <div class="wrap afternoon">
+      <div class="section-head">
+        <h2 id="afternoon-title">What an afternoon looks like</h2>
+        <p>Every session follows the same plan, so kids know what's coming and can get straight to building.</p>
+        <p>Kids work in pairs: one types, one navigates, and they swap halfway. They explain their thinking to each other, which is most of how they learn.</p>
+      </div>
+
+      <div class="blocks program" aria-label="Session schedule">
+        <div class="block event hat"><time>3:15</time> when the school bell rings</div>
+        <div class="block motion"><time>3:30</time> Snack and a warm-up puzzle
+          <span class="step-note">Five minutes, no screens. Today: guide a friend through a maze using only arrow cards.</span></div>
+        <div class="block motion"><time>3:45</time> Today's challenge
+          <span class="step-note">A short demo, then pairs build their own version. Mentors walk the room.</span></div>
+        <div class="c-block">
+          <div class="block control">repeat until it works</div>
+          <div class="c-body">
+            <div class="block motion">run it</div>
+            <div class="block motion last">find the bug, fix the bug</div>
+          </div>
+          <div class="c-foot"></div>
+        </div>
+        <div class="block motion"><time>4:30</time> Show and tell
+          <span class="step-note">Everyone demos what they made, bugs included. Each pair gets one question from the room.</span></div>
+        <div class="block event last"><time>5:00</time> Pick-up at the library's front desk</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="tracks-title">
+    <div class="section-head">
+      <h2 id="tracks-title">Two groups, split by age</h2>
+      <p>No experience needed for either group. If your child has already coded a lot, we'll find them a harder challenge.</p>
+    </div>
+
+    <div class="tracks">
+      <div class="track">
+        <h3 class="ages"><span style="background: var(--loop)" aria-hidden="true"></span>Ages 7–9: block coders</h3>
+        <p>Kids snap code blocks together in Scratch. They don't need to type, and they need only a little reading.</p>
+        <ul>
+          <li>Animate a story with characters that talk and move</li>
+          <li>Build a maze game with a timer and a score</li>
+          <li>Program a small floor robot to deliver a note across the room</li>
+        </ul>
+      </div>
+      <div class="track">
+        <h3 class="ages"><span style="background: var(--motion)" aria-hidden="true"></span>Ages 10–12: text coders</h3>
+        <p>Kids type real Python and see what it does right away. They start with turtle drawings and move on to games.</p>
+        <ul>
+          <li>Draw patterns and spirals with the Python turtle</li>
+          <li>Make a micro:bit step counter they can wear home</li>
+          <li>Design, build and playtest a game of their own by the end of term</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band section" id="details" aria-labelledby="details-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="details-title">Times, place and cost</h2>
+      </div>
+      <dl class="details">
+        <div><dt>When</dt><dd>Mondays and Wednesdays, 3:30–5:00 pm, during the school term. Winter term runs January 11 to March 17.</dd></div>
+        <div><dt>Where</dt><dd>Eastside Library, Room 2, at 410 Alder Street. Mentors walk kids over from Hillcrest Elementary.</dd></div>
+        <div><dt>Cost</dt><dd>$180 for the 10-week term, snacks included. Siblings pay $140. Free places are available; just ask.</dd></div>
+        <div><dt>Group size</dt><dd>12 kids per group, with two mentors in the room the whole time.</dd></div>
+        <div><dt>What to bring</dt><dd>Nothing. We provide laptops, robots and snacks. Let us know about any allergies.</dd></div>
+        <div><dt>Mentors</dt><dd>Teachers and computer science students, all background-checked and first-aid trained.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="faq-title">
+    <div class="section-head">
+      <h2 id="faq-title">Questions parents ask</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>My child has never coded. Is that okay?</summary>
+        <p>Yes. Most kids start with no experience. The first two sessions cover the basics, and pairs are matched so nobody gets left behind.</p>
+      </details>
+      <details>
+        <summary>What happens at the free trial session?</summary>
+        <p>Your child joins a normal session, from snack to show-and-tell. You can stay for the first 15 minutes if it helps them settle. There's no obligation to sign up afterwards.</p>
+      </details>
+      <details>
+        <summary>What if we miss a session?</summary>
+        <p>Each challenge stands on its own, so missing one is fine. We email a short recap after each session so kids can try it at home if they want.</p>
+      </details>
+      <details>
+        <summary>Will my child be on screens the whole time?</summary>
+        <p>No. About a third of each session is away from screens: warm-up puzzles, planning on paper and show-and-tell.</p>
+      </details>
+      <details>
+        <summary>Can I pay in instalments?</summary>
+        <p>Yes. You can pay in two parts, at the start and middle of term. If cost is a problem, ask us about a free place. We don't ask for proof.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="band section" id="trial" aria-labelledby="trial-title">
+    <div class="wrap signup">
+      <div class="section-head">
+        <h2 id="trial-title">Book a free trial session</h2>
+        <p>Pick a day and we'll save your child a spot. We reply within one school day to confirm.</p>
+        <p>Prefer to talk first? Call Priya at the library on (555) 014-2290.</p>
+      </div>
+
+      <form class="trial" id="trial-form" novalidate>
+        <div class="row-2">
+          <div class="field">
+            <label for="kid-name">Child's first name</label>
+            <input id="kid-name" name="kid" autocomplete="off" required>
+          </div>
+          <div class="field">
+            <label for="kid-age">Age</label>
+            <select id="kid-age" name="age" required>
+              <option value="">Choose</option>
+              <option>7</option><option>8</option><option>9</option>
+              <option>10</option><option>11</option><option>12</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="parent-email">Your email</label>
+          <input id="parent-email" name="email" type="email" autocomplete="email" required>
+          <span class="hint">We'll send the confirmation and the trial details here.</span>
+        </div>
+        <div class="field">
+          <label for="trial-day">Trial day</label>
+          <select id="trial-day" name="day" required>
+            <option value="">Choose a day</option>
+            <option>Monday, January 11</option>
+            <option>Wednesday, January 13</option>
+            <option>Monday, January 18</option>
+            <option>Wednesday, January 20</option>
+          </select>
+        </div>
+        <button class="btn" type="submit">Request trial spot</button>
+        <div class="form-msg" id="form-msg" role="status" tabindex="-1"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap site-foot">
+  <span>Loopers Coding Club, Eastside Library, 410 Alder Street</span>
+  <a href="mailto:hello@loopers.example">hello@loopers.example</a>
+</footer>
+
+<script>
+(() => {
+  const canvas = document.getElementById('turtle');
+  const ctx = canvas.getContext('2d');
+  const program = document.getElementById('program');
+  const nest = document.getElementById('nest');
+  const runBtn = document.getElementById('run');
+  const shapeName = document.getElementById('shape-name');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const names = { 3: 'a triangle', 4: 'a square', 5: 'a pentagon', 6: 'a hexagon', 8: 'an octagon' };
+  const PEN = '#F0507E';
+  const INK = '#1B2244';
+
+  let sides = 4;
+  let nested = false;
+  let raf = null;
+
+  function sizeCanvas() {
+    const r = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(r.width * dpr);
+    canvas.height = Math.round(r.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return r;
+  }
+
+  // Run the block program and return the turtle's path in turtle units.
+  function trace() {
+    let x = 0, y = 0, heading = -90; // start facing up
+    const pts = [{ x, y }];
+    const outer = nested ? 12 : 1;
+    for (let o = 0; o < outer; o++) {
+      for (let i = 0; i < sides; i++) {
+        x += 100 * Math.cos(heading * Math.PI / 180);
+        y += 100 * Math.sin(heading * Math.PI / 180);
+        pts.push({ x, y });
+        heading += 360 / sides;
+      }
+      if (nested) heading += 30;
+    }
+    return pts;
+  }
+
+  // Scale and center the path so any shape fits the canvas.
+  function fit(pts, w, h) {
+    const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
+    const minX = Math.min(...xs), maxX = Math.max(...xs);
+    const minY = Math.min(...ys), maxY = Math.max(...ys);
+    const pad = 36;
+    const s = Math.min((w - pad * 2) / (maxX - minX || 1), (h - pad * 2) / (maxY - minY || 1));
+    const ox = (w - (maxX - minX) * s) / 2 - minX * s;
+    const oy = (h - (maxY - minY) * s) / 2 - minY * s;
+    return pts.map(p => ({ x: p.x * s + ox, y: p.y * s + oy }));
+  }
+
+  function drawTurtle(x, y, angle) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.fillStyle = '#1E9E62';
+    ctx.strokeStyle = INK;
+    ctx.lineWidth = 2;
+    // legs
+    ctx.fillStyle = '#7FD3A8';
+    [[6, -9], [6, 9], [-7, -9], [-7, 9]].forEach(([lx, ly]) => {
+      ctx.beginPath(); ctx.arc(lx, ly, 3.6, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    });
+    // head
+    ctx.beginPath(); ctx.arc(13, 0, 4.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    // shell
+    ctx.fillStyle = '#1E9E62';
+    ctx.beginPath(); ctx.ellipse(0, 0, 11, 9, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+
+  function render(pts, upto) {
+    const r = canvas.getBoundingClientRect();
+    ctx.clearRect(0, 0, r.width, r.height);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = PEN;
+    ctx.lineWidth = nested ? 2.5 : 4;
+    const whole = Math.floor(upto);
+    const frac = upto - whole;
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i <= whole && i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    let tx = pts[Math.min(whole, pts.length - 1)].x;
+    let ty = pts[Math.min(whole, pts.length - 1)].y;
+    // at the very end, keep facing along the last side drawn
+    const seg = Math.min(whole, pts.length - 2);
+    const segFrom = pts[seg];
+    const segTo = pts[seg + 1];
+    if (whole < pts.length - 1) {
+      tx = segFrom.x + (segTo.x - segFrom.x) * frac;
+      ty = segFrom.y + (segTo.y - segFrom.y) * frac;
+      ctx.lineTo(tx, ty);
+    }
+    ctx.stroke();
+    const a = Math.atan2(segTo.y - segFrom.y, segTo.x - segFrom.x);
+    drawTurtle(tx, ty, a);
+  }
+
+  function run() {
+    cancelAnimationFrame(raf);
+    const r = sizeCanvas();
+    const pts = fit(trace(), r.width, r.height);
+    const total = pts.length - 1;
+    shapeName.textContent = nested ? `12 × ${names[sides]}: a flower` : names[sides][0].toUpperCase() + names[sides].slice(1);
+    if (reduceMotion) { render(pts, total); return; }
+    const perSeg = nested ? 55 : 380; // ms per side
+    const start = performance.now();
+    const step = now => {
+      const p = Math.min(total, (now - start) / perSeg);
+      render(pts, p);
+      if (p < total) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+  }
+
+  function syncBlocks() {
+    const turn = Math.round(360 / sides * 10) / 10;
+    ['slot-sides', 'slot-sides-2'].forEach(id => document.getElementById(id).textContent = sides);
+    ['slot-turn', 'slot-turn-2'].forEach(id => document.getElementById(id).textContent = turn);
+    program.classList.toggle('nested', nested);
+    document.getElementById('inner-solo').hidden = nested;
+  }
+
+  document.getElementById('sides-picker').addEventListener('change', e => {
+    sides = Number(e.target.value);
+    syncBlocks();
+  });
+  nest.addEventListener('change', () => { nested = nest.checked; syncBlocks(); });
+  runBtn.addEventListener('click', run);
+
+  // Draw a finished square on load so the stage is never empty.
+  syncBlocks();
+  const initial = () => { const r = sizeCanvas(); const pts = fit(trace(), r.width, r.height); render(pts, pts.length - 1); };
+  initial();
+  window.addEventListener('resize', () => { cancelAnimationFrame(raf); initial(); });
+
+  // Trial form: check fields and confirm in place.
+  const form = document.getElementById('trial-form');
+  const msg = document.getElementById('form-msg');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const missing = [...form.querySelectorAll('[required]')].filter(f => !f.checkValidity());
+    msg.classList.add('show');
+    if (missing.length) {
+      const labels = missing.map(f => form.querySelector(`label[for="${f.id}"]`).textContent.toLowerCase());
+      msg.style.borderColor = 'var(--event)';
+      msg.style.background = '#FDE7EE';
+      msg.innerHTML = `<strong>A few things are missing</strong>Please add: ${labels.join(', ')}.`;
+      missing[0].focus();
+      return;
+    }
+    const kid = form.kid.value.trim();
+    msg.style.borderColor = '';
+    msg.style.background = '';
+    msg.innerHTML = `<strong>Trial spot requested for ${kid.replace(/[<>&"]/g, '')}</strong>We'll email ${form.email.value.replace(/[<>&"]/g, '')} within one school day to confirm ${form.day.value}.`;
+    msg.focus();
+    form.querySelectorAll('input, select').forEach(f => f.value = '');
+  });
+})();
+</script>
+</body>
+</html>

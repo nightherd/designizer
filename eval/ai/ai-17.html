@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stakeout Plant Nursery</title>
+<meta name="description" content="Healthy houseplants, grown in our greenhouse and shipped in recyclable packaging with a 30-day replacement promise.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --soil:#241b14;
+  --leaf:#17402a;
+  --leaf-2:#3f8a4f;
+  --paper:#eef3e2;
+  --paper-2:#e0ead0;
+  --tag-sun:#f2d54a;
+  --tag-bright:#fbfaf3;
+  --tag-low:#b8b2e9;
+  --pot:#2b2b27;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"Newsreader",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--leaf);font:400 1.1875rem/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--leaf-2);outline-offset:3px;border-radius:4px}
+.wrap{width:min(1180px,100% - 40px);margin-inline:auto}
+h1,h2,h3{font-family:var(--display);line-height:1.02;letter-spacing:-.025em;font-weight:800}
+
+/* header */
+header{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.logo{font:800 1.5rem var(--display);letter-spacing:-.03em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo i{width:12px;height:30px;background:var(--tag-sun);clip-path:polygon(0 0,100% 0,100% 72%,50% 100%,0 72%);display:block;outline:0}
+nav{display:flex;gap:28px;align-items:center;font:500 1rem var(--display)}
+nav a{text-decoration:none}
+nav a:hover{text-decoration:underline;text-underline-offset:5px}
+.basket{background:var(--leaf);color:var(--paper);border:0;font:700 .95rem var(--display);padding:10px 18px;border-radius:99px;cursor:pointer}
+.basket b{display:inline-grid;place-items:center;min-width:24px;height:24px;margin-left:8px;border-radius:99px;background:var(--tag-sun);color:var(--soil);padding:0 6px}
+
+/* hero */
+.hero{padding:clamp(28px,6vw,70px) 0 0}
+.hero h1{font-size:clamp(3rem,9vw,7.6rem);max-width:11ch}
+.hero-row{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end;margin-top:28px}
+.hero p{max-width:34ch;font-size:1.35rem}
+.cta{display:inline-block;margin-top:22px;background:var(--tag-sun);color:var(--soil);font:700 1.05rem var(--display);padding:15px 26px;border-radius:99px;text-decoration:none;transition:transform .2s}
+.cta:hover{transform:translateY(-2px)}
+.bed{margin-top:clamp(30px,5vw,56px);background:var(--soil);position:relative;padding:0 0 60px}
+.bed::before{content:"";position:absolute;left:0;right:0;top:0;height:14px;background:radial-gradient(circle at 10px 14px,var(--soil) 9px,transparent 10px) 0 0/22px 14px repeat-x}
+.bed-inner{display:flex;gap:clamp(14px,3vw,40px);justify-content:center;align-items:flex-start;transform:translateY(-70px);margin-bottom:-70px}
+.bed .tag{width:clamp(150px,22vw,230px)}
+.bed .tag:nth-child(1){transform:rotate(-3deg)}
+.bed .tag:nth-child(2){transform:rotate(1.5deg) translateY(18px)}
+.bed .tag:nth-child(3){transform:rotate(-1deg)}
+.bed .tag:nth-child(4){transform:rotate(3deg) translateY(10px)}
+.plant-in{animation:plant 1s cubic-bezier(.2,.9,.3,1.2) both}
+.bed .tag:nth-child(2){animation-delay:.12s}.bed .tag:nth-child(3){animation-delay:.24s}.bed .tag:nth-child(4){animation-delay:.36s}
+@keyframes plant{from{opacity:0;translate:0 -120px}to{opacity:1;translate:0 0}}
+
+/* tag — the nursery stake tag is the product card */
+.tag{--c:var(--tag-bright);background:var(--c);color:var(--soil);clip-path:polygon(0 0,100% 0,100% calc(100% - 46px),50% 100%,0 calc(100% - 46px));padding:34px 18px 64px;position:relative;text-align:left;transition:translate .25s}
+.tag::before{content:"";position:absolute;top:11px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--paper);box-shadow:inset 0 1px 2px rgba(0,0,0,.35)}
+.tag[data-light=sun]{--c:var(--tag-sun)}
+.tag[data-light=low]{--c:var(--tag-low)}
+.tag svg{display:block;width:100%;height:auto;aspect-ratio:1/1}
+.tag h3{font-size:1.45rem;margin-top:8px}
+.tag .latin{font-style:italic;font-size:1rem;opacity:.75;line-height:1.3}
+.tag .meta{margin-top:10px;font:500 .95rem/1.3 var(--display)}
+
+/* shop */
+section{padding:clamp(60px,9vw,120px) 0 0}
+.head{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap}
+.head h2{font-size:clamp(2.2rem,5vw,4rem);max-width:14ch}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{font:700 .98rem var(--display);padding:10px 18px;border-radius:99px;border:2px solid var(--leaf);background:transparent;color:var(--leaf);cursor:pointer;display:flex;align-items:center;gap:9px}
+.filters button .sw{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--leaf);background:var(--c,transparent)}
+.filters button[aria-pressed=true]{background:var(--leaf);color:var(--paper)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:48px 26px;margin-top:56px;padding-bottom:20px}
+.grid .tag{height:100%;display:flex;flex-direction:column}
+.grid .tag[hidden]{display:none}
+.price{font:800 1.6rem var(--display);margin-top:auto;padding-top:14px;letter-spacing:-.02em}
+.add{margin-top:8px;border:0;background:var(--soil);color:var(--paper);font:700 .95rem var(--display);padding:10px 18px;border-radius:99px;cursor:pointer;align-self:flex-start;transition:background .2s}
+.add.done{background:var(--leaf-2)}
+.legend{margin-top:34px;font-size:1.05rem;max-width:62ch}
+.legend b{font-family:var(--display)}
+
+/* promise */
+.promise{background:var(--leaf);color:var(--paper);margin-top:clamp(60px,9vw,120px);padding:clamp(56px,8vw,100px) 0}
+.promise-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(30px,6vw,90px);align-items:start}
+.promise h2{font-size:clamp(2.2rem,5vw,4.2rem)}
+.promise ol{list-style:none;padding:0;display:grid;gap:30px;counter-reset:s}
+.promise li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:16px}
+.promise li::before{content:counter(s);font:800 1.3rem var(--display);width:44px;height:44px;border-radius:50%;background:var(--tag-sun);color:var(--soil);display:grid;place-items:center}
+.promise h3{font-size:1.4rem;margin-bottom:4px;letter-spacing:-.01em}
+.promise p{opacity:.88}
+
+/* guide + newsletter */
+.guide{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:44px}
+.guide div{border-top:5px solid var(--leaf);padding-top:16px}
+.guide h3{font-size:1.5rem;margin-bottom:8px}
+.news{margin-top:clamp(60px,9vw,120px);background:var(--paper-2);padding:clamp(34px,5vw,64px);border-radius:28px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.news h2{font-size:clamp(1.9rem,3.6vw,3rem)}
+.news form{display:flex;gap:10px;flex-wrap:wrap}
+.news input{flex:1 1 220px;font:400 1.1rem var(--body);padding:14px 20px;border-radius:99px;border:2px solid var(--leaf);background:var(--paper);color:var(--leaf)}
+.news button{border:0;background:var(--leaf);color:var(--paper);font:700 1rem var(--display);padding:14px 26px;border-radius:99px;cursor:pointer}
+.news p.ok{flex-basis:100%;font-weight:500}
+footer{margin-top:80px;background:var(--soil);color:var(--paper);padding:50px 0 40px}
+.foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;font-size:1.05rem}
+.foot .logo{color:var(--paper)}
+.foot ul{list-style:none;padding:0;display:flex;gap:22px;flex-wrap:wrap}
+
+@media (max-width:820px){
+  nav a{display:none}
+  .hero-row,.promise-grid,.news{grid-template-columns:1fr}
+  .bed-inner{flex-wrap:wrap;transform:translateY(-50px);margin-bottom:-50px}
+  .bed .tag:nth-child(n+3){display:none}
+  .bed .tag{width:42vw}
+  .guide{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.plant-in{animation:none}.cta{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<!-- shared leaf shapes -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="leaf" viewBox="-20 -60 40 62"><path d="M0 0C14-10 16-34 0-58C-16-34-14-10 0 0Z"/></symbol>
+    <symbol id="heart" viewBox="-30 -50 60 54"><path d="M0 0C-34-8-36-40-16-46C-6-48 0-40 0-34C0-40 6-48 16-46C36-40 34-8 0 0Z"/></symbol>
+    <symbol id="oval" viewBox="-18 -50 36 52"><ellipse cx="0" cy="-24" rx="15" ry="25"/></symbol>
+    <symbol id="pot" viewBox="0 0 120 70"><path d="M8 0H112L100 66Q99 70 94 70H26Q21 70 20 66Z" fill="#2b2b27"/><rect x="4" y="0" width="112" height="9" rx="3" fill="#3a3a35"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header>
+    <a class="logo" href="#top"><i></i>Stakeout</a>
+    <nav aria-label="Main">
+      <a href="#shop">Shop plants</a>
+      <a href="#promise">Our promise</a>
+      <a href="#light">Light guide</a>
+      <button class="basket" type="button" aria-label="Basket">Basket<b id="count">0</b></button>
+    </nav>
+  </header>
+</div>
+
+<main id="top">
+  <div class="wrap hero">
+    <h1>Plants raised to thrive in your home.</h1>
+    <div class="hero-row">
+      <div>
+        <p>We grow every plant in our own greenhouse, acclimate it to indoor light, and ship it in a pot that's ready to go.</p>
+        <a class="cta" href="#shop">Shop plants</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="bed" aria-hidden="true">
+    <div class="wrap bed-inner">
+      <div class="tag plant-in" data-light="low">
+        <svg viewBox="0 0 200 200"><use href="#pot" x="60" y="130" width="80" height="47"/><g fill="#2f7a45"><use href="#leaf" x="97" y="20" width="26" height="110" transform="rotate(-6 100 140)"/><use href="#leaf" x="80" y="40" width="26" height="100" transform="rotate(-24 100 140)"/><use href="#leaf" x="94" y="40" width="26" height="100" transform="rotate(20 100 140)" fill="#245f37"/></g></svg>
+        <h3>Snake plant</h3><div class="latin">Dracaena trifasciata</div>
+      </div>
+      <div class="tag plant-in" data-light="bright">
+        <svg viewBox="0 0 200 200"><use href="#pot" x="55" y="130" width="90" height="53"/><g fill="#3f8a4f"><use href="#heart" x="38" y="20" width="70" height="70" transform="rotate(-20 100 140)"/><use href="#heart" x="92" y="10" width="76" height="76" transform="rotate(16 100 140)" fill="#2f7a45"/><use href="#heart" x="64" y="40" width="70" height="70" fill="#4e9d5e"/></g></svg>
+        <h3>Monstera</h3><div class="latin">Monstera deliciosa</div>
+      </div>
+      <div class="tag plant-in" data-light="sun">
+        <svg viewBox="0 0 200 200"><use href="#pot" x="60" y="140" width="80" height="47"/><g fill="#6aa86a"><use href="#leaf" x="85" y="60" width="16" height="85" transform="rotate(-50 100 150)"/><use href="#leaf" x="92" y="40" width="16" height="105" transform="rotate(-25 100 150)"/><use href="#leaf" x="92" y="30" width="16" height="110"/><use href="#leaf" x="92" y="40" width="16" height="105" transform="rotate(25 100 150)"/><use href="#leaf" x="99" y="60" width="16" height="85" transform="rotate(50 100 150)"/></g></svg>
+        <h3>Aloe vera</h3><div class="latin">Aloe barbadensis</div>
+      </div>
+      <div class="tag plant-in" data-light="low">
+        <svg viewBox="0 0 200 200"><use href="#pot" x="60" y="130" width="80" height="47"/><g fill="#2a6b3f"><use href="#oval" x="70" y="30" width="30" height="95" transform="rotate(-30 100 140)"/><use href="#oval" x="85" y="20" width="30" height="100"/><use href="#oval" x="100" y="30" width="30" height="95" transform="rotate(30 100 140)"/></g></svg>
+        <h3>ZZ plant</h3><div class="latin">Zamioculcas zamiifolia</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="shop" aria-labelledby="shop-h">
+      <div class="head">
+        <h2 id="shop-h">Pick a plant by the light you have.</h2>
+        <div class="filters" role="group" aria-label="Filter by light">
+          <button type="button" aria-pressed="true" data-f="all">All plants</button>
+          <button type="button" aria-pressed="false" data-f="low" style="--c:var(--tag-low)"><span class="sw"></span>Low light</button>
+          <button type="button" aria-pressed="false" data-f="bright" style="--c:var(--tag-bright)"><span class="sw"></span>Bright, indirect</button>
+          <button type="button" aria-pressed="false" data-f="sun" style="--c:var(--tag-sun)"><span class="sw"></span>Full sun</button>
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+      <p class="legend">Like the stakes in our greenhouse, each tag is colour-coded: <b>lilac</b> for low light, <b>white</b> for bright indirect light, <b>yellow</b> for a sunny window.</p>
+    </section>
+  </div>
+
+  <div class="promise" id="promise">
+    <div class="wrap promise-grid">
+      <h2>If it doesn't arrive healthy, we send another.</h2>
+      <ol>
+        <li><div><h3>We pack it upright</h3><p>Each plant is staked, wrapped, and boxed standing up, so leaves arrive unbent.</p></div></li>
+        <li><div><h3>You unbox it the same week</h3><p>Ships Monday to Wednesday, so your plant never sits in a depot over a weekend.</p></div></li>
+        <li><div><h3>We replace it within 30 days</h3><p>Send us a photo if it's damaged or struggling. We ship a new one, free.</p></div></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="light" aria-labelledby="light-h">
+      <div class="head"><h2 id="light-h">Not sure how much light you have?</h2></div>
+      <div class="guide">
+        <div><h3>Low light</h3><p>A north-facing window, or a room where you can read at midday without a lamp. Snake plants and ZZ plants cope well here.</p></div>
+        <div><h3>Bright, indirect</h3><p>Within two metres of an east or south window, where the sun doesn't hit the leaves directly. Most tropical plants prefer this.</p></div>
+        <div><h3>Full sun</h3><p>A south or west windowsill with several hours of direct sun. Aloe and jade plants thrive here.</p></div>
+      </div>
+    </section>
+
+    <form class="news" id="news">
+      <h2>Get a care reminder when each plant needs you.</h2>
+      <div>
+        <label for="email" style="display:block;margin-bottom:8px">Email address</label>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <input id="email" type="email" required placeholder="you@example.com" autocomplete="email">
+          <button type="submit">Send me reminders</button>
+        </div>
+        <p class="ok" id="ok" role="status" style="margin-top:10px"></p>
+      </div>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="logo" href="#top"><i></i>Stakeout</a>
+    <ul>
+      <li><a href="#shop">Shop plants</a></li>
+      <li><a href="#promise">Shipping and returns</a></li>
+      <li><a href="#light">Light guide</a></li>
+      <li><a href="mailto:hello@stakeout.example">hello@stakeout.example</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+const leaves = {
+  monstera:'<g fill="#3f8a4f"><use href="#heart" x="38" y="20" width="70" height="70" transform="rotate(-20 100 140)"/><use href="#heart" x="92" y="10" width="76" height="76" transform="rotate(16 100 140)" fill="#2f7a45"/><use href="#heart" x="64" y="40" width="70" height="70" fill="#4e9d5e"/></g>',
+  snake:'<g fill="#2f7a45"><use href="#leaf" x="97" y="20" width="26" height="110" transform="rotate(-6 100 140)"/><use href="#leaf" x="80" y="40" width="26" height="100" transform="rotate(-24 100 140)"/><use href="#leaf" x="94" y="40" width="26" height="100" transform="rotate(20 100 140)" fill="#245f37"/></g>',
+  zz:'<g fill="#2a6b3f"><use href="#oval" x="70" y="30" width="30" height="95" transform="rotate(-30 100 140)"/><use href="#oval" x="85" y="20" width="30" height="100"/><use href="#oval" x="100" y="30" width="30" height="95" transform="rotate(30 100 140)"/></g>',
+  aloe:'<g fill="#6aa86a"><use href="#leaf" x="85" y="60" width="16" height="85" transform="rotate(-50 100 150)"/><use href="#leaf" x="92" y="40" width="16" height="105" transform="rotate(-25 100 150)"/><use href="#leaf" x="92" y="30" width="16" height="110"/><use href="#leaf" x="92" y="40" width="16" height="105" transform="rotate(25 100 150)"/><use href="#leaf" x="99" y="60" width="16" height="85" transform="rotate(50 100 150)"/></g>',
+  rubber:'<g fill="#1f5a34"><use href="#oval" x="60" y="40" width="44" height="70" transform="rotate(-28 100 140)"/><use href="#oval" x="78" y="10" width="44" height="90"/><use href="#oval" x="96" y="40" width="44" height="70" transform="rotate(28 100 140)" fill="#2a6b3f"/></g>',
+  pothos:'<g fill="#5fae62"><use href="#heart" x="55" y="50" width="34" height="34" transform="rotate(-40 100 140)"/><use href="#heart" x="85" y="30" width="38" height="38"/><use href="#heart" x="112" y="55" width="34" height="34" transform="rotate(40 100 140)" fill="#3f8a4f"/><use href="#heart" x="35" y="120" width="30" height="30" transform="rotate(-10 50 135)" fill="#3f8a4f"/><use href="#heart" x="138" y="125" width="30" height="30" transform="rotate(10 150 135)"/></g>'
+};
+const plants = [
+  {n:'Snake plant',l:'Dracaena trifasciata',light:'low',h:'60 cm',p:34,k:'snake',t:'Water every 2–3 weeks'},
+  {n:'ZZ plant',l:'Zamioculcas zamiifolia',light:'low',h:'45 cm',p:38,k:'zz',t:'Water every 3 weeks'},
+  {n:'Pothos',l:'Epipremnum aureum',light:'low',h:'30 cm, trailing',p:24,k:'pothos',t:'Water weekly'},
+  {n:'Monstera',l:'Monstera deliciosa',light:'bright',h:'55 cm',p:58,k:'monstera',t:'Water every 10 days'},
+  {n:'Rubber plant',l:'Ficus elastica',light:'bright',h:'70 cm',p:49,k:'rubber',t:'Water every 10 days'},
+  {n:'Aloe vera',l:'Aloe barbadensis',light:'sun',h:'25 cm',p:19,k:'aloe',t:'Water every 3 weeks'}
+];
+const lightName={low:'Low light',bright:'Bright, indirect light',sun:'Full sun'};
+const grid=document.getElementById('grid');
+grid.innerHTML=plants.map((p,i)=>`
+ <article class="tag" data-light="${p.light}">
+  <svg viewBox="0 0 200 200" role="img" aria-label="Illustration of a ${p.n}"><use href="#pot" x="55" y="${p.k==='aloe'||p.k==='pothos'?140:130}" width="90" height="53"/>${leaves[p.k]}</svg>
+  <h3>${p.n}</h3><div class="latin">${p.l}</div>
+  <div class="meta">${lightName[p.light]}<br>${p.h}<br>${p.t}</div>
+  <div class="price">$${p.p}</div>
+  <button class="add" type="button" data-i="${i}">Add to basket</button>
+ </article>`).join('');
+
+let n=0;const count=document.getElementById('count');
+grid.addEventListener('click',e=>{
+  const b=e.target.closest('.add');if(!b)return;
+  count.textContent=++n;b.textContent='Added';b.classList.add('done');
+  setTimeout(()=>{b.textContent='Add another';b.classList.remove('done')},1400);
+});
+document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  grid.querySelectorAll('.tag').forEach(t=>t.hidden=b.dataset.f!=='all'&&t.dataset.light!==b.dataset.f);
+}));
+document.getElementById('news').addEventListener('submit',e=>{
+  e.preventDefault();
+  document.getElementById('ok').textContent='Thanks. We\'ll email you when your plants need water.';
+  e.target.reset();
+});
+</script>
+</body>
+</html>

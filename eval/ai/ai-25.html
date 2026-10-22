@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cairn Wallet</title>
+<meta name="description" content="Cairn is a self-custody crypto wallet. Your recovery phrase, your keys, no account.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --stone: #D8DDDC;
+    --stone-deep: #C6CDCC;
+    --ink: #17222E;
+    --ink-soft: #46535F;
+    --steel-a: #AEB6BA;
+    --steel-b: #E6E9EA;
+    --cobalt: #2C44C4;
+    --cobalt-deep: #1F3299;
+    --rust: #9E3F26;
+    --paper: #EEF1F0;
+
+    --sans: "Schibsted Grotesk", system-ui, sans-serif;
+    --mono: "Martian Mono", ui-monospace, monospace;
+
+    /* Modular scale, ratio 1.25 from 17px */
+    --t-sm: 0.875rem;
+    --t-base: 1.0625rem;
+    --t-md: 1.33rem;
+    --t-lg: 1.66rem;
+    --t-xl: 2.6rem;
+    --t-2xl: clamp(2.6rem, 6vw, 4.75rem);
+
+    --gutter: clamp(16px, 4vw, 56px);
+    --max: 1180px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--stone);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: var(--t-base);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; border-radius: 2px; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ---------- Header ---------- */
+  .site-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 22px; padding-bottom: 22px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 1.2rem; letter-spacing: -0.02em; text-decoration: none; }
+  .brand svg { width: 26px; height: 26px; }
+  .site-nav { display: flex; gap: 28px; align-items: center; font-size: var(--t-sm); font-weight: 500; }
+  .site-nav a { text-decoration: none; color: var(--ink-soft); }
+  .site-nav a:hover { color: var(--ink); }
+  .site-nav .nav-cta { color: var(--ink); border-bottom: 2px solid var(--ink); padding-bottom: 1px; }
+  @media (max-width: 720px) { .site-nav a:not(.nav-cta) { display: none; } }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+    padding-top: clamp(32px, 7vw, 96px);
+    padding-bottom: clamp(64px, 9vw, 128px);
+  }
+  .hero h1 {
+    font-size: var(--t-2xl);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    font-weight: 900;
+    margin: 0 0 28px;
+    max-width: 11ch;
+  }
+  .hero .lede { font-size: var(--t-md); line-height: 1.45; color: var(--ink-soft); max-width: 34ch; margin: 0 0 36px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    font: 700 var(--t-base)/1 var(--sans);
+    padding: 17px 26px; border-radius: 6px; text-decoration: none; cursor: pointer;
+    border: 0;
+  }
+  .btn-primary { background: var(--cobalt); color: #fff; box-shadow: 0 2px 0 var(--cobalt-deep); }
+  .btn-primary:hover { background: var(--cobalt-deep); }
+  .btn-primary:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--cobalt-deep); }
+  .link-quiet { font-weight: 500; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .hero .fine { margin-top: 22px; font-size: var(--t-sm); color: var(--ink-soft); }
+
+  /* ---------- The plate ---------- */
+  .plate-stage { position: relative; }
+  .plate {
+    position: relative;
+    border-radius: 14px;
+    padding: clamp(26px, 4vw, 42px) clamp(20px, 3.5vw, 40px) clamp(22px, 3vw, 32px);
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.16) 0 1px, rgba(0,0,0,.025) 1px 3px),
+      linear-gradient(160deg, var(--steel-b) 0%, var(--steel-a) 55%, #C9CFD2 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.8),
+      inset 0 -2px 0 rgba(0,0,0,.12),
+      0 1px 0 #9aa3a8,
+      0 30px 50px -28px rgba(23,34,46,.55);
+    transform: rotate(-1.2deg);
+  }
+  .screw {
+    position: absolute; width: 14px; height: 14px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #f4f6f7, #8b959b 70%);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
+  }
+  .screw::after { content: ""; position: absolute; left: 3px; right: 3px; top: 6px; height: 2px; background: rgba(0,0,0,.35); transform: rotate(35deg); }
+  .screw.tl { top: 12px; left: 12px; } .screw.tr { top: 12px; right: 12px; }
+  .screw.bl { bottom: 12px; left: 12px; } .screw.br { bottom: 12px; right: 12px; }
+
+  .plate-head { display: flex; justify-content: space-between; align-items: baseline; margin: 0 8px 18px; font-family: var(--mono); font-size: 0.68rem; color: #5d676d; text-shadow: 0 1px 0 rgba(255,255,255,.6); }
+  .words {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px 10px;
+    counter-reset: w;
+  }
+  .words li {
+    display: flex; align-items: baseline; gap: 8px;
+    padding: 9px 8px;
+    border-bottom: 1px solid rgba(0,0,0,.08);
+    box-shadow: 0 1px 0 rgba(255,255,255,.45);
+    min-width: 0;
+  }
+  .words .n { font-family: var(--mono); font-size: 0.62rem; color: #6c767c; width: 1.6em; flex: none; text-shadow: 0 1px 0 rgba(255,255,255,.6); }
+  .words .w {
+    font-family: var(--mono); font-weight: 600;
+    font-size: clamp(0.78rem, 1.5vw, 1.02rem);
+    letter-spacing: 0.04em;
+    color: #3d464c;
+    /* stamped: light catches the lower lip, shadow sits on the upper edge */
+    text-shadow: 0 1px 0 rgba(255,255,255,.75), 0 -1px 0 rgba(0,0,0,.4);
+    white-space: nowrap; overflow: hidden; text-overflow: clip;
+  }
+  .words .w.is-blank { opacity: 0; }
+  .words .w.strike { animation: strike 260ms cubic-bezier(.2,.9,.3,1.3); }
+  @keyframes strike {
+    0% { opacity: 0; transform: scale(1.35); filter: blur(2px); }
+    60% { opacity: 1; transform: scale(.96); filter: blur(0); }
+    100% { transform: scale(1); }
+  }
+  .plate.shake { animation: thud 120ms ease-out; }
+  @keyframes thud { 0% { transform: rotate(-1.2deg) translateY(0); } 40% { transform: rotate(-1.2deg) translateY(2px); } 100% { transform: rotate(-1.2deg) translateY(0); } }
+
+  .plate-note {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 20px;
+    margin-top: 26px; padding-left: 6px;
+    font-size: var(--t-sm); color: var(--ink-soft);
+  }
+  .plate-note p { margin: 0; max-width: 40ch; }
+  .plate-note strong { color: var(--rust); font-weight: 700; }
+  .btn-stamp {
+    font: 600 var(--t-sm)/1 var(--sans); color: var(--ink);
+    background: var(--paper); border: 1px solid #aab3b6; border-radius: 6px;
+    padding: 11px 16px; cursor: pointer; white-space: nowrap;
+  }
+  .btn-stamp:hover { background: #fff; }
+  .btn-stamp[disabled] { opacity: .55; cursor: progress; }
+
+  /* ---------- Sections ---------- */
+  .band { padding-top: clamp(64px, 9vw, 120px); padding-bottom: clamp(64px, 9vw, 120px); }
+  .band-ink { background: var(--ink); color: var(--stone); }
+  .band-paper { background: var(--paper); }
+  .band h2 {
+    font-size: var(--t-xl); line-height: 1.05; letter-spacing: -0.03em; font-weight: 900;
+    margin: 0 0 20px; max-width: 18ch;
+  }
+  .band .intro { font-size: var(--t-md); line-height: 1.45; max-width: 46ch; margin: 0; }
+  .band-ink .intro { color: #AFBAC0; }
+
+  /* Can / can't ledger */
+  .ledger { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 56px; border-top: 2px solid #3A4754; }
+  .ledger > div { padding: 28px 0 0; }
+  .ledger > div + div { padding-left: clamp(20px, 4vw, 56px); border-left: 1px solid #3A4754; }
+  .ledger > div:first-child { padding-right: clamp(20px, 4vw, 56px); }
+  .ledger h3 { font-size: var(--t-lg); letter-spacing: -0.02em; margin: 0 0 18px; font-weight: 700; }
+  .ledger h3.cant { color: #E7A48F; }
+  .ledger ul { list-style: none; margin: 0; padding: 0; }
+  .ledger li { padding: 14px 0; border-bottom: 1px solid #2B3845; max-width: 40ch; }
+  .ledger li b { display: block; color: #fff; font-weight: 700; }
+  .ledger li span { color: #AFBAC0; font-size: 0.97rem; }
+
+  /* Setup steps — a real sequence */
+  .steps { list-style: none; margin: 56px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: clamp(24px, 4vw, 48px); counter-reset: step; }
+  .steps li { counter-increment: step; position: relative; padding-top: 72px; }
+  .steps li::before {
+    content: counter(step);
+    position: absolute; top: 0; left: 0;
+    font-weight: 900; font-size: 3.4rem; line-height: 1; letter-spacing: -0.04em;
+    color: transparent; -webkit-text-stroke: 1.5px var(--ink);
+  }
+  .steps li::after { content: ""; position: absolute; top: 28px; left: 52px; right: -12px; height: 1.5px; background: var(--ink); opacity: .2; }
+  .steps li:last-child::after { display: none; }
+  .steps h3 { font-size: var(--t-md); margin: 0 0 8px; letter-spacing: -0.01em; }
+  .steps p { margin: 0; color: var(--ink-soft); max-width: 34ch; }
+
+  /* Security specifics */
+  .specs { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .spec-list { margin: 0; }
+  .spec-list div { display: grid; grid-template-columns: 11rem 1fr; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--stone-deep); }
+  .spec-list div:first-child { border-top: 2px solid var(--ink); }
+  .spec-list dt { font-weight: 700; }
+  .spec-list dd { margin: 0; color: var(--ink-soft); max-width: 46ch; }
+  .spec-list code { font-family: var(--mono); font-size: 0.8em; background: var(--stone); padding: 2px 6px; border-radius: 3px; color: var(--ink); }
+
+  .networks { margin-top: 36px; font-size: var(--t-sm); color: var(--ink-soft); max-width: 44ch; }
+  .networks strong { color: var(--ink); }
+
+  /* Download */
+  .download { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 40px; align-items: end; }
+  .platforms { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .platform {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 18px; border-radius: 6px; text-decoration: none; font-weight: 600;
+    background: var(--paper); border: 1px solid #aab3b6;
+  }
+  .platform:hover { background: #fff; }
+  .platform small { font-weight: 400; color: var(--ink-soft); font-size: 0.8rem; }
+  .verify { font-size: var(--t-sm); color: var(--ink-soft); max-width: 34ch; margin: 0; }
+
+  .site-foot { padding-top: 40px; padding-bottom: 48px; font-size: var(--t-sm); color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; border-top: 1px solid var(--stone-deep); }
+  .site-foot nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .site-foot a { text-decoration: none; }
+  .site-foot a:hover { text-decoration: underline; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 920px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero h1 { max-width: 13ch; }
+    .specs { grid-template-columns: 1fr; }
+    .download { grid-template-columns: 1fr; align-items: start; }
+  }
+  @media (max-width: 720px) {
+    .ledger { grid-template-columns: 1fr; }
+    .ledger > div + div { padding-left: 0; border-left: 0; margin-top: 32px; }
+    .ledger > div:first-child { padding-right: 0; }
+    .steps { grid-template-columns: 1fr; }
+    .steps li::after { display: none; }
+    .spec-list div { grid-template-columns: 1fr; gap: 4px; }
+  }
+  @media (max-width: 480px) {
+    .words { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .plate { transform: none; }
+    .plate.shake { animation: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .words .w.strike, .plate.shake { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap site-head">
+  <a class="brand" href="#" aria-label="Cairn home">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="26" rx="12" ry="4.2" fill="#17222E"/><ellipse cx="15" cy="18.5" rx="8.5" ry="3.6" fill="#46535F"/><ellipse cx="16.5" cy="12" rx="5.5" ry="2.9" fill="#17222E"/><ellipse cx="15.5" cy="6.5" rx="3" ry="2" fill="#2C44C4"/></svg>
+    Cairn
+  </a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="#ownership">How custody works</a>
+    <a href="#setup">Setup</a>
+    <a href="#security">Security</a>
+    <a class="nav-cta" href="#download">Download</a>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <div>
+      <h1 id="hero-title">Twelve words. Only you hold them.</h1>
+      <p class="lede">Cairn is a wallet where your recovery phrase is the only key. There's no account, no email and no company that can freeze your coins.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#download">Download Cairn</a>
+        <a class="link-quiet" href="#ownership">What self-custody means for you</a>
+      </div>
+      <p class="fine">Free and open source. Runs on macOS, Windows, Linux, iOS and Android.</p>
+    </div>
+
+    <div class="plate-stage">
+      <div class="plate" id="plate">
+        <span class="screw tl"></span><span class="screw tr"></span><span class="screw bl"></span><span class="screw br"></span>
+        <div class="plate-head" aria-hidden="true"><span>RECOVERY</span><span>EXAMPLE ONLY</span></div>
+        <ol class="words" id="words" aria-label="Example recovery phrase"></ol>
+      </div>
+      <div class="plate-note">
+        <p><strong>This phrase is an example.</strong> Never type your real one into a website, including this one.</p>
+        <button class="btn-stamp" id="restamp" type="button">Stamp a new example</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-ink" id="ownership" aria-labelledby="own-title">
+    <div class="wrap">
+      <h2 id="own-title">You're the bank now. Here's what that means.</h2>
+      <p class="intro">Self-custody moves the responsibility to you. We'd rather you know exactly where the lines are before you move a single coin.</p>
+      <div class="ledger">
+        <div>
+          <h3>Cairn can</h3>
+          <ul>
+            <li><b>Sign transactions on your device</b><span>Your private keys are created and stored locally, encrypted with your passcode.</span></li>
+            <li><b>Warn you before you send</b><span>Cairn flags new addresses, unusual fees and token approvals that can drain a wallet.</span></li>
+            <li><b>Work with a hardware wallet</b><span>Pair a Ledger, Trezor or Keystone so keys never touch your phone at all.</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="cant">Cairn can't</h3>
+          <ul>
+            <li><b>Reset your recovery phrase</b><span>If you lose the twelve words and your device, nobody can restore your funds. Not us, not support.</span></li>
+            <li><b>See your balance or history</b><span>We don't run accounts, so there's nothing on our side to look at, sell or hand over.</span></li>
+            <li><b>Reverse a transaction</b><span>Once a transfer is confirmed on the network, it's final. Check the address before you send.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="setup" aria-labelledby="setup-title">
+    <div class="wrap">
+      <h2 id="setup-title">Set up in about four minutes</h2>
+      <p class="intro">Most of that time is spent writing down your phrase, and that part is worth doing slowly.</p>
+      <ol class="steps">
+        <li>
+          <h3>Write down your phrase</h3>
+          <p>Cairn shows twelve words once. Copy them onto paper or steel, in order, and store them somewhere only you can reach.</p>
+        </li>
+        <li>
+          <h3>Confirm three of the words</h3>
+          <p>Cairn asks for three words at random to check your copy is right. Screenshots and clipboard copying are blocked on this screen.</p>
+        </li>
+        <li>
+          <h3>Receive your first coins</h3>
+          <p>Share your address or QR code. Start with a small amount, then send it back to yourself to prove the round trip works.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band band-paper" id="security" aria-labelledby="sec-title">
+    <div class="wrap specs">
+      <div>
+        <h2 id="sec-title">Don't trust us. Check.</h2>
+        <p class="intro">Every claim here can be verified without asking our permission.</p>
+        <p class="networks"><strong>Networks:</strong> Bitcoin (including Taproot and Lightning), Ethereum, Base, Arbitrum, Optimism, Polygon and Solana. Tokens on those networks appear automatically.</p>
+      </div>
+      <dl class="spec-list">
+        <div><dt>Open source</dt><dd>The full app is on GitHub under the MIT licence. Every release is tagged and signed.</dd></div>
+        <div><dt>Reproducible builds</dt><dd>Build the app yourself and compare its hash to the one in the store. Run <code>make verify</code> to check.</dd></div>
+        <div><dt>Independent audits</dt><dd>Audited twice in 2026. Both reports are published unedited, including the findings we had to fix.</dd></div>
+        <div><dt>No account</dt><dd>No email, phone number or ID. Cairn has no server that knows who you are.</dd></div>
+        <div><dt>Your own node</dt><dd>Point Cairn at your own Bitcoin or Ethereum node so balance lookups never leave your network.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="band" id="download" aria-labelledby="dl-title">
+    <div class="wrap download">
+      <div>
+        <h2 id="dl-title">Download Cairn</h2>
+        <p class="intro">Free on every platform. No sign-up before or after.</p>
+        <div class="platforms">
+          <a class="platform" href="#">iPhone <small>iOS 16+</small></a>
+          <a class="platform" href="#">Android <small>9+</small></a>
+          <a class="platform" href="#">macOS <small>Apple silicon &amp; Intel</small></a>
+          <a class="platform" href="#">Windows <small>10+</small></a>
+          <a class="platform" href="#">Linux <small>AppImage, .deb</small></a>
+        </div>
+      </div>
+      <p class="verify">Only download Cairn from this page or the official app stores. Fake wallet apps are the most common way people lose their coins.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap site-foot">
+  <span>Cairn is free software. We never ask for your recovery phrase.</span>
+  <nav aria-label="Footer">
+    <a href="#">Source code</a>
+    <a href="#">Audit reports</a>
+    <a href="#">Recovery guide</a>
+    <a href="#">Report a vulnerability</a>
+  </nav>
+</footer>
+
+<script>
+  // Demo-only word pool. Not a real wordlist and not random enough for real keys.
+  const POOL = ["granite","harbor","lantern","meadow","orbit","pepper","quarry","ripple","saddle","timber","velvet","willow","anchor","basket","cobalt","drift","ember","fossil","glacier","hollow","island","juniper","kettle","lichen","marble","nectar","oyster","pebble","quiver","raven","summit","thistle","umber","valley","walnut","yonder","zephyr","ridge","cinder","heron"];
+  const list = document.getElementById("words");
+  const plate = document.getElementById("plate");
+  const btn = document.getElementById("restamp");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  for (let i = 0; i < 12; i++) {
+    const li = document.createElement("li");
+    li.innerHTML = `<span class="n">${String(i + 1).padStart(2, "0")}</span><span class="w is-blank">&nbsp;</span>`;
+    list.appendChild(li);
+  }
+  const slots = [...list.querySelectorAll(".w")];
+
+  function pick() {
+    const p = POOL.slice();
+    for (let i = p.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [p[i], p[j]] = [p[j], p[i]]; }
+    return p.slice(0, 12);
+  }
+
+  function stamp() {
+    const words = pick();
+    if (reduce) { slots.forEach((s, i) => { s.textContent = words[i]; s.classList.remove("is-blank"); }); return; }
+    btn.disabled = true;
+    slots.forEach(s => { s.classList.add("is-blank"); s.classList.remove("strike"); });
+    words.forEach((w, i) => {
+      setTimeout(() => {
+        const s = slots[i];
+        s.textContent = w;
+        s.classList.remove("is-blank");
+        void s.offsetWidth;
+        s.classList.add("strike");
+        plate.classList.remove("shake"); void plate.offsetWidth; plate.classList.add("shake");
+        if (i === words.length - 1) btn.disabled = false;
+      }, 250 + i * 140);
+    });
+  }
+
+  btn.addEventListener("click", stamp);
+  stamp();
+</script>
+</body>
+</html>

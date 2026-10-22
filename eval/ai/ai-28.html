@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grit House Bouldering</title>
+<meta name="description" content="Grit House is a bouldering gym with 400+ problems, reset every week. Day passes, memberships, intro sessions and a community that shows up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --chalk: #f3efe6;
+    --chalk-2: #e9e3d6;
+    --ink: #1c1a17;
+    --ink-soft: #57524a;
+    --line: #d6cfbf;
+    --card: #fbf9f4;
+
+    /* hold-tape colors, also the grade circuit */
+    --c-yellow: #f2c230;
+    --c-green: #2f9e5b;
+    --c-blue: #2b6cd4;
+    --c-red: #e2452f;
+    --c-purple: #7a4bc2;
+    --c-black: #1c1a17;
+
+    --accent: var(--c-red);
+    --radius: 14px;
+    --wrap: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--chalk);
+    color: var(--ink);
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+
+  h1, h2, h3 {
+    font-stretch: 75%;
+    font-weight: 900;
+    line-height: .92;
+    letter-spacing: -.01em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  h2 { font-size: clamp(40px, 6vw, 76px); }
+  h3 { font-size: 26px; line-height: 1; }
+
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--ink-soft); margin-bottom: 18px; }
+  .eyebrow::before { content: ""; width: 22px; height: 8px; border-radius: 2px; background: var(--accent); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 24px;
+    border-radius: 999px;
+    border: 2px solid var(--ink);
+    font-weight: 700; font-size: 16px;
+    text-decoration: none;
+    transition: transform .15s ease, background .15s ease, color .15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--ink); color: var(--chalk); }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-ghost { background: transparent; }
+  .btn-ghost:hover { background: var(--ink); color: var(--chalk); }
+
+  /* ---------- nav ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--chalk) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-stretch: 75%; font-size: 24px; text-transform: uppercase; text-decoration: none; letter-spacing: .01em; }
+  .logo svg { width: 30px; height: 30px; }
+  .nav ul { display: flex; gap: 30px; list-style: none; margin: 0; padding: 0; }
+  .nav ul a { text-decoration: none; font-weight: 600; font-size: 15px; }
+  .nav ul a:hover { color: var(--accent); }
+  .nav .btn { padding: 10px 18px; font-size: 14px; }
+  @media (max-width: 860px) { .nav ul { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; overflow: hidden; padding: 80px 0 0; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: end; }
+  .hero h1 { font-size: clamp(64px, 11vw, 168px); }
+  .hero h1 .tape {
+    display: inline-block; position: relative; z-index: 0;
+  }
+  .hero h1 .tape::after {
+    content: ""; position: absolute; z-index: -1;
+    left: -2%; right: -2%; bottom: 8%; height: 28%;
+    background: var(--c-yellow); transform: rotate(-1.5deg);
+  }
+  .hero p.lede { font-size: 20px; max-width: 520px; margin: 28px 0 34px; color: var(--ink-soft); }
+  .hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .open-now { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; color: var(--ink-soft); }
+  .open-now .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c-green); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c-green) 25%, transparent); }
+  .open-now.closed .dot { background: var(--c-red); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c-red) 25%, transparent); }
+
+  /* wall panel with holds */
+  .wall {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background:
+      radial-gradient(circle, #c9c0ad 1.6px, transparent 2px) 0 0 / 34px 34px,
+      linear-gradient(160deg, #ddd5c4, #cfc6b2);
+    border-radius: 22px 22px 0 0;
+    transform: perspective(900px) rotateX(6deg);
+    transform-origin: bottom;
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.05);
+  }
+  .wall .hold { position: absolute; width: var(--s, 60px); height: var(--s, 60px); color: var(--c); transform: rotate(var(--r, 0deg)); transition: transform .3s cubic-bezier(.3,1.6,.5,1); cursor: grab; filter: drop-shadow(0 6px 0 rgba(0,0,0,.14)); }
+  .wall .hold:hover { transform: rotate(calc(var(--r, 0deg) + 14deg)) scale(1.12); }
+  .wall .tag {
+    position: absolute; padding: 4px 8px; border-radius: 4px;
+    background: var(--ink); color: var(--chalk);
+  }
+
+  /* ---------- marquee ---------- */
+  .marquee { background: var(--ink); color: var(--chalk); overflow: hidden; padding: 18px 0; }
+  .marquee-track { display: flex; width: max-content; animation: scroll 38s linear infinite; }
+  .marquee span { font-weight: 900; font-stretch: 75%; text-transform: uppercase; font-size: 30px; padding: 0 22px; display: flex; align-items: center; gap: 44px; white-space: nowrap; }
+  .marquee span::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--c-yellow); }
+  .marquee span:nth-child(3n+2)::after { background: var(--c-red); }
+  .marquee span:nth-child(3n)::after { background: var(--c-blue); }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+
+  section { padding: 110px 0; }
+  .section-head { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 56px; flex-wrap: wrap; }
+  .section-head p { max-width: 420px; color: var(--ink-soft); margin: 0; }
+
+  /* ---------- stats ---------- */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .stat { padding: 34px 24px; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: 0; }
+  .stat b { display: block; font-size: clamp(48px, 6vw, 80px); font-weight: 900; font-stretch: 70%; line-height: 1; }
+  .stat span { color: var(--ink-soft); }
+  @media (max-width: 760px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat:nth-child(2) { border-right: 0; }
+    .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  }
+
+  /* ---------- walls ---------- */
+  .areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .area {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 28px; display: flex; flex-direction: column; gap: 14px; min-height: 340px;
+    position: relative; overflow: hidden;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .area:hover { transform: translateY(-4px); box-shadow: 0 18px 0 -8px var(--area-c); }
+  .area .angle { width: 100%; height: 120px; margin-bottom: 8px; }
+  .area p { color: var(--ink-soft); margin: 0; }
+  .area .meta { margin-top: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; font-size: 12px; }
+  @media (max-width: 900px) { .areas { grid-template-columns: 1fr; } .area { min-height: 0; } }
+
+  /* ---------- grades ---------- */
+  .grades-band { background: var(--chalk-2); }
+  .circuit { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; border-radius: var(--radius); overflow: hidden; }
+  .circuit button {
+    all: unset; cursor: pointer;
+    background: var(--g); color: #fff;
+    padding: 26px 18px 22px; min-height: 180px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: flex .3s ease, filter .2s;
+    position: relative;
+  }
+  .circuit button[data-light] { color: var(--ink); }
+  .circuit button:hover { filter: brightness(1.06); }
+  .circuit button:focus-visible { outline: 3px solid var(--ink); outline-offset: -6px; }
+  .circuit button b { font-size: 46px; font-weight: 900; font-stretch: 70%; line-height: 1; }
+  .circuit button[aria-pressed="true"]::after {
+    content: ""; position: absolute; left: 50%; bottom: -1px; transform: translateX(-50%);
+    border: 12px solid transparent; border-bottom-color: var(--card);
+  }
+  .grade-detail {
+    background: var(--card); border-radius: 0 0 var(--radius) var(--radius);
+    padding: 30px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; border: 1px solid var(--line); border-top: 0;
+  }
+  .grade-detail h3 { font-size: 34px; }
+  .grade-detail p { margin: 8px 0 0; color: var(--ink-soft); }
+  .bar { height: 10px; border-radius: 99px; background: var(--chalk-2); overflow: hidden; margin-top: 12px; }
+  .bar i { display: block; height: 100%; background: var(--ink); transition: width .4s ease; }
+  @media (max-width: 760px) {
+    .circuit { grid-template-columns: repeat(3, 1fr); }
+    .circuit button { min-height: 110px; }
+    .grade-detail { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- first visit ---------- */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; counter-reset: s; }
+  .step { border-top: 2px solid var(--ink); padding-top: 22px; }
+  .step::before { counter-increment: s; content: "0" counter(s); font-family: "JetBrains Mono", monospace; font-size: 13px; color: var(--accent); display: block; margin-bottom: 14px; }
+  .step h3 { font-size: 24px; margin-bottom: 10px; }
+  .step p { color: var(--ink-soft); margin: 0; font-size: 16px; }
+  @media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+
+  /* ---------- pricing ---------- */
+  .pricing { background: var(--ink); color: var(--chalk); }
+  .pricing .eyebrow, .pricing .section-head p { color: #b7b0a2; }
+  .toggle { display: inline-flex; background: #2b2824; border-radius: 999px; padding: 4px; }
+  .toggle button { all: unset; cursor: pointer; padding: 9px 18px; border-radius: 999px; font-weight: 600; font-size: 14px; color: #b7b0a2; }
+  .toggle button[aria-pressed="true"] { background: var(--chalk); color: var(--ink); }
+  .toggle button:focus-visible { outline: 2px solid var(--c-yellow); }
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .plan { border: 1px solid #3a3631; border-radius: var(--radius); padding: 32px; display: flex; flex-direction: column; }
+  .plan.featured { background: var(--c-yellow); color: var(--ink); border-color: var(--c-yellow); }
+  .plan .price { font-size: 72px; font-weight: 900; font-stretch: 70%; line-height: 1; margin: 22px 0 4px; }
+  .plan .price sup { font-size: 28px; vertical-align: top; position: relative; top: 8px; margin-right: 2px; }
+  .plan .per { opacity: .7; font-size: 15px; }
+  .plan ul { list-style: none; padding: 0; margin: 26px 0 30px; display: grid; gap: 10px; font-size: 16px; }
+  .plan li { display: flex; gap: 10px; }
+  .plan li::before { content: ""; flex: none; width: 8px; height: 8px; margin-top: 9px; border-radius: 50%; background: currentColor; opacity: .6; }
+  .plan .btn { margin-top: auto; justify-content: center; border-color: currentColor; }
+  .plan:not(.featured) .btn { color: var(--chalk); }
+  .plan:not(.featured) .btn:hover { background: var(--chalk); color: var(--ink); }
+  .plan.featured .btn { background: var(--ink); color: var(--chalk); border-color: var(--ink); }
+  .badge { align-self: flex-start; background: var(--ink); color: var(--c-yellow); padding: 4px 10px; border-radius: 4px; margin-bottom: 14px; }
+  .fineprint { margin-top: 26px; color: #8f887b; font-size: 14px; }
+  @media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
+
+  /* ---------- schedule ---------- */
+  .sched-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 60px; }
+  .hours { width: 100%; border-collapse: collapse; }
+  .hours td { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .hours td:last-child { text-align: right; font-weight: 700; }
+  .hours tr.today td { color: var(--accent); }
+  .hours tr.today td:first-child::after { content: " · today"; font-family: "JetBrains Mono", monospace; font-size: 12px; }
+  .events { display: grid; gap: 14px; }
+  .event { display: grid; grid-template-columns: 84px 1fr auto; gap: 20px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 22px; }
+  .event .date { text-align: center; border-right: 1px solid var(--line); padding-right: 16px; }
+  .event .date b { display: block; font-size: 38px; font-weight: 900; font-stretch: 70%; line-height: 1; }
+  .event h3 { font-size: 22px; margin-bottom: 4px; }
+  .event p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+  .event .pill { padding: 6px 12px; border-radius: 999px; background: var(--pc, var(--chalk-2)); font-size: 12px; white-space: nowrap; }
+  @media (max-width: 900px) { .sched-grid { grid-template-columns: 1fr; gap: 50px; } }
+  @media (max-width: 560px) { .event { grid-template-columns: 64px 1fr; } .event .pill { grid-column: 2; justify-self: start; } }
+
+  /* ---------- FAQ ---------- */
+  .faq { max-width: 860px; }
+  details { border-bottom: 1px solid var(--line); }
+  summary { list-style: none; cursor: pointer; padding: 24px 0; display: flex; justify-content: space-between; gap: 20px; font-size: 21px; font-weight: 700; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: "JetBrains Mono", monospace; font-size: 24px; transition: transform .2s; color: var(--accent); }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { margin: 0 0 24px; color: var(--ink-soft); max-width: 680px; }
+
+  /* ---------- CTA / footer ---------- */
+  .cta { background: var(--accent); color: #fff; text-align: center; padding: 120px 0; position: relative; overflow: hidden; }
+  .cta h2 { font-size: clamp(56px, 10vw, 150px); }
+  .cta p { font-size: 20px; margin: 22px auto 36px; max-width: 520px; }
+  .cta .btn { background: #fff; color: var(--ink); border-color: #fff; }
+  .cta .btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .cta .float { position: absolute; width: 90px; height: auto; aspect-ratio: 1; color: rgba(255,255,255,.18); }
+
+  footer { background: var(--ink); color: #b7b0a2; padding: 70px 0 40px; font-size: 15px; }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; }
+  footer .logo { color: var(--chalk); margin-bottom: 14px; }
+  footer h4 { color: var(--chalk); margin: 0 0 14px; font-weight: 400; }
+  footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--c-yellow); }
+  .foot-bottom { margin-top: 60px; padding-top: 24px; border-top: 1px solid #3a3631; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+
+  @media (max-width: 900px) {
+    .hero { padding-top: 50px; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .wall { aspect-ratio: 16 / 10; }
+    section { padding: 80px 0; }
+  }
+  @media (max-width: 520px) { .wrap { padding: 0 16px; } }
+</style>
+</head>
+<body>
+
+<!-- reusable hold shapes -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="h-jug" viewBox="0 0 100 100"><path fill="currentColor" d="M14 52c-4-20 12-38 36-38s42 14 38 36c-3 16-12 30-36 32S17 70 14 52z"/><path fill="rgba(0,0,0,.18)" d="M22 56c10 10 46 12 60-2-2 14-14 24-32 24s-26-10-28-22z"/><circle cx="50" cy="42" r="7" fill="rgba(0,0,0,.35)"/></symbol>
+    <symbol id="h-crimp" viewBox="0 0 100 100"><path fill="currentColor" d="M6 50c4-12 24-18 46-18s40 4 42 14-10 22-44 22S2 62 6 50z"/><path fill="rgba(0,0,0,.18)" d="M8 54c14 6 70 8 84-4-2 10-16 18-44 18S10 64 8 54z"/><circle cx="50" cy="48" r="6" fill="rgba(0,0,0,.35)"/></symbol>
+    <symbol id="h-sloper" viewBox="0 0 100 100"><path fill="currentColor" d="M10 60C8 32 30 10 54 12s38 22 36 44-22 34-42 32S12 82 10 60z"/><ellipse cx="40" cy="36" rx="16" ry="9" fill="rgba(255,255,255,.22)"/><circle cx="54" cy="54" r="7" fill="rgba(0,0,0,.35)"/></symbol>
+    <symbol id="h-pinch" viewBox="0 0 100 100"><path fill="currentColor" d="M30 8c14-4 22 8 22 22s-4 22 6 34 4 30-14 30-22-16-20-34S16 12 30 8z"/><path fill="rgba(0,0,0,.18)" d="M50 30c0 16-4 22 6 34s4 28-12 30c10-8 10-22 2-32s2-20 4-32z"/><circle cx="36" cy="46" r="6" fill="rgba(0,0,0,.35)"/></symbol>
+    <symbol id="h-volume" viewBox="0 0 100 100"><path fill="currentColor" d="M50 6 94 40 78 92H22L6 40z"/><path fill="rgba(0,0,0,.14)" d="M50 6 94 40 50 56z"/><path fill="rgba(255,255,255,.14)" d="M50 6 6 40 50 56z"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="logo" aria-label="Grit House home">
+      <svg viewBox="0 0 100 100" style="color:var(--accent)"><use href="#h-jug"/></svg>
+      Grit House
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#walls">Walls</a></li>
+        <li><a href="#grades">Grades</a></li>
+        <li><a href="#first-visit">First visit</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+      </ul>
+    </nav>
+    <a href="#pricing" class="btn btn-primary">Book a session</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div style="padding-bottom: 70px">
+        <div class="eyebrow mono">Bouldering gym · Eastside Works</div>
+        <h1 id="hero-title">No ropes.<br>Just <span class="tape">problems.</span></h1>
+        <p class="lede">420 problems across three walls, a fresh set every week, and a crew that'll yell "allez" when you're two moves from the top. Shoes on, chalk up.</p>
+        <div class="ctas">
+          <a href="#first-visit" class="btn btn-primary">Plan your first visit →</a>
+          <a href="#pricing" class="btn btn-ghost">See passes</a>
+        </div>
+        <div class="open-now mono" id="openNow"><span class="dot"></span><span id="openText">Open today 7:00–23:00</span></div>
+      </div>
+
+      <div class="wall" aria-hidden="true">
+        <svg class="hold" style="--c:var(--c-red);--s:92px;--r:-12deg;left:12%;top:10%"><use href="#h-jug"/></svg>
+        <svg class="hold" style="--c:var(--c-blue);--s:70px;--r:20deg;left:58%;top:6%"><use href="#h-crimp"/></svg>
+        <svg class="hold" style="--c:var(--c-yellow);--s:120px;--r:4deg;left:44%;top:30%"><use href="#h-volume"/></svg>
+        <svg class="hold" style="--c:var(--c-green);--s:64px;--r:-30deg;left:18%;top:40%"><use href="#h-pinch"/></svg>
+        <svg class="hold" style="--c:var(--c-purple);--s:84px;--r:10deg;left:70%;top:46%"><use href="#h-sloper"/></svg>
+        <svg class="hold" style="--c:var(--c-red);--s:58px;--r:40deg;left:36%;top:62%"><use href="#h-crimp"/></svg>
+        <svg class="hold" style="--c:var(--c-black);--s:72px;--r:-8deg;left:8%;top:72%"><use href="#h-sloper"/></svg>
+        <svg class="hold" style="--c:var(--c-blue);--s:66px;--r:-18deg;left:62%;top:76%"><use href="#h-jug"/></svg>
+        <span class="tag mono" style="left:9%;top:5%">Top</span>
+        <span class="tag mono" style="left:58%;top:88%">Start ✋✋</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Fresh sets every Tuesday</span><span>Beginner intros daily</span><span>Kids club Saturdays</span><span>Open till 11pm</span><span>Board night Thursdays</span><span>Café + coworking loft</span>
+      <span>Fresh sets every Tuesday</span><span>Beginner intros daily</span><span>Kids club Saturdays</span><span>Open till 11pm</span><span>Board night Thursdays</span><span>Café + coworking loft</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section style="padding-bottom:0">
+    <div class="wrap">
+      <div class="stats">
+        <div class="stat"><b data-count="420">420</b><span>problems on the walls</span></div>
+        <div class="stat"><b data-count="1200" data-suffix="m²">1200m²</b><span>of climbable surface</span></div>
+        <div class="stat"><b data-count="4.5" data-suffix="m">4.5m</b><span>tallest wall, 40cm mats</span></div>
+        <div class="stat"><b data-count="7">7</b><span>days until the next reset</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WALLS -->
+  <section id="walls" aria-labelledby="walls-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow mono">The walls</div>
+          <h2 id="walls-title">Three walls.<br>Every angle.</h2>
+        </div>
+        <p>Each area is set by a rotating team of five setters, so you'll never climb the same style two weeks in a row.</p>
+      </div>
+      <div class="areas">
+        <article class="area" style="--area-c:var(--c-green)">
+          <svg class="angle" viewBox="0 0 300 120" aria-hidden="true"><path d="M20 110 L80 10" stroke="var(--ink)" stroke-width="4" fill="none"/><path d="M0 110H300" stroke="var(--line)" stroke-width="2"/><circle cx="62" cy="40" r="9" fill="var(--c-green)"/><circle cx="44" cy="70" r="7" fill="var(--c-green)"/><text x="110" y="70" font-family="JetBrains Mono" font-size="13" fill="var(--ink-soft)">SLAB · 75°</text></svg>
+          <h3>The Slab</h3>
+          <p>Balance, footwork, trust. Slow, technical problems where the hardest move is believing your feet will stick.</p>
+          <div class="meta"><span class="chip mono">Footwork</span><span class="chip mono">Beginner friendly</span></div>
+        </article>
+        <article class="area" style="--area-c:var(--c-blue)">
+          <svg class="angle" viewBox="0 0 300 120" aria-hidden="true"><path d="M30 110 L30 60 L70 10" stroke="var(--ink)" stroke-width="4" fill="none"/><path d="M0 110H300" stroke="var(--line)" stroke-width="2"/><circle cx="50" cy="36" r="9" fill="var(--c-blue)"/><circle cx="30" cy="80" r="7" fill="var(--c-blue)"/><text x="110" y="70" font-family="JetBrains Mono" font-size="13" fill="var(--ink-soft)">VERT → 20° OVERHANG</text></svg>
+          <h3>The Prow</h3>
+          <p>A freestanding boulder with arêtes, a roof lip, and compression problems. The social hub of the gym.</p>
+          <div class="meta"><span class="chip mono">All levels</span><span class="chip mono">Comps</span></div>
+        </article>
+        <article class="area" style="--area-c:var(--c-red)">
+          <svg class="angle" viewBox="0 0 300 120" aria-hidden="true"><path d="M20 110 L20 90 L110 14" stroke="var(--ink)" stroke-width="4" fill="none"/><path d="M0 110H300" stroke="var(--line)" stroke-width="2"/><circle cx="80" cy="38" r="9" fill="var(--c-red)"/><circle cx="48" cy="66" r="7" fill="var(--c-red)"/><text x="140" y="70" font-family="JetBrains Mono" font-size="13" fill="var(--ink-soft)">CAVE · 45°</text></svg>
+          <h3>The Cave</h3>
+          <p>Steep, powerful and unapologetic. Plus a 40° training board and a moonboard for the numbers-chasers.</p>
+          <div class="meta"><span class="chip mono">Power</span><span class="chip mono">Training boards</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRADES -->
+  <section id="grades" class="grades-band" aria-labelledby="grades-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow mono">Color circuits</div>
+          <h2 id="grades-title">Find your color.</h2>
+        </div>
+        <p>We grade by color, not numbers. Pick a circuit, flash what you can, and move up when the next one starts to feel possible.</p>
+      </div>
+
+      <div class="circuit" role="group" aria-label="Grade circuits">
+        <button style="--g:var(--c-yellow)" data-light data-i="0" aria-pressed="true"><span class="mono">Circuit 1</span><b>Yellow</b></button>
+        <button style="--g:var(--c-green)" data-i="1" aria-pressed="false"><span class="mono">Circuit 2</span><b>Green</b></button>
+        <button style="--g:var(--c-blue)" data-i="2" aria-pressed="false"><span class="mono">Circuit 3</span><b>Blue</b></button>
+        <button style="--g:var(--c-red)" data-i="3" aria-pressed="false"><span class="mono">Circuit 4</span><b>Red</b></button>
+        <button style="--g:var(--c-purple)" data-i="4" aria-pressed="false"><span class="mono">Circuit 5</span><b>Purple</b></button>
+        <button style="--g:var(--c-black)" data-i="5" aria-pressed="false"><span class="mono">Circuit 6</span><b>Black</b></button>
+      </div>
+      <div class="grade-detail" aria-live="polite">
+        <div>
+          <span class="mono" style="color:var(--ink-soft)">Roughly</span>
+          <h3 id="gRange">V0 – V1</h3>
+          <p id="gWho">Your first session. Big holds, clear feet, no surprises.</p>
+        </div>
+        <div>
+          <span class="mono" style="color:var(--ink-soft)">Problems on the wall</span>
+          <h3 id="gCount">90</h3>
+          <div class="bar"><i id="gBar" style="width:100%"></i></div>
+        </div>
+        <div>
+          <span class="mono" style="color:var(--ink-soft)">What you'll learn</span>
+          <p id="gSkill" style="color:var(--ink);font-weight:600">Reading a route, keeping weight on your feet, downclimbing safely.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIRST VISIT -->
+  <section id="first-visit" aria-labelledby="fv-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow mono">First visit</div>
+          <h2 id="fv-title">Never climbed?<br>Perfect.</h2>
+        </div>
+        <p>Most of our members started with zero experience. Here's how your first hour goes.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>Sign the waiver</h3><p>Do it online before you arrive and skip the queue. Takes two minutes.</p></div>
+        <div class="step"><h3>Gear up</h3><p>Rent shoes and a chalk bag at the desk. Wear something you can stretch in.</p></div>
+        <div class="step"><h3>Join an intro</h3><p>A 20‑minute walkthrough on falling, spotting and wall etiquette. Runs on the hour, free.</p></div>
+        <div class="step"><h3>Climb yellow</h3><p>Start on the yellow circuit, rest between tries, and ask anyone for beta. Really, anyone.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing" aria-labelledby="pricing-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow mono">Passes</div>
+          <h2 id="pricing-title">Pick your pass.</h2>
+        </div>
+        <div class="toggle" role="group" aria-label="Rate">
+          <button aria-pressed="true" data-rate="adult">Adult</button>
+          <button aria-pressed="false" data-rate="concession">Student / Concession</button>
+        </div>
+      </div>
+      <div class="plans">
+        <article class="plan">
+          <span class="mono">Day pass</span>
+          <div class="price"><sup>$</sup><span data-adult="24" data-concession="19">24</span></div>
+          <div class="per">single entry, all day</div>
+          <ul>
+            <li>Come and go as you like</li>
+            <li>Free intro session</li>
+            <li>Shoe rental +$6</li>
+          </ul>
+          <a href="#" class="btn btn-ghost">Buy day pass</a>
+        </article>
+        <article class="plan featured">
+          <span class="badge mono">Most popular</span>
+          <span class="mono">Unlimited membership</span>
+          <div class="price"><sup>$</sup><span data-adult="79" data-concession="62">79</span></div>
+          <div class="per">per month · cancel anytime</div>
+          <ul>
+            <li>Unlimited climbing, every day</li>
+            <li>Free yoga &amp; mobility classes</li>
+            <li>Two guest passes each month</li>
+            <li>10% off café, shop &amp; courses</li>
+          </ul>
+          <a href="#" class="btn">Become a member</a>
+        </article>
+        <article class="plan">
+          <span class="mono">10‑visit punch card</span>
+          <div class="price"><sup>$</sup><span data-adult="199" data-concession="159">199</span></div>
+          <div class="per">valid 12 months, shareable</div>
+          <ul>
+            <li>Save ~17% vs. day passes</li>
+            <li>Share with friends</li>
+            <li>Upgrade to membership anytime</li>
+          </ul>
+          <a href="#" class="btn btn-ghost">Get punch card</a>
+        </article>
+      </div>
+      <p class="fineprint">Off-peak (weekdays before 4pm) day passes are $5 cheaper. Kids under 14 climb for $14 with a paying adult.</p>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section id="schedule" aria-labelledby="sched-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow mono">Hours &amp; events</div>
+          <h2 id="sched-title">When to show up.</h2>
+        </div>
+      </div>
+      <div class="sched-grid">
+        <div>
+          <table class="hours" aria-label="Opening hours">
+            <tbody>
+              <tr data-days="1"><td>Monday</td><td>7:00 – 23:00</td></tr>
+              <tr data-days="2"><td>Tuesday</td><td>12:00 – 23:00</td></tr>
+              <tr data-days="3"><td>Wednesday</td><td>7:00 – 23:00</td></tr>
+              <tr data-days="4"><td>Thursday</td><td>7:00 – 23:00</td></tr>
+              <tr data-days="5"><td>Friday</td><td>7:00 – 22:00</td></tr>
+              <tr data-days="6"><td>Saturday</td><td>9:00 – 21:00</td></tr>
+              <tr data-days="0"><td>Sunday</td><td>9:00 – 21:00</td></tr>
+            </tbody>
+          </table>
+          <p class="mono" style="color:var(--ink-soft);margin-top:16px">Tuesday mornings are reset time — fresh problems by noon.</p>
+        </div>
+        <div class="events">
+          <div class="event"><div class="date"><span class="mono">Tue</span><b>Set</b></div><div><h3>Reset Day</h3><p>New problems on one wall every week. Be the first to send.</p></div><span class="pill mono" style="--pc:var(--c-yellow)">Weekly</span></div>
+          <div class="event"><div class="date"><span class="mono">Wed</span><b>18</b></div><div><h3>Women &amp; Non‑binary Night</h3><p>Social climbing with coached tips, 6–9pm.</p></div><span class="pill mono" style="--pc:#d8c8f0">Free w/ entry</span></div>
+          <div class="event"><div class="date"><span class="mono">Thu</span><b>19</b></div><div><h3>Board Night</h3><p>Moonboard sessions + leaderboard. Pizza at 9.</p></div><span class="pill mono" style="--pc:#f6c7bf">Members</span></div>
+          <div class="event"><div class="date"><span class="mono">Sat</span><b>10</b></div><div><h3>Kids Club</h3><p>Ages 6–13, games-based coaching, 10–11:30am.</p></div><span class="pill mono" style="--pc:#c5e6d2">Book ahead</span></div>
+          <div class="event"><div class="date"><span class="mono">Nov</span><b>15</b></div><div><h3>Grit Fest Comp</h3><p>Our quarterly in‑house comp. Every level, every color.</p></div><span class="pill mono" style="--pc:#c4d6f4">Registration open</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="grades-band" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="eyebrow mono">Questions</div>
+      <h2 id="faq-title" style="margin-bottom:40px">Good to know.</h2>
+      <div class="faq">
+        <details><summary>Do I need to book?</summary><p>Not for general climbing — just turn up. Intro sessions are first-come, first-served, and kids club and courses need booking.</p></details>
+        <details><summary>What should I wear?</summary><p>Anything you can move in. Skip jeans if you can. Climbing shoes are required on the wall — rent them at the desk if you don't have your own.</p></details>
+        <details><summary>Is bouldering safe?</summary><p>Our walls max out at 4.5m and sit over 40cm of continuous padded flooring. The intro covers how to fall and land properly — the most important skill you'll learn.</p></details>
+        <details><summary>Can kids climb?</summary><p>Yes! Ages 6+ are welcome with a supervising adult, and our Saturday Kids Club is the best way to get them started.</p></details>
+        <details><summary>Is there parking?</summary><p>Free parking for 60 cars behind the building, plenty of bike racks, and the 14 bus stops right outside.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" aria-labelledby="cta-title">
+    <svg class="float" style="left:6%;top:14%;transform:rotate(-20deg)" aria-hidden="true"><use href="#h-jug"/></svg>
+    <svg class="float" style="right:8%;top:22%;width:130px" aria-hidden="true"><use href="#h-volume"/></svg>
+    <svg class="float" style="left:14%;bottom:12%;width:70px" aria-hidden="true"><use href="#h-crimp"/></svg>
+    <svg class="float" style="right:16%;bottom:10%" aria-hidden="true"><use href="#h-sloper"/></svg>
+    <div class="wrap" style="position:relative">
+      <h2 id="cta-title">Send it.</h2>
+      <p>Your first visit includes a free intro and shoe rental. Just bring yourself — and maybe a friend.</p>
+      <a href="#pricing" class="btn">Claim first-visit offer →</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#top" class="logo"><svg viewBox="0 0 100 100" style="color:var(--accent)"><use href="#h-jug"/></svg>Grit House</a>
+        <p>Bouldering, training and community in the old foundry on the Eastside.</p>
+      </div>
+      <div>
+        <h4 class="mono">Visit</h4>
+        <ul><li>48 Foundry Lane</li><li>Eastside Works</li><li><a href="tel:+15550142290">(555) 014‑2290</a></li></ul>
+      </div>
+      <div>
+        <h4 class="mono">Climb</h4>
+        <ul><li><a href="#walls">Walls</a></li><li><a href="#grades">Grades</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#schedule">Events</a></li></ul>
+      </div>
+      <div>
+        <h4 class="mono">Follow</h4>
+        <ul><li><a href="#">Instagram</a></li><li><a href="#">Newsletter</a></li><li><a href="#">Setting updates</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-bottom mono"><span>© <span id="yr">2026</span> Grit House Bouldering</span><span>Chalk responsibly.</span></div>
+  </div>
+</footer>
+
+<script>
+  // Grade circuit selector
+  const grades = [
+    { range: "V0 – V1", who: "Your first session. Big holds, clear feet, no surprises.", count: 90, skill: "Reading a route, keeping weight on your feet, downclimbing safely." },
+    { range: "V1 – V2", who: "A few sessions in. Holds shrink, moves get longer.", count: 85, skill: "Straight arms, flagging, and resting between attempts." },
+    { range: "V2 – V4", who: "Climbing regularly. Time to project.", count: 80, skill: "Heel hooks, drop knees, and committing to dynamic moves." },
+    { range: "V4 – V5", who: "Strong and technical. Expect a fight.", count: 70, skill: "Compression, body tension on overhangs, precise footwork." },
+    { range: "V5 – V7", who: "Seasoned. Problems may take weeks.", count: 55, skill: "Coordination moves, crimp strength, route-reading under pressure." },
+    { range: "V7+", who: "The hardest stuff on the wall.", count: 40, skill: "Whatever it takes. Ask the setters — they're proud of these." },
+  ];
+  const buttons = document.querySelectorAll(".circuit button");
+  const max = Math.max(...grades.map(g => g.count));
+  buttons.forEach(btn => btn.addEventListener("click", () => {
+    buttons.forEach(b => b.setAttribute("aria-pressed", b === btn));
+    const g = grades[btn.dataset.i];
+    document.getElementById("gRange").textContent = g.range;
+    document.getElementById("gWho").textContent = g.who;
+    document.getElementById("gCount").textContent = g.count;
+    document.getElementById("gSkill").textContent = g.skill;
+    const bar = document.getElementById("gBar");
+    bar.style.width = (g.count / max * 100) + "%";
+    bar.style.background = getComputedStyle(btn).getPropertyValue("--g");
+  }));
+
+  // Pricing toggle
+  const rateBtns = document.querySelectorAll(".toggle button");
+  rateBtns.forEach(btn => btn.addEventListener("click", () => {
+    rateBtns.forEach(b => b.setAttribute("aria-pressed", b === btn));
+    document.querySelectorAll("[data-adult]").forEach(el => el.textContent = el.dataset[btn.dataset.rate]);
+  }));
+
+  // Hours: highlight today + open/closed status
+  const hours = { 0: [9, 21], 1: [7, 23], 2: [12, 23], 3: [7, 23], 4: [7, 23], 5: [7, 22], 6: [9, 21] };
+  const now = new Date(), day = now.getDay(), h = now.getHours() + now.getMinutes() / 60;
+  document.querySelector(`tr[data-days="${day}"]`)?.classList.add("today");
+  const [o, c] = hours[day];
+  const fmt = n => `${n}:00`;
+  const status = document.getElementById("openNow"), text = document.getElementById("openText");
+  if (h >= o && h < c) text.textContent = `Open now · until ${fmt(c)}`;
+  else {
+    status.classList.add("closed");
+    const nextDay = h < o ? day : (day + 1) % 7;
+    text.textContent = `Closed · opens ${h < o ? "today" : "tomorrow"} ${fmt(hours[nextDay][0])}`;
+  }
+
+  // Count-up stats
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    io.unobserve(e.target);
+    const el = e.target, end = parseFloat(el.dataset.count), suf = el.dataset.suffix || "";
+    const dec = end % 1 ? 1 : 0, t0 = performance.now();
+    const tick = t => {
+      const p = Math.min((t - t0) / 1100, 1), v = end * (1 - Math.pow(1 - p, 3));
+      el.textContent = v.toFixed(dec) + suf;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }), { threshold: .6 });
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+    document.querySelectorAll("[data-count]").forEach(el => io.observe(el));
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

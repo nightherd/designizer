@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kept — a budget for one person</title>
+<meta name="description" content="Kept is a budgeting app for one person. One page per month, one number that matters: what's left.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4efe4;
+    --paper-2: #ebe4d3;
+    --ink: #1f1b16;
+    --ink-soft: #5d554a;
+    --rule: #d3c9b3;
+    --red: #c2411f;
+    --green: #2f5d3a;
+    --display: "Instrument Serif", Georgia, serif;
+    --body: "Newsreader", Georgia, serif;
+    --mono: "DM Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #181613;
+      --paper-2: #221f1a;
+      --ink: #ede6d6;
+      --ink-soft: #a39a88;
+      --rule: #38332a;
+      --red: #e8734e;
+      --green: #8bbf8f;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 19px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: var(--mono); font-size: 13px; letter-spacing: .02em; }
+
+  /* nav */
+  nav { display: flex; justify-content: space-between; align-items: baseline; padding: 28px 0; border-bottom: 1px solid var(--ink); }
+  .logo { font-family: var(--display); font-size: 34px; text-decoration: none; line-height: 1; }
+  .logo i { color: var(--red); }
+  nav .links { display: flex; gap: 28px; }
+  nav .links a { text-decoration: none; font-family: var(--mono); font-size: 13px; }
+  nav .links a:hover { color: var(--red); }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; padding: 72px 0 88px; align-items: start; }
+  h1 { font-family: var(--display); font-weight: 400; font-size: clamp(48px, 7vw, 92px); line-height: .96; letter-spacing: -.015em; }
+  h1 em { color: var(--red); }
+  .lede { margin-top: 28px; max-width: 30em; color: var(--ink-soft); }
+  .cta { margin-top: 36px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; background: var(--ink); color: var(--paper);
+    padding: 14px 24px; text-decoration: none; font-family: var(--mono); font-size: 14px;
+    border: 1px solid var(--ink); transition: transform .12s, box-shadow .12s;
+  }
+  .btn:hover { transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--red); }
+  .small-note { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+
+  /* ledger */
+  .ledger {
+    background: var(--paper-2);
+    border: 1px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--ink);
+    padding: 22px 22px 18px;
+    transform: rotate(.6deg);
+  }
+  .ledger-head { display: flex; justify-content: space-between; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+  .ledger-head b { font-family: var(--display); font-weight: 400; font-size: 26px; }
+  .ledger table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .ledger td { padding: 7px 0; border-bottom: 1px dotted var(--rule); font-family: var(--mono); font-size: 13px; }
+  .ledger td:last-child { text-align: right; }
+  .ledger td.d { color: var(--ink-soft); width: 52px; }
+  .ledger tr.new { animation: ink .6s ease-out; }
+  @keyframes ink { from { background: color-mix(in srgb, var(--red) 25%, transparent); } }
+  .left { margin-top: 16px; display: flex; justify-content: space-between; align-items: baseline; }
+  .left .big { font-family: var(--display); font-size: 58px; line-height: 1; }
+  .left .big.neg { color: var(--red); }
+  .bar { height: 6px; background: var(--rule); margin-top: 10px; }
+  .bar span { display: block; height: 100%; background: var(--ink); transition: width .3s; }
+  form.add { display: grid; grid-template-columns: 1fr 84px auto; gap: 8px; margin-top: 18px; }
+  form.add input {
+    font: 13px var(--mono); padding: 9px 10px; border: 1px solid var(--ink);
+    background: var(--paper); color: var(--ink); min-width: 0; border-radius: 0;
+  }
+  form.add button { font: 13px var(--mono); padding: 9px 14px; background: var(--red); color: #fff; border: 1px solid var(--red); cursor: pointer; border-radius: 0; }
+  form.add button:hover { filter: brightness(1.1); }
+  .try { margin-top: 12px; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+  .margin-note {
+    font-family: var(--display); font-style: italic; color: var(--red);
+    font-size: 22px; margin-top: 22px; transform: rotate(-1.5deg); padding-left: 12px;
+  }
+
+  /* sections */
+  section { padding: 80px 0; border-top: 1px solid var(--ink); }
+  .sec-label { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .1em; }
+  h2 { font-family: var(--display); font-weight: 400; font-size: clamp(36px, 5vw, 58px); line-height: 1; margin: 14px 0 0; max-width: 14em; }
+
+  .steps { margin-top: 56px; display: grid; gap: 0; }
+  .step { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 32px; padding: 28px 0; border-top: 1px solid var(--rule); }
+  .step:last-child { border-bottom: 1px solid var(--rule); }
+  .step .n { font-family: var(--display); font-size: 56px; line-height: .9; color: var(--red); }
+  .step h3 { font-family: var(--display); font-weight: 400; font-size: 30px; line-height: 1.1; }
+  .step p { color: var(--ink-soft); }
+
+  .nots { margin-top: 48px; columns: 2; column-gap: 64px; }
+  .nots p { break-inside: avoid; margin-bottom: 26px; }
+  .nots strong { display: block; font-family: var(--display); font-weight: 400; font-size: 26px; text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 2px; }
+  .nots span { color: var(--ink-soft); }
+
+  .quote { font-family: var(--display); font-size: clamp(28px, 4vw, 44px); line-height: 1.15; max-width: 22em; }
+  .quote + .mono { margin-top: 20px; color: var(--ink-soft); display: block; }
+
+  .price { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .price .amt { font-family: var(--display); font-size: clamp(90px, 14vw, 170px); line-height: .85; }
+  .price .amt small { font-size: .22em; font-family: var(--mono); color: var(--ink-soft); }
+  .price ul { list-style: none; padding: 0; margin: 24px 0 0; }
+  .price li { padding: 9px 0; border-bottom: 1px dotted var(--rule); }
+  .price li::before { content: "— "; color: var(--red); }
+
+  details { border-top: 1px solid var(--rule); padding: 18px 0; }
+  details:last-of-type { border-bottom: 1px solid var(--rule); }
+  summary { cursor: pointer; font-family: var(--display); font-size: 26px; list-style: none; display: flex; justify-content: space-between; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--mono); color: var(--red); }
+  details[open] summary::after { content: "–"; }
+  details p { margin-top: 10px; color: var(--ink-soft); max-width: 38em; }
+  .faq { margin-top: 40px; max-width: 760px; }
+
+  footer { border-top: 1px solid var(--ink); padding: 36px 0 60px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; color: var(--ink-soft); }
+
+  @media (max-width: 860px) {
+    .hero, .price { grid-template-columns: 1fr; gap: 40px; }
+    .step { grid-template-columns: 56px 1fr; gap: 16px; }
+    .step p { grid-column: 2; }
+    .nots { columns: 1; }
+    nav .links a:not(:last-child) { display: none; }
+    .ledger { transform: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="logo" href="#">Kept<i>.</i></a>
+    <div class="links">
+      <a href="#how">How it works</a>
+      <a href="#price">Price</a>
+      <a href="#faq">Questions</a>
+      <a href="#price">Get Kept →</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <p class="sec-label" style="margin-bottom:22px">A budget for one person</p>
+      <h1>Your month, on <em>one page.</em></h1>
+      <p class="lede">Kept skips the pie charts and the color-coded categories you'll abandon by March. You get a single sheet per month, a running total, and one number worth looking at: what's left until payday.</p>
+      <div class="cta">
+        <a class="btn" href="#price">Start your first page</a>
+        <span class="small-note">iPhone &amp; Mac · 30 days free · no card</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="ledger" aria-label="Interactive sample ledger">
+        <div class="ledger-head"><b>October</b><span class="mono">income $3,400</span></div>
+        <table id="rows"></table>
+        <div class="left">
+          <span class="mono">LEFT TO SPEND</span>
+          <span class="big" id="left">$0</span>
+        </div>
+        <div class="bar"><span id="fill"></span></div>
+        <form class="add" id="form">
+          <input id="what" placeholder="coffee with Dana" aria-label="What" required>
+          <input id="amt" type="number" min="0.01" step="0.01" placeholder="$" aria-label="Amount" required>
+          <button>Write it</button>
+        </form>
+        <p class="try">↑ go on, spend something. It's not real money.</p>
+      </div>
+      <p class="margin-note">that's the whole app, basically.</p>
+    </div>
+  </header>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <p class="sec-label">How it works</p>
+    <h2>Three habits. You'll pick them up in a week.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>Say what's coming in.</h3>
+        <p>Paycheck, freelance invoice, the $40 your brother owes you. Put the income at the top of the page and subtract rent and bills you already know about. What remains is your month.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>Write things down as they happen.</h3>
+        <p>Open the app, type "lunch 14.50", done. No bank login required, though you can connect one if you'd rather not type. Entries take about four seconds, and we've timed it.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>Close the page on the 1st.</h3>
+        <p>Kept shows what you spent against what you planned, rolls any surplus forward, and starts a clean sheet. Last month is never a lecture; it's just a page you can flip back to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="sec-label">On purpose</p>
+    <h2>Things Kept will never do.</h2>
+    <div class="nots">
+      <p><strong>Gamify your savings</strong><span>No streaks, badges or confetti. Saving $200 is its own reward, and a cartoon owl doesn't need to know.</span></p>
+      <p><strong>Sell your data</strong><span>Your ledger lives on your devices and syncs encrypted. We make money from the price below, and nothing else.</span></p>
+      <p><strong>Guess your categories</strong><span>Tag things how you think about them. "Dana stuff" is a perfectly good category.</span></p>
+      <p><strong>Send guilt notifications</strong><span>One optional nudge on Sunday evening with your remaining balance. That's the entire notification system.</span></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="quote">“I tried five budgeting apps. Kept is the first one I opened more than twice, mostly because it doesn't look like homework.”</p>
+    <span class="mono">— Marguerite O., freelance illustrator, Lisbon</span>
+  </div>
+</section>
+
+<section id="price">
+  <div class="wrap price">
+    <div>
+      <p class="sec-label">Price</p>
+      <p class="amt">$24<small> / year</small></p>
+    </div>
+    <div>
+      <h2 style="font-size:40px">One price. Not a trial in disguise.</h2>
+      <ul>
+        <li>Unlimited months, entries and categories</li>
+        <li>Syncs between your phone and Mac</li>
+        <li>Export everything to CSV, any time</li>
+        <li>Cancel and keep read-only access to your pages</li>
+      </ul>
+      <div class="cta"><a class="btn" href="#">Try it free for 30 days</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="sec-label">Questions</p>
+    <h2>Reasonable ones.</h2>
+    <div class="faq">
+      <details><summary>Does it connect to my bank?</summary><p>Optionally. If you link an account, transactions show up as suggestions that you approve with a tap. Nothing gets added behind your back, and you can use Kept without ever connecting anything.</p></details>
+      <details><summary>Can my partner use it too?</summary><p>Not yet. Kept is deliberately built for one person. A shared version is something we're thinking about slowly, rather than something we're promising.</p></details>
+      <details><summary>What if I forget to log for a week?</summary><p>Then you log a week on Sunday. There's no penalty and no broken chain. The page is just a page.</p></details>
+      <details><summary>Is there an Android app?</summary><p>Not at the moment. It's the most common request, and it's on the list after the Mac app gets a few more rounds of polish.</p></details>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <span class="logo" style="font-size:28px">Kept<i>.</i></span>
+    <span class="mono">Made by two people in a small apartment · hello@kept.example</span>
+  </footer>
+</div>
+
+<script>
+  const income = 3400;
+  const rows = [
+    ["01", "rent", 1450],
+    ["02", "electric + wifi", 96.4],
+    ["04", "groceries", 82.15],
+    ["07", "metro pass", 64],
+    ["09", "Dana's birthday", 38]
+  ];
+  const fmt = n => "$" + n.toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+  const tbl = document.getElementById("rows");
+  const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  function render(newest) {
+    tbl.innerHTML = rows.map((r, i) =>
+      `<tr${newest && i === rows.length - 1 ? ' class="new"' : ""}><td class="d">${r[0]}</td><td>${esc(r[1])}</td><td>${fmt(r[2])}</td></tr>`
+    ).join("");
+    const spent = rows.reduce((s, r) => s + r[2], 0);
+    const left = Math.round((income - spent) * 100) / 100;
+    const el = document.getElementById("left");
+    el.textContent = left < 0 ? "−" + fmt(-left) : fmt(left);
+    el.classList.toggle("neg", left < 0);
+    document.getElementById("fill").style.width = Math.min(100, spent / income * 100) + "%";
+  }
+  render();
+
+  document.getElementById("form").addEventListener("submit", e => {
+    e.preventDefault();
+    const what = document.getElementById("what"), amt = document.getElementById("amt");
+    const day = String(Math.min(31, 10 + rows.length - 5)).padStart(2, "0");
+    rows.push([day, what.value.trim(), parseFloat(amt.value)]);
+    if (rows.length > 11) rows.splice(0, 1);
+    render(true);
+    what.value = ""; amt.value = ""; what.focus();
+  });
+</script>
+</body>
+</html>
