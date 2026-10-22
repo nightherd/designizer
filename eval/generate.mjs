@@ -53,6 +53,37 @@ const PRODUCTS = [
   'a clean skincare brand',
   'a travel agency for small-group tours in Japan',
   'an accounting firm for e-commerce sellers',
+  // Added after the first test run, as a fresh held-out split (test-b).
+  'a project management tool for construction crews',
+  'a vintage watch dealer',
+  'a pediatric physiotherapy clinic',
+  'a password manager for families',
+  'a surf school in Portugal',
+  'an employment law practice',
+  'a robotics summer camp for teenagers',
+  'a documentary film production company',
+  'a cat litter subscription',
+  'a bike-sharing service for a mid-sized city',
+  'an AI customer-support chatbot platform',
+  'a natural wine bar',
+  'a property management company for landlords',
+  'a mobile tire fitting service',
+  'a landscape architecture studio',
+  'a jazz club with live music every night',
+  'a seed library and gardening co-op',
+  'an online piano course',
+  'an applicant tracking system for startups',
+  'a sleep tracking app',
+  'a mountain hut in the Dolomites',
+  'a gluten-free bakery',
+  'an invoice financing fintech',
+  'an open-source feature-flag service',
+  'a hardware wallet for Bitcoin',
+  'a handmade leather goods brand',
+  'a newsletter platform for independent writers',
+  'a trampoline park',
+  'an equine veterinary practice',
+  'a home battery installer',
 ];
 const MODELS = ['opus', 'sonnet', 'haiku'];
 const TAIL = 'Put everything in a single index.html in the current directory (CDN links are fine).';
@@ -62,12 +93,13 @@ const VARIANTS = {
   skill: p => `Use the frontend-design skill to build a landing page for ${p}. ${TAIL}`,
 };
 
-// Every model meets every variant once per 9 pages; every 4th page goes to the dev (tuning) split.
+// Every model meets every variant once per 9 pages; every 4th of the first 40 goes to the dev (tuning) split,
+// pages 41-70 form test-b, generated after the first test run and never used for tuning.
 const plan = PRODUCTS.map((product, i) => {
   const variant = Object.keys(VARIANTS)[Math.floor(i / 3) % 3];
   return {
     id: `ai-${String(i + 1).padStart(2, '0')}`,
-    split: i % 4 === 3 ? 'dev' : 'test',
+    split: i >= 40 ? 'test-b' : i % 4 === 3 ? 'dev' : 'test',
     model: MODELS[i % 3],
     variant,
     product,

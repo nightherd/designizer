@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember — Bitcoin Hardware Wallet</title>
+<meta name="description" content="Ember is a Bitcoin-only hardware wallet. Open source, air-gapped signing, and a secure element that keeps your keys offline.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0d; --bg2:#121216; --card:#16161b; --line:#25252c;
+  --text:#f4f4f5; --muted:#9a9aa5; --btc:#f7931a; --btc2:#ffb454;
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.mono{font-family:'JetBrains Mono',monospace}
+h1,h2,h3{line-height:1.1;letter-spacing:-.03em}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(11,11,13,.75);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.02em}
+.logo i{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--btc2),var(--btc));display:grid;place-items:center;color:#111;font-style:normal;font-size:15px;font-weight:800}
+.links{display:flex;gap:28px;font-size:14px;color:var(--muted)}
+.links a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:15px;border:1px solid var(--line);transition:.2s;cursor:pointer}
+.btn.primary{background:var(--btc);border-color:var(--btc);color:#111}
+.btn.primary:hover{background:var(--btc2);transform:translateY(-1px);box-shadow:0 8px 30px rgba(247,147,26,.3)}
+.btn.ghost:hover{border-color:#44444d}
+nav .btn{padding:8px 18px;font-size:14px}
+
+/* hero */
+.hero{position:relative;padding:90px 0 80px;overflow:hidden}
+.hero:before{content:"";position:absolute;top:-200px;left:50%;width:900px;height:900px;transform:translateX(-30%);background:radial-gradient(circle,rgba(247,147,26,.18),transparent 60%);pointer-events:none}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;position:relative}
+.pill{display:inline-flex;gap:8px;align-items:center;padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:13px;color:var(--muted);background:var(--bg2)}
+.pill b{width:8px;height:8px;border-radius:50%;background:var(--btc);box-shadow:0 0 10px var(--btc)}
+.hero h1{font-size:clamp(42px,6vw,72px);font-weight:800;margin:22px 0}
+.hero h1 span{background:linear-gradient(90deg,var(--btc2),var(--btc));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:19px;color:var(--muted);max-width:520px}
+.cta{display:flex;gap:12px;margin:34px 0 28px;flex-wrap:wrap}
+.trust{display:flex;gap:22px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.trust span:before{content:"✓ ";color:var(--btc)}
+
+/* device */
+.stage{display:grid;place-items:center;perspective:1000px}
+.device{position:relative;width:250px;height:400px;border-radius:34px;background:linear-gradient(160deg,#2a2a31,#121215 60%);border:1px solid #3a3a43;box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 90px rgba(247,147,26,.15),inset 0 1px 0 rgba(255,255,255,.1);transform:rotateY(-14deg) rotateX(6deg);animation:float 6s ease-in-out infinite;padding:22px 18px}
+@keyframes float{50%{transform:rotateY(-8deg) rotateX(3deg) translateY(-12px)}}
+.screen{height:210px;border-radius:14px;background:#050506;border:1px solid #2a2a30;padding:16px;display:flex;flex-direction:column;justify-content:space-between;font-size:11px;color:var(--muted)}
+.screen .amt{font-size:26px;color:var(--text);font-weight:600;letter-spacing:-.03em}
+.screen .amt small{font-size:13px;color:var(--btc)}
+.screen .addr{word-break:break-all;color:#bbb;font-size:10px}
+.screen .ok{display:flex;gap:6px}
+.screen .ok em{flex:1;text-align:center;padding:7px 0;border-radius:8px;font-style:normal;background:#1c1c21;font-size:11px}
+.screen .ok em:last-child{background:var(--btc);color:#111;font-weight:600}
+.btns{display:flex;justify-content:space-between;margin-top:26px;padding:0 14px}
+.btns i{width:54px;height:54px;border-radius:50%;background:linear-gradient(160deg,#25252b,#18181c);border:1px solid #33333a;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.usbc{position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:50px;height:8px;border-radius:6px 6px 0 0;background:#000;border:1px solid #333;border-bottom:0}
+.led{position:absolute;top:10px;right:26px;width:6px;height:6px;border-radius:50%;background:var(--btc);box-shadow:0 0 8px var(--btc)}
+
+/* sections */
+section{padding:90px 0}
+.eyebrow{color:var(--btc);font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+h2{font-size:clamp(32px,4.5vw,48px);font-weight:800;margin:14px 0 16px}
+.sub{color:var(--muted);font-size:18px;max-width:600px}
+.center{text-align:center}.center .sub{margin:0 auto}
+
+.stats{border-block:1px solid var(--line);background:var(--bg2);padding:36px 0}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.stats b{display:block;font-size:34px;font-weight:800;letter-spacing:-.03em}
+.stats span{font-size:13px;color:var(--muted)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:54px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px;transition:.25s}
+.card:hover{border-color:rgba(247,147,26,.5);transform:translateY(-4px)}
+.ico{width:46px;height:46px;border-radius:12px;background:rgba(247,147,26,.12);display:grid;place-items:center;font-size:22px;margin-bottom:20px}
+.card h3{font-size:20px;margin-bottom:10px;letter-spacing:-.02em}
+.card p{color:var(--muted);font-size:15px}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:54px;counter-reset:s}
+.step{position:relative;padding:26px;border-left:2px solid var(--line)}
+.step:before{counter-increment:s;content:"0" counter(s);font-family:'JetBrains Mono',monospace;color:var(--btc);font-size:14px}
+.step h3{font-size:18px;margin:10px 0 8px}
+.step p{color:var(--muted);font-size:14px}
+
+/* compare */
+.table{margin-top:48px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:560px;font-size:15px}
+th,td{padding:16px 22px;text-align:left;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{background:var(--bg2);font-weight:600;font-size:13px;color:var(--muted)}
+th.us{color:var(--btc)}
+td.us{background:rgba(247,147,26,.05);font-weight:500}
+.y{color:var(--btc)}.n{color:#5a5a64}
+
+/* specs */
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+dl{display:grid;grid-template-columns:140px 1fr;border-top:1px solid var(--line)}
+dt,dd{padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+dt{color:var(--muted)}
+
+/* faq */
+.faq{max-width:760px;margin:48px auto 0}
+details{border-bottom:1px solid var(--line);padding:22px 0}
+summary{cursor:pointer;font-weight:600;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:20px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";color:var(--btc);font-size:24px;line-height:1;transition:.2s}
+details[open] summary:after{transform:rotate(45deg)}
+details p{color:var(--muted);margin-top:12px}
+
+/* final cta */
+.final{margin:0 20px 80px}
+.final .box{max-width:1120px;margin:0 auto;border-radius:28px;padding:80px 24px;text-align:center;background:radial-gradient(circle at 50% 0,rgba(247,147,26,.25),transparent 65%),var(--card);border:1px solid var(--line)}
+.final .cta{justify-content:center;margin-bottom:0}
+.price{font-size:15px;color:var(--muted);margin-top:18px}
+
+footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer .f{display:flex;gap:24px;flex-wrap:wrap}
+footer a:hover{color:var(--text)}
+.note{max-width:1120px;margin:0 auto 26px;padding:0 20px;font-size:12px;color:#6a6a74}
+
+.reveal{opacity:0;transform:translateY(24px);transition:.7s}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.device{animation:none}.reveal{opacity:1;transform:none;transition:none}}
+
+@media(max-width:900px){
+  .links{display:none}
+  .hero .wrap,.specs{grid-template-columns:1fr}
+  .hero{padding-top:50px}
+  .grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .stats .wrap{grid-template-columns:1fr 1fr}
+  .specs{gap:30px}
+}
+@media(max-width:520px){.steps{grid-template-columns:1fr}dl{grid-template-columns:110px 1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo"><i>₿</i> Ember</a>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#compare">Compare</a>
+      <a href="#specs">Specs</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#buy" class="btn primary">Pre-order</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="pill"><b></b> Bitcoin-only. No altcoins. No compromises.</span>
+      <h1>Your keys.<br><span>Your bitcoin.</span><br>Truly offline.</h1>
+      <p class="lead">Ember is an open-source hardware wallet built for one job: keeping your private keys isolated from every networked device, forever.</p>
+      <div class="cta">
+        <a href="#buy" class="btn primary">Pre-order for $149</a>
+        <a href="#how" class="btn ghost">See how it works →</a>
+      </div>
+      <div class="trust">
+        <span>Fully open source</span>
+        <span>Secure element</span>
+        <span>Air-gap capable</span>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="device" aria-label="Illustration of the Ember hardware wallet">
+        <div class="led"></div>
+        <div class="screen">
+          <div class="mono">CONFIRM SEND</div>
+          <div>
+            <div class="amt">0.0420 <small>BTC</small></div>
+            <div class="mono addr" style="margin-top:6px">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
+          </div>
+          <div class="ok"><em>Reject</em><em>Approve</em></div>
+        </div>
+        <div class="btns"><i></i><i></i></div>
+        <div class="usbc"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="wrap">
+    <div><b>0</b><span>private key exposures by design</span></div>
+    <div><b>100%</b><span>open-source firmware &amp; hardware</span></div>
+    <div><b>24</b><span>word seed, BIP39 compatible</span></div>
+    <div><b>5 yr</b><span>firmware update commitment</span></div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="eyebrow">Why Ember</div>
+      <h2>Security you can verify.</h2>
+      <p class="sub">Nothing to trust blindly. Every line of code and every schematic is public, so you can audit it — or rely on the people who do.</p>
+    </div>
+    <div class="grid">
+      <div class="card reveal"><div class="ico">🔐</div><h3>Secure element</h3><p>Your seed lives inside a tamper-resistant chip with PIN rate-limiting and automatic wipe after repeated failed attempts.</p></div>
+      <div class="card reveal"><div class="ico">📡</div><h3>Air-gapped signing</h3><p>Sign over QR codes or microSD with no USB or Bluetooth connection. The device never touches a networked computer.</p></div>
+      <div class="card reveal"><div class="ico">👁️</div><h3>See what you sign</h3><p>Every output address and amount is shown on the device screen, so malware on your computer can't change a payment.</p></div>
+      <div class="card reveal"><div class="ico">🧩</div><h3>Multisig ready</h3><p>Native support for descriptor-based multisig and miniscript. Split trust across devices, people, and locations.</p></div>
+      <div class="card reveal"><div class="ico">🛠️</div><h3>Open &amp; reproducible</h3><p>Reproducible builds let you confirm the firmware you run matches the public source code, byte for byte.</p></div>
+      <div class="card reveal"><div class="ico">🔋</div><h3>Works with your wallet</h3><p>Compatible with Sparrow, Nunchuk, Specter, and other wallet software through standard PSBT files.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="background:var(--bg2);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">How it works</div>
+      <h2>Four steps to real self-custody.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><h3>Generate</h3><p>Create your seed on the device using hardware entropy. It never leaves the secure element.</p></div>
+      <div class="step reveal"><h3>Back up</h3><p>Write your 24 words on the included steel-ready card. Store it somewhere safe and offline.</p></div>
+      <div class="step reveal"><h3>Receive</h3><p>Verify your receive address on Ember's screen before sending any funds to it.</p></div>
+      <div class="step reveal"><h3>Sign</h3><p>Build a transaction in your wallet app, scan it, review it on-device, and approve.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Compare</div>
+      <h2>Self-custody, simplified.</h2>
+      <p class="sub">How Ember stacks up against the alternatives.</p>
+    </div>
+    <div class="table reveal">
+      <table>
+        <thead><tr><th></th><th class="us">Ember</th><th>Exchange</th><th>Software wallet</th></tr></thead>
+        <tbody>
+          <tr><td>You control the keys</td><td class="us y">✓</td><td class="n">✕</td><td class="y">✓</td></tr>
+          <tr><td>Keys isolated from internet</td><td class="us y">✓</td><td class="n">✕</td><td class="n">✕</td></tr>
+          <tr><td>Immune to PC malware</td><td class="us y">✓</td><td class="n">✕</td><td class="n">✕</td></tr>
+          <tr><td>Open-source hardware</td><td class="us y">✓</td><td class="n">✕</td><td class="n">—</td></tr>
+          <tr><td>Air-gapped signing</td><td class="us y">✓</td><td class="n">✕</td><td class="n">✕</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="specs" style="background:var(--bg2);border-block:1px solid var(--line)">
+  <div class="wrap specs">
+    <div class="reveal">
+      <div class="eyebrow">Specs</div>
+      <h2>Small. Sturdy. Simple.</h2>
+      <p class="sub">Designed to disappear into a drawer until the day you need it.</p>
+    </div>
+    <dl class="reveal">
+      <dt>Security chip</dt><dd>Certified secure element + general-purpose MCU</dd>
+      <dt>Display</dt><dd>2.4″ OLED, 320 × 240</dd>
+      <dt>Connectivity</dt><dd>USB-C, camera (QR), microSD. No Bluetooth, no Wi-Fi.</dd>
+      <dt>Power</dt><dd>Rechargeable battery or USB-C</dd>
+      <dt>Standards</dt><dd>BIP32/39/44/84/86, PSBT (BIP174), Taproot</dd>
+      <dt>Body</dt><dd>Anodized aluminum, 78 × 52 × 11 mm</dd>
+      <dt>In the box</dt><dd>Ember, USB-C cable, 2 backup cards, tamper-evident bag</dd>
+    </dl>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="center reveal">
+      <div class="eyebrow">FAQ</div>
+      <h2>Questions, answered.</h2>
+    </div>
+    <div class="faq reveal">
+      <details><summary>What if I lose my Ember?</summary><p>Your bitcoin is safe. Restore your 24-word backup onto a new Ember or any BIP39-compatible wallet and your funds are right where you left them.</p></details>
+      <details><summary>Why Bitcoin-only?</summary><p>Less code means a smaller attack surface. Focusing on a single asset lets us audit, test, and perfect the things that matter for storing bitcoin.</p></details>
+      <details><summary>Can I trust the supply chain?</summary><p>Ember ships in tamper-evident packaging and verifies its own firmware on first boot. Because builds are reproducible, you can independently confirm what is running on your device.</p></details>
+      <details><summary>Does it work with my wallet software?</summary><p>Yes. Ember uses standard PSBT files and QR codes, so it works with most wallet apps that support them, including Sparrow and Nunchuk.</p></details>
+      <details><summary>What happens if the company disappears?</summary><p>Everything is open source and your seed is standard BIP39. You are never locked in to our software or our servers.</p></details>
+    </div>
+  </div>
+</section>
+
+<div class="final" id="buy">
+  <div class="box reveal">
+    <h2>Take your bitcoin off the internet.</h2>
+    <p class="sub" style="margin:0 auto 34px">Pre-orders ship in the next production batch. Free worldwide shipping, 30-day returns on unopened devices.</p>
+    <div class="cta">
+      <a href="#" class="btn primary">Pre-order Ember — $149</a>
+      <a href="#" class="btn ghost">Read the source</a>
+    </div>
+    <p class="price">Not financial advice. Always test with a small amount first.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="note">Ember is a concept product page. Specs and pricing are illustrative.</div>
+  <div class="wrap">
+    <a href="#" class="logo"><i>₿</i> Ember</a>
+    <div class="f"><a href="#">Docs</a><a href="#">GitHub</a><a href="#">Security</a><a href="#">Support</a><a href="#">Privacy</a></div>
+    <div>© 2026 Ember Labs</div>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understory Landscape Studio</title>
+<meta name="description" content="Understory is a landscape architecture studio designing gardens, public spaces and restored ecologies that grow better with time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3efe6;
+    --paper-2: #e9e3d6;
+    --ink: #1f2a22;
+    --ink-soft: #4a564c;
+    --moss: #3f5a3c;
+    --moss-deep: #243a26;
+    --sage: #9bae8f;
+    --clay: #b8643f;
+    --line: rgba(31, 42, 34, .16);
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, -apple-system, sans-serif;
+    --max: 1240px;
+    --gutter: clamp(16px, 4vw, 48px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 17px/1.6 var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .eyebrow {
+    font: 600 12px/1 var(--sans);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--moss);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 300; letter-spacing: -.02em; line-height: 1.05; }
+  h2 { font-size: clamp(36px, 5vw, 64px); }
+  em { font-style: italic; color: var(--moss); }
+
+  /* Nav */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s;
+  }
+  header.scrolled { border-color: var(--line); }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { display: flex; align-items: center; gap: 10px; font: 500 20px var(--serif); letter-spacing: -.01em; }
+  .logo svg { width: 28px; height: 28px; color: var(--moss); }
+  .links { display: flex; gap: 36px; font-size: 15px; }
+  .links a { position: relative; color: var(--ink-soft); transition: color .2s; }
+  .links a:hover { color: var(--ink); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 22px; border-radius: 999px;
+    background: var(--moss-deep); color: var(--paper);
+    font: 500 15px var(--sans);
+    transition: background .2s, transform .2s;
+  }
+  .btn:hover { background: var(--moss); transform: translateY(-1px); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: var(--paper); }
+  .menu-btn { display: none; background: none; border: 0; color: var(--ink); cursor: pointer; }
+
+  /* Hero */
+  .hero { position: relative; padding: clamp(56px, 9vw, 120px) 0 0; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: end; }
+  .hero h1 { font-size: clamp(48px, 8.4vw, 116px); margin: 24px 0 32px; }
+  .hero p.lead { font-size: 19px; color: var(--ink-soft); max-width: 46ch; }
+  .hero-ctas { display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
+  .hero-meta { display: grid; gap: 28px; padding-bottom: 12px; }
+  .stat { border-top: 1px solid var(--line); padding-top: 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+  .stat b { font: 300 44px/1 var(--serif); letter-spacing: -.02em; }
+  .stat span { font-size: 14px; color: var(--ink-soft); text-align: right; }
+  .hero-art {
+    margin-top: clamp(48px, 7vw, 88px);
+    border-radius: 20px; overflow: hidden;
+    aspect-ratio: 21 / 9;
+    position: relative;
+  }
+  .hero-art svg { width: 100%; height: 100%; }
+  .hero-caption {
+    position: absolute; left: 24px; bottom: 22px;
+    background: var(--paper); color: var(--ink);
+    padding: 10px 16px; border-radius: 999px; font-size: 13px;
+    display: flex; gap: 8px; align-items: center;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--clay); }
+
+  section { padding: clamp(80px, 11vw, 150px) 0; }
+
+  /* Philosophy */
+  .philo { display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; }
+  .philo h2 { margin-top: 20px; }
+  .philo-body p { font: 300 clamp(22px, 2.4vw, 30px)/1.4 var(--serif); letter-spacing: -.01em; }
+  .philo-body p + p { margin-top: 24px; font: 400 17px/1.7 var(--sans); color: var(--ink-soft); max-width: 58ch; letter-spacing: 0; }
+  .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 56px; }
+  .principle { border-top: 1px solid var(--ink); padding-top: 18px; }
+  .principle h3 { font-size: 22px; font-weight: 400; margin-bottom: 8px; }
+  .principle p { font-size: 15px; color: var(--ink-soft); }
+
+  /* Services */
+  .services { background: var(--moss-deep); color: var(--paper); }
+  .services .eyebrow { color: var(--sage); }
+  .services em { color: var(--sage); }
+  .services-head { display: flex; justify-content: space-between; align-items: end; gap: 32px; margin-bottom: 56px; flex-wrap: wrap; }
+  .services-head p { max-width: 40ch; color: rgba(243,239,230,.72); }
+  .service-list { list-style: none; border-top: 1px solid rgba(243,239,230,.2); }
+  .service {
+    display: grid; grid-template-columns: 70px 1.1fr 1.4fr 40px; gap: 24px; align-items: center;
+    padding: 30px 0; border-bottom: 1px solid rgba(243,239,230,.2);
+    cursor: default; transition: padding .3s;
+  }
+  .service:hover { padding-left: 12px; }
+  .service .num { font: 400 14px var(--sans); color: var(--sage); }
+  .service h3 { font-size: clamp(26px, 3vw, 38px); }
+  .service p { color: rgba(243,239,230,.72); font-size: 15px; }
+  .service .arrow { justify-self: end; opacity: .4; transition: opacity .3s, transform .3s; }
+  .service:hover .arrow { opacity: 1; transform: rotate(-45deg); }
+
+  /* Projects */
+  .projects-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 48px; gap: 24px; flex-wrap: wrap; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+  .filters button {
+    font: 500 14px var(--sans); padding: 9px 16px; border-radius: 999px;
+    border: 1px solid var(--line); background: transparent; color: var(--ink-soft); cursor: pointer;
+    transition: all .2s;
+  }
+  .filters button.active, .filters button:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 28px; }
+  .card { grid-column: span 6; transition: opacity .35s, transform .35s; }
+  .card.wide { grid-column: span 7; }
+  .card.narrow { grid-column: span 5; }
+  .card.hide { display: none; }
+  .card .img { border-radius: 16px; overflow: hidden; aspect-ratio: 4/3; position: relative; }
+  .card.wide .img, .card.narrow .img { aspect-ratio: auto; height: clamp(280px, 34vw, 460px); }
+  .card .img svg { width: 100%; height: 100%; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+  .card:hover .img svg { transform: scale(1.04); }
+  .tag {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--paper); font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 999px;
+  }
+  .card-meta { display: flex; justify-content: space-between; align-items: baseline; margin-top: 18px; gap: 16px; }
+  .card h3 { font-size: 26px; font-weight: 400; }
+  .card-meta span { font-size: 14px; color: var(--ink-soft); white-space: nowrap; }
+  .card p { font-size: 15px; color: var(--ink-soft); margin-top: 6px; max-width: 52ch; }
+
+  /* Process */
+  .process { background: var(--paper-2); }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 64px; counter-reset: step; }
+  .step { padding: 0 28px 0 0; position: relative; }
+  .step::before {
+    counter-increment: step; content: "0" counter(step);
+    display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+    border: 1px solid var(--ink); font: 400 15px var(--serif); background: var(--paper-2);
+    position: relative; z-index: 1; margin-bottom: 28px;
+  }
+  .step::after { content: ""; position: absolute; top: 26px; left: 52px; right: 0; height: 1px; background: var(--line); }
+  .step:last-child::after { display: none; }
+  .step h3 { font-size: 24px; font-weight: 400; margin-bottom: 10px; }
+  .step p { font-size: 15px; color: var(--ink-soft); }
+  .step small { display: block; margin-top: 14px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--moss); font-weight: 600; }
+
+  /* Quote */
+  .quote { text-align: center; }
+  .quote blockquote { font: 300 clamp(28px, 4vw, 52px)/1.2 var(--serif); letter-spacing: -.02em; max-width: 22ch; margin: 28px auto 36px; }
+  .quote cite { font-style: normal; font-size: 15px; color: var(--ink-soft); }
+  .quote cite b { color: var(--ink); font-weight: 500; }
+  .press { display: flex; justify-content: center; gap: clamp(24px, 6vw, 72px); flex-wrap: wrap; margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--line); }
+  .press span { font: 400 20px var(--serif); color: var(--ink-soft); opacity: .7; font-style: italic; }
+
+  /* Contact */
+  .contact { background: var(--moss); color: var(--paper); border-radius: 24px; margin: 0 var(--gutter); padding: clamp(48px, 7vw, 96px) clamp(24px, 6vw, 80px); position: relative; overflow: hidden; }
+  .contact .topo { position: absolute; inset: 0; opacity: .14; pointer-events: none; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; position: relative; }
+  .contact h2 em { color: #e8c9a8; }
+  .contact .eyebrow { color: #e8c9a8; }
+  .contact-grid > div > p { margin-top: 24px; color: rgba(243,239,230,.8); max-width: 40ch; }
+  .contact-info { margin-top: 40px; display: grid; gap: 6px; font-size: 15px; }
+  .contact-info a { border-bottom: 1px solid rgba(243,239,230,.4); width: fit-content; }
+  form { display: grid; gap: 18px; }
+  .field { display: grid; gap: 6px; }
+  .field label { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(243,239,230,.7); font-weight: 600; }
+  .field input, .field select, .field textarea {
+    font: 400 17px var(--sans); color: var(--paper);
+    background: transparent; border: 0; border-bottom: 1px solid rgba(243,239,230,.35);
+    padding: 10px 0; outline: none; transition: border-color .2s; border-radius: 0;
+  }
+  .field select option { color: var(--ink); }
+  .field textarea { resize: vertical; min-height: 90px; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--paper); }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  form .btn { background: var(--paper); color: var(--moss-deep); justify-self: start; margin-top: 10px; border: 0; cursor: pointer; }
+  form .btn:hover { background: #fff; }
+  .sent { display: none; font: 300 26px var(--serif); }
+
+  footer { padding: 72px 0 40px; }
+  .foot { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+  .foot h4 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 14px; font-weight: 600; }
+  .foot ul { list-style: none; display: grid; gap: 8px; font-size: 15px; }
+  .foot ul a:hover { color: var(--moss); }
+  .foot p { color: var(--ink-soft); font-size: 15px; max-width: 34ch; margin-top: 14px; }
+  .legal { display: flex; justify-content: space-between; margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-soft); gap: 16px; flex-wrap: wrap; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .hero-grid, .philo, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-meta { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .stat { flex-direction: column; gap: 6px; }
+    .stat span { text-align: left; }
+    .principles { grid-template-columns: 1fr; gap: 24px; }
+    .service { grid-template-columns: 44px 1fr 32px; }
+    .service p { grid-column: 2 / 3; }
+    .service .arrow { grid-row: 1; grid-column: 3; }
+    .card, .card.wide, .card.narrow { grid-column: span 12; }
+    .steps { grid-template-columns: 1fr 1fr; gap: 48px 0; }
+    .step:nth-child(2)::after { display: none; }
+    .foot { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    .links, nav > .btn { display: none; }
+    .menu-btn { display: block; }
+    header.open .links {
+      display: flex; flex-direction: column; gap: 4px;
+      position: absolute; top: 72px; left: 0; right: 0;
+      background: var(--paper); padding: 12px var(--gutter) 24px; border-bottom: 1px solid var(--line);
+    }
+    header.open .links a { padding: 12px 0; font-size: 20px; font-family: var(--serif); color: var(--ink); }
+    .hero-art { aspect-ratio: 4/3; }
+    .hero-meta { grid-template-columns: 1fr; }
+    .stat { flex-direction: row; }
+    .steps { grid-template-columns: 1fr; }
+    .step::after { display: none; }
+    .row { grid-template-columns: 1fr; }
+    .foot { grid-template-columns: 1fr; }
+    .card.wide .img, .card.narrow .img { height: auto; aspect-ratio: 4/3; }
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <nav class="wrap">
+    <a href="#" class="logo" aria-label="Understory home">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <path d="M16 29V13"/><path d="M16 18c-5 0-8-3-8-8 5 0 8 3 8 8z" fill="currentColor" fill-opacity=".15"/>
+        <path d="M16 14c4 0 7-2.5 7-7-4 0-7 2.5-7 7z" fill="currentColor" fill-opacity=".15"/>
+        <path d="M5 29h22"/>
+      </svg>
+      Understory
+    </a>
+    <div class="links">
+      <a href="#studio">Studio</a>
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+    </div>
+    <a href="#contact" class="btn">Start a project</a>
+    <button class="menu-btn" aria-label="Open menu" aria-expanded="false">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h16M4 16h16"/></svg>
+    </button>
+  </nav>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="reveal">
+          <span class="eyebrow">Landscape Architecture · Est. 2011</span>
+          <h1>Places that grow <em>better</em> with time.</h1>
+          <p class="lead">Understory designs gardens, public landscapes and restored ecologies rooted in native planting, careful water and the long view. Rooted in the Pacific Northwest, with work across three continents.</p>
+          <div class="hero-ctas">
+            <a href="#work" class="btn">View selected work
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#studio" class="btn ghost">Our approach</a>
+          </div>
+        </div>
+        <div class="hero-meta reveal">
+          <div class="stat"><b>140+</b><span>Built landscapes</span></div>
+          <div class="stat"><b>62k</b><span>Native plants placed<br>last year</span></div>
+          <div class="stat"><b>18</b><span>National design awards</span></div>
+        </div>
+      </div>
+
+      <div class="hero-art reveal">
+        <svg viewBox="0 0 1200 514" preserveAspectRatio="xMidYMid slice" aria-label="Illustrated layered landscape of hills, trees and a pond">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#e7d9c0"/><stop offset=".7" stop-color="#efe3cc"/><stop offset="1" stop-color="#f3e9d6"/>
+            </linearGradient>
+            <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#a9bcae"/><stop offset="1" stop-color="#7f9886"/>
+            </linearGradient>
+          </defs>
+          <rect width="1200" height="514" fill="url(#sky)"/>
+          <circle cx="880" cy="170" r="70" fill="#e4a77f" opacity=".75"/>
+          <path d="M0 270 C160 210 300 240 430 200 S700 150 860 210 1100 190 1200 220 V514 H0z" fill="#b9c4a6"/>
+          <path d="M0 320 C200 270 380 300 520 270 S820 240 980 280 1150 260 1200 270 V514 H0z" fill="#8fa383"/>
+          <g fill="#5b7656">
+            <path d="M140 300 l18 -70 18 70z"/><path d="M175 305 l14 -52 14 52z"/><path d="M990 285 l20 -80 20 80z"/><path d="M1030 290 l14 -55 14 55z"/>
+            <circle cx="700" cy="262" r="26"/><circle cx="730" cy="270" r="20"/>
+          </g>
+          <path d="M0 380 C180 340 360 370 520 350 S860 320 1020 360 1160 350 1200 355 V514 H0z" fill="#5f7a58"/>
+          <ellipse cx="640" cy="430" rx="260" ry="38" fill="url(#water)"/>
+          <path d="M420 430 h60 M560 440 h90 M700 424 h70" stroke="#e8eee6" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+          <path d="M0 450 C200 420 340 470 420 460 S560 490 640 480 820 470 900 470 1100 440 1200 450 V514 H0z" fill="#3f5a3c"/>
+          <g stroke="#2c4430" stroke-width="2" fill="none" stroke-linecap="round">
+            <path d="M80 470 q4 -30 -6 -50 M92 472 q2 -24 10 -40 M100 470 q-2 -18 -14 -30"/>
+            <path d="M1080 462 q4 -30 -6 -50 M1092 464 q2 -24 10 -40 M1100 462 q-2 -18 -14 -30"/>
+          </g>
+          <g fill="#b8643f">
+            <circle cx="78" cy="420" r="4"/><circle cx="102" cy="432" r="4"/><circle cx="1074" cy="412" r="4"/><circle cx="1102" cy="422" r="4"/>
+          </g>
+          <g fill="#2c4430">
+            <path d="M260 470 l26 -110 26 110z"/><path d="M300 474 l20 -82 20 82z"/>
+            <path d="M880 470 l28 -120 28 120z"/>
+          </g>
+        </svg>
+        <div class="hero-caption"><span class="dot"></span>Cedar Hollow Wetland Park, 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section id="studio">
+    <div class="wrap">
+      <div class="philo">
+        <div class="reveal">
+          <span class="eyebrow">The studio</span>
+          <h2>Design from the <em>ground</em> up.</h2>
+        </div>
+        <div class="philo-body reveal">
+          <p>We read a site before we draw on it — its soils, its water, its light and the people who already love it. The best landscapes feel inevitable, as though they were always meant to be there.</p>
+          <p>Our team of 24 landscape architects, ecologists and horticulturists works from a single studio in Portland. We take on a small number of projects each year so every one gets the time a living thing deserves — from first walk to tenth growing season.</p>
+        </div>
+      </div>
+      <div class="principles">
+        <div class="principle reveal"><h3>Native first</h3><p>Over 80% of our planting palettes are regionally native, chosen for habitat value and resilience.</p></div>
+        <div class="principle reveal"><h3>Water as structure</h3><p>Rain gardens, bioswales and ponds that turn runoff into the backbone of the design.</p></div>
+        <div class="principle reveal"><h3>Built to mature</h3><p>We design for year ten, not opening day — and stay on as stewards while the landscape settles in.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="services-head reveal">
+        <div>
+          <span class="eyebrow">What we do</span>
+          <h2 style="margin-top:20px">Four scales, <em>one</em> sensibility.</h2>
+        </div>
+        <p>From a courtyard to a watershed, our process stays the same: listen closely, design patiently, build carefully.</p>
+      </div>
+      <ul class="service-list">
+        <li class="service reveal"><span class="num">01</span><h3>Residential gardens</h3><p>Private gardens, estates and rooftops — planted spaces made for daily life and the changing seasons.</p><svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></li>
+        <li class="service reveal"><span class="num">02</span><h3>Public realm</h3><p>Parks, plazas and streetscapes that invite people to linger, gather and look after one another.</p><svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></li>
+        <li class="service reveal"><span class="num">03</span><h3>Ecological restoration</h3><p>Wetland, riparian and meadow restoration grounded in field ecology and long-term monitoring.</p><svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></li>
+        <li class="service reveal"><span class="num">04</span><h3>Master planning</h3><p>Campus, institutional and mixed-use frameworks where landscape leads, not follows.</p><svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work">
+    <div class="wrap">
+      <div class="projects-head reveal">
+        <div>
+          <span class="eyebrow">Selected work</span>
+          <h2 style="margin-top:20px">Recent <em>landscapes</em></h2>
+        </div>
+        <div class="filters" role="tablist">
+          <button class="active" data-filter="all">All</button>
+          <button data-filter="public">Public</button>
+          <button data-filter="residential">Residential</button>
+          <button data-filter="ecology">Ecology</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card wide reveal" data-cat="public">
+          <div class="img">
+            <svg viewBox="0 0 700 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="700" height="460" fill="#cdd5bf"/>
+              <g fill="none" stroke="#9fb08f" stroke-width="1.4">
+                <path d="M-20 80 C150 40 300 120 720 60"/><path d="M-20 120 C160 80 320 160 720 100"/><path d="M-20 160 C170 120 340 200 720 140"/><path d="M-20 200 C180 160 360 240 720 180"/>
+              </g>
+              <path d="M0 300 C120 260 220 330 350 300 S600 250 700 280 V460 H0z" fill="#6f8a66"/>
+              <path d="M90 460 C200 360 420 360 560 460" fill="none" stroke="#e9dfc9" stroke-width="22"/>
+              <g fill="#3f5a3c"><circle cx="120" cy="290" r="38"/><circle cx="170" cy="300" r="30"/><circle cx="560" cy="270" r="44"/><circle cx="610" cy="290" r="32"/></g>
+              <g fill="#b8643f"><rect x="320" y="370" width="60" height="8" rx="2"/><rect x="420" y="390" width="60" height="8" rx="2"/></g>
+            </svg>
+            <span class="tag">Public realm</span>
+          </div>
+          <div class="card-meta"><h3>Cedar Hollow Wetland Park</h3><span>Portland, OR · 2025</span></div>
+          <p>Eleven acres of former industrial land reborn as a stormwater park, filtering runoff for 40 city blocks.</p>
+        </article>
+
+        <article class="card narrow reveal" data-cat="residential">
+          <div class="img">
+            <svg viewBox="0 0 500 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="500" height="460" fill="#e6d7bd"/>
+              <rect x="60" y="60" width="380" height="340" fill="#d4c3a2"/>
+              <rect x="100" y="100" width="300" height="260" fill="#8fa383"/>
+              <rect x="190" y="180" width="120" height="100" fill="#9fb6b1"/>
+              <g fill="#3f5a3c"><circle cx="130" cy="130" r="22"/><circle cx="370" cy="130" r="22"/><circle cx="130" cy="330" r="22"/><circle cx="370" cy="330" r="22"/></g>
+              <g fill="#c9845f"><circle cx="160" cy="230" r="6"/><circle cx="340" cy="230" r="6"/><circle cx="250" cy="150" r="6"/><circle cx="250" cy="310" r="6"/></g>
+            </svg>
+            <span class="tag">Residential</span>
+          </div>
+          <div class="card-meta"><h3>The Linden Courtyard</h3><span>Seattle, WA · 2024</span></div>
+          <p>A walled garden of mosses, ferns and a still reflecting pool for a 1920s brick home.</p>
+        </article>
+
+        <article class="card narrow reveal" data-cat="ecology">
+          <div class="img">
+            <svg viewBox="0 0 500 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="500" height="460" fill="#dfe3d2"/>
+              <path d="M-10 0 C100 120 60 220 180 300 S320 420 300 470" fill="none" stroke="#86a3a0" stroke-width="40"/>
+              <path d="M-10 0 C100 120 60 220 180 300 S320 420 300 470" fill="none" stroke="#a9c2bd" stroke-width="18"/>
+              <g fill="#5f7a58"><circle cx="300" cy="120" r="34"/><circle cx="350" cy="160" r="26"/><circle cx="410" cy="110" r="30"/><circle cx="80" cy="360" r="30"/><circle cx="420" cy="320" r="38"/></g>
+              <g stroke="#7d9470" stroke-width="2" stroke-linecap="round">
+                <path d="M220 200 v-20 M230 205 v-26 M240 200 v-18 M380 260 v-22 M390 262 v-28 M400 258 v-16"/>
+              </g>
+            </svg>
+            <span class="tag">Ecology</span>
+          </div>
+          <div class="card-meta"><h3>Mill Creek Restoration</h3><span>Clackamas, OR · 2023</span></div>
+          <p>2.3 miles of re-meandered stream with salmon spawning beds returning after 60 years.</p>
+        </article>
+
+        <article class="card wide reveal" data-cat="public">
+          <div class="img">
+            <svg viewBox="0 0 700 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="700" height="460" fill="#ece3d0"/>
+              <g fill="#d5c6a8"><rect x="0" y="0" width="700" height="140"/></g>
+              <g fill="#c1b090"><rect x="40" y="40" width="120" height="100"/><rect x="190" y="20" width="160" height="120"/><rect x="380" y="50" width="110" height="90"/><rect x="520" y="30" width="150" height="110"/></g>
+              <g stroke="#cfc2a6" stroke-width="2">
+                <path d="M0 200 H700 M0 260 H700 M0 320 H700 M0 380 H700"/>
+              </g>
+              <g fill="#7d9470"><rect x="60" y="180" width="160" height="60" rx="30"/><rect x="300" y="290" width="200" height="60" rx="30"/><rect x="540" y="200" width="130" height="60" rx="30"/></g>
+              <g fill="#3f5a3c"><circle cx="100" cy="210" r="18"/><circle cx="180" cy="210" r="18"/><circle cx="350" cy="320" r="18"/><circle cx="450" cy="320" r="18"/><circle cx="600" cy="230" r="18"/></g>
+              <g fill="#b8643f"><circle cx="140" cy="214" r="4"/><circle cx="400" cy="318" r="4"/><circle cx="640" cy="226" r="4"/></g>
+            </svg>
+            <span class="tag">Public realm</span>
+          </div>
+          <div class="card-meta"><h3>Alder Street Plaza</h3><span>Vancouver, BC · 2024</span></div>
+          <p>A downtown plaza of planted islands and timber seating that doubled weekday foot traffic.</p>
+        </article>
+
+        <article class="card reveal" data-cat="residential">
+          <div class="img">
+            <svg viewBox="0 0 600 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="600" height="450" fill="#e9dcc3"/>
+              <path d="M0 250 C150 200 250 280 400 230 S560 200 600 210 V450 H0z" fill="#c8b98e"/>
+              <g stroke="#a89a6c" stroke-width="2" stroke-linecap="round">
+                <path d="M40 330 q6 -40 -4 -70 M60 332 q2 -36 12 -58 M300 380 q6 -40 -4 -70 M320 382 q2 -36 12 -58 M480 320 q6 -40 -4 -70 M500 322 q2 -36 12 -58"/>
+              </g>
+              <g fill="#9a6a8c"><circle cx="120" cy="300" r="5"/><circle cx="140" cy="320" r="5"/><circle cx="380" cy="300" r="5"/><circle cx="400" cy="340" r="5"/><circle cx="220" cy="360" r="5"/></g>
+              <g fill="#d9a441"><circle cx="190" cy="290" r="5"/><circle cx="440" cy="280" r="5"/><circle cx="540" cy="350" r="5"/><circle cx="90" cy="390" r="5"/></g>
+              <rect x="420" y="120" width="140" height="90" fill="#f3efe6"/><path d="M410 120 l80 -50 80 50z" fill="#4a564c"/>
+            </svg>
+            <span class="tag">Residential</span>
+          </div>
+          <div class="card-meta"><h3>Hawthorn Meadow House</h3><span>Hood River, OR · 2023</span></div>
+          <p>A lawn replaced with a pollinator meadow — 140 species, one mow a year.</p>
+        </article>
+
+        <article class="card reveal" data-cat="ecology">
+          <div class="img">
+            <svg viewBox="0 0 600 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="600" height="450" fill="#d7ddd0"/>
+              <g fill="none" stroke="#8ea18a" stroke-width="1.5">
+                <ellipse cx="300" cy="230" rx="260" ry="170"/><ellipse cx="300" cy="230" rx="210" ry="135"/><ellipse cx="300" cy="230" rx="160" ry="100"/><ellipse cx="300" cy="230" rx="110" ry="66"/>
+              </g>
+              <ellipse cx="300" cy="230" rx="62" ry="36" fill="#86a3a0"/>
+              <g fill="#3f5a3c"><circle cx="90" cy="90" r="26"/><circle cx="510" cy="370" r="30"/><circle cx="520" cy="80" r="22"/><circle cx="80" cy="380" r="24"/></g>
+              <path d="M300 194 v-60 M300 266 v70" stroke="#b8643f" stroke-width="2" stroke-dasharray="4 6"/>
+            </svg>
+            <span class="tag">Ecology</span>
+          </div>
+          <div class="card-meta"><h3>Sauvie Island Kettle Pond</h3><span>Multnomah, OR · 2022</span></div>
+          <p>A seasonal wetland rebuilt for migratory birds, now hosting 90+ recorded species.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="process" id="process">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">How we work</span>
+        <h2 style="margin-top:20px; max-width:16ch">A process measured in <em>seasons</em>.</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><h3>Listen</h3><p>Site walks, soil tests, community conversations and a full year of seasonal observation where we can.</p><small>4–8 weeks</small></div>
+        <div class="step reveal"><h3>Shape</h3><p>Concept and schematic design, tested with physical models and planting studies.</p><small>2–4 months</small></div>
+        <div class="step reveal"><h3>Build</h3><p>Construction documents and close site supervision with growers and craftspeople we trust.</p><small>3–12 months</small></div>
+        <div class="step reveal"><h3>Steward</h3><p>Three years of establishment care and monitoring, so the landscape matures as intended.</p><small>Ongoing</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="quote">
+    <div class="wrap reveal">
+      <span class="eyebrow">Kind words</span>
+      <blockquote>“They gave us a park that already feels like it has always been here.”</blockquote>
+      <cite><b>Maria Okafor</b> — Director, Portland Parks Foundation</cite>
+      <div class="press">
+        <span>Landscape Journal</span><span>Dwell</span><span>Topos</span><span>Gardenista</span><span>ASLA Honor Award</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" style="padding-top:0">
+    <div class="contact reveal">
+      <svg class="topo" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g fill="none" stroke="#f3efe6" stroke-width="1.2">
+          <path d="M900 -50 C1050 100 1250 80 1300 250"/><path d="M850 -50 C1000 150 1250 140 1300 320"/><path d="M800 -50 C950 200 1250 200 1300 390"/><path d="M750 -50 C900 250 1250 260 1300 460"/><path d="M700 -50 C850 300 1250 320 1300 530"/><path d="M650 -50 C800 350 1250 380 1300 600"/>
+          <path d="M-50 450 C150 400 250 520 420 650"/><path d="M-50 380 C180 330 300 480 500 650"/><path d="M-50 310 C200 260 360 440 580 650"/>
+        </g>
+      </svg>
+      <div class="contact-grid">
+        <div>
+          <span class="eyebrow">Start a project</span>
+          <h2 style="margin-top:20px">Let’s walk your <em>site</em> together.</h2>
+          <p>Tell us a little about your land and what you hope it could become. We reply to every inquiry within two working days.</p>
+          <div class="contact-info">
+            <a href="mailto:hello@understory.studio">hello@understory.studio</a>
+            <span>+1 (503) 555 0148</span>
+            <span>1120 SE Water Ave, Portland, OR</span>
+          </div>
+        </div>
+        <div>
+          <form id="form">
+            <div class="row">
+              <div class="field"><label for="name">Name</label><input id="name" required autocomplete="name"></div>
+              <div class="field"><label for="email">Email</label><input id="email" type="email" required autocomplete="email"></div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="type">Project type</label>
+                <select id="type"><option>Residential garden</option><option>Public realm</option><option>Ecological restoration</option><option>Master planning</option><option>Something else</option></select>
+              </div>
+              <div class="field"><label for="size">Site size</label>
+                <select id="size"><option>Under 1 acre</option><option>1–10 acres</option><option>10–100 acres</option><option>100+ acres</option></select>
+              </div>
+            </div>
+            <div class="field"><label for="msg">Tell us about it</label><textarea id="msg" placeholder="Location, timeline, what you love about the place…"></textarea></div>
+            <button class="btn" type="submit">Send inquiry
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </form>
+          <p class="sent" id="sent">Thank you — we’ll be in touch within two working days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#" class="logo">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--moss)" aria-hidden="true">
+            <path d="M16 29V13"/><path d="M16 18c-5 0-8-3-8-8 5 0 8 3 8 8z" fill="currentColor" fill-opacity=".15"/>
+            <path d="M16 14c4 0 7-2.5 7-7-4 0-7 2.5-7 7z" fill="currentColor" fill-opacity=".15"/><path d="M5 29h22"/>
+          </svg>
+          Understory
+        </a>
+        <p>Landscape architecture for gardens, cities and the wild places in between.</p>
+      </div>
+      <div><h4>Studio</h4><ul><li><a href="#studio">About</a></li><li><a href="#process">Process</a></li><li><a href="#">Careers</a></li><li><a href="#">Journal</a></li></ul></div>
+      <div><h4>Work</h4><ul><li><a href="#work">Public realm</a></li><li><a href="#work">Residential</a></li><li><a href="#work">Ecology</a></li><li><a href="#work">Planning</a></li></ul></div>
+      <div><h4>Follow</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">Newsletter</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© <span id="yr"></span> Understory Landscape Studio</span><span>Designed on the ancestral lands of the Multnomah, Clackamas and Chinook peoples.</span></div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Header border on scroll + mobile menu
+  const header = document.querySelector('header');
+  addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 10), { passive: true });
+  const menuBtn = document.querySelector('.menu-btn');
+  menuBtn.addEventListener('click', () => {
+    const open = header.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.links a').forEach(a => a.addEventListener('click', () => header.classList.remove('open')));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Project filters
+  const buttons = document.querySelectorAll('.filters button');
+  buttons.forEach(b => b.addEventListener('click', () => {
+    buttons.forEach(x => x.classList.toggle('active', x === b));
+    const f = b.dataset.filter;
+    document.querySelectorAll('.card').forEach(c => {
+      const show = f === 'all' || c.dataset.cat === f;
+      c.classList.toggle('hide', !show);
+      if (show) c.classList.add('in');
+    });
+  }));
+
+  // Contact form (demo)
+  document.getElementById('form').addEventListener('submit', e => {
+    e.preventDefault();
+    e.target.style.display = 'none';
+    document.getElementById('sent').style.display = 'block';
+  });
+</script>
+</body>
+</html>

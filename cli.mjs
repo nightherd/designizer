@@ -70,7 +70,7 @@ async function shoot(page, file, only) {
 function sets(split) {
   const ai = read(join(ROOT, 'eval/ai.json')).map(e => ({ id: e.id, label: 'ai', split: e.split, target: join(ROOT, 'eval', e.file) }));
   const human = read(join(ROOT, 'eval/human.json')).map(e => ({ id: e.id, label: 'human', split: e.split, target: e.url, hard: e.hard }));
-  return [...ai, ...human].filter(e => split === 'all' || e.split === split);
+  return [...ai, ...human].filter(e => split === 'all' || split.split(',').includes(e.split));
 }
 
 async function evaluate() {
@@ -87,7 +87,7 @@ async function evaluate() {
       try {
         ({ page, close } = await open(browser, e.target));
         const r = await scanPage(page);
-        const row = { label: e.label, split: e.split, score: r.score, verdict: r.verdict, fired: r.fired.map(f => f.id), url: e.label === 'human' ? e.target : undefined, scanned: new Date().toISOString().slice(0, 10) };
+        const row = { label: e.label, split: e.split, score: r.score, verdict: r.verdict, fired: r.fired.map(f => f.id), strength: Object.fromEntries(r.fired.map(f => [f.id, f.strength])), url: e.label === 'human' ? e.target : undefined, scanned: new Date().toISOString().slice(0, 10) };
         if (baselines) {
           row.baselines = {};
           for (const [name, fn] of Object.entries(baselines)) {
@@ -114,13 +114,13 @@ async function evaluate() {
     const src = readFileSync(readme, 'utf8');
     writeFileSync(readme, src.replace(/<!-- eval -->[\s\S]*<!-- \/eval -->/, `<!-- eval -->\n${table.md}\n<!-- /eval -->`));
   }
-  if (split === 'test' && !table.pass) process.exitCode = 1;
+  if (/test/.test(split) && !table.pass) process.exitCode = 1;
 }
 
 // Accuracy and false alarms for designizer and for each baseline. Baseline thresholds are tuned on the dev split,
 // the same way designizer's threshold was, then applied unchanged to the split being reported.
 function report(results, split) {
-  const rows = Object.entries(results).filter(([, r]) => split === 'all' || r.split === split);
+  const rows = Object.entries(results).filter(([, r]) => split === 'all' || split.split(',').includes(r.split));
   const dev = Object.values(results).filter(r => r.split === 'dev');
   const stats = (rs, isAi) => {
     const ai = rs.filter(r => r.label === 'ai'), hu = rs.filter(r => r.label === 'human');

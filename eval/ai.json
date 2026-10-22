@@ -518,5 +518,382 @@
     ],
     "file": "ai/ai-40.html",
     "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-41",
+    "split": "test-b",
+    "model": "sonnet",
+    "variant": "less-ai",
+    "product": "a project management tool for construction crews",
+    "prompt": "Build a landing page for a project management tool for construction crews. Make it look less AI-generated, not like a generic AI template. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ai-41.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-42",
+    "split": "test-b",
+    "model": "haiku",
+    "variant": "less-ai",
+    "product": "a vintage watch dealer",
+    "prompt": "Build a landing page for a vintage watch dealer. Make it look less AI-generated, not like a generic AI template. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ai-42.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-43",
+    "split": "test-b",
+    "model": "opus",
+    "variant": "skill",
+    "product": "a pediatric physiotherapy clinic",
+    "prompt": "Use the frontend-design skill to build a landing page for a pediatric physiotherapy clinic. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-opus-5-5"
+    ],
+    "file": "ai/ai-43.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-44",
+    "split": "test-b",
+    "model": "sonnet",
+    "variant": "skill",
+    "product": "a password manager for families",
+    "prompt": "Use the frontend-design skill to build a landing page for a password manager for families. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ai-44.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-45",
+    "split": "test-b",
+    "model": "haiku",
+    "variant": "skill",
+    "product": "a surf school in Portugal",
+    "prompt": "Use the frontend-design skill to build a landing page for a surf school in Portugal. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ai-45.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-46",
+    "split": "test-b",
+    "model": "opus",
+    "variant": "plain",
+    "product": "an employment law practice",
+    "prompt": "Build a landing page for an employment law practice. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-opus-5-5"
+    ],
+    "file": "ai/ai-46.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-47",
+    "split": "test-b",
+    "model": "sonnet",
+    "variant": "plain",
+    "product": "a robotics summer camp for teenagers",
+    "prompt": "Build a landing page for a robotics summer camp for teenagers. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ai-47.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-48",
+    "split": "test-b",
+    "model": "haiku",
+    "variant": "plain",
+    "product": "a documentary film production company",
+    "prompt": "Build a landing page for a documentary film production company. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ai-48.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-49",
+    "split": "test-b",
+    "model": "opus",
+    "variant": "less-ai",
+    "product": "a cat litter subscription",
+    "prompt": "Build a landing page for a cat litter subscription. Make it look less AI-generated, not like a generic AI template. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-opus-5-5"
+    ],
+    "file": "ai/ai-49.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-50",
+    "split": "test-b",
+    "model": "sonnet",
+    "variant": "less-ai",
+    "product": "a bike-sharing service for a mid-sized city",
+    "prompt": "Build a landing page for a bike-sharing service for a mid-sized city. Make it look less AI-generated, not like a generic AI template. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ai-50.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-51",
+    "split": "test-b",
+    "model": "haiku",
+    "variant": "less-ai",
+    "product": "an AI customer-support chatbot platform",
+    "prompt": "Build a landing page for an AI customer-support chatbot platform. Make it look less AI-generated, not like a generic AI template. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ai-51.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-52",
+    "split": "test-b",
+    "model": "opus",
+    "variant": "skill",
+    "product": "a natural wine bar",
+    "prompt": "Use the frontend-design skill to build a landing page for a natural wine bar. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-opus-5-5"
+    ],
+    "file": "ai/ai-52.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-53",
+    "split": "test-b",
+    "model": "sonnet",
+    "variant": "skill",
+    "product": "a property management company for landlords",
+    "prompt": "Use the frontend-design skill to build a landing page for a property management company for landlords. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ai-53.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-54",
+    "split": "test-b",
+    "model": "haiku",
+    "variant": "skill",
+    "product": "a mobile tire fitting service",
+    "prompt": "Use the frontend-design skill to build a landing page for a mobile tire fitting service. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ai-54.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-55",
+    "split": "test-b",
+    "model": "opus",
+    "variant": "plain",
+    "product": "a landscape architecture studio",
+    "prompt": "Build a landing page for a landscape architecture studio. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-opus-5-5"
+    ],
+    "file": "ai/ai-55.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-56",
+    "split": "test-b",
+    "model": "sonnet",
+    "variant": "plain",
+    "product": "a jazz club with live music every night",
+    "prompt": "Build a landing page for a jazz club with live music every night. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ai-56.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-57",
+    "split": "test-b",
+    "model": "haiku",
+    "variant": "plain",
+    "product": "a seed library and gardening co-op",
+    "prompt": "Build a landing page for a seed library and gardening co-op. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ai-57.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-58",
+    "split": "test-b",
+    "model": "opus",
+    "variant": "less-ai",
+    "product": "an online piano course",
+    "prompt": "Build a landing page for an online piano course. Make it look less AI-generated, not like a generic AI template. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-opus-5-5"
+    ],
+    "file": "ai/ai-58.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-59",
+    "split": "test-b",
+    "model": "sonnet",
+    "variant": "less-ai",
+    "product": "an applicant tracking system for startups",
+    "prompt": "Build a landing page for an applicant tracking system for startups. Make it look less AI-generated, not like a generic AI template. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ai-59.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-60",
+    "split": "test-b",
+    "model": "haiku",
+    "variant": "less-ai",
+    "product": "a sleep tracking app",
+    "prompt": "Build a landing page for a sleep tracking app. Make it look less AI-generated, not like a generic AI template. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ai-60.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-61",
+    "split": "test-b",
+    "model": "opus",
+    "variant": "skill",
+    "product": "a mountain hut in the Dolomites",
+    "prompt": "Use the frontend-design skill to build a landing page for a mountain hut in the Dolomites. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-opus-5-5"
+    ],
+    "file": "ai/ai-61.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-62",
+    "split": "test-b",
+    "model": "sonnet",
+    "variant": "skill",
+    "product": "a gluten-free bakery",
+    "prompt": "Use the frontend-design skill to build a landing page for a gluten-free bakery. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ai-62.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-63",
+    "split": "test-b",
+    "model": "haiku",
+    "variant": "skill",
+    "product": "an invoice financing fintech",
+    "prompt": "Use the frontend-design skill to build a landing page for an invoice financing fintech. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ai-63.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-64",
+    "split": "test-b",
+    "model": "opus",
+    "variant": "plain",
+    "product": "an open-source feature-flag service",
+    "prompt": "Build a landing page for an open-source feature-flag service. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-opus-5-5"
+    ],
+    "file": "ai/ai-64.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-65",
+    "split": "test-b",
+    "model": "sonnet",
+    "variant": "plain",
+    "product": "a hardware wallet for Bitcoin",
+    "prompt": "Build a landing page for a hardware wallet for Bitcoin. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ai-65.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-66",
+    "split": "test-b",
+    "model": "haiku",
+    "variant": "plain",
+    "product": "a handmade leather goods brand",
+    "prompt": "Build a landing page for a handmade leather goods brand. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ai-66.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-67",
+    "split": "test-b",
+    "model": "opus",
+    "variant": "less-ai",
+    "product": "a newsletter platform for independent writers",
+    "prompt": "Build a landing page for a newsletter platform for independent writers. Make it look less AI-generated, not like a generic AI template. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-opus-5-5"
+    ],
+    "file": "ai/ai-67.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-68",
+    "split": "test-b",
+    "model": "sonnet",
+    "variant": "less-ai",
+    "product": "a trampoline park",
+    "prompt": "Build a landing page for a trampoline park. Make it look less AI-generated, not like a generic AI template. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ai-68.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-69",
+    "split": "test-b",
+    "model": "haiku",
+    "variant": "less-ai",
+    "product": "an equine veterinary practice",
+    "prompt": "Build a landing page for an equine veterinary practice. Make it look less AI-generated, not like a generic AI template. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ai-69.html",
+    "generated": "2026-10-22"
   }
 ]

@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slow Keys — Piano for Grown-Ups</title>
+<meta name="description" content="A twenty-minute-a-day piano course for adults who always meant to learn. Taught by Margit Halloran.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3ede1;
+    --paper-2: #ebe3d3;
+    --ink: #1d1a16;
+    --ink-soft: #5b544a;
+    --rule: #c9bfae;
+    --red: #b8361f;
+    --key-white: #fbf8f1;
+    --key-black: #1d1a16;
+    --serif: "Spectral", Georgia, serif;
+    --display: "Bodoni Moda", "Didot", Georgia, serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  ::selection { background: var(--red); color: var(--paper); }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+  .label {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- top ---------- */
+  .notice {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    text-align: center;
+    padding: 9px 16px;
+  }
+  .notice a { color: #f0b9a8; }
+  header.top {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 22px 0; border-bottom: 1px solid var(--ink);
+  }
+  .wordmark {
+    font-family: var(--display); font-size: 26px; text-decoration: none;
+    letter-spacing: -.01em;
+  }
+  .wordmark i { color: var(--red); }
+  nav.top-nav { display: flex; gap: 26px; font-size: 16px; }
+  nav.top-nav a { text-decoration: none; }
+  nav.top-nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 56px;
+    padding: 72px 0 40px;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(44px, 7vw, 92px);
+    line-height: .98;
+    letter-spacing: -.025em;
+    margin: 14px 0 0;
+  }
+  .hero h1 em { color: var(--red); }
+  .letter {
+    align-self: end;
+    border-left: 1px solid var(--rule);
+    padding-left: 28px;
+    font-size: 18px;
+  }
+  .letter p { margin: 0 0 14px; }
+  .letter .sig {
+    font-family: var(--display); font-style: italic; font-size: 24px; margin-top: 18px;
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; margin-top: 22px; }
+  .btn {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: .03em;
+    padding: 14px 22px;
+    border: 1px solid var(--red);
+    transition: background .15s;
+  }
+  .btn:hover { background: #962a17; }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: var(--paper); }
+  .small { font-size: 15px; color: var(--ink-soft); }
+
+  /* ---------- keyboard ---------- */
+  .piano-block { padding: 24px 0 80px; }
+  .piano-head {
+    display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
+    gap: 8px; margin-bottom: 14px;
+  }
+  .piano-head .now {
+    font-family: var(--display); font-size: 22px; min-width: 4ch; text-align: right;
+  }
+  .piano {
+    position: relative;
+    display: flex;
+    height: 220px;
+    background: var(--ink);
+    padding: 14px 14px 0;
+    border-radius: 3px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+  }
+  .piano .felt {
+    position: absolute; left: 14px; right: 14px; top: 10px; height: 4px; background: var(--red);
+  }
+  .key {
+    position: relative;
+    flex: 1;
+    background: var(--key-white);
+    border-right: 1px solid #cfc6b4;
+    border-radius: 0 0 4px 4px;
+    cursor: pointer;
+    transition: background .05s;
+  }
+  .key:last-of-type { border-right: none; }
+  .key.down { background: #e4d9c3; }
+  .key span {
+    position: absolute; bottom: 10px; left: 0; right: 0; text-align: center;
+    font-family: var(--mono); font-size: 11px; color: #9a907f;
+  }
+  .key.black {
+    position: absolute;
+    top: 14px;
+    width: calc((100% - 28px) / 13 * .62);
+    height: 58%;
+    background: var(--key-black);
+    border: none;
+    border-radius: 0 0 3px 3px;
+    z-index: 2;
+    box-shadow: inset 0 -6px 0 #3a352e;
+  }
+  .key.black.down { background: #3a352e; box-shadow: inset 0 -2px 0 #3a352e; }
+  .key.black span { color: #8a8174; bottom: 8px; }
+  .piano-foot { margin-top: 12px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .piano-foot button {
+    font: inherit; font-family: var(--mono); font-size: 13px;
+    background: none; border: none; color: var(--red); cursor: pointer; padding: 0;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+
+  /* ---------- staff divider ---------- */
+  .staff {
+    height: 33px;
+    background: repeating-linear-gradient(to bottom, var(--rule) 0 1px, transparent 1px 8px);
+    position: relative;
+  }
+
+  section { padding: 96px 0; }
+  h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(34px, 4.6vw, 56px);
+    line-height: 1.04;
+    letter-spacing: -.02em;
+    margin: 10px 0 28px;
+  }
+
+  /* ---------- is / isn't ---------- */
+  .honest { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--ink); }
+  .honest > div { padding: 28px 32px 8px 0; }
+  .honest > div + div { padding-left: 32px; border-left: 1px solid var(--rule); }
+  .honest h3 { font-family: var(--mono); font-weight: 500; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 16px; }
+  .honest ul { list-style: none; padding: 0; margin: 0; }
+  .honest li { padding: 12px 0; border-bottom: 1px dotted var(--rule); }
+  .honest li:last-child { border-bottom: none; }
+  .honest .no h3 { color: var(--red); }
+  .honest .no li { color: var(--ink-soft); }
+
+  /* ---------- contents ---------- */
+  .contents-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; }
+  .toc { list-style: none; margin: 0; padding: 0; }
+  .toc > li { margin-bottom: 34px; }
+  .toc .part { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--red); }
+  .toc .part-title { font-family: var(--display); font-size: 30px; margin: 2px 0 10px; }
+  .toc ol { list-style: none; padding: 0; margin: 0; }
+  .toc ol li { display: flex; align-items: baseline; gap: 8px; font-size: 17.5px; padding: 3px 0; }
+  .toc ol li .dots { flex: 1; border-bottom: 1px dotted var(--ink-soft); transform: translateY(-5px); min-width: 20px; }
+  .toc ol li .n { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+  .aside-note {
+    position: sticky; top: 28px;
+    font-size: 17px;
+  }
+  .aside-note p { margin: 0 0 14px; }
+
+  /* ---------- a session ---------- */
+  .session { background: var(--paper-2); }
+  .bar { display: flex; height: 76px; margin: 36px 0 14px; border: 1px solid var(--ink); }
+  .bar div {
+    display: flex; align-items: flex-end; padding: 10px 12px;
+    font-family: var(--mono); font-size: 12.5px; border-right: 1px solid var(--ink);
+  }
+  .bar div:last-child { border-right: none; }
+  .bar .a { flex: 4; }
+  .bar .b { flex: 11; background: var(--ink); color: var(--paper); }
+  .bar .c { flex: 5; background: repeating-linear-gradient(135deg, transparent 0 6px, rgba(184,54,31,.18) 6px 7px); }
+  .bar-legend { display: grid; grid-template-columns: 4fr 11fr 5fr; gap: 18px; font-size: 16.5px; }
+  .bar-legend strong { display: block; font-weight: 500; margin-bottom: 4px; }
+  .bar-legend p { margin: 0; color: var(--ink-soft); }
+
+  /* ---------- teacher ---------- */
+  .teacher { display: grid; grid-template-columns: 300px 1fr; gap: 64px; align-items: start; }
+  .portrait {
+    aspect-ratio: 4 / 5;
+    background:
+      radial-gradient(circle at 50% 36%, #d9cdb6 0 21%, transparent 21.5%),
+      radial-gradient(ellipse at 50% 100%, #d9cdb6 0 46%, transparent 46.5%),
+      var(--paper-2);
+    border: 1px solid var(--rule);
+    position: relative;
+  }
+  .portrait figcaption {
+    position: absolute; left: 0; right: 0; bottom: -30px;
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft);
+  }
+  .teacher blockquote {
+    margin: 0 0 28px;
+    font-family: var(--display); font-style: italic;
+    font-size: clamp(26px, 3vw, 36px); line-height: 1.2;
+  }
+  .teacher .bio { columns: 2; column-gap: 40px; font-size: 17.5px; }
+  .teacher .bio p { margin: 0 0 14px; }
+
+  /* ---------- students ---------- */
+  .notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--ink); }
+  .note { padding: 28px 28px 0 0; }
+  .note + .note { padding-left: 28px; border-left: 1px solid var(--rule); }
+  .note p { margin: 0 0 18px; font-size: 18px; }
+  .note .who { font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); line-height: 1.6; }
+  .note .who b { color: var(--ink); font-weight: 500; }
+
+  /* ---------- price ---------- */
+  .price { background: var(--ink); color: var(--paper); }
+  .price .label { color: #a89f90; }
+  .price-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: end; }
+  .figure { font-family: var(--display); font-size: clamp(80px, 12vw, 150px); line-height: .9; letter-spacing: -.03em; }
+  .figure small { font-size: .22em; letter-spacing: 0; font-family: var(--serif); color: #bfb6a6; }
+  .price ul { list-style: none; padding: 0; margin: 0 0 28px; }
+  .price li { padding: 10px 0; border-bottom: 1px solid #3b362f; font-size: 17.5px; }
+  .price li::before { content: "—  "; color: var(--red); }
+  .price .small { color: #a89f90; }
+  .price .btn.ghost { color: var(--paper); border-color: var(--paper); }
+  .price .btn.ghost:hover { background: var(--paper); color: var(--ink); }
+
+  /* ---------- faq ---------- */
+  .faq { max-width: 760px; }
+  details { border-top: 1px solid var(--rule); }
+  details:last-of-type { border-bottom: 1px solid var(--rule); }
+  summary {
+    list-style: none; cursor: pointer; padding: 20px 40px 20px 0; position: relative;
+    font-size: 20px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: "+"; position: absolute; right: 4px; top: 16px;
+    font-family: var(--display); font-size: 28px; color: var(--red); transition: transform .2s;
+  }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { margin: 0 0 22px; color: var(--ink-soft); font-size: 17.5px; max-width: 64ch; }
+
+  footer { border-top: 1px solid var(--ink); padding: 30px 0 50px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 15px; color: var(--ink-soft); }
+
+  :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px) {
+    body { font-size: 18px; }
+    .wrap { padding: 0 16px; }
+    nav.top-nav a:not(:last-child) { display: none; }
+    .hero, .contents-grid, .teacher, .price-grid { grid-template-columns: 1fr; gap: 36px; }
+    .hero { padding-top: 44px; }
+    .letter { border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 22px; }
+    .honest, .notes { grid-template-columns: 1fr; }
+    .honest > div + div, .note + .note { padding-left: 0; border-left: none; border-top: 1px solid var(--rule); }
+    .note { padding-right: 0; padding-bottom: 10px; }
+    .aside-note { position: static; }
+    .teacher .portrait { max-width: 240px; }
+    .teacher .bio { columns: 1; }
+    .bar-legend { grid-template-columns: 1fr; }
+    .bar div { font-size: 11px; padding: 8px; }
+    section { padding: 68px 0; }
+    .piano { height: 170px; padding: 10px 8px 0; }
+    .piano .felt { left: 8px; right: 8px; top: 6px; }
+    .key.black { top: 10px; width: calc((100% - 16px) / 13 * .62); }
+    .key span { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="notice">Winter term starts 2 December · 41 places left · <a href="#price">enrol by 30 November</a></div>
+
+<div class="wrap">
+  <header class="top">
+    <a class="wordmark" href="#">Slow <i>Keys</i></a>
+    <nav class="top-nav">
+      <a href="#contents">Contents</a>
+      <a href="#teacher">Teacher</a>
+      <a href="#faq">Questions</a>
+      <a href="#price">Enrol</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <div class="label">Piano for adults · 20 minutes a day · 36 weeks</div>
+      <h1>You don’t need talent. You need <em>twenty minutes</em> and somewhere to put your hands.</h1>
+      <div class="cta-row">
+        <a class="btn" href="#price">Join the winter term</a>
+        <a class="small" href="#contents">or read the contents first</a>
+      </div>
+    </div>
+    <div class="letter">
+      <p>Most adults who quit piano quit in week three, when the excitement wears off and the left hand still won’t do what it’s told.</p>
+      <p>This course is built around week three. Short daily lessons, real pieces from the start, and a teacher who listens to your recordings every Friday.</p>
+      <div class="sig">— Margit</div>
+    </div>
+  </div>
+
+  <div class="piano-block" aria-label="Playable keyboard">
+    <div class="piano-head">
+      <div class="label">Go on, press something. Keys A → K on your keyboard, or tap.</div>
+      <div class="now" id="now" aria-live="polite">&nbsp;</div>
+    </div>
+    <div class="piano" id="piano"><div class="felt"></div></div>
+    <div class="piano-foot">
+      <span class="small">That’s one octave. Lesson 1 uses five of these keys.</span>
+      <button type="button" id="demo">Play the first thing you’ll learn ▸</button>
+    </div>
+  </div>
+</div>
+
+<div class="staff" aria-hidden="true"></div>
+
+<section>
+  <div class="wrap">
+    <div class="label">Before you spend anything</div>
+    <h2>What this is, and what it isn’t.</h2>
+    <div class="honest">
+      <div>
+        <h3>It is</h3>
+        <ul>
+          <li>A daily lesson of 6–9 minutes of video, then about 12 minutes of you playing.</li>
+          <li>Reading music properly. Slowly, but properly. No coloured-letter shortcuts.</li>
+          <li>A short recording you send each Friday, with written feedback by Monday.</li>
+          <li>Fine on a £150 keyboard with 61 keys. Weighted keys help, but they can wait.</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h3>It isn’t</h3>
+        <ul>
+          <li>“Play any song in 30 days.” You’ll play nice things by week six. Chopin is a year two problem.</li>
+          <li>A gamified app with streaks. Missing a day is normal; we just pick up again.</li>
+          <li>For children. The pacing, the pieces and the jokes are for people over about 16.</li>
+          <li>Exam prep. If you want Grade 3 by June, a local teacher will serve you better.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="staff" aria-hidden="true"></div>
+
+<section id="contents">
+  <div class="wrap contents-grid">
+    <div>
+      <div class="aside-note">
+        <div class="label">Contents</div>
+        <h2>Four parts, thirty-six weeks.</h2>
+        <p>It’s laid out like the method books I learned from, because that structure works: a small idea, a short study to practise it, then a real piece that uses it.</p>
+        <p class="small">Every piece is in the public domain or written for the course, so you get the sheet music as a printable PDF.</p>
+      </div>
+    </div>
+    <ol class="toc">
+      <li>
+        <div class="part">PART I · WEEKS 1–9</div>
+        <div class="part-title">The hands, separately</div>
+        <ol>
+          <li>Sitting, height, and why your wrists hurt<span class="dots"></span><span class="n">wk 1</span></li>
+          <li>Five-finger position, middle C, the treble staff<span class="dots"></span><span class="n">wk 2</span></li>
+          <li>Counting out loud (you will feel silly)<span class="dots"></span><span class="n">wk 4</span></li>
+          <li>The bass clef, from the bottom up<span class="dots"></span><span class="n">wk 6</span></li>
+          <li>First piece: <i>Ode to Joy</i>, both hands, not together yet<span class="dots"></span><span class="n">wk 9</span></li>
+        </ol>
+      </li>
+      <li>
+        <div class="part">PART II · WEEKS 10–18</div>
+        <div class="part-title">The hands, together</div>
+        <ol>
+          <li>Hands together at half speed, every time<span class="dots"></span><span class="n">wk 10</span></li>
+          <li>Three chords that cover most of folk music<span class="dots"></span><span class="n">wk 12</span></li>
+          <li>Moving out of position without looking<span class="dots"></span><span class="n">wk 15</span></li>
+          <li>Türk, <i>Arioso</i> · Gurlitt, <i>Morning Greeting</i><span class="dots"></span><span class="n">wk 18</span></li>
+        </ol>
+      </li>
+      <li>
+        <div class="part">PART III · WEEKS 19–28</div>
+        <div class="part-title">Sound, not just notes</div>
+        <ol>
+          <li>Legato, staccato, and the space between<span class="dots"></span><span class="n">wk 19</span></li>
+          <li>The sustain pedal, used sparingly<span class="dots"></span><span class="n">wk 22</span></li>
+          <li>Scales in C, G, F, and their minors<span class="dots"></span><span class="n">wk 24</span></li>
+          <li>Bach, <i>Minuet in G</i> (the one everyone knows)<span class="dots"></span><span class="n">wk 28</span></li>
+        </ol>
+      </li>
+      <li>
+        <div class="part">PART IV · WEEKS 29–36</div>
+        <div class="part-title">Playing for someone</div>
+        <ol>
+          <li>Learning a piece on your own, in a week<span class="dots"></span><span class="n">wk 29</span></li>
+          <li>Lead sheets: playing songs from chord symbols<span class="dots"></span><span class="n">wk 31</span></li>
+          <li>Satie, <i>Gymnopédie No. 1</i><span class="dots"></span><span class="n">wk 34</span></li>
+          <li>The end-of-term recital (online, optional, lovely)<span class="dots"></span><span class="n">wk 36</span></li>
+        </ol>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="session">
+  <div class="wrap">
+    <div class="label">A typical day</div>
+    <h2>Twenty minutes, split like this.</h2>
+    <div class="bar" role="img" aria-label="4 minutes warm-up, 11 minutes on the lesson, 5 minutes on your piece">
+      <div class="a">0:00</div>
+      <div class="b">0:04</div>
+      <div class="c">0:15 → 0:20</div>
+    </div>
+    <div class="bar-legend">
+      <div><strong>Warm up</strong><p>A finger pattern from yesterday. Slowly enough to be boring.</p></div>
+      <div><strong>Today’s idea</strong><p>Watch the short video once, then work through the study with the metronome in the app. Most of the learning happens here.</p></div>
+      <div><strong>Your piece</strong><p>Four bars of whatever you’re working on. Then stop, even if it’s going well.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="teacher">
+  <div class="wrap teacher">
+    <figure class="portrait" style="margin:0">
+      <figcaption>Margit, at the upright she’s had since 1994</figcaption>
+    </figure>
+    <div>
+      <div class="label">Your teacher</div>
+      <blockquote>“I taught children for twenty years. Adults are harder to teach, and much more fun. They actually want to be there.”</blockquote>
+      <div class="bio">
+        <p>Margit Halloran trained at the Royal Northern College of Music and spent two decades running a private studio in Leeds before most of her pupils turned out to be their parents.</p>
+        <p>She started Slow Keys in 2021 as a WhatsApp group for six adult beginners. It now has a little over 2,000 students, and she still reads every Friday recording herself, with help from two teachers she trained.</p>
+        <p>She plays mostly Schubert, badly-tuned jazz standards, and whatever her students are stuck on that week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="staff" aria-hidden="true"></div>
+
+<section>
+  <div class="wrap">
+    <div class="label">From last year’s students</div>
+    <h2>Notes people sent in.</h2>
+    <div class="notes">
+      <div class="note">
+        <p>I bought a keyboard during lockdown and it sat under a sheet for two years. Played the Minuet for my mum at Christmas. She cried, I nearly did.</p>
+        <div class="who"><b>Dev, 44</b><br>Started Sept 2024 · now on Part IV</div>
+      </div>
+      <div class="note">
+        <p>The Friday feedback is the whole thing for me. “Your thumb is collapsing on the C” is not something an app was ever going to tell me.</p>
+        <div class="who"><b>Ruth, 67</b><br>Retired GP · second term</div>
+      </div>
+      <div class="note">
+        <p>Honestly I nearly quit at week 11. Hands together broke my brain. Margit sent me a 40-second voice note and I went back to half speed. Fine now.</p>
+        <div class="who"><b>Tomasz, 29</b><br>Started Jan 2025 · plays Gymnopédie, slowly</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="price" id="price">
+  <div class="wrap price-grid">
+    <div>
+      <div class="label">One plan, everything included</div>
+      <div class="figure">£14<small> a month</small></div>
+      <p class="small" style="margin-top:18px">Or £120 for the full 36-week term, which works out a little cheaper. Prices include VAT.</p>
+    </div>
+    <div>
+      <ul>
+        <li>All 180 daily lessons, unlocked a week at a time</li>
+        <li>Printable sheet music for every piece</li>
+        <li>Weekly written feedback on your recording</li>
+        <li>The students’ forum, which is genuinely kind</li>
+        <li>Cancel by replying “cancel” to any email</li>
+      </ul>
+      <div class="cta-row" style="margin-top:0">
+        <a class="btn" href="#">Join for £14 a month</a>
+        <a class="btn ghost" href="#">Pay £120 for the term</a>
+      </div>
+      <p class="small" style="margin-top:16px">First week free. If it’s not for you, you won’t be charged.</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="label">Questions</div>
+    <h2>Things people ask before joining.</h2>
+    <div class="faq">
+      <details>
+        <summary>I’m 58. Is it too late?</summary>
+        <p>No. Our oldest current student is 81. Adults learn more slowly in the hands and more quickly in the head. You’ll understand theory faster than a ten-year-old, and your fingers will catch up.</p>
+      </details>
+      <details>
+        <summary>What do I need to buy?</summary>
+        <p>A keyboard with at least 61 full-size keys and a sustain pedal input, and something to prop your phone on for recordings. We keep a short, unsponsored list of keyboards that work well, starting around £150.</p>
+      </details>
+      <details>
+        <summary>I had lessons as a child and forgot everything.</summary>
+        <p>Very common. Start at Part I anyway; you’ll move through the first few weeks quickly, and it’s worth fixing the habits you picked up at eight.</p>
+      </details>
+      <details>
+        <summary>What if I miss a week?</summary>
+        <p>Lessons stay unlocked, so you just carry on where you left off. If you fall far behind the term, you can roll into the next one at no cost.</p>
+      </details>
+      <details>
+        <summary>Can I do it without reading music?</summary>
+        <p>Not really. Reading is about a third of the course, and it’s what lets you keep learning after you finish. We go slowly enough that people who were sure they’d hate it usually don’t.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span><span class="wordmark" style="font-size:20px">Slow <i style="color:var(--red)">Keys</i></span> &nbsp;·&nbsp; Made in Leeds</span>
+    <span>hello@slowkeys.example &nbsp;·&nbsp; <a href="#">Terms</a> &nbsp;·&nbsp; <a href="#">Privacy</a></span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const NOTES = [
+    { n: 'C',  k: 'a', f: 261.63 }, { n: 'C♯', k: 'w', f: 277.18, b: 1 },
+    { n: 'D',  k: 's', f: 293.66 }, { n: 'D♯', k: 'e', f: 311.13, b: 1 },
+    { n: 'E',  k: 'd', f: 329.63 },
+    { n: 'F',  k: 'f', f: 349.23 }, { n: 'F♯', k: 't', f: 369.99, b: 1 },
+    { n: 'G',  k: 'g', f: 392.00 }, { n: 'G♯', k: 'y', f: 415.30, b: 1 },
+    { n: 'A',  k: 'h', f: 440.00 }, { n: 'A♯', k: 'u', f: 466.16, b: 1 },
+    { n: 'B',  k: 'j', f: 493.88 },
+    { n: 'C',  k: 'k', f: 523.25 }
+  ];
+  const piano = document.getElementById('piano');
+  const now = document.getElementById('now');
+  const whites = NOTES.filter(x => !x.b).length;
+  let ctx, master;
+
+  function audio() {
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      master = ctx.createGain();
+      master.gain.value = 0.32;
+      const lp = ctx.createBiquadFilter();
+      lp.type = 'lowpass'; lp.frequency.value = 3200;
+      master.connect(lp).connect(ctx.destination);
+    }
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  // A plain additive tone with a fast attack and long decay: not a sampled piano, but it isn't a beep either.
+  function strike(f) {
+    const c = audio(), t = c.currentTime;
+    const env = c.createGain();
+    env.gain.setValueAtTime(0, t);
+    env.gain.linearRampToValueAtTime(1, t + 0.006);
+    env.gain.exponentialRampToValueAtTime(0.25, t + 0.4);
+    env.gain.exponentialRampToValueAtTime(0.0008, t + 2.6);
+    env.connect(master);
+    [[1, 1], [2, .42], [3, .18], [4, .09], [5, .05]].forEach(([h, a]) => {
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = h === 1 ? 'triangle' : 'sine';
+      o.frequency.value = f * h * (1 + (h - 1) * 0.0006);
+      g.gain.value = a;
+      o.connect(g).connect(env);
+      o.start(t); o.stop(t + 2.7);
+    });
+  }
+
+  let wi = 0;
+  NOTES.forEach((note, i) => {
+    const el = document.createElement('div');
+    el.className = 'key' + (note.b ? ' black' : '');
+    el.innerHTML = '<span>' + note.k.toUpperCase() + '</span>';
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', note.n);
+    if (note.b) {
+      el.style.left = `calc(14px + (100% - 28px) / ${whites} * ${wi} - (100% - 28px) / ${whites} * .31)`;
+    } else wi++;
+    note.el = el;
+    piano.appendChild(el);
+  });
+  // fix black-key offsets on the narrower mobile padding
+  const mq = matchMedia('(max-width: 860px)');
+  function place() {
+    const pad = mq.matches ? 8 : 14; let w = 0;
+    NOTES.forEach(n => {
+      if (n.b) n.el.style.left = `calc(${pad}px + (100% - ${pad * 2}px) / ${whites} * ${w} - (100% - ${pad * 2}px) / ${whites} * .31)`;
+      else w++;
+    });
+  }
+  place(); mq.addEventListener('change', place);
+
+  function play(note) {
+    strike(note.f);
+    now.textContent = note.n;
+    note.el.classList.add('down');
+    clearTimeout(note.t);
+    note.t = setTimeout(() => note.el.classList.remove('down'), 180);
+  }
+
+  piano.addEventListener('pointerdown', e => {
+    const el = e.target.closest('.key');
+    if (!el) return;
+    e.preventDefault();
+    play(NOTES.find(n => n.el === el));
+  });
+
+  const held = new Set();
+  window.addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+    if (/input|textarea/i.test(document.activeElement.tagName)) return;
+    const note = NOTES.find(n => n.k === e.key.toLowerCase());
+    if (note && !held.has(note.k)) { held.add(note.k); play(note); }
+  });
+  window.addEventListener('keyup', e => held.delete(e.key.toLowerCase()));
+
+  // Lesson 1: the opening of Ode to Joy, five-finger position.
+  const tune = 'E E F G G F E D C C D E E D D'.split(' ');
+  const beats = [1,1,1,1,1,1,1,1,1,1,1,1,1.5,.5,2];
+  let playing = false;
+  document.getElementById('demo').addEventListener('click', async () => {
+    if (playing) return; playing = true;
+    audio();
+    for (let i = 0; i < tune.length; i++) {
+      play(NOTES.find(n => n.n === tune[i] && n.f < 500));
+      await new Promise(r => setTimeout(r, beats[i] * 380));
+    }
+    playing = false;
+  });
+})();
+</script>
+</body>
+</html>

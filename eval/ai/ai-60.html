@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dimmer — a sleep log for irregular schedules</title>
+<meta name="description" content="Dimmer keeps a plain record of when you fell asleep, when you woke, and what your body was doing in between.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3efe6;
+    --paper-2: #ebe5d7;
+    --ink: #1d1c19;
+    --ink-2: #4a463e;
+    --muted: #7a7466;
+    --rule: #d6cebd;
+    --deep: #2c3a6e;
+    --light: #8291bd;
+    --rem: #c4572a;
+    --awake: #d8ccb3;
+    --accent: #c4572a;
+    --accent-ink: #fff8ef;
+    --serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #151513;
+      --paper-2: #1d1c19;
+      --ink: #ece6d8;
+      --ink-2: #b9b2a2;
+      --muted: #8a8475;
+      --rule: #34322c;
+      --deep: #8ea0e0;
+      --light: #56648f;
+      --rem: #e87b4f;
+      --awake: #4a4539;
+      --accent: #e87b4f;
+      --accent-ink: #151513;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #151513;
+    --paper-2: #1d1c19;
+    --ink: #ece6d8;
+    --ink-2: #b9b2a2;
+    --muted: #8a8475;
+    --rule: #34322c;
+    --deep: #8ea0e0;
+    --light: #56648f;
+    --rem: #e87b4f;
+    --awake: #4a4539;
+    --accent: #e87b4f;
+    --accent-ink: #151513;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 40px; } }
+
+  /* ---------- nav ---------- */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0; border-bottom: 1px solid var(--rule);
+  }
+  .mark {
+    font-size: 24px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .mark i {
+    display: inline-block; width: 14px; height: 14px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--paper) 0 28%, var(--ink) 29%);
+    box-shadow: inset 0 0 0 1.5px var(--ink);
+  }
+  .nav-links { display: none; gap: 28px; font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+  .nav-links a { text-decoration: none; color: var(--ink-2); }
+  .nav-links a:hover { color: var(--ink); }
+  @media (min-width: 760px) { .nav-links { display: flex; } }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 14px; letter-spacing: .02em;
+    padding: 12px 18px; border-radius: 2px; text-decoration: none;
+    border: 1.5px solid var(--ink); color: var(--ink); background: transparent;
+    transition: background .15s, color .15s;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.solid { background: var(--ink); color: var(--paper); }
+  .btn.solid:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    display: grid; gap: 48px; padding: 72px 0 88px;
+  }
+  @media (min-width: 900px) {
+    .hero { grid-template-columns: 1.02fr 1fr; align-items: center; gap: 56px; padding: 96px 0 112px; }
+  }
+  .eyebrow {
+    font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--muted); margin-bottom: 22px;
+  }
+  h1 {
+    font-weight: 400; font-size: clamp(46px, 7vw, 84px); line-height: 1.0;
+    letter-spacing: -0.025em; font-variation-settings: "opsz" 72;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .lede { margin-top: 28px; max-width: 30em; color: var(--ink-2); font-size: 21px; }
+  .cta { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .cta small { font-family: var(--mono); font-size: 12px; color: var(--muted); width: 100%; margin-top: 4px; }
+
+  /* night card */
+  .night {
+    background: var(--paper-2); border: 1px solid var(--rule); border-radius: 4px;
+    padding: 22px 20px 20px; position: relative;
+  }
+  .night-head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    font-family: var(--mono); font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em;
+    padding-bottom: 14px; border-bottom: 1px dashed var(--rule);
+  }
+  .night-head strong { color: var(--ink); font-weight: 500; }
+  .night svg { display: block; width: 100%; height: auto; margin: 10px 0 4px; overflow: visible; }
+  .night svg text { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
+  .night svg .lbl { fill: var(--ink-2); font-size: 11px; }
+  .s-awake { fill: var(--awake); }
+  .s-rem { fill: var(--rem); }
+  .s-light { fill: var(--light); }
+  .s-deep { fill: var(--deep); }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 14px; font-family: var(--mono); font-size: 12px; color: var(--ink-2);
+    margin-top: 8px;
+  }
+  .legend span::before {
+    content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px;
+  }
+  .legend .l-awake::before { background: var(--awake); }
+  .legend .l-rem::before { background: var(--rem); }
+  .legend .l-light::before { background: var(--light); }
+  .legend .l-deep::before { background: var(--deep); }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+    margin-top: 20px; border-top: 1px solid var(--rule);
+  }
+  .stats div { padding: 14px 0 6px; }
+  .stats div:nth-child(odd) { padding-right: 12px; border-right: 1px solid var(--rule); }
+  .stats div:nth-child(even) { padding-left: 14px; }
+  .stats div:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+  .stats dt { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+  .stats dd { font-size: 30px; line-height: 1.15; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  .stats dd small { font-size: 15px; color: var(--muted); margin-left: 2px; }
+
+  /* ---------- sections ---------- */
+  section { padding: 88px 0; border-top: 1px solid var(--rule); }
+  .sec-label {
+    font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted);
+  }
+  h2 { font-weight: 400; font-size: clamp(34px, 4.6vw, 52px); line-height: 1.08; letter-spacing: -0.02em; margin-top: 14px; max-width: 18em; }
+  h2 em { font-style: italic; }
+  .split { display: grid; gap: 40px; }
+  @media (min-width: 900px) { .split { grid-template-columns: 5fr 7fr; gap: 80px; } }
+
+  /* method rows */
+  .method { list-style: none; border-top: 1px solid var(--rule); }
+  .method li {
+    display: grid; grid-template-columns: 56px 1fr; gap: 12px; padding: 26px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .method .n { font-family: var(--mono); font-size: 14px; color: var(--accent); padding-top: 6px; }
+  .method h3 { font-weight: 500; font-size: 23px; letter-spacing: -0.01em; line-height: 1.2; }
+  .method p { color: var(--ink-2); margin-top: 6px; }
+  .caveat {
+    margin-top: 32px; padding-left: 18px; border-left: 2px solid var(--accent);
+    color: var(--ink-2); font-style: italic;
+  }
+
+  /* week table */
+  .week { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .week th {
+    font-family: var(--mono); font-weight: 400; font-size: 12px; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--muted); text-align: left; padding: 0 10px 12px 0; border-bottom: 1px solid var(--ink);
+  }
+  .week td {
+    padding: 15px 10px 15px 0; border-bottom: 1px solid var(--rule); font-size: 18px; vertical-align: middle;
+  }
+  .week td.mono { font-family: var(--mono); font-size: 15px; }
+  .week td.night-name { font-size: 18px; }
+  .week tr.hl td { color: var(--accent); }
+  .week tr.hl td.night-name { font-style: italic; }
+  .bar { height: 8px; background: var(--paper-2); border: 1px solid var(--rule); position: relative; min-width: 80px; }
+  .bar b { position: absolute; left: 0; top: 0; bottom: 0; background: var(--deep); }
+  .week tr.hl .bar b { background: var(--accent); }
+  .week .hide-s { display: none; }
+  @media (min-width: 640px) { .week .hide-s { display: table-cell; } }
+  .target { position: relative; }
+  .table-note { margin-top: 18px; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+
+  /* privacy */
+  .privacy-list { list-style: none; margin-top: 30px; }
+  .privacy-list li {
+    padding: 16px 0; border-top: 1px solid var(--rule); display: flex; gap: 14px; color: var(--ink-2);
+  }
+  .privacy-list li:last-child { border-bottom: 1px solid var(--rule); }
+  .privacy-list b { color: var(--ink); font-weight: 500; min-width: 9.5em; }
+
+  /* pricing */
+  .prices { display: grid; gap: 18px; margin-top: 44px; }
+  @media (min-width: 720px) { .prices { grid-template-columns: 1fr 1fr; } }
+  .price {
+    border: 1px solid var(--rule); padding: 30px 28px 28px; background: var(--paper-2); border-radius: 3px;
+    display: flex; flex-direction: column;
+  }
+  .price.featured { border: 1.5px solid var(--ink); background: var(--paper); }
+  .price .tag { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+  .price .amt { font-size: 56px; line-height: 1; letter-spacing: -0.03em; margin-top: 18px; font-variant-numeric: lining-nums; }
+  .price .amt small { font-size: 18px; color: var(--muted); letter-spacing: 0; }
+  .price p { color: var(--ink-2); margin-top: 14px; font-size: 17px; }
+  .price ul { list-style: none; margin: 22px 0 28px; font-size: 17px; color: var(--ink-2); }
+  .price li { padding: 7px 0 7px 22px; position: relative; }
+  .price li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+  .price .btn { margin-top: auto; justify-content: center; }
+
+  /* faq */
+  details { border-top: 1px solid var(--rule); padding: 20px 0; }
+  details:last-child { border-bottom: 1px solid var(--rule); }
+  summary {
+    cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 20px;
+    font-size: 21px; line-height: 1.3;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--mono); font-size: 20px; color: var(--muted); transition: transform .2s; }
+  details[open] summary::after { content: "–"; }
+  details p { margin-top: 12px; max-width: 40em; color: var(--ink-2); }
+
+  footer { padding: 48px 0 56px; border-top: 1px solid var(--rule); font-size: 16px; color: var(--muted); }
+  .foot { display: flex; flex-direction: column; gap: 22px; justify-content: space-between; }
+  @media (min-width: 720px) { .foot { flex-direction: row; } }
+  .foot nav { border: 0; padding: 0; display: flex; gap: 22px; flex-wrap: wrap; font-family: var(--mono); font-size: 13px; }
+  .foot a { text-decoration: none; }
+  .foot a:hover { color: var(--ink); }
+  .fine { font-family: var(--mono); font-size: 12px; margin-top: 26px; max-width: 60em; line-height: 1.6; }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <a class="mark" href="#top"><i></i>Dimmer</a>
+    <div class="nav-links">
+      <a href="#method">Method</a>
+      <a href="#log">Log</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <a class="btn" href="#pricing">Get the app</a>
+  </nav>
+
+  <header class="hero" id="top">
+    <div>
+      <p class="eyebrow">A sleep log for irregular schedules</p>
+      <h1>The night, <em>accounted for.</em></h1>
+      <p class="lede">Dimmer records when you fell asleep, when you surfaced, and what your body was doing in between. It was built for night-shift nurses, new parents and anyone whose sleep moves around more than the calendar does.</p>
+      <div class="cta">
+        <a class="btn solid" href="#pricing">Download for iPhone</a>
+        <a class="btn" href="#method">How it reads the night</a>
+        <small>Apple Watch recommended. Works with a phone on the nightstand, less precisely.</small>
+      </div>
+    </div>
+
+    <figure class="night" aria-label="Sleep timeline for Tuesday 21 October">
+      <div class="night-head">
+        <span><strong>Tue 21 Oct</strong> · last night</span>
+        <span>23:00 → 07:54</span>
+      </div>
+      <svg id="timeline" viewBox="0 0 780 232" role="img" aria-label="Sleep stages from 23:00 to 07:54"></svg>
+      <div class="legend">
+        <span class="l-awake">Awake</span>
+        <span class="l-rem">REM</span>
+        <span class="l-light">Light</span>
+        <span class="l-deep">Deep</span>
+      </div>
+      <dl class="stats">
+        <div><dt>Asleep</dt><dd id="s-asleep">7h 42m</dd></div>
+        <div><dt>Efficiency</dt><dd id="s-eff">87<small>%</small></dd></div>
+        <div><dt>Fell asleep in</dt><dd id="s-onset">18<small>min</small></dd></div>
+        <div><dt>Woke up</dt><dd id="s-wakes">3<small>times</small></dd></div>
+      </dl>
+    </figure>
+  </header>
+</div>
+
+<section id="method">
+  <div class="wrap split">
+    <div>
+      <p class="sec-label">The method</p>
+      <h2>Three signals. <em>One honest guess</em> at each stage.</h2>
+      <p class="caveat">Wrist motion and heart rate are good at telling asleep from awake. They are weaker at separating light sleep from deep sleep. Dimmer shows you that uncertainty instead of hiding it.</p>
+    </div>
+    <ol class="method">
+      <li>
+        <span class="n">01</span>
+        <div>
+          <h3>Movement</h3>
+          <p>An accelerometer notes when you are still and when you turn over. Long stillness after lights-out is the first thing the app looks for.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">02</span>
+        <div>
+          <h3>Heart rate and its variability</h3>
+          <p>Heart rate drops during deep sleep, and its beat-to-beat variation rises during REM. Dimmer reads both and draws the stage boundaries from them.</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">03</span>
+        <div>
+          <h3>Your own baseline</h3>
+          <p>After about ten nights the app stops comparing you to an average person and starts comparing you to you. Stage lengths are scored against your last month.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="log">
+  <div class="wrap">
+    <div style="display:grid;gap:28px" class="split">
+      <div>
+        <p class="sec-label">The log</p>
+        <h2>Two weeks, <em>no averages</em> hiding the bad nights.</h2>
+        <p style="margin-top:24px;color:var(--ink-2);max-width:26em">Every night is a row you can open. Shift changes show up as a visible drift in bedtime, so you can see the cause of a tired Thursday instead of guessing at it.</p>
+      </div>
+      <div>
+        <table class="week">
+          <thead>
+            <tr><th>Night</th><th>In bed</th><th>Woke</th><th class="hide-s">Asleep</th><th>Length</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="night-name">Sat 18</td><td class="mono">02:20</td><td class="mono">10:40</td><td class="mono hide-s">7h 58m</td><td><div class="bar"><b style="width:88%"></b></div></td></tr>
+            <tr><td class="night-name">Sun 19</td><td class="mono">23:55</td><td class="mono">06:02</td><td class="mono hide-s">5h 41m</td><td><div class="bar"><b style="width:63%"></b></div></td></tr>
+            <tr><td class="night-name">Mon 20</td><td class="mono">23:05</td><td class="mono">07:30</td><td class="mono hide-s">7h 02m</td><td><div class="bar"><b style="width:78%"></b></div></td></tr>
+            <tr class="hl"><td class="night-name">Tue 21</td><td class="mono">23:00</td><td class="mono">07:54</td><td class="mono hide-s">7h 42m</td><td><div class="bar"><b style="width:86%"></b></div></td></tr>
+            <tr><td class="night-name">Wed 22</td><td class="mono">00:12</td><td class="mono">06:48</td><td class="mono hide-s">6h 21m</td><td><div class="bar"><b style="width:70%"></b></div></td></tr>
+            <tr><td class="night-name">Thu 23</td><td class="mono">01:31</td><td class="mono">08:20</td><td class="mono hide-s">6h 36m</td><td><div class="bar"><b style="width:73%"></b></div></td></tr>
+            <tr><td class="night-name">Fri 24</td><td class="mono">22:48</td><td class="mono">08:05</td><td class="mono hide-s">8h 49m</td><td><div class="bar"><b style="width:98%"></b></div></td></tr>
+          </tbody>
+        </table>
+        <p class="table-note">Highlighted row is the night shown above. Bars are scaled to nine hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="privacy">
+  <div class="wrap split">
+    <div>
+      <p class="sec-label">Privacy</p>
+      <h2>Your nights stay <em>on your phone.</em></h2>
+      <p style="margin-top:24px;color:var(--ink-2);max-width:26em">There is no account to create and no feed to scroll. Dimmer does not sell or share sleep data, and nothing leaves the device unless you ask it to.</p>
+    </div>
+    <ul class="privacy-list">
+      <li><b>No account</b> Open the app and it starts logging. Email is optional and only used for receipts.</li>
+      <li><b>On-device analysis</b> Stage estimates are computed locally from the sensor data.</li>
+      <li><b>Optional sync</b> Turn on iCloud sync to share your log between your own devices, encrypted end to end.</li>
+      <li><b>Export anytime</b> A full CSV of every night, with raw movement and heart rate samples, leaves whenever you want it to.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <p class="sec-label">Pricing</p>
+    <h2>Pay once, or <em>pay for a year</em> and stop thinking about it.</h2>
+    <div class="prices">
+      <div class="price">
+        <span class="tag">Yearly</span>
+        <div class="amt">$24<small> / year</small></div>
+        <p>Your first month is free, with no card needed until you decide.</p>
+        <ul>
+          <li>Full nightly log and trends</li>
+          <li>Apple Watch and phone sensing</li>
+          <li>iCloud sync across devices</li>
+        </ul>
+        <a class="btn solid" href="#">Start free month</a>
+      </div>
+      <div class="price featured">
+        <span class="tag">Lifetime</span>
+        <div class="amt">$49<small> once</small></div>
+        <p>For people who would rather not have another subscription in their life.</p>
+        <ul>
+          <li>Everything in yearly, forever</li>
+          <li>Free updates for version 2 and later</li>
+          <li>Data export and offline use included</li>
+        </ul>
+        <a class="btn solid" href="#">Buy lifetime</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap split">
+    <div>
+      <p class="sec-label">Questions</p>
+      <h2>Things people <em>ask first.</em></h2>
+    </div>
+    <div>
+      <details>
+        <summary>Is this a medical device?</summary>
+        <p>No. Dimmer is a personal log. It does not diagnose sleep apnea, insomnia or any other condition. If a pattern worries you, bring the export to a clinician. Many of them find it useful.</p>
+      </details>
+      <details>
+        <summary>How accurate are the sleep stages?</summary>
+        <p>Good enough to see trends over weeks, not good enough to read a single night as fact. Asleep versus awake is reliable. Deep versus light is an estimate, and the app labels it that way.</p>
+      </details>
+      <details>
+        <summary>Does it work without a watch?</summary>
+        <p>Yes. A phone on the mattress or nightstand picks up movement and gives you duration and wake counts. You lose heart rate and the stage detail.</p>
+      </details>
+      <details>
+        <summary>Can I use it on rotating shifts?</summary>
+        <p>That is the main case it is built for. You can tag each sleep period as main sleep, a nap or a recovery block, and the weekly view will average them separately so a day-shift nap does not hide a short night.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a class="mark" href="#top" style="color:var(--ink);font-size:20px"><i></i>Dimmer</a>
+      <p style="margin-top:8px">Made in a small studio. Sleeps eight hours, usually.</p>
+    </div>
+    <nav>
+      <a href="#">Support</a>
+      <a href="#">Privacy policy</a>
+      <a href="#">Export format</a>
+      <a href="#">Press</a>
+    </nav>
+  </div>
+  <div class="wrap">
+    <p class="fine">Dimmer is not a medical device and is not intended to diagnose, treat or prevent any disease or sleep disorder. Stage estimates are approximations. Apple Watch is a trademark of Apple Inc. This site is not affiliated with Apple.</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    // Each segment: [start, end, stage], in hours after 23:00.
+    var night = [
+      [0, 0.3, "awake"], [0.3, 1.2, "light"], [1.2, 2.0, "deep"], [2.0, 2.2, "light"],
+      [2.2, 2.9, "deep"], [2.9, 3.1, "awake"], [3.1, 3.9, "light"], [3.9, 4.8, "rem"],
+      [4.8, 5.4, "light"], [5.4, 5.7, "awake"], [5.7, 6.5, "light"], [6.5, 7.4, "rem"],
+      [7.4, 7.8, "light"], [7.8, 8.2, "awake"], [8.2, 8.9, "light"]
+    ];
+
+    var rows = { awake: 0, rem: 1, light: 2, deep: 3 };
+    var labels = { awake: "Awake", rem: "REM", light: "Light", deep: "Deep" };
+    var x0 = 92, span = 680, total = 8.9, rowH = 42, top = 14;
+    var px = function (h) { return x0 + (h / total) * span; };
+    var svg = document.getElementById("timeline");
+    var out = "";
+
+    // faint row guides and labels
+    Object.keys(rows).forEach(function (k) {
+      var y = top + rows[k] * rowH;
+      out += '<text class="lbl" x="0" y="' + (y + 21) + '">' + labels[k] + '</text>';
+    });
+
+    // hour ticks
+    for (var h = 0; h <= 9; h += 1) {
+      var x = px(h);
+      out += '<line x1="' + x + '" x2="' + x + '" y1="' + top + '" y2="' + (top + 4 * rowH - 6) + '" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 4" />';
+      if (h % 2 === 0) {
+        var hr = (23 + h) % 24;
+        out += '<text x="' + x + '" y="' + (top + 4 * rowH + 10) + '" text-anchor="' + (h === 0 ? "start" : "middle") + '">' + (hr < 10 ? "0" : "") + hr + ':00</text>';
+      }
+    }
+
+    // stage bars
+    var awakeMin = 0, asleepMin = 0, firstSleep = null, wakes = 0;
+    night.forEach(function (s, i) {
+      var y = top + rows[s[2]] * rowH + 4;
+      var w = px(s[1]) - px(s[0]);
+      out += '<rect class="s-' + s[2] + '" x="' + px(s[0]) + '" y="' + y + '" width="' + Math.max(w - 1.5, 1) + '" height="' + (rowH - 14) + '" rx="2" />';
+      var mins = (s[1] - s[0]) * 60;
+      if (s[2] === "awake") {
+        awakeMin += mins;
+        if (firstSleep !== null && i < night.length - 1) wakes += 1;
+      } else {
+        asleepMin += mins;
+        if (firstSleep === null) firstSleep = s[0];
+      }
+    });
+
+    // connector line tracing the hypnogram
+    var pts = [];
+    night.forEach(function (s) {
+      var y = top + rows[s[2]] * rowH + (rowH - 14) / 2 + 4;
+      pts.push(px(s[0]) + "," + y, px(s[1]) + "," + y);
+    });
+    out += '<polyline points="' + pts.join(" ") + '" fill="none" stroke="var(--ink)" stroke-opacity=".25" stroke-width="1" />';
+
+    svg.innerHTML = out;
+
+    var fmt = function (m) { return Math.floor(m / 60) + "h " + String(Math.round(m % 60)).padStart(2, "0") + "m"; };
+    var inBed = total * 60;
+    var eff = Math.round((asleepMin / inBed) * 100);
+    document.getElementById("s-asleep").textContent = fmt(asleepMin);
+    document.getElementById("s-eff").innerHTML = eff + "<small>%</small>";
+    document.getElementById("s-onset").innerHTML = Math.round(firstSleep * 60) + "<small>min</small>";
+    document.getElementById("s-wakes").innerHTML = wakes + "<small>times</small>";
+  })();
+</script>
+</body>
+</html>

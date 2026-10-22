@@ -7,10 +7,12 @@
  * Pattern numbers match the catalogue in SKILL.md. Patterns 34 and 36 need a model and are not here.
  */
 (() => {
-  const VERSION = '0.1.0';
+  const VERSION = '0.2.0';
   // Lowest score at which no human page in the dev split was flagged (eval/README.md). Tuned once, before the test run.
   const THRESHOLD = 10;
   const WEIGHT = { strong: 3, medium: 2, weak: 1 };
+  // scored: false = reported for the skill to judge, but left out of the page verdict: on the 80 development pages
+  // (eval/results.json, splits dev and test) these fired on at least as many human pages as AI pages.
   const PATTERNS = {
     'default-sans': { n: 1, w: 'weak', name: 'Default sans everywhere' },
     'trendy-font': { n: 2, w: 'weak', name: 'Template display font' },
@@ -20,32 +22,32 @@
     'mono-label': { n: 6, w: 'medium', name: 'Monospace labels that are not code' },
     numbered: { n: 7, w: 'medium', name: '01 / 02 / 03 numbering' },
     'meta-string': { n: 8, w: 'weak', name: 'A · B · C meta strings' },
-    'arrow-links': { n: 9, w: 'weak', name: 'Arrow on every link' },
+    'arrow-links': { n: 9, w: 'weak', scored: false, name: 'Arrow on every link' },
     'type-scale': { n: 10, w: 'weak', name: 'Sentence-long display headline or flat scale' },
     'crushed-tracking': { n: 11, w: 'weak', name: 'Crushed tracking on display type' },
-    purple: { n: 12, w: 'medium', name: 'Purple or indigo buttons' },
-    'gradient-text': { n: 13, w: 'strong', name: 'Gradient text' },
+    purple: { n: 12, w: 'medium', scored: false, name: 'Purple or indigo buttons' },
+    'gradient-text': { n: 13, w: 'strong', scored: false, name: 'Gradient text' },
     gradients: { n: 14, w: 'medium', name: 'Gradients, blobs and halos everywhere' },
-    'dark-glow': { n: 15, w: 'medium', name: 'Dark mode with grey text and coloured glow' },
+    'dark-glow': { n: 15, w: 'medium', scored: false, name: 'Dark mode with grey text and coloured glow' },
     'warm-editorial': { n: 16, w: 'medium', name: 'Cream, serif and terracotta' },
-    'dark-acid': { n: 17, w: 'medium', name: 'Near-black with one acid accent' },
-    'card-kit': { n: 18, w: 'weak', name: 'One radius and one shadow on every card' },
+    'dark-acid': { n: 17, w: 'medium', scored: false, name: 'Near-black with one acid accent' },
+    'card-kit': { n: 18, w: 'weak', scored: false, name: 'One radius and one shadow on every card' },
     'side-stripe': { n: 19, w: 'strong', name: 'Coloured stripe on a card edge' },
     'nested-cards': { n: 20, w: 'medium', name: 'Cards inside cards' },
-    glass: { n: 21, w: 'medium', name: 'Glassmorphism' },
+    glass: { n: 21, w: 'medium', scored: false, name: 'Glassmorphism' },
     decor: { n: 22, w: 'weak', name: 'Ghost cards, grid background or grain' },
-    hero: { n: 23, w: 'medium', name: 'Pill badge over a centred hero' },
+    hero: { n: 23, w: 'medium', scored: false, name: 'Pill badge over a centred hero' },
     'icon-cards': { n: 24, w: 'weak', name: 'Identical cards with an icon' },
     'stat-row': { n: 25, w: 'medium', name: 'Row of big numbers' },
     faq: { n: 26, w: 'weak', name: 'Stock page order (FAQ accordion)' },
     broadsheet: { n: 27, w: 'medium', name: 'Newspaper cosplay' },
-    'fake-window': { n: 28, w: 'medium', name: 'Fake window chrome or terminal' },
+    'fake-window': { n: 28, w: 'medium', scored: false, name: 'Fake window chrome or terminal' },
     'uniform-spacing': { n: 29, w: 'weak', name: 'Same spacing everywhere' },
-    reveal: { n: 30, w: 'medium', name: 'Every section fades up' },
-    'infinite-motion': { n: 31, w: 'medium', name: 'Pulsing dot, marquee or blinking cursor' },
+    reveal: { n: 30, w: 'medium', scored: false, name: 'Every section fades up' },
+    'infinite-motion': { n: 31, w: 'medium', scored: false, name: 'Pulsing dot, marquee or blinking cursor' },
     bounce: { n: 32, w: 'weak', name: 'Bouncy easing' },
     emoji: { n: 33, w: 'strong', name: 'Emoji as icons' },
-    sparkles: { n: 35, w: 'medium', name: 'Sparkles and robots as the AI icon' },
+    sparkles: { n: 35, w: 'medium', scored: false, name: 'Sparkles and robots as the AI icon' },
   };
 
   const DEFAULT_SANS = /^(inter( var| variable| display)?|geist( sans)?|roboto|arial|helvetica( neue)?|system-ui|-apple-system|blinkmacsystemfont|segoe ui|sans-serif|ui-sans-serif|dm sans|manrope|plus jakarta sans|open sans|lato|poppins|montserrat|nunito( sans)?|work sans|figtree|onest|outfit)$/;
@@ -707,13 +709,13 @@
       const p = PATTERNS[id];
       const strength = res.w || p.w;
       fired.push({
-        id, n: p.n, name: p.name, strength, allowed: allow.has(id), count: res.hits.length,
+        id, n: p.n, name: p.name, strength, scored: p.scored !== false, allowed: allow.has(id), count: res.hits.length,
         hits: res.hits.slice(0, 12).map(([el, evidence]) => ({ selector: selector(el), evidence })),
       });
       for (const [el] of res.hits) last.push({ id, el });
     }
     const credits = craft(m);
-    const score = fired.filter(f => !f.allowed).reduce((a, f) => a + WEIGHT[f.strength], 0) - credits.length;
+    const score = fired.filter(f => f.scored && !f.allowed).reduce((a, f) => a + WEIGHT[f.strength], 0) - credits.length;
     const threshold = opts.threshold ?? THRESHOLD;
     return { version: VERSION, url: location.href, score, threshold, verdict: score >= threshold ? 'ai' : 'human', fired, craft: credits };
   }

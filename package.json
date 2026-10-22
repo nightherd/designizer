@@ -1,6 +1,6 @@
 {
   "name": "designizer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Humanizer for UI: finds the default AI look in your interface and fixes it.",
   "type": "module",
   "license": "MIT",

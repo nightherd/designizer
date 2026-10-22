@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiet Grain Bakery — 100% gluten-free bread and pastry</title>
+<meta name="description" content="A dedicated gluten-free bakery. Sourdough, pastry and cakes made from teff, sorghum, buckwheat, millet and rice. No wheat has ever entered our kitchen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=Gloock&display=swap" rel="stylesheet">
+<style>
+:root{
+  --buckwheat:#E6E2EC;
+  --teff:#2B1F2B;
+  --millet:#F0BE2E;
+  --rhubarb:#9B2D55;
+  --rice:#FBFAF8;
+  --loaf:#8A5A3C;
+  --loaf-dark:#5E3A25;
+  --muted:#5C5060;
+  --gutter:clamp(20px,5vw,72px);
+  --display:'Gloock',Georgia,serif;
+  --body:'Familjen Grotesk',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--buckwheat);color:var(--teff);font-family:var(--body);font-size:1.125rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--rhubarb);outline-offset:3px;border-radius:2px}
+.wrap{padding-inline:var(--gutter);max-width:1360px;margin-inline:auto}
+.skip{position:absolute;left:-999px;top:8px;background:var(--teff);color:var(--rice);padding:8px 14px;z-index:10}
+.skip:focus{left:8px}
+
+/* header */
+header .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:22px;gap:20px}
+.logo{font-family:var(--display);font-size:1.5rem;text-decoration:none;letter-spacing:-.01em}
+nav ul{display:flex;gap:clamp(16px,3vw,36px);list-style:none}
+nav a{text-decoration:none;font-weight:500}
+nav a:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px}
+
+/* hero */
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,80px);align-items:center;padding-block:clamp(24px,5vw,64px) clamp(40px,6vw,88px)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(3rem,7.4vw,6.6rem);line-height:.98;letter-spacing:-.025em;text-wrap:balance}
+.hero p.lede{margin-top:28px;max-width:34em;font-size:1.25rem}
+.btns{margin-top:34px;display:flex;flex-wrap:wrap;gap:14px}
+.btn{display:inline-block;padding:15px 26px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--teff);transition:background .2s,color .2s}
+.btn.primary{background:var(--teff);color:var(--rice)}
+.btn.primary:hover{background:var(--rhubarb);border-color:var(--rhubarb)}
+.btn.ghost:hover{background:var(--teff);color:var(--rice)}
+
+.loaf-stage{position:relative}
+.loaf-stage svg{width:100%;height:auto;display:block;overflow:visible}
+.loaf-body{fill:var(--loaf);transition:fill .5s ease}
+.loaf-shade{fill:var(--loaf-dark);transition:fill .5s ease}
+.score{fill:none;stroke:var(--rice);stroke-width:9;stroke-linecap:round;stroke-dasharray:130;stroke-dashoffset:130;animation:cut .9s .25s cubic-bezier(.6,0,.2,1) forwards}
+.score:nth-of-type(2){animation-delay:.45s}
+.score:nth-of-type(3){animation-delay:.65s}
+@keyframes cut{to{stroke-dashoffset:0}}
+.crumb{fill:var(--loaf-dark);opacity:.35;transition:fill .5s}
+
+/* flour picker */
+.flours{background:var(--teff);color:var(--rice)}
+.flours .wrap{padding-block:clamp(44px,6vw,84px);display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(24px,5vw,80px)}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(2.2rem,4.6vw,3.8rem);line-height:1.05;letter-spacing:-.02em;text-wrap:balance}
+.flours h2{margin-bottom:18px}
+.flours .intro{max-width:30em;opacity:.85}
+.swatches{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.swatch{display:flex;align-items:center;gap:10px;background:transparent;color:var(--rice);border:2px solid rgba(251,250,248,.35);padding:8px 18px 8px 8px;border-radius:999px;font:inherit;font-weight:500;cursor:pointer;transition:border-color .2s,background .2s}
+.swatch i{width:28px;height:28px;border-radius:50%;background:var(--c);border:2px solid rgba(251,250,248,.5)}
+.swatch:hover{border-color:var(--rice)}
+.swatch[aria-pressed="true"]{background:var(--rice);color:var(--teff);border-color:var(--rice)}
+.flour-detail{align-self:center;min-height:15em}
+.flour-detail h3{font-family:var(--display);font-weight:400;font-size:clamp(1.8rem,3vw,2.5rem);margin-bottom:12px}
+.flour-detail p{max-width:32em;margin-bottom:14px}
+.flour-detail .bakes{margin-top:18px;padding-top:18px;border-top:2px solid var(--millet)}
+.flour-detail .bakes strong{color:var(--millet);font-weight:600}
+
+/* menu */
+.menu .wrap{padding-block:clamp(56px,8vw,120px)}
+.menu-head{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;margin-bottom:clamp(30px,4vw,56px)}
+.menu-head p{max-width:26em;color:var(--muted)}
+.menu-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,64px)}
+.menu h3{font-family:var(--display);font-weight:400;font-size:1.7rem;margin-bottom:6px;padding-bottom:12px;border-bottom:3px solid var(--teff)}
+.menu ul{list-style:none}
+.menu li{padding-block:16px;border-bottom:1px solid rgba(43,31,43,.2)}
+.menu .row{display:flex;align-items:baseline;gap:8px;font-weight:600}
+.menu .row::after{content:"";order:1;flex:1;border-bottom:2px dotted rgba(43,31,43,.35);transform:translateY(-4px)}
+.menu .row span:last-child{order:2;font-variant-numeric:tabular-nums}
+.menu li small{display:block;margin-top:2px;color:var(--muted);font-size:.95rem}
+
+/* kitchen */
+.kitchen{background:var(--millet)}
+.kitchen .wrap{padding-block:clamp(56px,8vw,112px);display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,6vw,96px);align-items:start}
+.kitchen h2{max-width:11em}
+.kitchen .claims{display:grid;gap:22px}
+.kitchen .claims p{padding-left:20px;border-left:4px solid var(--teff)}
+.kitchen .claims b{display:block;font-size:1.2rem}
+
+/* visit */
+.visit .wrap{padding-block:clamp(56px,8vw,112px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,96px)}
+.hours{margin-top:24px;border-collapse:collapse;width:100%;max-width:26em}
+.hours th,.hours td{text-align:left;padding:10px 0;border-bottom:1px solid rgba(43,31,43,.2);font-weight:400}
+.hours th{font-weight:600}
+.addr{margin-top:22px}
+form{background:var(--rice);padding:clamp(22px,3vw,40px);border-radius:6px;display:grid;gap:18px;align-self:start}
+form h3{font-family:var(--display);font-weight:400;font-size:1.9rem}
+label{display:grid;gap:6px;font-weight:600;font-size:1rem}
+input,select,textarea{font:inherit;font-weight:400;padding:12px 14px;border:2px solid var(--teff);border-radius:4px;background:#fff;color:var(--teff)}
+textarea{min-height:90px;resize:vertical}
+form .btn{border:0;cursor:pointer;font:inherit;font-weight:600;justify-self:start}
+.note{font-size:.95rem;color:var(--muted)}
+#confirm{font-weight:600;color:var(--rhubarb);min-height:1.5em}
+
+footer{background:var(--teff);color:var(--rice)}
+footer .wrap{padding-block:34px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:1rem}
+
+@media (max-width:900px){
+  .hero .wrap,.flours .wrap,.kitchen .wrap,.visit .wrap{grid-template-columns:1fr}
+  .menu-cols{grid-template-columns:1fr}
+  .loaf-stage{max-width:520px}
+  nav ul{gap:14px;font-size:1rem}
+}
+@media (max-width:520px){ header .wrap{flex-direction:column;align-items:flex-start;gap:8px} }
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .score{animation:none;stroke-dashoffset:0}
+  .loaf-body,.loaf-shade,.crumb,.btn,.swatch{transition:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#menu">Skip to menu</a>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">Quiet Grain Bakery</a>
+    <nav aria-label="Main"><ul>
+      <li><a href="#flours">Flours</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#kitchen">Our kitchen</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Bread that never met wheat.</h1>
+        <p class="lede">Quiet Grain is a bakery where everything is gluten-free, so nobody has to ask what’s safe. Sourdough, croissants and cakes, baked daily from teff, sorghum, buckwheat, millet and rice.</p>
+        <div class="btns">
+          <a class="btn primary" href="#visit">Pre-order for pickup</a>
+          <a class="btn ghost" href="#menu">See the menu</a>
+        </div>
+      </div>
+      <div class="loaf-stage" id="loafStage">
+        <svg viewBox="0 0 520 400" role="img" aria-label="A scored loaf of bread">
+          <ellipse cx="260" cy="352" rx="200" ry="22" fill="#2B1F2B" opacity=".14"/>
+          <path class="loaf-shade" d="M40 250C40 120 150 40 260 40s220 80 220 210c0 70-70 110-220 110S40 320 40 250Z"/>
+          <path class="loaf-body" d="M52 238C56 120 156 52 260 52s204 68 208 186c3 62-64 98-208 98S49 300 52 238Z"/>
+          <circle class="crumb" cx="130" cy="260" r="5"/><circle class="crumb" cx="190" cy="300" r="4"/>
+          <circle class="crumb" cx="350" cy="296" r="5"/><circle class="crumb" cx="408" cy="244" r="4"/>
+          <circle class="crumb" cx="96" cy="200" r="3"/><circle class="crumb" cx="300" cy="318" r="3"/>
+          <path class="score" d="M150 205c14-44 30-68 52-92"/>
+          <path class="score" d="M232 215c14-52 30-82 54-110"/>
+          <path class="score" d="M316 215c12-40 30-66 54-88"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="flours" id="flours" aria-labelledby="fl-h">
+    <div class="wrap">
+      <div>
+        <h2 id="fl-h">Five flours, each with its own loaf.</h2>
+        <p class="intro">Gluten-free baking works best when you stop imitating wheat. Choose a flour to see how it changes the crust above and what we bake with it.</p>
+        <div class="swatches" role="group" aria-label="Choose a flour">
+          <button class="swatch" style="--c:#4A2E2A" data-i="0" aria-pressed="true"><i></i>Teff</button>
+          <button class="swatch" style="--c:#B8553F" data-i="1" aria-pressed="false"><i></i>Sorghum</button>
+          <button class="swatch" style="--c:#8C8296" data-i="2" aria-pressed="false"><i></i>Buckwheat</button>
+          <button class="swatch" style="--c:#E0A92B" data-i="3" aria-pressed="false"><i></i>Millet</button>
+          <button class="swatch" style="--c:#C9A27A" data-i="4" aria-pressed="false"><i></i>Brown rice</button>
+        </div>
+      </div>
+      <div class="flour-detail" aria-live="polite" id="detail"></div>
+    </div>
+  </section>
+
+  <section class="menu" id="menu" aria-labelledby="menu-h">
+    <div class="wrap">
+      <div class="menu-head">
+        <h2 id="menu-h">Today’s bake</h2>
+        <p>Loaves sell out by early afternoon. Pre-order by 6 pm the day before to be sure of yours.</p>
+      </div>
+      <div class="menu-cols">
+        <div>
+          <h3>Bread</h3>
+          <ul>
+            <li><div class="row"><span>Teff and sorghum sourdough</span><span>$9</span></div><small>Dark, tangy, a little sweet</small></li>
+            <li><div class="row"><span>Buckwheat seed loaf</span><span>$10</span></div><small>Sunflower, flax and pumpkin seeds</small></li>
+            <li><div class="row"><span>Millet sandwich loaf</span><span>$8</span></div><small>Soft, sliceable, holds a sandwich</small></li>
+            <li><div class="row"><span>Rice flour baguette</span><span>$5</span></div><small>Crackling crust, baked twice daily</small></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Pastry</h3>
+          <ul>
+            <li><div class="row"><span>Butter croissant</span><span>$4.50</span></div><small>Laminated by hand, 27 layers</small></li>
+            <li><div class="row"><span>Cardamom bun</span><span>$4</span></div><small>Sorghum dough, pearl sugar</small></li>
+            <li><div class="row"><span>Rhubarb galette</span><span>$6</span></div><small>Buckwheat crust, seasonal fruit</small></li>
+            <li><div class="row"><span>Brown butter cookie</span><span>$3</span></div><small>Chewy, with sea salt</small></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Cakes</h3>
+          <ul>
+            <li><div class="row"><span>Dark chocolate teff cake</span><span>$52</span></div><small>Serves 8–10, order 48 hours ahead</small></li>
+            <li><div class="row"><span>Lemon millet loaf cake</span><span>$18</span></div><small>Glazed, keeps for three days</small></li>
+            <li><div class="row"><span>Birthday cake, any flavor</span><span>from $64</span></div><small>Tell us the date and the flavor</small></li>
+            <li><div class="row"><span>Slice of the day</span><span>$7</span></div><small>Ask at the counter</small></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="kitchen" id="kitchen" aria-labelledby="k-h">
+    <div class="wrap">
+      <h2 id="k-h">No wheat, barley or rye has ever come through our door.</h2>
+      <div class="claims">
+        <p><b>One kitchen, one rule.</b>We don’t have a gluten-free corner. The whole bakery is gluten-free, so there’s no shared oven, bench or flour dust.</p>
+        <p><b>Every delivery is checked.</b>We buy from mills that don’t process wheat, and we keep the ingredient labels on file for anyone who wants to see them.</p>
+        <p><b>Ask us anything.</b>Allergies beyond gluten, such as nuts, dairy and eggs, are listed on every item at the counter.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit" id="visit" aria-labelledby="v-h">
+    <div class="wrap">
+      <div>
+        <h2 id="v-h">Come in, or order ahead.</h2>
+        <p class="addr">48 Millrace Lane<br>Corner of Millrace and Ash Street</p>
+        <table class="hours">
+          <caption class="note" style="text-align:left;caption-side:top;margin-top:22px">Opening hours</caption>
+          <tr><th scope="row">Tuesday to Friday</th><td>7 am – 5 pm</td></tr>
+          <tr><th scope="row">Saturday</th><td>8 am – 3 pm</td></tr>
+          <tr><th scope="row">Sunday</th><td>8 am – 1 pm</td></tr>
+          <tr><th scope="row">Monday</th><td>Closed</td></tr>
+        </table>
+      </div>
+      <form id="order">
+        <h3>Reserve a loaf</h3>
+        <label>Your name<input name="name" required autocomplete="name"></label>
+        <label>What would you like
+          <select name="item">
+            <option>Teff and sorghum sourdough</option>
+            <option>Buckwheat seed loaf</option>
+            <option>Millet sandwich loaf</option>
+            <option>Rice flour baguette</option>
+            <option>A cake (tell us below)</option>
+          </select>
+        </label>
+        <label>Pickup day<input type="date" name="day" required></label>
+        <label>Notes<textarea name="notes"></textarea></label>
+        <button class="btn primary" type="submit">Reserve for pickup</button>
+        <p id="confirm" role="status"></p>
+        <p class="note">You pay at the counter. We’ll hold your order until closing time.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Quiet Grain Bakery · 48 Millrace Lane</span>
+    <span>hello@quietgrain.example</span>
+  </div>
+</footer>
+
+<script>
+const flours=[
+ {n:'Teff',body:'#6B4033',dark:'#3F241D',t:'The smallest grain in the world, and the darkest loaf.',p:'Teff has a malty, almost cocoa-like flavor and ferments beautifully, which gives our sourdough its tang.',b:'Teff and sorghum sourdough, chocolate teff cake'},
+ {n:'Sorghum',body:'#B8553F',dark:'#7A3022',t:'Mild and a little sweet, with a tender crumb.',p:'Sorghum is the closest we get to the softness of wheat. It carries spice and sugar well.',b:'Cardamom buns, the sorghum half of our sourdough'},
+ {n:'Buckwheat',body:'#7E7488',dark:'#4D4457',t:'Despite the name, it’s a seed and not related to wheat.',p:'Buckwheat tastes earthy and nutty. It makes crisp, flaky pastry and a hearty seed loaf.',b:'Buckwheat seed loaf, galette crusts'},
+ {n:'Millet',body:'#D9A22A',dark:'#946B12',t:'Golden, light and gently corn-sweet.',p:'Millet gives the softest crumb of the five, so it’s our flour for sandwich bread and lemon cake.',b:'Millet sandwich loaf, lemon loaf cake'},
+ {n:'Brown rice',body:'#B98C60',dark:'#7C5836',t:'Neutral and crisp, it lets the crust do the talking.',p:'Finely milled rice flour makes the crackling shell on our baguettes and the shortness in our cookies.',b:'Rice flour baguette, brown butter cookies'}
+];
+const stage=document.getElementById('loafStage'),detail=document.getElementById('detail');
+const btns=[...document.querySelectorAll('.swatch')];
+function pick(i){
+  const f=flours[i];
+  stage.style.setProperty('--loaf',f.body);stage.style.setProperty('--loaf-dark',f.dark);
+  document.documentElement.style.setProperty('--loaf',f.body);
+  document.documentElement.style.setProperty('--loaf-dark',f.dark);
+  btns.forEach((b,j)=>b.setAttribute('aria-pressed',j===i));
+  detail.innerHTML='<h3>'+f.n+'</h3><p><strong>'+f.t+'</strong></p><p>'+f.p+'</p><p class="bakes"><strong>We bake with it:</strong> '+f.b+'</p>';
+}
+btns.forEach((b,i)=>b.addEventListener('click',()=>pick(i)));
+pick(0);
+
+const d=document.querySelector('input[type=date]');
+d.min=new Date().toISOString().split('T')[0];
+document.getElementById('order').addEventListener('submit',e=>{
+  e.preventDefault();
+  const f=new FormData(e.target);
+  document.getElementById('confirm').textContent='Reserved: '+f.get('item')+' for '+f.get('name')+' on '+f.get('day')+'. See you then.';
+});
+</script>
+</body>
+</html>

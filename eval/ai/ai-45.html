@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vento Norte Surf Escola, Ericeira</title>
+  <meta name="description" content="Surf lessons in Ericeira, Portugal. Small groups, timed to the tide, for beginners and intermediate surfers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --chalk: #F7F6F1;
+      --graphite: #1B2326;
+      --cobalt: #1F3F8F;
+      --glass: #CFE3DC;
+      --sun: #E0A43A;
+      --muted: #4A5A5E;
+      --gutter: clamp(1rem, 4vw, 2.5rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--chalk);
+      color: var(--graphite);
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 1.1875rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img, svg { display: block; max-width: 100%; }
+
+    a { color: var(--cobalt); text-underline-offset: 0.2em; }
+
+    :focus-visible {
+      outline: 3px solid var(--cobalt);
+      outline-offset: 3px;
+    }
+
+    .display,
+    h1, h2, h3 {
+      font-family: "Archivo", "Arial Black", sans-serif;
+      font-stretch: 125%;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      margin: 0;
+    }
+
+    .wrap {
+      width: min(1180px, 100% - var(--gutter) * 2);
+      margin-inline: auto;
+    }
+
+    /* Header */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding-block: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .wordmark {
+      font-family: "Archivo", sans-serif;
+      font-stretch: 125%;
+      font-weight: 900;
+      font-size: 1.125rem;
+      color: var(--graphite);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 2.25rem);
+      font-size: 1rem;
+    }
+
+    .site-nav a {
+      color: var(--graphite);
+      text-decoration: none;
+    }
+
+    .site-nav a:hover { text-decoration: underline; }
+
+    .btn {
+      display: inline-block;
+      background: var(--cobalt);
+      color: var(--chalk);
+      font-family: "Archivo", sans-serif;
+      font-stretch: 112%;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.95rem 1.5rem;
+      text-decoration: none;
+      border-radius: 999px;
+      transition: background-color 200ms ease;
+    }
+
+    .btn:hover { background: #17306E; }
+
+    /* Hero */
+    .hero {
+      padding-block: clamp(3rem, 9vw, 7rem) clamp(3rem, 7vw, 5rem);
+    }
+
+    .hero h1 {
+      font-size: clamp(3.2rem, 11vw, 9.5rem);
+      max-width: 10ch;
+    }
+
+    .hero h1 .line { display: block; }
+    .hero h1 .line--cobalt { color: var(--cobalt); }
+
+    .hero-lede {
+      margin-top: 2rem;
+      max-width: 34em;
+      font-size: 1.3rem;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      margin-top: 2.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta {
+      font-family: "Archivo", sans-serif;
+      font-stretch: 100%;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .wave {
+      margin-top: clamp(3rem, 7vw, 5rem);
+      width: 100%;
+      height: auto;
+    }
+
+    .wave path.line {
+      fill: none;
+      stroke: var(--cobalt);
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    .wave path.sun-line {
+      fill: none;
+      stroke: var(--sun);
+      stroke-width: 10;
+      stroke-linecap: round;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .wave path.line,
+      .wave path.sun-line {
+        stroke-dasharray: 2000;
+        stroke-dashoffset: 2000;
+        animation: draw 2.4s cubic-bezier(.6,.1,.2,1) 0.2s forwards;
+      }
+      .wave path.sun-line { animation-delay: 0.5s; }
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* Tide table */
+    .tides {
+      background: var(--glass);
+      padding-block: clamp(3.5rem, 8vw, 6rem);
+    }
+
+    .tides h2 {
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      max-width: 14ch;
+    }
+
+    .tides-intro {
+      margin-top: 1.25rem;
+      max-width: 36em;
+      color: var(--muted);
+    }
+
+    .tide-table {
+      margin-top: 3rem;
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tide-table caption {
+      text-align: left;
+      font-family: "Archivo", sans-serif;
+      font-stretch: 112%;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding-bottom: 1rem;
+      caption-side: top;
+    }
+
+    .tide-table th,
+    .tide-table td {
+      text-align: left;
+      padding: 1.1rem 1rem 1.1rem 0;
+      vertical-align: baseline;
+    }
+
+    .tide-table thead th {
+      font-family: "Archivo", sans-serif;
+      font-stretch: 100%;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--muted);
+      padding-bottom: 0.75rem;
+    }
+
+    .tide-table tbody tr + tr td {
+      border-top: 1px solid rgba(27, 35, 38, 0.18);
+    }
+
+    .tide-table .time {
+      font-family: "Archivo", sans-serif;
+      font-stretch: 112%;
+      font-weight: 800;
+      font-size: 1.6rem;
+      white-space: nowrap;
+    }
+
+    .tide-table .price {
+      font-family: "Archivo", sans-serif;
+      font-stretch: 112%;
+      font-weight: 800;
+      font-size: 1.6rem;
+      text-align: right;
+      padding-right: 0;
+    }
+
+    .tide-table .tide-note {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .tide-table th.price { text-align: right; }
+
+    .tides-foot {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* First hour */
+    .first-hour {
+      padding-block: clamp(3.5rem, 8vw, 6.5rem);
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: start;
+    }
+
+    .first-hour h2 {
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      position: sticky;
+      top: 2rem;
+    }
+
+    .timeline {
+      margin: 0;
+      padding: 0;
+    }
+
+    .timeline div {
+      display: grid;
+      grid-template-columns: 6.5rem 1fr;
+      gap: 1.5rem;
+      padding-block: 1.6rem;
+    }
+
+    .timeline div + div {
+      border-top: 1px solid rgba(27, 35, 38, 0.15);
+    }
+
+    .timeline dt {
+      font-family: "Archivo", sans-serif;
+      font-stretch: 112%;
+      font-weight: 800;
+      font-size: 1.15rem;
+      font-variant-numeric: tabular-nums;
+      color: var(--cobalt);
+    }
+
+    .timeline dd {
+      margin: 0;
+    }
+
+    .timeline dd strong {
+      display: block;
+      font-family: "Archivo", sans-serif;
+      font-stretch: 105%;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Coast */
+    .coast {
+      background: var(--graphite);
+      color: var(--chalk);
+      padding-block: clamp(3.5rem, 8vw, 6.5rem);
+    }
+
+    .coast h2 {
+      font-size: clamp(2.2rem, 6vw, 4.5rem);
+      max-width: 13ch;
+    }
+
+    .coast-body {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.5rem, 4vw, 3.5rem);
+      max-width: 60rem;
+    }
+
+    .coast-body p {
+      margin: 0;
+      color: #C9D3D5;
+    }
+
+    .coast-body p:first-child {
+      color: var(--chalk);
+      font-size: 1.35rem;
+    }
+
+    /* People */
+    .people {
+      padding-block: clamp(3.5rem, 8vw, 6.5rem);
+    }
+
+    .people-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: start;
+    }
+
+    .people h2 {
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+    }
+
+    .people p {
+      margin: 0 0 1.2rem;
+      max-width: 34em;
+    }
+
+    .people .quote {
+      font-style: italic;
+      font-size: 1.5rem;
+      line-height: 1.35;
+      color: var(--cobalt);
+      border-left: 4px solid var(--sun);
+      padding-left: 1.25rem;
+      margin: 0;
+    }
+
+    .quote cite {
+      display: block;
+      margin-top: 0.9rem;
+      font-style: normal;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid rgba(27, 35, 38, 0.15);
+      padding-block: 2.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+
+    .site-footer a { color: var(--graphite); }
+
+    /* Small screens */
+    @media (max-width: 760px) {
+      .site-nav a:not(.btn) { display: none; }
+
+      .tide-table thead { display: none; }
+      .tide-table,
+      .tide-table tbody,
+      .tide-table tr,
+      .tide-table td {
+        display: block;
+        width: 100%;
+      }
+      .tide-table tr {
+        padding-block: 1.25rem;
+      }
+      .tide-table tbody tr + tr td {
+        border-top: none;
+      }
+      .tide-table tbody tr + tr {
+        border-top: 1px solid rgba(27, 35, 38, 0.18);
+      }
+      .tide-table td { padding: 0.2rem 0; }
+      .tide-table .price { text-align: left; }
+
+      .first-hour,
+      .people-grid,
+      .coast-body {
+        grid-template-columns: 1fr;
+      }
+      .first-hour h2 { position: static; }
+
+      .timeline div { grid-template-columns: 5rem 1fr; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <a class="wordmark" href="#top">Vento Norte</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="#tides">Lessons</a>
+        <a href="#first-hour">First hour</a>
+        <a href="#coast">Ericeira</a>
+        <a href="#people">Instructors</a>
+        <a class="btn" href="#tides">Book a lesson</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title">
+          <span class="line">Stand up</span>
+          <span class="line line--cobalt">in your first</span>
+          <span class="line">hour.</span>
+        </h1>
+        <p class="hero-lede">
+          Small-group surf lessons on the north coast of Portugal, timed to the tide. Whether you have never touched a board or you want to finally turn properly, we start where you are.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="#tides">Check tide times and book</a>
+          <span class="hero-meta">Ericeira, Portugal. Ages 8 and up.</span>
+        </div>
+
+        <svg class="wave" viewBox="0 0 1200 220" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path class="line" d="M0 120 C 120 60, 240 60, 360 120 S 600 180, 720 120 S 960 60, 1080 120 S 1140 150, 1200 130" />
+          <path class="sun-line" d="M0 170 C 150 130, 300 130, 450 170 S 750 210, 900 170 S 1100 130, 1200 160" />
+        </svg>
+      </section>
+
+      <section id="tides" class="tides" aria-labelledby="tides-title">
+        <div class="wrap">
+          <h2 id="tides-title">Lessons run on the tide.</h2>
+          <p class="tides-intro">
+            We start each session two hours before high water, when the waves are soft and the wind is still low. Times below are typical; we confirm the exact slot with you the evening before.
+          </p>
+
+          <table class="tide-table">
+            <caption>This week, at the beach</caption>
+            <thead>
+              <tr>
+                <th scope="col">Time</th>
+                <th scope="col">Session</th>
+                <th scope="col">Who it is for</th>
+                <th scope="col" class="price">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="time">08:30</td>
+                <td>Beginner, 2 hours<br><span class="tide-note">Low tide, soft white water</span></td>
+                <td>First time on a board</td>
+                <td class="price">€55</td>
+              </tr>
+              <tr>
+                <td class="time">11:00</td>
+                <td>Improver, 2 hours<br><span class="tide-note">Mid tide, longer walls</span></td>
+                <td>You can stand, want to turn</td>
+                <td class="price">€60</td>
+              </tr>
+              <tr>
+                <td class="time">14:30</td>
+                <td>Private, 90 minutes<br><span class="tide-note">Your pace, your board</span></td>
+                <td>Pairs, families, nerves</td>
+                <td class="price">€120</td>
+              </tr>
+              <tr>
+                <td class="time">17:00</td>
+                <td>Sunset session, 2 hours<br><span class="tide-note">Glassy evening sea when the wind drops</span></td>
+                <td>Intermediates</td>
+                <td class="price">€65</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="tides-foot">
+            <a class="btn" href="#book">Book the next session</a>
+            <span class="hero-meta">Wetsuit and board included. Free cancellation until 18:00 the day before.</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="wrap">
+        <section id="first-hour" class="first-hour" aria-labelledby="first-hour-title">
+          <h2 id="first-hour-title">What the first hour looks like</h2>
+
+          <dl class="timeline">
+            <div>
+              <dt>0:00</dt>
+              <dd>
+                <strong>Sand, not water</strong>
+                We learn the pop-up on the beach, board flat under your hands, until it feels boring. That is the goal.
+              </dd>
+            </div>
+            <div>
+              <dt>0:20</dt>
+              <dd>
+                <strong>Knee-deep, then waist-deep</strong>
+                We walk out together and catch whitewater. Your instructor stays next to you, not ahead.
+              </dd>
+            </div>
+            <div>
+              <dt>0:50</dt>
+              <dd>
+                <strong>Your first ride</strong>
+                A small wave, a clear call from the shore, and a few seconds standing. Most people get up before the first session ends.
+              </dd>
+            </div>
+            <div>
+              <dt>1:30</dt>
+              <dd>
+                <strong>Read the sea</strong>
+                We look at the set, the rip and where the wave breaks, so the next paddle goes somewhere useful.
+              </dd>
+            </div>
+          </dl>
+        </section>
+      </div>
+
+      <section id="coast" class="coast" aria-labelledby="coast-title">
+        <div class="wrap">
+          <h2 id="coast-title">Ribeira d'Ilhas, Ericeira</h2>
+          <div class="coast-body">
+            <p>
+              Ericeira is a fishing town with a surf culture older than most of its surf shops. The reef breaks and sandy beaches here take a swell from the Atlantic, so the same stretch of coast can hold a gentle lesson in the morning and a proper barrel by afternoon.
+            </p>
+            <p>
+              Our school is a ten-minute walk from the old town, past the fish market. We keep the boards, wetsuits and warm showers on site. Lisbon is about forty minutes away by car, and the airport is closer than you think.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="people" class="people" aria-labelledby="people-title">
+        <div class="wrap people-grid">
+          <div>
+            <h2 id="people-title">Taught by people who still paddle out on their days off.</h2>
+          </div>
+          <div>
+            <p>
+              Our instructors are local surfers, trained in water safety and first aid, and most of them learned on these same beaches. Lessons stay small: no more than four students per instructor, so you get corrected and not just watched.
+            </p>
+            <blockquote class="quote">
+              "I was scared of the water for twenty years. Two sessions in, I was paddling out at Ribeira. They never rushed me."
+              <cite>Student, intermediate course</cite>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <section id="book" class="wrap" style="padding-block: clamp(3rem, 7vw, 5rem);" aria-labelledby="book-title">
+        <h2 id="book-title" style="font-size: clamp(2rem, 5vw, 3.5rem); max-width: 16ch;">Pick a tide. We will bring the board.</h2>
+        <p style="margin-top: 1.5rem; max-width: 34em; color: var(--muted);">
+          Send us your preferred day and level. We reply within a few hours with a confirmed time, and you pay nothing until you have one.
+        </p>
+        <p style="margin-top: 2rem;">
+          <a class="btn" href="mailto:hello@ventonorte.example">Email hello@ventonorte.example</a>
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Vento Norte Surf Escola, Ericeira, Portugal</span>
+      <span><a href="tel:+351000000000">+351 000 000 000</a>, <a href="mailto:hello@ventonorte.example">hello@ventonorte.example</a></span>
+    </footer>
+  </div>
+</body>
+</html>

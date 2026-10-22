@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tern Bikes — Bike share for Marlow</title>
+<meta name="description" content="Tern is Marlow's bike share: 64 stations, 700 bikes, $2 to unlock. Ride from the Mill District to Eastgate in 14 minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f0ebdd; --paper2:#e6dfcc; --ink:#1c1b18; --mute:#6d6859;
+    --signal:#ff4a1c; --river:#2f5fd0; --park:#3f7a4f; --line:#1c1b18;
+    --sans:'Bricolage Grotesque',system-ui,sans-serif; --mono:'Spline Sans Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  .mono{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
+
+  /* nav */
+  header{border-bottom:2px solid var(--line)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;font-size:26px;letter-spacing:-.04em;text-decoration:none;display:flex;align-items:center;gap:8px}
+  .logo i{width:22px;height:22px;border-radius:50%;border:4px solid var(--signal);display:inline-block;position:relative}
+  .logo i::after{content:"";position:absolute;width:6px;height:6px;background:var(--ink);border-radius:50%;right:-9px;top:3px}
+  nav{display:flex;gap:28px;align-items:center}
+  nav a{text-decoration:none;font-size:15px;font-weight:600}
+  nav a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+  .btn{display:inline-block;background:var(--ink);color:var(--paper);padding:12px 22px;text-decoration:none;font-weight:600;font-size:16px;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--signal);transition:transform .12s,box-shadow .12s}
+  .btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--signal)}
+  .btn.ghost{background:transparent;color:var(--ink);box-shadow:none}
+  .btn.ghost:hover{background:var(--paper2);transform:none}
+  nav .btn{padding:8px 16px;font-size:14px;box-shadow:3px 3px 0 var(--signal)}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;padding:64px 0 56px;align-items:center}
+  .eyebrow{color:var(--mute);margin-bottom:18px}
+  h1{font-weight:800;font-size:clamp(46px,6.4vw,92px);line-height:.94;letter-spacing:-.045em}
+  h1 em{font-style:normal;background:var(--signal);color:var(--paper);padding:0 .12em;margin-left:-.06em;display:inline-block;transform:rotate(-1.5deg)}
+  .lede{max-width:34ch;margin:26px 0 30px;font-size:21px;line-height:1.4}
+  .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .fine{margin-top:18px;color:var(--mute);font-size:14px}
+
+  .mapcard{position:relative;border:2px solid var(--line);background:#f7f3e8;box-shadow:8px 8px 0 var(--ink)}
+  .mapcard svg{display:block;width:100%;height:auto}
+  .mapcard .bar{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:2px solid var(--line);background:var(--paper2)}
+  .station{cursor:pointer}
+  .station circle{transition:r .12s}
+  .station:hover circle,.station.on circle{r:9}
+  .readout{padding:14px 16px;border-top:2px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline;min-height:70px}
+  .readout b{font-size:22px;letter-spacing:-.02em;font-weight:800;display:block;line-height:1.1}
+  .readout .n{font-family:var(--mono);font-size:30px;font-weight:500;color:var(--signal);line-height:1;text-align:right}
+  .readout .n small{display:block;font-size:11px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
+
+  /* ticker */
+  .ticker{border-block:2px solid var(--line);background:var(--ink);color:var(--paper);overflow:hidden;white-space:nowrap}
+  .ticker div{display:inline-block;padding:11px 0;animation:slide 40s linear infinite}
+  .ticker span{margin-right:44px}
+  .ticker span::before{content:"●";color:var(--signal);margin-right:12px}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.ticker div{animation:none}}
+
+  section{padding:88px 0}
+  h2{font-weight:800;font-size:clamp(34px,4.4vw,56px);line-height:1;letter-spacing:-.04em;max-width:16ch}
+  .sechead{display:flex;gap:40px;align-items:flex-end;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap}
+  .sechead p{max-width:36ch;color:var(--mute)}
+
+  /* how */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--line)}
+  .step{padding:28px 26px 32px;border-right:2px dashed var(--line);position:relative}
+  .step:last-child{border-right:0}
+  .step .num{font-family:var(--mono);font-size:84px;line-height:1;font-weight:500;color:var(--signal);letter-spacing:-.06em}
+  .step h3{font-size:26px;letter-spacing:-.03em;margin:14px 0 8px;line-height:1.1}
+  .step p{color:#3d3a31;font-size:17px}
+  .step:nth-child(2){background:var(--paper2)}
+
+  /* why: uneven */
+  .why{background:var(--ink);color:var(--paper)}
+  .why .sechead p{color:#b9b29c}
+  .facts{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
+  .fact{padding:26px;border:2px solid var(--paper)}
+  .fact.a{grid-column:span 7}.fact.b{grid-column:span 5;background:var(--signal);border-color:var(--signal);color:var(--ink)}
+  .fact.c{grid-column:span 4}.fact.d{grid-column:span 8}
+  .fact .big{font-size:clamp(56px,8vw,110px);font-weight:800;letter-spacing:-.06em;line-height:.9}
+  .fact p{margin-top:12px;max-width:40ch}
+  .fact.a p,.fact.d p{color:#cfc8b2}.fact.b p{color:var(--ink)}
+
+  /* fares */
+  .fares{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  table{width:100%;border-collapse:collapse;font-size:17px}
+  th{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.05em;text-align:left;font-weight:500;color:var(--mute);padding:0 0 10px;border-bottom:2px solid var(--line)}
+  td{padding:16px 0;border-bottom:1px solid #b8b09a;vertical-align:top}
+  td:first-child{font-weight:700;font-size:20px;letter-spacing:-.02em}
+  td small{display:block;color:var(--mute);font-size:14px;font-weight:400;letter-spacing:0;line-height:1.35;margin-top:2px}
+  td.price{font-family:var(--mono);font-size:22px;text-align:right;white-space:nowrap}
+  tr.hl td{background:linear-gradient(transparent 62%,#ffd2c3 62%)}
+  .assist{border:2px solid var(--line);padding:26px;transform:rotate(1.2deg);background:#fff9e6;box-shadow:6px 6px 0 var(--park)}
+  .assist h3{font-size:28px;letter-spacing:-.03em;line-height:1.05;margin-bottom:10px}
+  .assist ul{margin:14px 0 0 1.1em}
+  .assist li{margin-bottom:6px}
+
+  /* neighborhoods */
+  .hoods{columns:3;column-gap:32px;font-size:19px;font-weight:600;letter-spacing:-.01em}
+  .hoods li{list-style:none;padding:10px 0;border-bottom:1px solid #b8b09a;break-inside:avoid;display:flex;justify-content:space-between}
+  .hoods li span{font-family:var(--mono);font-weight:400;font-size:13px;color:var(--mute)}
+  .hoods li.soon span{color:var(--signal)}
+
+  /* quotes */
+  .quotes{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:24px;align-items:start}
+  blockquote{border-left:4px solid var(--signal);padding-left:20px;font-size:22px;line-height:1.3;letter-spacing:-.015em}
+  blockquote:nth-child(2){margin-top:40px;font-size:19px;border-color:var(--river)}
+  blockquote:nth-child(3){margin-top:12px;font-size:19px;border-color:var(--park)}
+  blockquote footer{margin-top:12px;font-size:14px;color:var(--mute);font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
+
+  /* faq */
+  .faq{max-width:760px}
+  details{border-bottom:2px solid var(--line)}
+  summary{cursor:pointer;list-style:none;padding:20px 0;font-size:22px;font-weight:700;letter-spacing:-.02em;display:flex;justify-content:space-between;gap:20px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-family:var(--mono);font-weight:400;color:var(--signal);font-size:28px;line-height:1}
+  details[open] summary::after{content:"–"}
+  details p{padding:0 40px 22px 0;color:#3d3a31}
+
+  /* final */
+  .final{background:var(--signal);border-block:2px solid var(--line);padding:80px 0}
+  .final .wrap{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
+  .final h2{max-width:13ch;font-size:clamp(40px,6vw,80px)}
+  .final .btn{box-shadow:4px 4px 0 var(--paper);font-size:20px;padding:16px 30px}
+  .final .btn:hover{box-shadow:2px 2px 0 var(--paper)}
+
+  footer.site{padding:40px 0 48px;font-size:15px}
+  footer.site .wrap{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+  footer.site h4{font-family:var(--mono);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);margin-bottom:10px}
+  footer.site li{list-style:none;margin-bottom:6px}
+  footer.site .copy{grid-column:1/-1;color:var(--mute);font-size:13px;border-top:1px solid #b8b09a;padding-top:18px}
+
+  @media (max-width:900px){
+    .hero,.fares{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}.step{border-right:0;border-bottom:2px dashed var(--line)}.step:last-child{border-bottom:0}
+    .fact.a,.fact.b,.fact.c,.fact.d{grid-column:span 12}
+    .hoods{columns:2}.quotes{grid-template-columns:1fr}
+    blockquote:nth-child(n){margin-top:0}
+    footer.site .wrap{grid-template-columns:1fr 1fr}
+    nav a:not(.btn){display:none}
+    section{padding:64px 0}
+  }
+  @media (max-width:520px){.hoods{columns:1}.wrap{padding:0 18px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#"><i></i>tern</a>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#fares">Fares</a>
+      <a href="#where">Where</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="#join">Get the app</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap hero">
+  <div>
+    <p class="eyebrow mono">Marlow's bike share · Since March 2023</p>
+    <h1>Mill District to Eastgate in <em>14 minutes.</em></h1>
+    <p class="lede">Seven hundred bikes, sixty-four stations, one flat unlock fee. No parking garage required.</p>
+    <div class="cta">
+      <a class="btn" href="#join">Unlock your first ride</a>
+      <a class="btn ghost" href="#where">See the stations</a>
+    </div>
+    <p class="fine">First 30 minutes free on your first ride. No card needed to look around.</p>
+  </div>
+
+  <div class="mapcard" aria-label="Map of selected Tern stations">
+    <div class="bar mono"><span>Live · Central Marlow</span><span id="clock">--:--</span></div>
+    <svg viewBox="0 0 520 400" role="img" aria-label="Simplified map showing the Aldous River, Harrow Park and bike stations connected by routes">
+      <rect width="520" height="400" fill="#f7f3e8"/>
+      <!-- park -->
+      <path d="M300 30 L430 24 L452 110 L330 130 Z" fill="#cfe0c5" stroke="#3f7a4f" stroke-width="1.5"/>
+      <text x="338" y="82" font-family="Spline Sans Mono" font-size="11" fill="#3f7a4f" letter-spacing="1">HARROW PARK</text>
+      <!-- river -->
+      <path d="M-10 250 C 80 200, 130 300, 230 270 S 380 200, 530 290 L530 335 C 390 255, 330 330, 230 320 S 70 255, -10 300 Z" fill="#bcd0f5" stroke="#2f5fd0" stroke-width="1.5"/>
+      <text x="40" y="290" font-family="Spline Sans Mono" font-size="11" fill="#2f5fd0" letter-spacing="1" transform="rotate(-8 40 290)">ALDOUS RIVER</text>
+      <!-- streets -->
+      <g stroke="#d4ccb4" stroke-width="6" fill="none" stroke-linecap="round">
+        <path d="M0 150 H520"/><path d="M120 0 V400"/><path d="M270 0 V400"/><path d="M0 60 L520 190"/>
+      </g>
+      <!-- routes -->
+      <g fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M60 110 L120 150 L270 150 L330 190 L460 190" stroke="#ff4a1c"/>
+        <path d="M120 40 L120 150 L120 235 L180 235 L270 235 L270 360" stroke="#1c1b18" stroke-dasharray="1 10" stroke-width="5"/>
+        <path d="M430 330 L400 230 L330 190 L330 130" stroke="#3f7a4f"/>
+      </g>
+      <g id="stations"></g>
+    </svg>
+    <div class="readout" aria-live="polite">
+      <div><span class="mono" style="color:var(--mute)">Selected station</span><b id="st-name">Mill Street Steps</b></div>
+      <div class="n"><span id="st-bikes">9</span><small>bikes · <span id="st-docks">6</span> docks</small></div>
+    </div>
+  </div>
+</div>
+
+<div class="ticker" aria-hidden="true"><div id="tk"></div></div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sechead">
+      <h2>Three taps. Then you're moving.</h2>
+      <p>We cut the signup form down to a phone number and a payment method. Yes, really.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h3>Scan the sticker</h3><p>Every bike has a QR code on the stem. Point your phone at it. No station kiosk, no waiting behind someone.</p></div>
+      <div class="step"><div class="num">02</div><h3>Ride anywhere</h3><p>Three-speed, step-through frames with a front basket that fits a grocery bag and a lock built into the frame.</p></div>
+      <div class="step"><div class="num">03</div><h3>Dock and walk off</h3><p>Slide the front wheel into any open dock until it clicks. The app confirms and the clock stops. That's the whole thing.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="wrap">
+    <div class="sechead">
+      <h2>Why Marlow rides</h2>
+      <p>Numbers from our 2025 annual report, rounded for honesty.</p>
+    </div>
+    <div class="facts">
+      <div class="fact a"><div class="big">38%</div><p>of Tern trips replace a car trip under three miles, according to the rider survey the city ran with us last spring.</p></div>
+      <div class="fact b"><div class="big">$2</div><p>to unlock. Then 12¢ a minute. A typical commute lands around $3.40.</p></div>
+      <div class="fact c"><div class="big">4 min</div><p>average walk to the nearest station inside the Ring Road.</p></div>
+      <div class="fact d"><div class="big">1.9M</div><p>trips last year. The busiest hour is 5:40 pm on Thursdays, for reasons nobody can explain.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="fares">
+  <div class="wrap fares">
+    <div>
+      <h2 style="margin-bottom:36px">Fares you can do in your head</h2>
+      <table>
+        <thead><tr><th>Plan</th><th style="text-align:right">Price</th></tr></thead>
+        <tbody>
+          <tr><td>Single ride<small>$2 unlock, then 12¢ per minute</small></td><td class="price">$2+</td></tr>
+          <tr class="hl"><td>Monthly<small>Unlimited 45-minute rides. Most riders break even in week two.</small></td><td class="price">$19/mo</td></tr>
+          <tr><td>Day pass<small>Visitors, conference weekends, rainy-day regrets</small></td><td class="price">$7</td></tr>
+          <tr><td>Student &amp; staff<small>Marlow State and Aldous College, with a .edu address</small></td><td class="price">$9/mo</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <aside class="assist">
+      <p class="mono" style="color:var(--park);margin-bottom:8px">Tern Access</p>
+      <h3>$5 a month if you qualify for SNAP, Medicaid or a reduced-fare bus pass.</h3>
+      <p>Cash accepted at the Central Library desk. No smartphone? We'll mail you a key fob.</p>
+      <ul>
+        <li>Same unlimited 45-minute rides</li>
+        <li>No credit card needed</li>
+        <li>Sign up in person or by phone at 555-0142</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<section id="where" style="background:var(--paper2);border-block:2px solid var(--line)">
+  <div class="wrap">
+    <div class="sechead">
+      <h2>Where you'll find us</h2>
+      <p>Stations in every neighborhood inside the Ring Road, with the east side growing next.</p>
+    </div>
+    <ul class="hoods">
+      <li>Mill District <span>12 stations</span></li>
+      <li>Old Town <span>9</span></li>
+      <li>Harrow Park <span>6</span></li>
+      <li>Eastgate <span>8</span></li>
+      <li>University Hill <span>10</span></li>
+      <li>Riverside <span>7</span></li>
+      <li>Fairmount <span>5</span></li>
+      <li>Station Quarter <span>7</span></li>
+      <li class="soon">Northfield <span>spring 2027</span></li>
+      <li class="soon">Kiln Road <span>spring 2027</span></li>
+      <li class="soon">Southgate <span>fall 2027</span></li>
+      <li class="soon">Ashby Heights <span>asking you</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><h2>Overheard on the Ring Road</h2></div>
+    <div class="quotes">
+      <blockquote>I sold my second car in June. The Tern monthly is less than what I spent on parking at the hospital.<footer>Dara O., nurse, Fairmount</footer></blockquote>
+      <blockquote>The basket is the underrated feature. I've carried a whole sheet cake home on it.<footer>Mikael, baker, Old Town</footer></blockquote>
+      <blockquote>Bikes are heavy, which sounds bad until you ride one over the Pell Street bridge in a crosswind.<footer>Jun W., grad student</footer></blockquote>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <h2 style="margin-bottom:32px">Questions people ask</h2>
+    <div class="faq">
+      <details><summary>What if there are no open docks where I'm going?</summary><p>The app shows live dock counts. If your station is full, tap "Find nearby" and we'll add 15 free minutes so you can ride to the next one.</p></details>
+      <details><summary>Do I get a helmet?</summary><p>No, but there are free loaner helmets at the ten busiest stations, and Marlow Cycles gives a $10 discount to Tern members.</p></details>
+      <details><summary>What happens in winter?</summary><p>We run all year. From December to February about a third of the fleet switches to studded tires, and snow-day rides are free for the first 20 minutes.</p></details>
+      <details><summary>Can I reserve a bike?</summary><p>Yes, for up to 10 minutes. Reservations are free for monthly members and $0.50 for everyone else.</p></details>
+      <details><summary>Who runs this?</summary><p>Tern is a nonprofit co-op operated under contract with the City of Marlow. Fare revenue covers about 70% of the cost, and the rest comes from the transit levy.</p></details>
+    </div>
+  </div>
+</section>
+
+<div class="final" id="join">
+  <div class="wrap">
+    <h2>Your first 30 minutes are on us.</h2>
+    <a class="btn" href="#">Download Tern</a>
+  </div>
+</div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div><a class="logo" href="#"><i></i>tern</a><p style="margin-top:12px;max-width:30ch;color:var(--mute)">A nonprofit bike share for Marlow. 214 Canal Street, Mill District.</p></div>
+    <div><h4>Ride</h4><ul><li><a href="#how">How it works</a></li><li><a href="#fares">Fares</a></li><li><a href="#where">Stations</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="#">About the co-op</a></li><li><a href="#">Jobs</a></li><li><a href="#">Open data</a></li></ul></div>
+    <div><h4>Help</h4><ul><li><a href="#faq">FAQ</a></li><li><a href="#">Report a broken bike</a></li><li>hello@ternbikes.example</li></ul></div>
+    <p class="copy">© 2026 Tern Cooperative. Marlow is a fictional city; the data above is illustrative.</p>
+  </div>
+</footer>
+
+<script>
+  const S=[
+    {n:"Mill Street Steps",x:60,y:110,b:9,d:6},
+    {n:"Canal & 3rd",x:120,y:150,b:4,d:11},
+    {n:"Old Town Square",x:270,y:150,b:12,d:2},
+    {n:"Pell Street Bridge",x:270,y:235,b:3,d:9},
+    {n:"Harrow Park Gate",x:330,y:130,b:7,d:5},
+    {n:"Station Quarter",x:330,y:190,b:0,d:14},
+    {n:"Eastgate Market",x:460,y:190,b:11,d:3},
+    {n:"Riverside Lido",x:400,y:230,b:5,d:8},
+    {n:"Fairmount Library",x:430,y:330,b:8,d:4},
+    {n:"University Hill",x:120,y:40,b:6,d:7},
+    {n:"Aldous College",x:180,y:235,b:10,d:2},
+    {n:"South Quay",x:270,y:360,b:2,d:12}
+  ];
+  const g=document.getElementById('stations'),NS='http://www.w3.org/2000/svg';
+  function pick(i,el){
+    document.querySelectorAll('.station').forEach(s=>s.classList.remove('on'));
+    el.classList.add('on');
+    st_name.textContent=S[i].n; st_bikes.textContent=S[i].b; st_docks.textContent=S[i].d;
+  }
+  S.forEach((s,i)=>{
+    const gr=document.createElementNS(NS,'g');gr.setAttribute('class','station');gr.setAttribute('tabindex','0');gr.setAttribute('role','button');gr.setAttribute('aria-label',s.n);
+    const c=document.createElementNS(NS,'circle');
+    c.setAttribute('cx',s.x);c.setAttribute('cy',s.y);c.setAttribute('r',7);
+    c.setAttribute('fill',s.b===0?'#f7f3e8':'#f0ebdd');c.setAttribute('stroke','#1c1b18');c.setAttribute('stroke-width',3);
+    gr.appendChild(c);
+    if(s.b>0){const d=document.createElementNS(NS,'circle');d.setAttribute('cx',s.x);d.setAttribute('cy',s.y);d.setAttribute('r',2.5);d.setAttribute('fill','#ff4a1c');d.setAttribute('pointer-events','none');gr.appendChild(d);}
+    gr.addEventListener('click',()=>pick(i,gr));
+    gr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(i,gr)}});
+    g.appendChild(gr);
+    if(i===0)pick(0,gr);
+  });
+  const tick=["Mill Street Steps: 9 bikes","Pell Street bridge lane resurfaced","Station Quarter dock full — try Canal & 3rd","Monthly pass now $19","Northfield stations open spring 2027","Free helmets at ten stations","Studded tires from December 1"];
+  tk.innerHTML=[...tick,...tick].map(t=>`<span class="mono">${t}</span>`).join('');
+  const tc=()=>clock.textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  tc();setInterval(tc,30000);
+</script>
+</body>
+</html>

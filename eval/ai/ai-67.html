@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quire — newsletters for independent writers</title>
+<meta name="description" content="Quire is a newsletter platform for independent writers. Flat 5% fee, your list is always yours, and no algorithm between you and your readers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,700;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3eee3;
+    --paper-2: #ebe4d4;
+    --ink: #1c1a17;
+    --ink-2: #4a453d;
+    --ink-3: #807868;
+    --rule: #cfc5b0;
+    --red: #c8401c;
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    --wrap: 1180px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.5;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  ::selection { background: var(--red); color: var(--paper); }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 28px; }
+  .mono { font-family: var(--mono); font-size: 12.5px; letter-spacing: .02em; text-transform: uppercase; }
+  hr.rule { border: 0; border-top: 1px solid var(--ink); margin: 0; }
+  hr.thin { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+
+  /* ---------- masthead ---------- */
+  .top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0; gap: 20px;
+  }
+  .top .mono { color: var(--ink-3); }
+  .top nav { display: flex; gap: 26px; align-items: center; }
+  .top nav a { text-decoration: none; font-size: 16px; }
+  .top nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .logo {
+    font-weight: 700; font-size: 30px; letter-spacing: -.02em; text-decoration: none;
+    display: inline-flex; align-items: baseline; gap: 2px;
+  }
+  .logo span { color: var(--red); }
+  .btn {
+    display: inline-block; font-family: var(--mono); font-size: 13px; letter-spacing: .03em;
+    text-transform: uppercase; text-decoration: none; border: 1px solid var(--ink);
+    padding: 11px 16px; background: var(--ink); color: var(--paper); cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover { transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--red); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    display: grid; grid-template-columns: 1.15fr .85fr; gap: 64px;
+    padding: 72px 0 84px; align-items: start;
+  }
+  .kicker { color: var(--red); margin-bottom: 22px; display: block; }
+  h1 {
+    font-weight: 400; font-size: clamp(46px, 7vw, 92px); line-height: .98;
+    letter-spacing: -.035em; margin: 0 0 30px;
+  }
+  h1 em { font-style: italic; color: var(--red); }
+  .lede { font-size: 22px; color: var(--ink-2); max-width: 30em; margin: 0 0 36px; }
+  .signup { display: flex; max-width: 480px; border: 1px solid var(--ink); background: #fbf8f1; }
+  .signup input {
+    flex: 1; min-width: 0; border: 0; background: transparent; padding: 14px 16px;
+    font: inherit; font-size: 17px; color: var(--ink); outline: none;
+  }
+  .signup input::placeholder { color: var(--ink-3); }
+  .signup .btn { border: 0; border-left: 1px solid var(--ink); }
+  .signup .btn:hover { transform: none; box-shadow: none; background: var(--red); }
+  .fine { margin-top: 12px; font-size: 15px; color: var(--ink-3); }
+  .fine strong { color: var(--ink-2); font-weight: 500; }
+  .thanks { display: none; font-size: 17px; margin-top: 4px; }
+  .thanks.show { display: block; }
+
+  /* issue mockup */
+  .issue {
+    background: #fffdf8; border: 1px solid var(--rule);
+    box-shadow: 0 1px 0 var(--rule), 10px 12px 0 -1px var(--paper-2), 10px 12px 0 0 var(--rule);
+    padding: 30px 30px 26px; transform: rotate(1.2deg); position: relative; margin-top: 12px;
+  }
+  .issue .meta { display: flex; justify-content: space-between; color: var(--ink-3); border-bottom: 1px solid var(--rule); padding-bottom: 12px; margin-bottom: 20px; }
+  .issue h3 { font-size: 30px; line-height: 1.08; font-weight: 500; letter-spacing: -.02em; margin: 0 0 6px; }
+  .issue .by { font-style: italic; color: var(--ink-2); font-size: 16px; margin-bottom: 18px; }
+  .issue p { font-size: 16.5px; margin: 0 0 14px; color: var(--ink-2); }
+  .issue p:first-of-type::first-letter {
+    float: left; font-size: 58px; line-height: .82; padding: 6px 8px 0 0; font-weight: 500; color: var(--ink);
+  }
+  .issue .fade { height: 50px; margin-top: -50px; position: relative; background: linear-gradient(transparent, #fffdf8); }
+  .issue .paywall {
+    border-top: 1px dashed var(--rule); padding-top: 14px; margin-top: 4px;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 15px;
+  }
+  .issue .paywall .mono { color: var(--red); }
+  .note {
+    position: absolute; right: -18px; bottom: -46px; transform: rotate(-3deg);
+    background: var(--red); color: var(--paper); padding: 8px 12px; font-size: 15px; font-style: italic;
+    max-width: 210px; line-height: 1.3;
+  }
+
+  /* ---------- sent strip ---------- */
+  .sent { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); overflow: hidden; background: var(--paper-2); }
+  .sent-track { display: flex; width: max-content; animation: slide 60s linear infinite; }
+  .sent:hover .sent-track { animation-play-state: paused; }
+  .sent-item { padding: 14px 28px; border-right: 1px solid var(--rule); white-space: nowrap; font-size: 16px; }
+  .sent-item i { color: var(--ink-3); font-style: normal; font-family: var(--mono); font-size: 12px; margin-left: 10px; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .sent-track { animation: none; } }
+
+  /* ---------- sections ---------- */
+  section { padding: 96px 0; }
+  .sec-head { display: grid; grid-template-columns: 200px 1fr; gap: 40px; margin-bottom: 52px; }
+  .sec-head .mono { color: var(--ink-3); padding-top: 12px; }
+  h2 { font-weight: 400; font-size: clamp(34px, 4.6vw, 56px); line-height: 1.04; letter-spacing: -.03em; margin: 0; max-width: 16em; }
+  h2 em { color: var(--red); }
+
+  /* principles */
+  .principles { display: grid; grid-template-columns: 200px 1fr; gap: 40px; }
+  .plist { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+  .plist li {
+    counter-increment: p; display: grid; grid-template-columns: 70px 1fr 1.2fr; gap: 28px;
+    padding: 28px 0; border-top: 1px solid var(--rule);
+  }
+  .plist li:last-child { border-bottom: 1px solid var(--rule); }
+  .plist li::before { content: counter(p, decimal-leading-zero); font-family: var(--mono); font-size: 13px; color: var(--red); padding-top: 8px; }
+  .plist h4 { margin: 0; font-size: 26px; font-weight: 500; line-height: 1.15; letter-spacing: -.015em; }
+  .plist p { margin: 0; color: var(--ink-2); font-size: 18px; }
+
+  /* calculator */
+  .money { background: var(--ink); color: var(--paper); }
+  .money .sec-head .mono { color: #a39a88; }
+  .money h2 em { color: #f0805f; }
+  .calc { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #4a453d; }
+  .calc .inputs { padding: 36px; border-right: 1px solid #4a453d; }
+  .calc label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+  .calc label .mono { color: #a39a88; }
+  .calc label output { font-size: 28px; font-weight: 500; }
+  .calc .field { margin-bottom: 36px; }
+  .calc .field:last-child { margin-bottom: 0; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 2px; background: #6b6457; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: var(--paper); border: 0; border-radius: 0; cursor: pointer; }
+  input[type=range]::-moz-range-thumb { width: 20px; height: 20px; background: var(--paper); border: 0; border-radius: 0; cursor: pointer; }
+  input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid #f0805f; outline-offset: 3px; }
+  .calc .out { padding: 36px; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; }
+  .calc .big { font-size: clamp(52px, 7vw, 84px); line-height: 1; letter-spacing: -.03em; }
+  .calc .big small { font-size: 22px; color: #a39a88; letter-spacing: 0; }
+  .ledger { font-family: var(--mono); font-size: 13.5px; width: 100%; border-collapse: collapse; }
+  .ledger td { padding: 7px 0; border-top: 1px dotted #5c564b; }
+  .ledger td:last-child { text-align: right; }
+  .ledger tr.total td { border-top: 1px solid var(--paper); color: var(--paper); padding-top: 10px; }
+  .ledger td { color: #c9c0ae; }
+  .money .aside { margin-top: 22px; font-size: 16px; color: #a39a88; max-width: 44em; }
+
+  /* writers */
+  .writers { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; align-items: start; }
+  blockquote.pull { margin: 0; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.18; letter-spacing: -.02em; }
+  blockquote.pull::before { content: "“"; display: block; font-size: 120px; line-height: .6; color: var(--red); height: 48px; }
+  .attrib { display: flex; gap: 16px; align-items: center; margin-top: 28px; }
+  .avatar {
+    width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 20px; font-style: italic; background: var(--paper-2); border: 1px solid var(--rule); flex: none;
+  }
+  .attrib div:last-child { font-size: 16px; line-height: 1.35; }
+  .attrib .mono { color: var(--ink-3); display: block; margin-top: 3px; font-size: 11.5px; }
+  .smalls { display: flex; flex-direction: column; }
+  .small { padding: 22px 0; border-top: 1px solid var(--rule); }
+  .small:last-child { border-bottom: 1px solid var(--rule); }
+  .small p { margin: 0 0 10px; font-size: 18px; }
+  .small .mono { color: var(--ink-3); font-size: 11.5px; }
+
+  /* comparison */
+  .compare { width: 100%; border-collapse: collapse; font-size: 17px; }
+  .compare th, .compare td { text-align: left; padding: 16px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .compare th { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-3); font-weight: 400; border-bottom-color: var(--ink); }
+  .compare td:first-child { color: var(--ink-2); width: 32%; }
+  .compare td.us { background: #fbf8f1; font-weight: 500; }
+  .compare th.us { color: var(--red); background: #fbf8f1; }
+  .compare-wrap { overflow-x: auto; }
+
+  /* faq */
+  .faq { display: grid; grid-template-columns: 200px 1fr; gap: 40px; }
+  details { border-top: 1px solid var(--rule); }
+  details:last-child { border-bottom: 1px solid var(--rule); }
+  summary {
+    list-style: none; cursor: pointer; padding: 22px 40px 22px 0; font-size: 22px; position: relative;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; position: absolute; right: 4px; top: 18px; font-family: var(--mono); font-size: 22px; color: var(--red); }
+  details[open] summary::after { content: "–"; }
+  summary:hover { color: var(--red); }
+  details p { margin: 0 0 24px; color: var(--ink-2); max-width: 40em; font-size: 18px; }
+
+  /* closing */
+  .closing { padding: 110px 0 100px; text-align: left; border-top: 1px solid var(--ink); }
+  .closing h2 { font-size: clamp(42px, 6.4vw, 84px); max-width: 12em; margin-bottom: 36px; }
+  .closing .row { display: flex; gap: 40px; align-items: center; flex-wrap: wrap; }
+
+  footer { border-top: 1px solid var(--ink); padding: 40px 0 56px; font-size: 15px; color: var(--ink-2); }
+  .foot { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+  .foot h5 { margin: 0 0 12px; font-family: var(--mono); font-weight: 400; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-3); }
+  .foot ul { list-style: none; padding: 0; margin: 0; }
+  .foot li { margin-bottom: 6px; }
+  .foot a { text-decoration: none; }
+  .foot a:hover { text-decoration: underline; }
+  .colophon { font-style: italic; max-width: 26em; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; gap: 72px; padding-top: 48px; }
+    .issue { max-width: 520px; }
+    .sec-head, .principles, .faq { grid-template-columns: 1fr; gap: 14px; }
+    .sec-head .mono, .principles > .mono, .faq > .mono { padding-top: 0; }
+    .plist li { grid-template-columns: 50px 1fr; }
+    .plist li p { grid-column: 2; }
+    .calc { grid-template-columns: 1fr; }
+    .calc .inputs { border-right: 0; border-bottom: 1px solid #4a453d; }
+    .writers { grid-template-columns: 1fr; gap: 48px; }
+    .foot { grid-template-columns: 1fr 1fr; }
+    .top nav a.hide-sm { display: none; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 18px; }
+    .wrap { padding: 0 16px; }
+    .top .mono { display: none; }
+    .top nav { gap: 16px; }
+    section { padding: 72px 0; }
+    .lede { font-size: 20px; }
+    .signup { flex-direction: column; }
+    .signup .btn { border-left: 0; border-top: 1px solid var(--ink); text-align: center; }
+    .issue { padding: 22px 20px; }
+    .note { right: 8px; }
+    .calc .inputs, .calc .out { padding: 24px 20px; }
+    .plist li { grid-template-columns: 1fr; gap: 8px; }
+    .plist li p { grid-column: 1; }
+    .foot { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="top">
+    <a href="#" class="logo" aria-label="Quire home">Quire<span>.</span></a>
+    <span class="mono">For people who write on purpose</span>
+    <nav>
+      <a href="#how" class="hide-sm">How it works</a>
+      <a href="#money" class="hide-sm">Pricing</a>
+      <a href="#faq" class="hide-sm">FAQ</a>
+      <a href="#">Log in</a>
+    </nav>
+  </div>
+  <hr class="rule">
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <span class="mono kicker">A newsletter platform, without the platform</span>
+        <h1>Write the thing.<br>Send it to the people who <em>asked</em> for it.</h1>
+        <p class="lede">Quire handles the mailing list, the paywall and the payouts. You handle the sentences. No feed, no recommendation engine, no growth hacks — just a list of readers that is yours to keep.</p>
+        <form class="signup" id="signup" novalidate>
+          <label for="email" class="sr" style="position:absolute;left:-9999px">Email address</label>
+          <input id="email" type="email" placeholder="you@yourname.com" autocomplete="email" required>
+          <button class="btn" type="submit">Start a newsletter</button>
+        </form>
+        <p class="fine" id="fine">Free until you have <strong>100 paying readers</strong>. Bring your list from anywhere; we import CSVs that other places pretend not to understand.</p>
+        <p class="thanks" id="thanks">Good. Check your inbox — there’s a link in there that sets up your first issue. It expires in an hour, so don’t make tea first.</p>
+      </div>
+
+      <aside class="issue" aria-label="Example newsletter issue">
+        <div class="meta mono"><span>The Low Tide</span><span>No. 112 · Tue</span></div>
+        <h3>The marsh is moving inland, and the farmers already know</h3>
+        <div class="by">by Ruth Okonkwo-Hale · 9 min read</div>
+        <p>Every spring, Dennis walks the far edge of his barley field with a length of bamboo and pushes it into the mud until it stops. He’s done this for nineteen years. He writes the numbers in a school exercise book that has, by now, the texture of a biscuit.</p>
+        <p>What the book shows is not dramatic. That’s the point. Two centimetres here, four there. The sea isn’t arriving, it’s seeping —</p>
+        <div class="fade"></div>
+        <div class="paywall">
+          <span>Keep reading for £5/month</span>
+          <span class="mono">2,841 paid</span>
+        </div>
+        <div class="note">Ruth left a big platform in 2024 and took every reader with her.</div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="sent" aria-label="Recently sent issues">
+    <div class="sent-track" id="sent"></div>
+  </div>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="principles">
+        <span class="mono" style="color:var(--ink-3);padding-top:12px">How we run things</span>
+        <div>
+          <h2 style="margin-bottom:48px">Four promises, written down so we can be held to them.</h2>
+          <ol class="plist">
+            <li>
+              <h4>Your list leaves with you.</h4>
+              <p>One click exports every subscriber, every payment status and every issue you’ve sent as plain files. Paid readers move with you too — we hand over the card relationships, not just the email addresses.</p>
+            </li>
+            <li>
+              <h4>We don’t sell your readers to other writers.</h4>
+              <p>There’s no “recommended for you” sidebar, no network effect we’re secretly optimising for. If a reader finds you, it’s because someone shared you, which is how it used to work and how it should.</p>
+            </li>
+            <li>
+              <h4>The email looks like you wrote it.</h4>
+              <p>Plain, fast, readable on a cracked phone screen. Footnotes, pull quotes, images that don’t get clipped by Gmail. Your own domain from day one, at no extra charge.</p>
+            </li>
+            <li>
+              <h4>One fee. It never goes up on you.</h4>
+              <p>5% of what you earn, plus the card processor’s cut. The rate you sign up on is the rate you keep, written into your terms. No “pro tier”, no per-subscriber surcharges at 10,000.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="money" id="money">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="mono">The arithmetic</span>
+        <h2>What you’d actually take home, <em>before</em> the taxman gets involved.</h2>
+      </div>
+
+      <div class="calc">
+        <div class="inputs">
+          <div class="field">
+            <label for="subs"><span class="mono">Paying readers</span><output id="subsOut">400</output></label>
+            <input type="range" id="subs" min="0" max="5000" step="10" value="400">
+          </div>
+          <div class="field">
+            <label for="price"><span class="mono">Monthly price</span><output id="priceOut">$6</output></label>
+            <input type="range" id="price" min="3" max="25" step="1" value="6">
+          </div>
+          <div class="field">
+            <label for="annual"><span class="mono">Readers on annual plans</span><output id="annualOut">30%</output></label>
+            <input type="range" id="annual" min="0" max="100" step="5" value="30">
+          </div>
+        </div>
+        <div class="out">
+          <div>
+            <span class="mono" style="color:#a39a88">You keep, per year</span>
+            <div class="big" id="keep">$25,960</div>
+          </div>
+          <table class="ledger">
+            <tr><td>Gross subscriptions</td><td id="gross">—</td></tr>
+            <tr><td>Card processing (≈2.9% + 30¢)</td><td id="stripe">—</td></tr>
+            <tr><td>Quire (5%)</td><td id="fee">—</td></tr>
+            <tr class="total"><td>Yours</td><td id="net">—</td></tr>
+          </table>
+        </div>
+      </div>
+      <p class="aside">Annual readers get two months free, which is the convention, and save you a lot in per-charge card fees. Free subscribers cost nothing, no matter how many you have.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="mono">From the writers</span>
+        <h2>We asked a few people why they stayed. We didn’t edit the answers much.</h2>
+      </div>
+      <div class="writers">
+        <div>
+          <blockquote class="pull">I spent three years feeding an algorithm that never once told me who my readers were. On Quire I know their names. Two of them sent me jam.</blockquote>
+          <div class="attrib">
+            <div class="avatar">M</div>
+            <div>Marisol Treviño, <em>Small Hours</em><span class="mono">Essays on night work · 1,204 paid</span></div>
+          </div>
+        </div>
+        <div class="smalls">
+          <div class="small">
+            <p>“Moved 11,000 people over on a Sunday afternoon. Nobody noticed, which is the highest compliment I can give software.”</p>
+            <span class="mono">Tom Achterberg — Ledger Lines, municipal finance</span>
+          </div>
+          <div class="small">
+            <p>“The editor doesn’t try to help me. I didn’t realise how much I wanted that.”</p>
+            <span class="mono">Priya Raman — Second Draft, fiction serial</span>
+          </div>
+          <div class="small">
+            <p>“I emailed support at 1am about a broken footnote and a person named Jo fixed it by breakfast.”</p>
+            <span class="mono">Wes Kaminski — Fieldnotes from the Rust Belt</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <hr class="thin" style="margin-bottom:96px">
+      <div class="sec-head">
+        <span class="mono">Side by side</span>
+        <h2>How we compare to the usual arrangement.</h2>
+      </div>
+      <div class="compare-wrap">
+        <table class="compare">
+          <thead>
+            <tr><th></th><th class="us">Quire</th><th>A typical big platform</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Fee on paid subscriptions</td><td class="us">5%, locked</td><td>10%, subject to change</td></tr>
+            <tr><td>Custom domain</td><td class="us">Included</td><td>Paid add-on</td></tr>
+            <tr><td>Export paid subscribers</td><td class="us">Yes, with billing</td><td>Emails only, usually</td></tr>
+            <tr><td>Your posts promoted next to others’</td><td class="us">Never</td><td>That’s the business model</td></tr>
+            <tr><td>Who answers support</td><td class="us">One of nine staff</td><td>A help-centre article</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:0">
+    <div class="wrap">
+      <hr class="thin" style="margin-bottom:96px">
+      <div class="faq">
+        <span class="mono" style="color:var(--ink-3);padding-top:6px">Questions people actually ask</span>
+        <div>
+          <details>
+            <summary>How do you make money if you don’t promote anything?</summary>
+            <p>The 5%. That’s it. It means we only do well when writers do well, which is a constraint we chose on purpose. We’re profitable at around 3,000 earning writers and we passed that in March.</p>
+          </details>
+          <details>
+            <summary>Can I write for free and never charge anyone?</summary>
+            <p>Yes. Free newsletters are free forever, with no subscriber cap. We’d rather you were here when you eventually decide to charge.</p>
+          </details>
+          <details>
+            <summary>What happens to my list if Quire shuts down?</summary>
+            <p>We keep a nightly export of every account ready to download, and our terms commit us to 90 days’ notice and a full paid-subscriber handover to a processor of your choice. We’d like that never to matter.</p>
+          </details>
+          <details>
+            <summary>Do you have a podcast feature / community forum / app?</summary>
+            <p>No, no, and no. Email and the web, done carefully. If that changes, it’ll be because writers asked, not because a competitor shipped one.</p>
+          </details>
+          <details>
+            <summary>I’m coming from somewhere else. How painful is the move?</summary>
+            <p>Usually an afternoon. Upload your subscriber export, connect your payments account, and we’ll bring your archive across with formatting intact. If anything breaks, write to us and a person will help.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="closing">
+      <span class="mono kicker">Issue No. 1 is the hardest one</span>
+      <h2>Your readers are already out there. Go and write to them.</h2>
+      <div class="row">
+        <a href="#signup" class="btn" onclick="document.getElementById('email').focus()">Start a newsletter</a>
+        <a href="#" class="btn ghost">Read a few first</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <a href="#" class="logo" style="font-size:24px">Quire<span>.</span></a>
+      <p class="colophon">Set in Newsreader and JetBrains Mono. Built by nine people in Leeds and Lisbon, none of whom have ever used the phrase “creator economy” unironically.</p>
+    </div>
+    <div>
+      <h5>Product</h5>
+      <ul><li><a href="#how">How it works</a></li><li><a href="#money">Pricing</a></li><li><a href="#">Migrating</a></li><li><a href="#">Changelog</a></li></ul>
+    </div>
+    <div>
+      <h5>Company</h5>
+      <ul><li><a href="#">About</a></li><li><a href="#">Our numbers</a></li><li><a href="#">Jobs (one)</a></li></ul>
+    </div>
+    <div>
+      <h5>Small print</h5>
+      <ul><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li><li><a href="#">Content policy</a></li><li>© 2026 Quire Ltd</li></ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // recently-sent ticker
+  const sent = [
+    ["Why every bus timetable lies a little", "Ledger Lines", "4,190 opens"],
+    ["Notes on a failed sourdough, part III", "Crumb", "812 opens"],
+    ["The second-hand piano market is collapsing", "Low Fidelity", "2,377 opens"],
+    ["Chapter 14: The Ferryman’s Debt", "Second Draft", "6,003 opens"],
+    ["What the council minutes didn’t say", "The Parish Pump", "1,540 opens"],
+    ["I tried to read every Booker winner", "Shelf Life", "9,812 opens"],
+    ["A short history of the hi-vis vest", "Small Hours", "3,118 opens"],
+    ["The marsh is moving inland", "The Low Tide", "7,446 opens"],
+  ];
+  const track = document.getElementById("sent");
+  const html = sent.map(([t, n, o]) =>
+    `<div class="sent-item"><em>${t}</em> — ${n}<i>${o}</i></div>`).join("");
+  track.innerHTML = html + html;
+
+  // calculator
+  const $ = id => document.getElementById(id);
+  const fmt = n => "$" + Math.round(n).toLocaleString("en-US");
+  function calc() {
+    const subs = +$("subs").value, price = +$("price").value, annualPct = +$("annual").value / 100;
+    const annual = subs * annualPct, monthly = subs - annual;
+    const grossMonthly = monthly * price * 12;
+    const grossAnnual = annual * price * 10;
+    const gross = grossMonthly + grossAnnual;
+    const charges = monthly * 12 + annual;
+    const stripe = gross * 0.029 + charges * 0.30;
+    const fee = gross * 0.05;
+    const net = gross - stripe - fee;
+    $("subsOut").textContent = subs.toLocaleString("en-US");
+    $("priceOut").textContent = "$" + price;
+    $("annualOut").textContent = Math.round(annualPct * 100) + "%";
+    $("gross").textContent = fmt(gross);
+    $("stripe").textContent = "−" + fmt(stripe);
+    $("fee").textContent = "−" + fmt(fee);
+    $("net").textContent = fmt(net);
+    $("keep").innerHTML = fmt(net) + (subs ? ` <small>≈ ${fmt(net / 12)}/mo</small>` : "");
+  }
+  ["subs", "price", "annual"].forEach(id => $(id).addEventListener("input", calc));
+  calc();
+
+  // signup
+  $("signup").addEventListener("submit", e => {
+    e.preventDefault();
+    const input = $("email");
+    if (!/^\S+@\S+\.\S+$/.test(input.value)) {
+      input.focus();
+      input.placeholder = "That needs to be an email address";
+      input.value = "";
+      return;
+    }
+    $("signup").style.display = "none";
+    $("fine").style.display = "none";
+    $("thanks").classList.add("show");
+  });
+</script>
+</body>
+</html>

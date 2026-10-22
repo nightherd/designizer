@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hollow Creek Equine Veterinary Services</title>
+<meta name="description" content="Large-animal veterinary care for horses across Tillman and Ardell counties. Farm calls, lameness work, reproduction, dentistry and 24-hour emergency coverage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4efe4;
+    --paper-deep: #ebe4d4;
+    --ink: #1f2320;
+    --ink-soft: #4b5049;
+    --rule: #cfc6b1;
+    --barn: #8a3b26;
+    --barn-ink: #6e2d1c;
+    --pasture: #3f5140;
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --sans: "Instrument Sans", system-ui, -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1b1d1a;
+      --paper-deep: #232621;
+      --ink: #ece6d8;
+      --ink-soft: #aaa595;
+      --rule: #3a3d36;
+      --barn: #d88a6a;
+      --barn-ink: #e9a488;
+      --pasture: #9db39a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #1b1d1a;
+    --paper-deep: #232621;
+    --ink: #ece6d8;
+    --ink-soft: #aaa595;
+    --rule: #3a3d36;
+    --barn: #d88a6a;
+    --barn-ink: #e9a488;
+    --pasture: #9db39a;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  a:focus-visible { outline: 2px solid var(--barn); outline-offset: 3px; }
+
+  .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.01em; margin: 0; line-height: 1.1; }
+  h2 { font-size: clamp(2rem, 4vw, 2.9rem); }
+  h3 { font-size: 1.35rem; line-height: 1.2; }
+  p { margin: 0 0 1em; }
+  em { font-family: var(--serif); font-style: italic; }
+
+  /* Header */
+  .top {
+    border-bottom: 1px solid var(--rule);
+  }
+  .top .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 76px;
+  }
+  .brand { text-decoration: none; display: flex; flex-direction: column; line-height: 1.15; }
+  .brand strong { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; }
+  .brand span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-soft); text-transform: uppercase; }
+  .top nav { display: flex; gap: 28px; font-size: 15px; }
+  .top nav a { text-decoration: none; color: var(--ink-soft); }
+  .top nav a:hover { color: var(--ink); }
+  .phone-link {
+    font-family: var(--mono);
+    font-size: 14px;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    padding: 9px 14px;
+    white-space: nowrap;
+  }
+  .phone-link:hover { background: var(--ink); color: var(--paper); }
+
+  /* Hero */
+  .hero { padding: clamp(56px, 9vw, 112px) 0 clamp(48px, 7vw, 88px); }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 88px);
+    align-items: end;
+  }
+  .hero h1 {
+    font-size: clamp(2.8rem, 6.4vw, 5.2rem);
+    margin-top: 20px;
+    font-weight: 400;
+  }
+  .hero h1 em { color: var(--barn); }
+  .hero .lede {
+    font-size: 1.2rem;
+    color: var(--ink-soft);
+    max-width: 34em;
+    margin-top: 28px;
+  }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .btn {
+    display: inline-block;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    padding: 14px 22px;
+    border: 1px solid var(--ink);
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-solid { background: var(--ink); color: var(--paper); }
+  .btn-solid:hover { background: var(--barn); border-color: var(--barn); }
+  .btn-line:hover { background: var(--ink); color: var(--paper); }
+
+  .card {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    padding: 28px 28px 12px;
+    position: relative;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 4px;
+    background: var(--barn);
+  }
+  .card h3 { margin-bottom: 18px; }
+  .facts { margin: 0; }
+  .facts div {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 16px;
+    padding: 13px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .facts div:first-child { border-top: 0; }
+  .facts dt { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); padding-top: 3px; }
+  .facts dd { margin: 0; font-size: 15px; }
+
+  .oncall {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-deep);
+  }
+  .oncall .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 32px;
+    align-items: baseline;
+    padding: 18px 0;
+    font-size: 15px;
+  }
+  .oncall strong { font-weight: 600; }
+  .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--pasture);
+    margin-right: 8px;
+    transform: translateY(-1px);
+  }
+
+  section.block { padding: clamp(64px, 9vw, 112px) 0; }
+  .section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: end;
+    margin-bottom: clamp(36px, 5vw, 56px);
+  }
+  .section-head p { color: var(--ink-soft); margin: 0; max-width: 36em; }
+
+  /* Services */
+  .services { border-top: 1px solid var(--ink); }
+  .service {
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .service .num { font-family: var(--mono); font-size: 14px; color: var(--barn); padding-top: 6px; }
+  .service h3 { font-size: 1.6rem; }
+  .service p { margin: 0; color: var(--ink-soft); }
+  .service ul {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .service li { padding-left: 18px; position: relative; }
+  .service li::before { content: "–"; position: absolute; left: 0; color: var(--barn); }
+
+  /* Process */
+  .steps-wrap { background: var(--paper-deep); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    counter-reset: step;
+  }
+  .steps li {
+    padding: 36px 28px 36px 0;
+    border-right: 1px solid var(--rule);
+    padding-left: 28px;
+  }
+  .steps li:first-child { padding-left: 0; }
+  .steps li:last-child { border-right: 0; }
+  .steps .when { font-family: var(--mono); font-size: 12px; color: var(--barn-ink); text-transform: uppercase; letter-spacing: 0.06em; }
+  .steps h3 { margin: 10px 0 10px; font-size: 1.4rem; }
+  .steps p { margin: 0; font-size: 15px; color: var(--ink-soft); }
+
+  /* Prices */
+  .prices {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+  .prices th, .prices td {
+    text-align: left;
+    padding: 18px 16px 18px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .prices th { font-family: var(--mono); font-size: 12px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); padding-top: 0; }
+  .prices td.amt { font-family: var(--mono); white-space: nowrap; text-align: right; padding-right: 0; }
+  .prices th.amt { text-align: right; }
+  .prices td small { display: block; color: var(--ink-soft); font-size: 14px; margin-top: 2px; }
+  .price-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 80px);
+    align-items: start;
+  }
+  .note { font-size: 15px; color: var(--ink-soft); margin-top: 20px; }
+
+  /* Team */
+  .team {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .doc {
+    padding: 32px 28px 8px 0;
+    border-right: 1px solid var(--rule);
+    margin-right: 0;
+  }
+  .doc + .doc { padding-left: 28px; }
+  .doc:last-child { border-right: 0; }
+  .monogram {
+    width: 64px; height: 64px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-size: 22px;
+    margin-bottom: 22px;
+  }
+  .doc .role { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--barn-ink); margin: 6px 0 14px; }
+  .doc p { font-size: 15px; color: var(--ink-soft); }
+
+  /* Area + contact */
+  .area-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 80px);
+  }
+  .towns { columns: 2; column-gap: 32px; list-style: none; padding: 0; margin: 0; font-size: 16px; }
+  .towns li { padding: 9px 0; border-bottom: 1px solid var(--rule); break-inside: avoid; }
+
+  .contact-block {
+    background: var(--ink);
+    color: var(--paper);
+    padding: clamp(36px, 5vw, 56px);
+  }
+  .contact-block .label { color: #b9b29f; }
+  .contact-block h2 { color: var(--paper); margin: 14px 0 20px; }
+  .contact-block .big {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.6vw, 2.5rem);
+    text-decoration: none;
+    display: inline-block;
+    border-bottom: 1px solid #6b6a5e;
+    padding-bottom: 4px;
+    margin-bottom: 28px;
+  }
+  .contact-block .big:hover { border-color: var(--paper); }
+  .contact-block dl { margin: 0; display: grid; grid-template-columns: 110px 1fr; gap: 10px 16px; font-size: 15px; }
+  .contact-block dt { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #b9b29f; padding-top: 2px; }
+  .contact-block dd { margin: 0; }
+
+  footer { border-top: 1px solid var(--rule); padding: 28px 0 40px; font-size: 14px; color: var(--ink-soft); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; }
+
+  @media (max-width: 960px) {
+    .hero-grid, .section-head, .price-grid, .area-grid { grid-template-columns: 1fr; }
+    .service { grid-template-columns: 56px minmax(0, 1fr); }
+    .service > div:last-child { grid-column: 2; }
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .steps li:nth-child(2) { border-right: 0; }
+    .steps li:nth-child(3) { padding-left: 0; }
+    .team { grid-template-columns: 1fr; }
+    .doc, .doc + .doc { padding: 28px 0; border-right: 0; border-bottom: 1px solid var(--rule); }
+    .doc:last-child { border-bottom: 0; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .top nav { display: none; }
+    .top .wrap { min-height: 64px; }
+    .steps { grid-template-columns: 1fr; }
+    .steps li, .steps li:first-child { padding: 26px 0; border-right: 0; border-bottom: 1px solid var(--rule); padding-left: 0; }
+    .steps li:last-child { border-bottom: 0; }
+    .towns { columns: 1; }
+    .facts div { grid-template-columns: 1fr; gap: 2px; }
+    .prices thead { display: none; }
+    .prices td { display: block; padding: 14px 0; border-bottom: 0; }
+    .prices tr { display: block; border-bottom: 1px solid var(--rule); padding: 6px 0; }
+    .prices td.amt { text-align: left; padding-top: 0; }
+    .contact-block dl { grid-template-columns: 1fr; gap: 2px; }
+    .contact-block dt { margin-top: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" id="top">
+      <strong>Hollow Creek Equine</strong>
+      <span>Veterinary Services · Est. 1987</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#visits">Farm calls</a>
+      <a href="#team">Doctors</a>
+      <a href="#area">Service area</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="phone-link" href="tel:+15555550142">555·0142</a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="label">Large-animal practice, Tillman &amp; Ardell counties</p>
+      <h1>Horse medicine, <em>on your farm</em>, from doctors who pick up the phone.</h1>
+      <p class="lede">Four veterinarians, two trucks and a 24-hour line. We treat horses in their own paddocks, barns and show stalls, and we explain what we find before we pick up a needle.</p>
+      <div class="actions">
+        <a class="btn btn-solid" href="#contact">Request a farm call</a>
+        <a class="btn btn-line" href="#services">What we treat</a>
+      </div>
+    </div>
+
+    <aside class="card" aria-label="Practice details">
+      <h3>The practice at a glance</h3>
+      <dl class="facts">
+        <div><dt>Emergency</dt><dd>24 hours, every day, 555·0142</dd></div>
+        <div><dt>Office</dt><dd>Mon–Fri 7:30–5:30, Sat 8–noon</dd></div>
+        <div><dt>Coverage</dt><dd>340 sq. mi. around Route 9 and the Ardell River bottoms</dd></div>
+        <div><dt>Specialties</dt><dd>Lameness, reproduction, dentistry, diagnostic imaging</dd></div>
+        <div><dt>Accepting</dt><dd>New clients, boarding barns, show strings</dd></div>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<div class="oncall">
+  <div class="wrap">
+    <span class="label"><span class="dot"></span>On call tonight</span>
+    <span><strong>Dr. Ruth Okafor</strong> · dispatch via 555·0142</span>
+    <span class="label">Updated 6:00 pm</span>
+  </div>
+</div>
+
+<section class="block services" id="services" style="border-top:0">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What we <em>do</em> in the barn</h2>
+      <p>Most of our work happens standing in the aisle with a lead rope in one hand and a clipboard in the other. The list below is what we see most often, and what we bring in the truck for each.</p>
+    </div>
+
+    <div class="services">
+      <article class="service">
+        <div class="num">01</div>
+        <div>
+          <h3>Lameness &amp; orthopedics</h3>
+        </div>
+        <div>
+          <p>Nerve blocks, flexion tests, and a lot of patience. We work up the leg from the hoof to the stifle, then use radiographs and ultrasound to find where the problem actually is.</p>
+          <ul>
+            <li>Digital radiography, portable on farm</li>
+            <li>Joint injections and shockwave therapy</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="service">
+        <div class="num">02</div>
+        <div>
+          <h3>Reproduction &amp; foaling</h3>
+        </div>
+        <div>
+          <p>Cycle management, breeding soundness exams, pregnancy checks by transrectal ultrasound, and foaling attendance for mares who need a second set of hands at 2 a.m.</p>
+          <ul>
+            <li>Cooled and frozen semen handling</li>
+            <li>Neonatal foal care and monitoring</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="service">
+        <div class="num">03</div>
+        <div>
+          <h3>Dentistry</h3>
+        </div>
+        <div>
+          <p>Sharp enamel points cause more trouble than most owners expect. We float teeth under sedation, check for wolf teeth and diastemas, and note what we changed so the next visit is easier.</p>
+          <ul>
+            <li>Power floating with a written dental chart</li>
+            <li>Extractions and sinus-related work</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="service">
+        <div class="num">04</div>
+        <div>
+          <h3>Colic &amp; emergencies</h3>
+        </div>
+        <div>
+          <p>Colic is the one call we do not ask you to wait on. We bring pain relief, a nasogastric tube, and a rectal exam to the farm. If the horse needs surgery, we tell you early and drive it to the referral hospital ourselves.</p>
+          <ul>
+            <li>Nasogastric intubation and fluid therapy</li>
+            <li>Referral transport to university hospitals</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="service">
+        <div class="num">05</div>
+        <div>
+          <h3>Vaccines, Coggins &amp; health papers</h3>
+        </div>
+        <div>
+          <p>Routine care that keeps the herd healthy and the trailer legal. Core vaccines by region and risk, parasite programs built around your pasture, and health certificates for interstate travel and shows.</p>
+          <ul>
+            <li>Coggins testing and same-day paperwork</li>
+            <li>Health certificates for travel and competition</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="service">
+        <div class="num">06</div>
+        <div>
+          <h3>Imaging &amp; diagnostics</h3>
+        </div>
+        <div>
+          <p>Ultrasound, endoscopy, and bloodwork run in our own lab. Most results come back the same day, so a diagnosis does not have to wait a week for a courier.</p>
+          <ul>
+            <li>Standing endoscopy for airway and gut work</li>
+            <li>In-house CBC, chemistry and fecal testing</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="steps-wrap" id="visits">
+  <div class="wrap" style="padding: clamp(56px, 8vw, 96px) 0 0;">
+    <div class="section-head" style="margin-bottom: 0;">
+      <h2>How a farm call <em>works</em></h2>
+      <p>No automated phone tree and no surprise fees. You describe what you are seeing, we tell you when we will arrive, and the bill matches what we quoted you.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <ol class="steps">
+      <li>
+        <div class="when">Step one</div>
+        <h3>You call</h3>
+        <p>Describe the horse, what changed and when. A doctor calls back within 15 minutes during office hours, and right away after hours.</p>
+      </li>
+      <li>
+        <div class="when">Step two</div>
+        <h3>We triage</h3>
+        <p>Most calls are settled by phone with a plan. If the horse needs us in person, we give you a window, not a vague &ldquo;sometime today.&rdquo;</p>
+      </li>
+      <li>
+        <div class="when">Step three</div>
+        <h3>We examine</h3>
+        <p>The doctor walks the horse, asks about feed, turnout and past history, and explains findings as they come up, before anything is done.</p>
+      </li>
+      <li>
+        <div class="when">Step four</div>
+        <h3>You get a plan</h3>
+        <p>A written summary with what we did, what it costs, what to watch for, and when we will check again.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="block" id="prices">
+  <div class="wrap price-grid">
+    <div>
+      <h2>Common visits, <em>plainly</em> priced</h2>
+      <p class="note" style="margin-top:20px; font-size:16px; color: var(--ink-soft);">Farm call fees apply to every on-farm visit and are waived when a procedure is booked during the same trip. Emergency rates are charged after 6 pm and on weekends and holidays. Prices reflect our 2026 schedule and are confirmed before any work starts.</p>
+    </div>
+    <div>
+      <table class="prices">
+        <thead>
+          <tr><th>Visit</th><th class="amt">From</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Farm call fee<small>Applies to all on-farm visits</small></td><td class="amt">$95</td></tr>
+          <tr><td>Wellness visit<small>Exam, vaccines and Coggins draw</small></td><td class="amt">$165</td></tr>
+          <tr><td>Power float<small>Sedation and written dental chart</small></td><td class="amt">$185</td></tr>
+          <tr><td>Pregnancy check<small>Transrectal ultrasound</small></td><td class="amt">$70</td></tr>
+          <tr><td>Lameness exam<small>Flexion tests and nerve blocks, before imaging</small></td><td class="amt">$240</td></tr>
+          <tr><td>Colic evaluation<small>After-hours rate applies</small></td><td class="amt">$320</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="team" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>The doctors, <em>by name</em></h2>
+      <p>Four veterinarians share the call schedule. You will usually see the same two or three faces, and the notes in your horse&rsquo;s file are written so whoever answers already knows its history.</p>
+    </div>
+
+    <div class="team">
+      <article class="doc">
+        <div class="monogram">RO</div>
+        <h3>Dr. Ruth Okafor</h3>
+        <p class="role">Founding partner · Lameness</p>
+        <p>Twenty-five years of sport horse work across the eventing and reining circuits. Likely to be standing at your stall with a flexion test in hand.</p>
+      </article>
+      <article class="doc">
+        <div class="monogram">DM</div>
+        <h3>Dr. Daniel Marsh</h3>
+        <p class="role">Partner · Reproduction</p>
+        <p>Runs our breeding program and foaling calls. Certified in reproductive ultrasound and a regular at the state breeders&rsquo; seminar.</p>
+      </article>
+      <article class="doc">
+        <div class="monogram">AL</div>
+        <h3>Dr. Amara Lindqvist</h3>
+        <p class="role">Associate · Emergency &amp; dentistry</p>
+        <p>Leads our colic rotation and our dental clinic. Keeps a very tidy float kit and will tell you exactly what she found in your horse&rsquo;s mouth.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="area" style="padding-top:0;">
+  <div class="wrap area-grid">
+    <div>
+      <h2>Where we <em>drive</em></h2>
+      <p style="color: var(--ink-soft); margin-top: 20px; max-width: 30em;">Our trucks cover the western half of Tillman County and the river bottoms of Ardell County. Farms outside the line are welcome, but a call beyond 40 miles adds a travel fee quoted at booking.</p>
+      <ul class="towns" style="margin-top: 28px;">
+        <li>Harlan Bend</li>
+        <li>Coldwater Flats</li>
+        <li>Ostrander</li>
+        <li>Pine Ridge Road</li>
+        <li>Millbrook</li>
+        <li>Upper Ardell</li>
+        <li>Stone Corral</li>
+        <li>Greer Crossing</li>
+      </ul>
+    </div>
+    <div class="contact-block" id="contact">
+      <span class="label">Contact</span>
+      <h2>Call the barn, <em>or</em> send a note</h2>
+      <a class="big" href="tel:+15555550142">(555) 555-0142</a>
+      <dl>
+        <dt>Email</dt><dd><a href="mailto:office@hollowcreekequine.example">office@hollowcreekequine.example</a></dd>
+        <dt>Office</dt><dd>418 County Road 9, Harlan Bend, OK</dd>
+        <dt>Hours</dt><dd>Mon–Fri 7:30–5:30<br>Sat 8–noon, Sun by emergency only</dd>
+        <dt>Emergency</dt><dd>Always answered, 24 hours</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Hollow Creek Equine Veterinary Services, PLLC</span>
+    <span>Licensed in Oklahoma · Accredited by the AAEP</span>
+  </div>
+</footer>
+
+</body>
+</html>

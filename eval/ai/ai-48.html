@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ember &amp; Lantern Films — Documentary Production</title>
+  <meta name="description" content="Ember & Lantern Films makes character-driven documentaries for broadcast, streaming and the big screen.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0c0b;
+      --bg-alt: #161412;
+      --surface: #1d1a17;
+      --line: rgba(243, 232, 214, 0.12);
+      --text: #f3e8d6;
+      --muted: #a79c8c;
+      --accent: #e0893a;
+      --accent-strong: #f0a35a;
+      --accent-ink: #1a0f05;
+      --radius: 14px;
+      --max: 1180px;
+      --serif: "Fraunces", Georgia, serif;
+      --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme="dark"]) {
+        --bg: #f7f1e7;
+        --bg-alt: #efe6d7;
+        --surface: #fffaf2;
+        --line: rgba(33, 24, 14, 0.12);
+        --text: #22190f;
+        --muted: #6b5d4c;
+        --accent: #b85a1b;
+        --accent-strong: #9a4a14;
+        --accent-ink: #fff8ee;
+      }
+    }
+
+    :root[data-theme="light"] {
+      --bg: #f7f1e7;
+      --bg-alt: #efe6d7;
+      --surface: #fffaf2;
+      --line: rgba(33, 24, 14, 0.12);
+      --text: #22190f;
+      --muted: #6b5d4c;
+      --accent: #b85a1b;
+      --accent-strong: #9a4a14;
+      --accent-ink: #fff8ee;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; margin: 0; letter-spacing: -0.01em; }
+    p { margin: 0; }
+
+    .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+    @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+    .eyebrow {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font: 600 15px/1 var(--sans);
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .btn-primary { background: var(--accent); color: var(--accent-ink); }
+    .btn-primary:hover { background: var(--accent-strong); transform: translateY(-1px); }
+    .btn-ghost { border-color: var(--line); color: var(--text); background: transparent; }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      transition: background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+    .site-header.scrolled {
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-color: var(--line);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      font-family: var(--serif);
+      font-size: 20px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-mark {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffd39a, var(--accent) 55%, #6b2c08);
+      box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 60%, transparent);
+    }
+    .nav-links { display: none; gap: 28px; list-style: none; margin: 0; padding: 0; }
+    .nav-links a { text-decoration: none; font-size: 14px; color: var(--muted); }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { display: none; }
+    .menu-toggle {
+      background: none; border: 1px solid var(--line); color: var(--text);
+      border-radius: 10px; padding: 8px 12px; font: 500 14px var(--sans); cursor: pointer;
+    }
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      padding: 8px 0 20px;
+      background: var(--bg);
+      border-top: 1px solid var(--line);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { padding: 12px 0; text-decoration: none; border-bottom: 1px solid var(--line); }
+    @media (min-width: 900px) {
+      .nav-links { display: flex; }
+      .nav-cta { display: inline-flex; padding: 10px 18px; font-size: 14px; }
+      .menu-toggle { display: none; }
+      .mobile-menu { display: none !important; }
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
+      padding: 140px 0 72px;
+      overflow: hidden;
+      background:
+        radial-gradient(70% 60% at 80% 20%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%),
+        radial-gradient(60% 50% at 10% 90%, #3a1d0c 0%, transparent 70%),
+        linear-gradient(180deg, #0d0c0b 0%, #14100c 100%);
+      color: #f3e8d6;
+    }
+    .hero::after {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.07'/></svg>");
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 920px; }
+    .hero h1 {
+      font-size: clamp(44px, 8.5vw, 104px);
+      font-weight: 300;
+      font-variation-settings: "opsz" 144;
+      margin: 18px 0 24px;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent-strong); }
+    .hero-lede { font-size: clamp(17px, 2vw, 20px); color: #cbbfae; max-width: 580px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+    .hero .btn-ghost { color: #f3e8d6; }
+    .hero-meta {
+      margin-top: 64px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      border-top: 1px solid rgba(243, 232, 214, 0.15);
+      padding-top: 24px;
+    }
+    .hero-meta strong { display: block; font: 400 clamp(26px, 4vw, 40px)/1 var(--serif); color: #f3e8d6; }
+    .hero-meta span { font-size: 13px; color: #a79c8c; }
+
+    /* ---------- Sections ---------- */
+    section { padding: 112px 0; }
+    .section-head { display: grid; gap: 16px; margin-bottom: 56px; max-width: 680px; }
+    .section-head h2 { font-size: clamp(34px, 5vw, 56px); }
+    .section-head p { color: var(--muted); font-size: 18px; }
+
+    /* ---------- About ---------- */
+    .about-grid { display: grid; gap: 48px; }
+    .about-grid p { color: var(--muted); font-size: 18px; }
+    .about-grid p + p { margin-top: 18px; }
+    .pull {
+      font-family: var(--serif);
+      font-size: clamp(26px, 3.4vw, 38px);
+      line-height: 1.25;
+      font-weight: 300;
+    }
+    .pull em { color: var(--accent); }
+    @media (min-width: 900px) { .about-grid { grid-template-columns: 1.1fr 1fr; align-items: start; } }
+
+    /* ---------- Films ---------- */
+    .films { background: var(--bg-alt); }
+    .film-grid { display: grid; gap: 28px; }
+    @media (min-width: 640px) { .film-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1000px) { .film-grid { grid-template-columns: repeat(3, 1fr); } }
+    .film {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .film:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
+    .poster {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #f3e8d6;
+      overflow: hidden;
+    }
+    .poster::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.55));
+    }
+    .poster > * { position: relative; z-index: 1; }
+    .poster-tag {
+      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+      background: rgba(0,0,0,0.35); padding: 6px 10px; border-radius: 999px;
+      align-self: flex-start;
+    }
+    .poster-title { font: 400 clamp(30px, 3.2vw, 40px)/1.02 var(--serif); }
+    .p1 { background: radial-gradient(circle at 70% 25%, #f5b56a, transparent 45%), linear-gradient(160deg, #7a2e12, #2a0f08 70%); }
+    .p2 { background: radial-gradient(circle at 30% 30%, #9fd3c7, transparent 45%), linear-gradient(200deg, #1d3b3a, #08161a 75%); }
+    .p3 { background: radial-gradient(circle at 50% 80%, #e7c9a0, transparent 50%), linear-gradient(170deg, #4a3a5c, #15101f 80%); }
+    .p4 { background: radial-gradient(circle at 80% 70%, #f08a4b, transparent 40%), linear-gradient(190deg, #3b2a18, #120c06 80%); }
+    .p5 { background: radial-gradient(circle at 25% 75%, #c3d8a1, transparent 45%), linear-gradient(160deg, #26381f, #0b1409 80%); }
+    .p6 { background: radial-gradient(circle at 60% 20%, #f2e3c6, transparent 40%), linear-gradient(180deg, #5b1f2b, #1a0709 80%); }
+    .film-body { padding: 22px 24px 26px; display: grid; gap: 8px; }
+    .film-body h3 { font-size: 24px; }
+    .film-body p { color: var(--muted); font-size: 15px; }
+    .film-meta { font-size: 13px; color: var(--muted); letter-spacing: 0.02em; }
+    .film-meta b { color: var(--accent); font-weight: 600; }
+    .films-foot { margin-top: 48px; display: flex; justify-content: center; }
+
+    /* ---------- Services ---------- */
+    .services-grid { display: grid; gap: 20px; }
+    @media (min-width: 720px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1000px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
+    .service {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 8px;
+    }
+    .service .num { font: 400 15px var(--serif); color: var(--accent); font-style: italic; }
+    .service h3 { font-size: 26px; margin: 12px 0 12px; }
+    .service p { color: var(--muted); font-size: 15px; }
+
+    /* ---------- Process ---------- */
+    .process { background: var(--bg-alt); }
+    .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: step; }
+    .steps li {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 16px;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .steps li:first-child { border-top: 1px solid var(--line); }
+    .step-no {
+      font: 300 44px/1 var(--serif);
+      color: var(--accent);
+    }
+    .steps h3 { font-size: 24px; margin-bottom: 6px; }
+    .steps p { color: var(--muted); font-size: 16px; }
+    @media (min-width: 900px) {
+      .process-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; }
+      .process-grid .section-head { position: sticky; top: 120px; }
+    }
+
+    /* ---------- Testimonials ---------- */
+    .quotes { display: grid; gap: 20px; }
+    @media (min-width: 900px) { .quotes { grid-template-columns: repeat(3, 1fr); } }
+    .quote {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .quote blockquote { margin: 0; font: 400 21px/1.4 var(--serif); font-style: italic; }
+    .quote figcaption { font-size: 14px; color: var(--muted); }
+    .quote figcaption strong { display: block; color: var(--text); font-weight: 600; }
+
+    /* ---------- Team ---------- */
+    .team-grid { display: grid; gap: 28px; }
+    @media (min-width: 640px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1000px) { .team-grid { grid-template-columns: repeat(4, 1fr); } }
+    .person .avatar {
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      display: grid; place-items: center;
+      font: 300 56px var(--serif);
+      color: #f3e8d6;
+    }
+    .person h3 { font-size: 22px; }
+    .person p { color: var(--muted); font-size: 14px; }
+
+    /* ---------- Contact ---------- */
+    .contact { background: var(--bg-alt); }
+    .contact-grid { display: grid; gap: 56px; }
+    @media (min-width: 900px) { .contact-grid { grid-template-columns: 1fr 1.1fr; gap: 80px; } }
+    .contact-info p { color: var(--muted); font-size: 18px; margin-top: 18px; }
+    .contact-info dl { margin: 40px 0 0; display: grid; gap: 20px; }
+    .contact-info dt { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+    .contact-info dd { margin: 4px 0 0; font: 400 22px var(--serif); }
+    form.inquiry {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: grid;
+      gap: 18px;
+    }
+    .row { display: grid; gap: 18px; }
+    @media (min-width: 560px) { .row { grid-template-columns: 1fr 1fr; } }
+    label { display: grid; gap: 8px; font-size: 14px; font-weight: 500; color: var(--muted); }
+    input, select, textarea {
+      font: 400 16px var(--sans);
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 14px;
+      width: 100%;
+    }
+    input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+    textarea { min-height: 120px; resize: vertical; }
+    form.inquiry .btn { justify-self: start; border: 0; }
+    .form-note { font-size: 13px; color: var(--muted); }
+    .form-status { font-size: 15px; color: var(--accent); min-height: 1.5em; }
+
+    /* ---------- Footer ---------- */
+    footer { padding: 56px 0 40px; border-top: 1px solid var(--line); }
+    .foot { display: grid; gap: 32px; }
+    @media (min-width: 720px) { .foot { grid-template-columns: 2fr 1fr 1fr; } }
+    .foot p, .foot a { color: var(--muted); font-size: 14px; text-decoration: none; }
+    .foot a:hover { color: var(--text); }
+    .foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .foot h4 { margin: 0 0 12px; font: 600 12px var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--text); }
+    .legal { margin-top: 40px; font-size: 13px; color: var(--muted); }
+
+    /* ---------- Reveal on scroll ---------- */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .film, .btn { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" id="header">
+    <nav class="wrap nav" aria-label="Primary">
+      <a href="#top" class="logo" aria-label="Ember and Lantern Films home">
+        <span class="logo-mark" aria-hidden="true"></span>
+        Ember &amp; Lantern
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">Studio</a></li>
+        <li><a href="#films">Films</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#team">Team</a></li>
+      </ul>
+      <a href="#contact" class="btn btn-primary nav-cta">Start a project</a>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu">Menu</button>
+    </nav>
+    <div class="mobile-menu wrap" id="mobileMenu">
+      <a href="#about">Studio</a>
+      <a href="#films">Films</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Start a project</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Documentary film production</p>
+        <h1>Real people, <em>told slowly</em>, and told well.</h1>
+        <p class="hero-lede">Ember &amp; Lantern makes character-driven documentaries for broadcast, streaming and theatrical release. We spend the time it takes to earn our subjects' trust, and we shoot what the story needs.</p>
+        <div class="hero-actions">
+          <a href="#films" class="btn btn-primary">See our films</a>
+          <a href="#contact" class="btn btn-ghost">Pitch us a story</a>
+        </div>
+        <div class="hero-meta">
+          <div><strong>38</strong><span>films produced since 2011</span></div>
+          <div><strong>11</strong><span>festival awards and nominations</span></div>
+          <div><strong>24</strong><span>countries on location</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About -->
+    <section id="about">
+      <div class="wrap about-grid">
+        <div class="reveal">
+          <p class="eyebrow">The studio</p>
+          <h2 style="margin-top:16px; font-size: clamp(34px, 5vw, 56px);">A small studio with a long attention span.</h2>
+        </div>
+        <div class="reveal">
+          <p class="pull">We make films about people who are rarely the subject of a headline: <em>nurses, fishers, archivists, and the families who keep a town running.</em></p>
+          <p style="margin-top:28px;">Ember &amp; Lantern is a team of directors, producers, editors and researchers based in Lisbon and Toronto. We take on a small number of projects each year so that every film gets a full crew, a proper edit and the time to find its real shape.</p>
+          <p>We work with broadcasters, streamers, foundations and independent funders, and we keep creative control where it matters most: the story itself.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Films -->
+    <section id="films" class="films">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Selected work</p>
+          <h2>Films that stay with you after the credits.</h2>
+          <p>A selection of recent features and series. Each one began with a single person and a question we couldn't put down.</p>
+        </div>
+
+        <div class="film-grid">
+          <article class="film reveal">
+            <div class="poster p1">
+              <span class="poster-tag">Feature · 2025</span>
+              <h3 class="poster-title">The Last Night Shift</h3>
+            </div>
+            <div class="film-body">
+              <h3>The Last Night Shift</h3>
+              <p>Over one winter, a rural hospital prepares to close its doors. We stayed with the people who were still working there.</p>
+              <div class="film-meta"><b>Festival Premiere</b> · 96 min · Subtitled in 9 languages</div>
+            </div>
+          </article>
+
+          <article class="film reveal">
+            <div class="poster p2">
+              <span class="poster-tag">Series · 2024</span>
+              <h3 class="poster-title">Salt &amp; Tide</h3>
+            </div>
+            <div class="film-body">
+              <h3>Salt &amp; Tide</h3>
+              <p>Four episodes following three generations of fishing families as quotas, weather and prices reshape the coastline.</p>
+              <div class="film-meta"><b>Broadcast Series</b> · 4 × 52 min</div>
+            </div>
+          </article>
+
+          <article class="film reveal">
+            <div class="poster p3">
+              <span class="poster-tag">Feature · 2023</span>
+              <h3 class="poster-title">Index of Small Things</h3>
+            </div>
+            <div class="film-body">
+              <h3>Index of Small Things</h3>
+              <p>A municipal archivist spends a career cataloguing objects no one asked for, until one box changes what the city remembers.</p>
+              <div class="film-meta"><b>Theatrical Release</b> · 84 min</div>
+            </div>
+          </article>
+
+          <article class="film reveal">
+            <div class="poster p4">
+              <span class="poster-tag">Short · 2024</span>
+              <h3 class="poster-title">Kiln Season</h3>
+            </div>
+            <div class="film-body">
+              <h3>Kiln Season</h3>
+              <p>Twelve minutes inside a ceramics cooperative in the hills above Porto, shot entirely by the potters themselves.</p>
+              <div class="film-meta"><b>Award Winner</b> · 12 min</div>
+            </div>
+          </article>
+
+          <article class="film reveal">
+            <div class="poster p5">
+              <span class="poster-tag">Feature · 2022</span>
+              <h3 class="poster-title">Where the Rivers Meet</h3>
+            </div>
+            <div class="film-body">
+              <h3>Where the Rivers Meet</h3>
+              <p>Two farming communities on either side of a disputed border share one irrigation canal, and one ferryman.</p>
+              <div class="film-meta"><b>Streaming Original</b> · 102 min</div>
+            </div>
+          </article>
+
+          <article class="film reveal">
+            <div class="poster p6">
+              <span class="poster-tag">Series · 2026</span>
+              <h3 class="poster-title">Night Choir</h3>
+            </div>
+            <div class="film-body">
+              <h3>Night Choir</h3>
+              <p>A volunteer choir for people experiencing homelessness, followed across a single season of rehearsals and one unforgettable concert.</p>
+              <div class="film-meta"><b>In Post-Production</b> · 6 × 45 min</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">What we do</p>
+          <h2>From first idea to final delivery.</h2>
+        </div>
+        <div class="services-grid">
+          <div class="service reveal">
+            <span class="num">i.</span>
+            <h3>Original development</h3>
+            <p>We help shape a story from a spark into a treatment, a funding package and a clear, filmable plan.</p>
+          </div>
+          <div class="service reveal">
+            <span class="num">ii.</span>
+            <h3>Production</h3>
+            <p>Full-service shooting in-house, with cinematography, sound and crew on location anywhere in the world.</p>
+          </div>
+          <div class="service reveal">
+            <span class="num">iii.</span>
+            <h3>Post &amp; finishing</h3>
+            <p>Editorial, colour, sound design and mix, plus archival research and licensing for every frame.</p>
+          </div>
+          <div class="service reveal">
+            <span class="num">iv.</span>
+            <h3>Distribution support</h3>
+            <p>Festival strategy, deliverables for broadcasters and platforms, and impact campaigns for the communities we film.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section id="process" class="process">
+      <div class="wrap process-grid">
+        <div class="section-head reveal">
+          <p class="eyebrow">How we work</p>
+          <h2>Patient by design.</h2>
+          <p>Our films take time because the best moments rarely happen on a schedule. This is the path most of our projects follow.</p>
+        </div>
+        <ol class="steps">
+          <li class="reveal">
+            <span class="step-no">01</span>
+            <div>
+              <h3>Listen first</h3>
+              <p>We begin with conversations, not cameras. Research, meetings and a short paper that tests whether the story holds.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <span class="step-no">02</span>
+            <div>
+              <h3>Earn trust on location</h3>
+              <p>Scouting and pre-production with subjects and their communities. We agree on boundaries before we roll.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <span class="step-no">03</span>
+            <div>
+              <h3>Shoot what happens</h3>
+              <p>Lean crews, long takes and room for the unexpected. We keep the camera close and the footprint small.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <span class="step-no">04</span>
+            <div>
+              <h3>Find the shape in the edit</h3>
+              <p>Many months in the edit room, testing cuts with trusted audiences until the film knows what it is saying.</p>
+            </div>
+          </li>
+          <li class="reveal">
+            <span class="step-no">05</span>
+            <div>
+              <h3>Carry it into the world</h3>
+              <p>Premieres, screenings, and outreach that puts the film in front of the people who can act on it.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="voices">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Voices</p>
+          <h2>What partners and subjects say.</h2>
+        </div>
+        <div class="quotes">
+          <figure class="quote reveal">
+            <blockquote>“They asked better questions than anyone who had ever come to our town, and then they waited until we answered.”</blockquote>
+            <figcaption><strong>Maria Duarte</strong>Charge nurse, subject of <em>The Last Night Shift</em></figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <blockquote>“Ember &amp; Lantern treats a documentary like a long conversation. The result is rigorous, humane and very rarely rushed.”</blockquote>
+            <figcaption><strong>Daniel Okafor</strong>Commissioning Editor, Factual Drama</figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <blockquote>“We were scared of being exploited on camera. Instead we got a film we're proud to show our grandchildren.”</blockquote>
+            <figcaption><strong>Ines Carvalho</strong>Fisher and cooperative member, <em>Salt &amp; Tide</em></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section id="team" class="films">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">The team</p>
+          <h2>The people behind the lens.</h2>
+        </div>
+        <div class="team-grid">
+          <div class="person reveal">
+            <div class="avatar p1">A</div>
+            <h3>Amara Lind</h3>
+            <p>Co-founder &amp; Director</p>
+          </div>
+          <div class="person reveal">
+            <div class="avatar p2">T</div>
+            <h3>Tomás Reis</h3>
+            <p>Co-founder &amp; Executive Producer</p>
+          </div>
+          <div class="person reveal">
+            <div class="avatar p4">J</div>
+            <h3>Judith Osei</h3>
+            <p>Head of Editorial</p>
+          </div>
+          <div class="person reveal">
+            <div class="avatar p5">R</div>
+            <h3>Ravi Mehta</h3>
+            <p>Director of Photography</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+      <div class="wrap contact-grid">
+        <div class="contact-info reveal">
+          <p class="eyebrow">Get in touch</p>
+          <h2 style="margin-top:16px; font-size: clamp(34px, 5vw, 56px);">Have a story that deserves time?</h2>
+          <p>Send us a short note about the people, place and question at the heart of your idea. We read every submission and reply to those we can help.</p>
+          <dl>
+            <div>
+              <dt>Development</dt>
+              <dd>hello@emberandlantern.example</dd>
+            </div>
+            <div>
+              <dt>Studios</dt>
+              <dd>Lisbon &amp; Toronto</dd>
+            </div>
+          </dl>
+        </div>
+
+        <form class="inquiry reveal" id="inquiry" novalidate>
+          <div class="row">
+            <label>Name
+              <input type="text" name="name" autocomplete="name" required>
+            </label>
+            <label>Email
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+          </div>
+          <label>Project type
+            <select name="type">
+              <option>Feature documentary</option>
+              <option>Series</option>
+              <option>Short film</option>
+              <option>Commission a production</option>
+              <option>Something else</option>
+            </select>
+          </label>
+          <label>Tell us about the story
+            <textarea name="message" required></textarea>
+          </label>
+          <button class="btn btn-primary" type="submit">Send inquiry</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          <p class="form-note">We reply within three weeks. Your details are used only to respond to your inquiry.</p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <a href="#top" class="logo">
+            <span class="logo-mark" aria-hidden="true"></span>
+            Ember &amp; Lantern
+          </a>
+          <p style="margin-top:14px; max-width:340px;">Documentary films made with patience, care and a steady camera.</p>
+        </div>
+        <div>
+          <h4>Studio</h4>
+          <ul>
+            <li><a href="#films">Films</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#team">Team</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#contact">Pitch a story</a></li>
+            <li><a href="#contact">Press kit</a></li>
+            <li><a href="#contact">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legal">© <span id="year"></span> Ember &amp; Lantern Films. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Header state on scroll
+    const header = document.getElementById('header');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Mobile menu
+    const toggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('mobileMenu');
+    toggle.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.textContent = open ? 'Close' : 'Menu';
+    });
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.textContent = 'Menu';
+    }));
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12 });
+      revealEls.forEach(el => io.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add('in'));
+    }
+
+    // Contact form (front-end only: wire to your form endpoint)
+    const form = document.getElementById('inquiry');
+    const status = document.getElementById('formStatus');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = form.elements.name.value.trim();
+      const email = form.elements.email.value.trim();
+      const message = form.elements.message.value.trim();
+      if (!name || !email || !message) {
+        status.textContent = 'Please fill in your name, email and a short note.';
+        return;
+      }
+      status.textContent = 'Thank you, ' + name.split(' ')[0] + '. Your inquiry has been noted; we will be in touch.';
+      form.reset();
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

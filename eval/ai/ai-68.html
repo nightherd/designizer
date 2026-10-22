@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Springhouse Trampoline Park — Cedar Falls, IA</title>
+<meta name="description" content="Springhouse is a trampoline park in an old feed warehouse on Mill Street. Open jump, dodgeball, foam pit, toddler hours and birthday parties.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1eadb;
+    --paper-2:#e7dfcb;
+    --ink:#1c1a16;
+    --orange:#ff4b1f;
+    --lime:#d6f03c;
+    --line:2px solid var(--ink);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Archivo',system-ui,sans-serif;font-stretch:100%;
+    font-size:17px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  .serif{font-family:'Newsreader',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em}
+  .tag{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-stretch:110%}
+
+  /* status strip */
+  .strip{background:var(--ink);color:var(--paper);font-size:13px}
+  .strip .wrap{display:flex;justify-content:space-between;gap:16px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#777;margin-right:8px;vertical-align:1px}
+  .dot.on{background:var(--lime);box-shadow:0 0 0 3px rgba(214,240,60,.25)}
+
+  /* nav */
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:18px;padding-bottom:18px}
+  .logo{font-weight:900;font-stretch:125%;font-size:22px;letter-spacing:-.02em;text-decoration:none;text-transform:uppercase}
+  .logo i{font-style:normal;color:var(--orange)}
+  nav ul{display:flex;gap:28px;list-style:none;font-weight:600;font-size:15px}
+  nav ul a{text-decoration:none;border-bottom:2px solid transparent}
+  nav ul a:hover{border-color:var(--orange)}
+  .btn{
+    display:inline-block;background:var(--orange);color:var(--ink);text-decoration:none;
+    font-weight:800;font-stretch:112%;text-transform:uppercase;letter-spacing:.03em;font-size:15px;
+    padding:14px 22px;border:var(--line);box-shadow:5px 5px 0 var(--ink);
+    transition:transform .12s, box-shadow .12s;
+  }
+  .btn:hover{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+  .btn.alt{background:var(--paper)}
+  @media(max-width:760px){nav ul{display:none}}
+
+  /* hero */
+  .hero{border-top:var(--line);border-bottom:var(--line);position:relative;overflow:hidden}
+  .hero .wrap{padding-top:56px;padding-bottom:0}
+  h1{
+    font-weight:900;font-stretch:125%;text-transform:uppercase;
+    font-size:clamp(52px,11.5vw,168px);line-height:.84;letter-spacing:-.045em;
+  }
+  h1 .o{color:var(--orange)}
+  h1 .serif{text-transform:none;font-weight:400;letter-spacing:-.04em;font-stretch:100%}
+  .hero-row{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end;margin-top:36px}
+  .hero-row p{max-width:470px;font-size:19px}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap}
+  @media(max-width:760px){.hero-row{grid-template-columns:1fr}}
+
+  /* bouncing ball */
+  .floor{position:relative;height:150px;margin-top:10px}
+  .floor::after{ /* mat */
+    content:"";position:absolute;left:0;right:0;bottom:0;height:34px;background:var(--ink);
+  }
+  .floor::before{ /* court tape */
+    content:"";position:absolute;left:0;right:0;bottom:34px;height:6px;
+    background:repeating-linear-gradient(90deg,var(--lime) 0 28px,transparent 28px 56px);
+  }
+  .ball{
+    position:absolute;left:62%;bottom:40px;width:64px;height:64px;border-radius:50%;
+    background:var(--orange);border:var(--line);
+    animation:bounce 1.15s infinite;transform-origin:50% 100%;
+  }
+  .ball::after{content:"";position:absolute;left:12px;top:10px;width:14px;height:14px;border-radius:50%;background:var(--paper);opacity:.7}
+  .shadow{
+    position:absolute;left:calc(62% + 4px);bottom:36px;width:56px;height:8px;border-radius:50%;
+    background:rgba(0,0,0,.35);animation:shade 1.15s infinite;z-index:1;
+  }
+  @keyframes bounce{
+    0%{transform:translateY(0) scale(1.18,.8);animation-timing-function:cubic-bezier(.2,.7,.4,1)}
+    12%{transform:translateY(-6px) scale(.95,1.06);animation-timing-function:cubic-bezier(.2,.7,.4,1)}
+    50%{transform:translateY(-84px) scale(1);animation-timing-function:cubic-bezier(.6,0,.8,.3)}
+    88%{transform:translateY(0) scale(1);animation-timing-function:ease-out}
+    94%{transform:translateY(0) scale(1.18,.8)}
+    100%{transform:translateY(0) scale(1.18,.8)}
+  }
+  @keyframes shade{0%,100%{transform:scaleX(1.1);opacity:1}50%{transform:scaleX(.5);opacity:.4}}
+  .sticker{
+    position:absolute;right:4%;top:48px;transform:rotate(9deg);
+    width:128px;height:128px;border-radius:50%;background:var(--lime);border:var(--line);
+    display:grid;place-items:center;text-align:center;font-weight:800;font-stretch:110%;
+    font-size:13px;line-height:1.15;text-transform:uppercase;letter-spacing:.04em;padding:14px;
+  }
+  .sticker b{display:block;font-size:34px;font-stretch:125%;font-weight:900;letter-spacing:-.04em;line-height:1}
+  @media(max-width:900px){.sticker{display:none}}
+
+  /* section head */
+  section{padding:88px 0}
+  .sh{display:grid;grid-template-columns:160px 1fr;gap:20px;margin-bottom:44px}
+  .sh h2{font-weight:900;font-stretch:118%;text-transform:uppercase;letter-spacing:-.035em;line-height:.92;font-size:clamp(36px,6vw,76px)}
+  .sh .tag{padding-top:14px}
+  @media(max-width:700px){.sh{grid-template-columns:1fr;gap:6px}}
+
+  /* floor ledger */
+  .ledger{border-top:var(--line)}
+  .row{
+    display:grid;grid-template-columns:70px 1.2fr 2fr 130px;gap:20px;align-items:baseline;
+    padding:22px 0;border-bottom:var(--line);transition:background .15s, padding .15s;
+  }
+  .row:hover{background:var(--lime);padding-left:14px;padding-right:14px;margin:0 -14px}
+  .row .n{font-weight:900;font-stretch:125%;font-size:15px;color:var(--orange)}
+  .row h3{font-weight:800;font-stretch:112%;font-size:27px;letter-spacing:-.02em;line-height:1.05;text-transform:uppercase}
+  .row p{color:#3b372f}
+  .row .meta{text-align:right;font-size:14px;font-weight:600}
+  @media(max-width:760px){
+    .row{grid-template-columns:44px 1fr;gap:6px 12px}
+    .row p{grid-column:2}.row .meta{grid-column:2;text-align:left}
+    .row:hover{margin:0;padding-left:0;padding-right:0}
+  }
+
+  /* tickets */
+  .tickets{background:var(--ink);color:var(--paper)}
+  .tickets .sh h2{color:var(--paper)}
+  .tix{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .tk{
+    background:var(--paper);color:var(--ink);position:relative;padding:28px 26px 26px;
+    -webkit-mask:radial-gradient(circle 12px at 0 62%,#0000 98%,#000) left/51% 100% no-repeat,
+                 radial-gradient(circle 12px at 100% 62%,#0000 98%,#000) right/51% 100% no-repeat;
+            mask:radial-gradient(circle 12px at 0 62%,#0000 98%,#000) left/51% 100% no-repeat,
+                 radial-gradient(circle 12px at 100% 62%,#0000 98%,#000) right/51% 100% no-repeat;
+  }
+  .tk:nth-child(2){background:var(--orange)}
+  .tk:nth-child(1){transform:rotate(-1.2deg)}
+  .tk:nth-child(3){transform:rotate(1deg)}
+  .tk .len{font-weight:900;font-stretch:125%;font-size:20px;text-transform:uppercase}
+  .tk .price{font-weight:900;font-stretch:125%;font-size:84px;letter-spacing:-.06em;line-height:1;margin:14px 0 6px}
+  .tk .price sup{font-size:.38em;vertical-align:.95em;letter-spacing:0;margin-right:3px}
+  .tk .cut{border-top:2px dashed var(--ink);margin:20px -26px 16px;position:relative;top:14px}
+  .tk ul{list-style:none;font-size:15px;margin-top:30px}
+  .tk li{padding:4px 0}
+  .tk li::before{content:"→ ";font-weight:800}
+  .fine{margin-top:34px;font-size:15px;max-width:640px;opacity:.85}
+  @media(max-width:900px){.tix{grid-template-columns:1fr}.tk{transform:none!important}}
+
+  /* schedule */
+  .sched{display:grid;grid-template-columns:1.1fr 1fr;gap:56px}
+  table{width:100%;border-collapse:collapse;font-size:17px}
+  td,th{padding:13px 0;border-bottom:var(--line);text-align:left}
+  th{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-stretch:110%;border-top:var(--line)}
+  td:last-child,th:last-child{text-align:right}
+  tr.today td{background:var(--lime);font-weight:700}
+  tr.today td:first-child{padding-left:10px}tr.today td:last-child{padding-right:10px}
+  .special{border:var(--line);padding:28px;background:var(--paper-2);box-shadow:8px 8px 0 var(--ink);align-self:start}
+  .special h3{font-weight:900;font-stretch:118%;text-transform:uppercase;font-size:28px;line-height:1;letter-spacing:-.03em;margin:10px 0 12px}
+  .special + .special{margin-top:36px}
+  .special p{margin-bottom:10px}
+  @media(max-width:900px){.sched{grid-template-columns:1fr}}
+
+  /* party */
+  .party{background:var(--orange);border-top:var(--line);border-bottom:var(--line)}
+  .party-in{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
+  .party h2{font-weight:900;font-stretch:125%;text-transform:uppercase;letter-spacing:-.045em;line-height:.88;font-size:clamp(44px,7.5vw,104px)}
+  .party h2 .serif{text-transform:none;font-weight:400;font-stretch:100%}
+  .party p{font-size:19px;margin:22px 0 28px;max-width:460px}
+  .quote{background:var(--paper);border:var(--line);padding:26px;transform:rotate(1.6deg);box-shadow:8px 8px 0 var(--ink)}
+  .quote q{display:block;font-family:'Newsreader',serif;font-style:italic;font-size:26px;line-height:1.2;quotes:none}
+  .quote cite{display:block;margin-top:16px;font-style:normal;font-size:14px;font-weight:600}
+  @media(max-width:900px){.party-in{grid-template-columns:1fr}}
+
+  /* faq */
+  .faq{border-top:var(--line);max-width:860px;margin-left:auto}
+  details{border-bottom:var(--line)}
+  summary{
+    list-style:none;cursor:pointer;padding:20px 0;font-weight:800;font-stretch:108%;font-size:20px;
+    display:flex;justify-content:space-between;gap:20px;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-weight:400;font-size:30px;line-height:.8;transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg);color:var(--orange)}
+  details p{padding:0 40px 22px 0;max-width:660px}
+
+  /* footer */
+  footer{background:var(--ink);color:var(--paper);padding:72px 0 28px;overflow:hidden}
+  .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+  footer h4{margin-bottom:12px;color:var(--lime)}
+  footer p,footer a{font-size:16px}
+  .big{
+    font-weight:900;font-stretch:125%;text-transform:uppercase;letter-spacing:-.05em;line-height:.8;
+    font-size:clamp(60px,17vw,250px);margin-top:56px;color:var(--paper);white-space:nowrap;
+  }
+  .big i{font-style:normal;color:var(--orange)}
+  .legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;opacity:.6;margin-top:24px}
+  @media(max-width:760px){.fgrid{grid-template-columns:1fr}}
+
+  @media(prefers-reduced-motion:reduce){.ball,.shadow{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <div class="wrap">
+    <span><span class="dot" id="dot"></span><span id="status">Checking the floor…</span></span>
+    <span>418 Mill Street, Cedar Falls · (319) 555-0147</span>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#">Spring<i>house</i></a>
+    <ul>
+      <li><a href="#floor">The floor</a></li>
+      <li><a href="#tickets">Tickets</a></li>
+      <li><a href="#hours">Hours</a></li>
+      <li><a href="#parties">Parties</a></li>
+      <li><a href="#faq">Questions</a></li>
+    </ul>
+    <a class="btn" href="#tickets">Book a jump</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="sticker"><span>Grip socks<b>$3</b>at the desk</span></div>
+  <div class="wrap">
+    <h1>Get off<br>the <span class="o">ground</span><span class="serif">, </span><br><span class="serif">briefly.</span></h1>
+    <div class="hero-row">
+      <p>Springhouse is 22,000 square feet of trampoline in a former feed warehouse. Open jump, a dodgeball court, a foam pit we are very proud of, and a lot of people laughing at their own landings.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#tickets">See tickets</a>
+        <a class="btn alt" href="#hours">Today's hours</a>
+      </div>
+    </div>
+  </div>
+  <div class="floor" aria-hidden="true"><div class="shadow"></div><div class="ball"></div></div>
+</header>
+
+<section id="floor">
+  <div class="wrap">
+    <div class="sh"><span class="tag">01 / The floor</span><h2>Six places<br>to land.</h2></div>
+    <div class="ledger">
+      <div class="row"><span class="n">A</span><h3>Open court</h3><p>Forty-one connected trampolines wall to wall, with angled side walls for running up and bouncing off. Where most people start and some never leave.</p><span class="meta">All ages · 5 ft+ to do wall runs</span></div>
+      <div class="row"><span class="n">B</span><h3>The pit</h3><p>A 14-foot-deep foam pit, fed by a launch trampoline and a platform you will stand on for longer than you want to admit.</p><span class="meta">6+ · staff on deck</span></div>
+      <div class="row"><span class="n">C</span><h3>Dodgeball</h3><p>Two trampoline courts, real foam balls, and a referee who has seen every loophole. Walk-ons welcome; leagues on Thursday nights.</p><span class="meta">8+ · 10 per side</span></div>
+      <div class="row"><span class="n">D</span><h3>Dunk lanes</h3><p>Four basketball hoops at four heights. Trampoline-assisted dunks are a very real thing and a very easy way to get a sore ankle.</p><span class="meta">8+ · hoops set by staff</span></div>
+      <div class="row"><span class="n">E</span><h3>Ninja strip</h3><p>Warped wall, rope swing, rings, and a pad-lined drop into the pit. Timed runs are posted on the board by the snack bar.</p><span class="meta">8+ · 48 in min</span></div>
+      <div class="row"><span class="n">F</span><h3>Tot lot</h3><p>A fenced-off soft zone with low trampolines and foam blocks, for kids under 6 and the adults chasing them.</p><span class="meta">Under 6 · parent jumps free</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="tickets" class="tickets">
+  <div class="wrap">
+    <div class="sh"><span class="tag">02 / Tickets</span><h2>Pick your<br>dose.</h2></div>
+    <div class="tix">
+      <div class="tk">
+        <div class="len">60 minutes</div>
+        <div class="price"><sup>$</sup>16</div>
+        <p>Enough to figure out the walls.</p>
+        <div class="cut"></div>
+        <ul><li>Open court + Tot lot</li><li>Timer starts when you hit the floor</li><li>Waiver signed online beforehand</li></ul>
+      </div>
+      <div class="tk">
+        <div class="len">90 minutes</div>
+        <div class="price"><sup>$</sup>21</div>
+        <p>What regulars buy. Time for the pit and a snack break.</p>
+        <div class="cut"></div>
+        <ul><li>Everything on the floor</li><li>One free refill of the water station</li><li>Grip socks not included ($3)</li></ul>
+      </div>
+      <div class="tk">
+        <div class="len">All day pass</div>
+        <div class="price"><sup>$</sup>34</div>
+        <p>Leave, eat lunch, come back. Wristband stays on.</p>
+        <div class="cut"></div>
+        <ul><li>In and out until close</li><li>Includes a pair of grip socks</li><li>Best on rainy Saturdays</li></ul>
+      </div>
+    </div>
+    <p class="fine">Spectators are always free. Members get one hour a day and 15% off the snack bar for $29 a month. Ask at the desk, no contract, cancel by text.</p>
+  </div>
+</section>
+
+<section id="hours">
+  <div class="wrap">
+    <div class="sh"><span class="tag">03 / Hours</span><h2>When we're<br>open.</h2></div>
+    <div class="sched">
+      <table>
+        <thead><tr><th>Day</th><th>Open jump</th></tr></thead>
+        <tbody id="rows">
+          <tr data-d="1"><td>Monday</td><td>3 – 9 pm</td></tr>
+          <tr data-d="2"><td>Tuesday</td><td>3 – 9 pm</td></tr>
+          <tr data-d="3"><td>Wednesday</td><td>3 – 9 pm</td></tr>
+          <tr data-d="4"><td>Thursday</td><td>3 – 9 pm</td></tr>
+          <tr data-d="5"><td>Friday</td><td>3 – 11 pm</td></tr>
+          <tr data-d="6"><td>Saturday</td><td>9 am – 11 pm</td></tr>
+          <tr data-d="0"><td>Sunday</td><td>9 am – 7 pm</td></tr>
+        </tbody>
+      </table>
+      <div>
+        <div class="special">
+          <span class="tag">Tue &amp; Thu, 9–11 am</span>
+          <h3>Tot time</h3>
+          <p>The whole park for kids 6 and under, with the music turned down. $9 per child, one adult free.</p>
+        </div>
+        <div class="special">
+          <span class="tag">Fri &amp; Sat, 8–11 pm</span>
+          <h3>Glow jump</h3>
+          <p>Lights off, blacklights on, a DJ who takes requests. 12 and up only. Parents, you can sit this one out.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="party" id="parties">
+  <div class="wrap party-in">
+    <div>
+      <h2>Birthdays<span class="serif">, </span><br><span class="serif">sorted.</span></h2>
+      <p>Ten kids, two hours of jumping, a private room, pizza, and a host who handles the cleanup. You bring the cake and take the credit. From $229.</p>
+      <a class="btn alt" href="tel:3195550147">Call to hold a date</a>
+    </div>
+    <div class="quote">
+      <q>My son's whole class came out sweaty and quiet in the car. I haven't seen that in years.</q>
+      <cite>Dana R., mother of a very tired 8-year-old</cite>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sh"><span class="tag">04 / Questions</span><h2>Before you<br>come in.</h2></div>
+    <div class="faq">
+      <details><summary>Do I need special socks?</summary><p>Yes, grip socks are required on every trampoline. Bring your own or buy a pair at the desk for $3. Regular socks and bare feet are not allowed.</p></details>
+      <details><summary>How young is too young?</summary><p>Babies who can't yet walk are welcome in the Tot lot with a parent but not on the main floor. Anyone under 18 needs a waiver signed by a parent or guardian, which you can do online in about two minutes.</p></details>
+      <details><summary>Is there a weight or height limit?</summary><p>Our trampolines are rated to 250 lb per jumper. For wall runs and the Ninja strip there's a height minimum posted at each entrance.</p></details>
+      <details><summary>Can I bring my own food?</summary><p>Not into the park, but the party rooms and the lobby tables are fair game. Our snack bar sells pizza by the slice, hot pretzels, and a coffee that's better than it needs to be.</p></details>
+      <details><summary>What if I get hurt?</summary><p>Every floor has trained staff, and a first aid kit is behind the desk. Most injuries here are bruised egos. We'd still rather you tell us and sit out.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <h4 class="tag">Find us</h4>
+        <p>418 Mill Street<br>Cedar Falls, IA 50613<br>Free parking behind the building</p>
+      </div>
+      <div>
+        <h4 class="tag">Talk to us</h4>
+        <p><a href="tel:3195550147">(319) 555-0147</a><br><a href="mailto:hello@springhouse.example">hello@springhouse.example</a></p>
+      </div>
+      <div>
+        <h4 class="tag">Follow along</h4>
+        <p><a href="#">Instagram</a><br><a href="#">Facebook</a></p>
+      </div>
+    </div>
+    <div class="big">Spring<i>house</i></div>
+    <div class="legal"><span>© 2026 Springhouse Trampoline Park, LLC</span><span>Jump at your own risk. Rules posted at the door.</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // [open, close] in hours, by getDay(); close past 24 not needed here
+  var H = {0:[9,19],1:[15,21],2:[15,21],3:[15,21],4:[15,21],5:[15,23],6:[9,23]};
+  var tot = {2:[9,11],4:[9,11]};
+  var now = new Date(), d = now.getDay(), h = now.getHours() + now.getMinutes()/60;
+  var row = document.querySelector('#rows tr[data-d="'+d+'"]');
+  if (row) row.className = 'today';
+  var t = H[d], isTot = tot[d] && h >= tot[d][0] && h < tot[d][1];
+  var el = document.getElementById('status'), dot = document.getElementById('dot');
+  function f(x){var s=x>12?x-12:x;return s+(x>=12?' pm':' am');}
+  if (isTot){ dot.className='dot on'; el.textContent='Open now · Tot time until 11 am'; }
+  else if (h >= t[0] && h < t[1]){ dot.className='dot on'; el.textContent='Open now · jumping until '+f(t[1]); }
+  else if (h < t[0]){ el.textContent='Closed · opens today at '+f(t[0]); }
+  else { el.textContent='Closed · see you tomorrow'; }
+})();
+</script>
+</body>
+</html>

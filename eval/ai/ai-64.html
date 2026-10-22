@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Switchyard — Open-source feature flags</title>
+<meta name="description" content="Switchyard is an open-source feature-flag service. Ship continuously, roll out gradually, and turn anything off in milliseconds. Self-host in one container.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;
+  --bg-2:#eeebe3;
+  --surface:#ffffff;
+  --ink:#16181d;
+  --ink-2:#4a4f5a;
+  --ink-3:#7c818c;
+  --line:#dedad0;
+  --line-2:#cfcabd;
+  --on:#1f9d55;
+  --on-soft:#d8f0e1;
+  --off:#c9c4b8;
+  --signal:#e8590c;
+  --signal-soft:#fde4d5;
+  --code-bg:#16181d;
+  --code-ink:#e6e3da;
+  --code-dim:#7d8290;
+  --code-key:#f59f62;
+  --code-str:#8fd4a4;
+  --code-fn:#9cc3ff;
+  --shadow:0 1px 0 rgba(22,24,29,.04),0 12px 32px -12px rgba(22,24,29,.18);
+  --radius:14px;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#111317;--bg-2:#171a1f;--surface:#1b1e24;--ink:#eeebe4;--ink-2:#b3b0a8;--ink-3:#80838c;
+    --line:#2a2e36;--line-2:#363b45;--on:#3ccf7a;--on-soft:#173a26;--off:#3a3f49;
+    --signal:#ff7a33;--signal-soft:#3b2216;--code-bg:#0b0c0f;
+    --shadow:0 1px 0 rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111317;--bg-2:#171a1f;--surface:#1b1e24;--ink:#eeebe4;--ink-2:#b3b0a8;--ink-3:#80838c;
+  --line:#2a2e36;--line-2:#363b45;--on:#3ccf7a;--on-soft:#173a26;--off:#3a3f49;
+  --signal:#ff7a33;--signal-soft:#3b2216;--code-bg:#0b0c0f;
+  --shadow:0 1px 0 rgba(0,0,0,.3),0 16px 40px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img,svg{display:block}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:6px}
+
+.wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 24px}
+@media (max-width:600px){.wrap{padding:0 16px}}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:32px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font:700 19px/1 var(--display);text-decoration:none;letter-spacing:-.01em}
+.logo-mark{width:26px;height:26px}
+.nav-links{display:flex;gap:26px;margin-right:auto}
+.nav-links a{text-decoration:none;color:var(--ink-2);font-size:14.5px;font-weight:500}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.gh{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;text-decoration:none;padding:7px 12px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface)}
+.gh .count{font-family:var(--mono);font-size:12.5px;color:var(--ink-2);padding-left:8px;border-left:1px solid var(--line)}
+.theme-btn{width:36px;height:36px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);display:grid;place-items:center}
+.theme-btn svg{width:16px;height:16px}
+@media (max-width:820px){.nav-links{display:none}.nav .wrap{justify-content:space-between}}
+@media (max-width:420px){.gh .label{display:none}}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid transparent;transition:transform .15s,background .15s,border-color .15s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--ink);color:var(--bg)}
+.btn-primary:hover{background:color-mix(in srgb,var(--ink) 86%,var(--signal))}
+.btn-ghost{border-color:var(--line-2);background:var(--surface)}
+.btn-ghost:hover{border-color:var(--ink-3)}
+.btn svg{width:16px;height:16px}
+
+/* ---------- hero ---------- */
+.hero{padding:72px 0 40px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.02fr 1fr;gap:56px;align-items:center}
+@media (max-width:980px){.hero-grid{grid-template-columns:1fr;gap:44px}}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:500 13px/1 var(--mono);color:var(--ink-2);padding:7px 12px 7px 8px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface);text-decoration:none}
+.eyebrow .tag{background:var(--signal-soft);color:var(--signal);padding:4px 7px;border-radius:999px;font-weight:500}
+h1{font:800 clamp(42px,6.4vw,76px)/.98 var(--display);letter-spacing:-.035em;margin:22px 0 22px}
+h1 .strike{position:relative;color:var(--ink-3);white-space:nowrap}
+h1 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:54%;height:.09em;background:var(--signal);transform:rotate(-2deg);border-radius:4px}
+.lede{font-size:19px;color:var(--ink-2);max-width:520px;line-height:1.55}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin:32px 0 26px}
+.install{display:flex;align-items:center;gap:12px;font:14px/1 var(--mono);background:var(--code-bg);color:var(--code-ink);padding:12px 12px 12px 16px;border-radius:10px;max-width:440px}
+.install .p{color:var(--code-dim)}
+.install code{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.copy{background:transparent;border:1px solid #333842;color:var(--code-ink);border-radius:7px;padding:6px 9px;font:12px/1 var(--mono);flex-shrink:0}
+.copy:hover{border-color:#5b616d}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:22px;font-size:13.5px;color:var(--ink-3)}
+.meta-row span{display:inline-flex;align-items:center;gap:7px}
+.meta-row svg{width:14px;height:14px;color:var(--on)}
+
+/* ---------- console demo ---------- */
+.console{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.console-top{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.dots{display:flex;gap:6px}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--line-2)}
+.env{display:flex;gap:2px;margin-left:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:2px}
+.env button{border:0;background:transparent;font:500 12px/1 var(--mono);padding:6px 9px;border-radius:6px;color:var(--ink-3)}
+.env button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.flag-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 20px 16px}
+.flag-key{font:500 15px/1.2 var(--mono)}
+.flag-desc{font-size:13.5px;color:var(--ink-3);margin-top:5px}
+.switch{position:relative;width:52px;height:30px;border-radius:999px;border:0;background:var(--off);transition:background .2s;flex-shrink:0}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
+.switch[aria-checked="true"]{background:var(--on)}
+.switch[aria-checked="true"]::after{transform:translateX(22px)}
+.panel{padding:0 20px 20px}
+.label-row{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:10px}
+.pct{font:700 22px/1 var(--display);color:var(--ink);letter-spacing:-.02em;text-transform:none}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;background:linear-gradient(to right,var(--on) var(--v,25%),var(--line) var(--v,25%));outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--surface);border:2px solid var(--ink);cursor:grab}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--surface);border:2px solid var(--ink);cursor:grab}
+input[type=range]:disabled{opacity:.45}
+.rules{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 18px}
+.chip{font:500 12.5px/1 var(--mono);padding:7px 10px;border-radius:7px;border:1px dashed var(--line-2);background:transparent;color:var(--ink-3)}
+.chip[aria-pressed="true"]{border-style:solid;border-color:var(--ink);color:var(--ink);background:var(--bg-2)}
+.users{display:grid;grid-template-columns:repeat(20,1fr);gap:4px;padding:14px;background:var(--bg-2);border-radius:10px;border:1px solid var(--line)}
+.users i{aspect-ratio:1;border-radius:3px;background:var(--line-2);transition:background .25s,transform .25s}
+.users i.on{background:var(--on)}
+.users i.rule{background:var(--signal)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:12.5px;color:var(--ink-3)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend b{width:9px;height:9px;border-radius:2px;display:inline-block}
+.legend .n{margin-left:auto;font-family:var(--mono);color:var(--ink-2)}
+.log{border-top:1px solid var(--line);font:12.5px/1.5 var(--mono);padding:10px 20px;color:var(--ink-3);display:flex;gap:10px;align-items:center;min-height:42px}
+.log .pulse{width:7px;height:7px;border-radius:50%;background:var(--on);box-shadow:0 0 0 0 var(--on);animation:pulse 2s infinite;flex-shrink:0}
+.log .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--on) 60%,transparent)}70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+
+/* ---------- logos strip ---------- */
+.strip{padding:44px 0 24px}
+.strip p{font-size:13px;color:var(--ink-3);text-align:center;margin-bottom:18px;letter-spacing:.02em}
+.strip-row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 44px;color:var(--ink-3);font:700 20px/1 var(--display);letter-spacing:-.02em;opacity:.8}
+
+/* ---------- sections ---------- */
+section{padding:96px 0}
+@media (max-width:600px){section{padding:68px 0}}
+.kicker{font:500 13px/1 var(--mono);color:var(--signal);letter-spacing:.02em;margin-bottom:16px;display:block}
+h2{font:800 clamp(32px,4.4vw,50px)/1.04 var(--display);letter-spacing:-.03em;max-width:720px}
+.sub{font-size:18px;color:var(--ink-2);max-width:600px;margin-top:18px}
+
+/* features */
+.features{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:52px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;position:relative;overflow:hidden}
+.card h3{font:700 21px/1.2 var(--display);letter-spacing:-.015em;margin:16px 0 8px}
+.card p{color:var(--ink-2);font-size:15px}
+.ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--bg-2);border:1px solid var(--line)}
+.ico svg{width:19px;height:19px}
+.c-3{grid-column:span 3}.c-2{grid-column:span 2}.c-4{grid-column:span 4}
+@media (max-width:900px){.features{grid-template-columns:1fr 1fr}.c-3,.c-2,.c-4{grid-column:span 1}.c-wide{grid-column:span 2}}
+@media (max-width:600px){.features{grid-template-columns:1fr}.c-wide{grid-column:span 1}}
+
+.latency{display:flex;align-items:flex-end;gap:5px;height:70px;margin-top:22px}
+.latency i{flex:1;background:var(--on-soft);border-top:2px solid var(--on);border-radius:3px 3px 0 0}
+.latency-meta{display:flex;justify-content:space-between;font:12px/1 var(--mono);color:var(--ink-3);margin-top:8px}
+
+.kill{margin-top:22px;display:flex;align-items:center;gap:14px;padding:14px;border-radius:10px;background:var(--signal-soft);border:1px solid color-mix(in srgb,var(--signal) 30%,transparent)}
+.kill .k-btn{background:var(--signal);color:#fff;border:0;border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--sans);white-space:nowrap}
+.kill .k-txt{font:12.5px/1.4 var(--mono);color:var(--ink-2)}
+
+/* code section */
+.code-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start;margin-top:8px}
+@media (max-width:980px){.code-grid{grid-template-columns:1fr;gap:36px}}
+.steps{list-style:none;margin-top:36px;display:grid;gap:22px}
+.steps li{display:grid;grid-template-columns:36px 1fr;gap:14px}
+.steps .num{width:30px;height:30px;border-radius:8px;border:1px solid var(--line-2);display:grid;place-items:center;font:500 13px/1 var(--mono);background:var(--surface)}
+.steps h4{font:700 17px/1.3 var(--display);margin-bottom:3px}
+.steps p{color:var(--ink-2);font-size:15px}
+.editor{background:var(--code-bg);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #23262d}
+.tabs{display:flex;gap:2px;padding:10px 10px 0;border-bottom:1px solid #262a32;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{background:transparent;border:0;color:var(--code-dim);font:500 13px/1 var(--mono);padding:10px 14px 12px;border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--code-ink);border-bottom-color:var(--signal)}
+pre{margin:0;padding:22px 24px 26px;overflow-x:auto;font:13.5px/1.75 var(--mono);color:var(--code-ink);tab-size:2}
+pre .c{color:var(--code-dim)}pre .k{color:var(--code-key)}pre .s{color:var(--code-str)}pre .f{color:var(--code-fn)}
+.sdk-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.sdk-list span{font:12.5px/1 var(--mono);padding:7px 10px;border:1px solid var(--line);border-radius:7px;color:var(--ink-2);background:var(--surface)}
+
+/* architecture */
+.arch{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.diagram{margin-top:52px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px;overflow-x:auto}
+.diagram svg{min-width:720px;width:100%;height:auto}
+.diagram text{font-family:var(--mono);font-size:12.5px;fill:var(--ink-2)}
+.diagram .tt{font-family:var(--display);font-size:16px;font-weight:700;fill:var(--ink)}
+.diagram .box{fill:var(--bg-2);stroke:var(--line-2)}
+.diagram .box-hi{fill:var(--ink)}
+.diagram .tt-hi{fill:var(--bg);font-family:var(--display);font-size:16px;font-weight:700}
+.diagram .sub-hi{fill:color-mix(in srgb,var(--bg) 70%,transparent)}
+.diagram .wire{stroke:var(--line-2);stroke-width:1.5;fill:none}
+.diagram .flow{stroke:var(--on);stroke-width:2;fill:none;stroke-dasharray:4 10;animation:flow 1.4s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-28}}
+.arch-notes{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:36px}
+.arch-notes h4{font:700 17px/1.3 var(--display);margin-bottom:6px}
+.arch-notes p{color:var(--ink-2);font-size:15px}
+@media (max-width:800px){.arch-notes{grid-template-columns:1fr}}
+
+/* compare */
+.compare{margin-top:48px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface)}
+.compare table{width:100%;border-collapse:collapse;font-size:15px}
+.compare th,.compare td{padding:15px 20px;text-align:left;border-bottom:1px solid var(--line)}
+.compare tr:last-child td{border-bottom:0}
+.compare thead th{font:600 13px/1.3 var(--sans);color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;background:var(--bg-2)}
+.compare thead th.us{color:var(--ink)}
+.compare td.us{background:color-mix(in srgb,var(--on-soft) 45%,transparent);font-weight:500}
+.compare td:first-child{color:var(--ink-2)}
+.y{color:var(--on);font-weight:600}.n{color:var(--ink-3)}
+.compare-scroll{overflow-x:auto}
+.compare table{min-width:560px}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+@media (max-width:900px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column}
+.plan.hi{border-color:var(--ink);box-shadow:var(--shadow)}
+.plan h3{font:700 20px/1.2 var(--display)}
+.plan .price{font:800 44px/1 var(--display);letter-spacing:-.03em;margin:18px 0 4px}
+.plan .price small{font:500 15px/1 var(--sans);color:var(--ink-3);letter-spacing:0}
+.plan .pd{color:var(--ink-2);font-size:14.5px;min-height:44px}
+.plan ul{list-style:none;margin:22px 0 28px;display:grid;gap:10px;font-size:14.5px}
+.plan li{display:flex;gap:10px;align-items:flex-start}
+.plan li svg{width:16px;height:16px;color:var(--on);flex-shrink:0;margin-top:4px}
+.plan .btn{margin-top:auto;justify-content:center}
+.badge{font:500 11.5px/1 var(--mono);background:var(--signal-soft);color:var(--signal);padding:5px 8px;border-radius:6px;margin-left:8px;vertical-align:middle}
+
+/* quote */
+.quote{max-width:860px;margin:0 auto;text-align:center}
+.quote blockquote{font:700 clamp(24px,3.2vw,36px)/1.25 var(--display);letter-spacing:-.02em}
+.quote cite{display:block;margin-top:24px;font-style:normal;color:var(--ink-3);font-size:15px}
+.quote cite b{color:var(--ink);font-weight:600}
+
+/* cta */
+.cta{padding:0 0 96px}
+.cta-box{background:var(--ink);color:var(--bg);border-radius:24px;padding:64px 48px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+.cta-box h2{color:var(--bg)}
+.cta-box p{color:color-mix(in srgb,var(--bg) 72%,transparent);margin-top:14px;font-size:17px}
+.cta-box .install{background:color-mix(in srgb,var(--bg) 8%,var(--ink));max-width:none;border:1px solid color-mix(in srgb,var(--bg) 14%,transparent)}
+.cta-box .btn-primary{background:var(--bg);color:var(--ink)}
+.cta-box .btn-ghost{background:transparent;color:var(--bg);border-color:color-mix(in srgb,var(--bg) 30%,transparent)}
+.cta-actions{display:grid;gap:14px}
+.cta-actions .row{display:flex;gap:10px;flex-wrap:wrap}
+.cta-flags{position:absolute;right:-30px;top:-30px;display:grid;grid-template-columns:repeat(8,22px);gap:8px;opacity:.12;transform:rotate(-8deg);pointer-events:none}
+.cta-flags i{width:22px;height:13px;border-radius:99px;background:var(--bg)}
+@media (max-width:860px){.cta-box{grid-template-columns:1fr;padding:44px 24px}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:56px 0 40px;font-size:14.5px}
+.foot{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:32px}
+@media (max-width:760px){.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:span 2}}
+.foot h5{font:600 13px/1 var(--sans);color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+.foot ul{list-style:none;display:grid;gap:9px}
+.foot a{text-decoration:none;color:var(--ink-2)}
+.foot a:hover{color:var(--ink)}
+.foot .blurb{color:var(--ink-3);margin-top:14px;max-width:320px}
+.legal{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:48px;padding-top:24px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13.5px}
+.status{display:inline-flex;align-items:center;gap:8px}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--on)}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="check" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="arrow" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="github" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></symbol>
+</svg>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Switchyard home">
+      <svg class="logo-mark" viewBox="0 0 26 26" aria-hidden="true">
+        <rect width="26" height="26" rx="7" fill="var(--ink)"/>
+        <path d="M7 19V7" stroke="var(--bg)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M7 13c5 0 7-6 12-6" stroke="var(--signal)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <path d="M7 13c5 0 7 6 12 6" stroke="var(--bg)" stroke-width="2.2" stroke-linecap="round" fill="none" opacity=".45"/>
+      </svg>
+      Switchyard
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#features">Features</a>
+      <a href="#sdks">SDKs</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#">Docs</a>
+    </nav>
+    <div class="nav-right">
+      <a class="gh" href="#" aria-label="Star Switchyard on GitHub">
+        <svg width="16" height="16"><use href="#github"/></svg>
+        <span class="label">Star</span>
+        <span class="count">14.2k</span>
+      </a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle color theme">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 2a6 6 0 010 12z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <a class="eyebrow" href="#"><span class="tag">v3.0</span> Edge evaluation is here →</a>
+      <h1>Ship on <span class="strike">Tuesday</span> Friday.<br>Undo it in 40ms.</h1>
+      <p class="lede">Switchyard is an open-source feature-flag service. Decouple deploys from releases, roll out to 1% of users, and kill a bad change before anyone files a ticket.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#sdks">Get started <svg><use href="#arrow"/></svg></a>
+        <a class="btn btn-ghost" href="#"><svg><use href="#github"/></svg> View on GitHub</a>
+      </div>
+      <div class="install">
+        <span class="p">$</span>
+        <code id="installCmd">docker run -p 4242:4242 switchyard/server</code>
+        <button class="copy" data-copy="installCmd">copy</button>
+      </div>
+      <div class="meta-row">
+        <span><svg><use href="#check"/></svg>Apache 2.0</span>
+        <span><svg><use href="#check"/></svg>Single Go binary</span>
+        <span><svg><use href="#check"/></svg>OpenFeature compatible</span>
+      </div>
+    </div>
+
+    <!-- Interactive demo -->
+    <div class="console" aria-label="Interactive feature flag demo">
+      <div class="console-top">
+        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="env" role="group" aria-label="Environment">
+          <button aria-pressed="false" data-env="dev">dev</button>
+          <button aria-pressed="false" data-env="staging">staging</button>
+          <button aria-pressed="true" data-env="prod">prod</button>
+        </div>
+      </div>
+      <div class="flag-head">
+        <div>
+          <div class="flag-key">new-checkout-flow</div>
+          <div class="flag-desc">One-page checkout with saved wallets</div>
+        </div>
+        <button class="switch" id="flagSwitch" role="switch" aria-checked="true" aria-label="Flag enabled"></button>
+      </div>
+      <div class="panel">
+        <div class="label-row"><span>Gradual rollout</span><span class="pct" id="pctLabel">25%</span></div>
+        <input type="range" id="rollout" min="0" max="100" value="25" aria-label="Rollout percentage">
+        <div class="rules" role="group" aria-label="Targeting rules">
+          <button class="chip" aria-pressed="false" data-rule="staff">email ends_with @acme.co</button>
+          <button class="chip" aria-pressed="false" data-rule="beta">segment = beta</button>
+          <button class="chip" aria-pressed="false" data-rule="eu">country in [DE, FR]</button>
+        </div>
+        <div class="users" id="users" aria-hidden="true"></div>
+        <div class="legend">
+          <span><b style="background:var(--on)"></b>rollout</span>
+          <span><b style="background:var(--signal)"></b>targeted</span>
+          <span><b style="background:var(--line-2)"></b>control</span>
+          <span class="n" id="servedLabel">25 / 200 served</span>
+        </div>
+      </div>
+      <div class="log" aria-live="polite"><span class="pulse" id="pulse"></span><span class="t" id="logText">prod · synced to 38 edge nodes in 41ms</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="strip">
+  <div class="wrap">
+    <p>Flipping 2.1 billion flags a day for teams at</p>
+    <div class="strip-row" aria-label="Example users">
+      <span>northwind</span><span>Halcyon</span><span>parcel.io</span><span>Tessellate</span><span>LUMEN</span><span>orbitbank</span>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <span class="kicker reveal">// features</span>
+    <h2 class="reveal">Everything you'd build in-house, minus the two quarters it'd take.</h2>
+    <p class="sub reveal">Switchyard is the flag platform we wanted: fast enough to evaluate in a hot loop, boring enough to trust in production.</p>
+
+    <div class="features">
+      <article class="card c-4 c-wide reveal">
+        <div class="ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M11 2L4 11h5l-1 7 7-9h-5z" stroke-linejoin="round"/></svg></div>
+        <h3>Sub-millisecond, local evaluation</h3>
+        <p>SDKs stream rules over SSE and evaluate in-process. No network call on the hot path, no latency budget spent on a boolean.</p>
+        <div class="latency" id="latency" aria-hidden="true"></div>
+        <div class="latency-meta"><span>p50 0.004ms</span><span>p99 0.019ms</span><span>last 24h</span></div>
+      </article>
+
+      <article class="card c-2 reveal">
+        <div class="ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M5 15L15 5"/></svg></div>
+        <h3>Kill switches</h3>
+        <p>One click, every node, under 50ms. Wire them to alerts and let incidents resolve themselves.</p>
+        <div class="kill">
+          <button class="k-btn" id="killBtn">Kill flag</button>
+          <span class="k-txt" id="killTxt">payments-v2 · live</span>
+        </div>
+      </article>
+
+      <article class="card c-2 reveal">
+        <div class="ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7" cy="7" r="3"/><circle cx="14" cy="13" r="3"/><path d="M3 17c0-2 2-4 4-4M17 3c0 2-1 4-3 4"/></svg></div>
+        <h3>Targeting &amp; segments</h3>
+        <p>Rules on any attribute: plan, region, app version, or your own. Reusable segments keep them DRY.</p>
+      </article>
+
+      <article class="card c-2 reveal">
+        <div class="ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 16V9M8 16V4M13 16v-5M18 16V7"/></svg></div>
+        <h3>Experiments built in</h3>
+        <p>Multivariate flags with sticky bucketing. Export exposures to your warehouse; we won't hold your data hostage.</p>
+      </article>
+
+      <article class="card c-2 reveal">
+        <div class="ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4h12v12H4z" stroke-linejoin="round"/><path d="M4 8h12M8 8v8"/></svg></div>
+        <h3>Audit log &amp; approvals</h3>
+        <p>Every change is versioned, diffable and attributable. Require a second approver for production.</p>
+      </article>
+
+      <article class="card c-3 c-wide reveal">
+        <div class="ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6L2 10l4 4M14 6l4 4-4 4M11 4l-2 12"/></svg></div>
+        <h3>Flags as code</h3>
+        <p>Define flags in YAML, review them in pull requests, and sync with <code style="font-family:var(--mono);font-size:13.5px">syard apply</code>. Terraform provider included. The UI and the repo never drift.</p>
+      </article>
+
+      <article class="card c-3 c-wide reveal">
+        <div class="ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V5z"/><path d="M7 10l2 2 4-4"/></svg></div>
+        <h3>Yours to run, end to end</h3>
+        <p>Self-host on Postgres or SQLite. SSO, SCIM and RBAC are in the open-source core, not behind a sales call. Air-gapped installs welcome.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SDKs -->
+<section id="sdks" style="padding-top:24px">
+  <div class="wrap code-grid">
+    <div>
+      <span class="kicker reveal">// five minutes to first flag</span>
+      <h2 class="reveal">Wrap it. Ship it. Flip it.</h2>
+      <ol class="steps">
+        <li class="reveal"><span class="num">1</span><div><h4>Run the server</h4><p>One container, or <code style="font-family:var(--mono);font-size:13.5px">brew install switchyard</code>. Postgres optional.</p></div></li>
+        <li class="reveal"><span class="num">2</span><div><h4>Add an SDK</h4><p>Native SDKs for 14 languages, plus an OpenFeature provider for the rest.</p></div></li>
+        <li class="reveal"><span class="num">3</span><div><h4>Release from the dashboard</h4><p>Your code is already deployed. Turning the feature on is a separate, reversible decision.</p></div></li>
+      </ol>
+      <div class="sdk-list reveal">
+        <span>TypeScript</span><span>Go</span><span>Python</span><span>Rust</span><span>Java</span><span>Ruby</span><span>.NET</span><span>Swift</span><span>Kotlin</span><span>PHP</span><span>Elixir</span><span>+3</span>
+      </div>
+    </div>
+
+    <div class="editor reveal">
+      <div class="tabs" role="tablist" aria-label="SDK examples">
+        <button role="tab" aria-selected="true" data-tab="ts">checkout.ts</button>
+        <button role="tab" aria-selected="false" data-tab="go">checkout.go</button>
+        <button role="tab" aria-selected="false" data-tab="py">checkout.py</button>
+        <button role="tab" aria-selected="false" data-tab="yaml">flags.yaml</button>
+      </div>
+<pre data-pane="ts"><span class="k">import</span> { Switchyard } <span class="k">from</span> <span class="s">"@switchyard/node"</span>;
+
+<span class="k">const</span> flags = <span class="k">await</span> Switchyard.<span class="f">connect</span>({
+  url: <span class="s">"https://flags.acme.internal"</span>,
+  key: process.env.SWITCHYARD_KEY,
+});
+
+<span class="k">export async function</span> <span class="f">checkout</span>(user: User) {
+  <span class="c">// evaluated locally — no network round-trip</span>
+  <span class="k">if</span> (flags.<span class="f">isEnabled</span>(<span class="s">"new-checkout-flow"</span>, user)) {
+    <span class="k">return</span> <span class="f">onePageCheckout</span>(user);
+  }
+  <span class="k">return</span> <span class="f">legacyCheckout</span>(user);
+}</pre>
+<pre data-pane="go" hidden><span class="k">import</span> <span class="s">"github.com/switchyard/switchyard-go"</span>
+
+client, _ := switchyard.<span class="f">New</span>(switchyard.Config{
+	URL: <span class="s">"https://flags.acme.internal"</span>,
+	Key: os.<span class="f">Getenv</span>(<span class="s">"SWITCHYARD_KEY"</span>),
+})
+
+<span class="k">func</span> <span class="f">Checkout</span>(u User) Result {
+	ctx := switchyard.Context{UserID: u.ID, Attrs: u.Attrs()}
+	<span class="c">// evaluated locally — no network round-trip</span>
+	<span class="k">if</span> client.<span class="f">IsEnabled</span>(<span class="s">"new-checkout-flow"</span>, ctx) {
+		<span class="k">return</span> <span class="f">onePageCheckout</span>(u)
+	}
+	<span class="k">return</span> <span class="f">legacyCheckout</span>(u)
+}</pre>
+<pre data-pane="py" hidden><span class="k">from</span> switchyard <span class="k">import</span> Switchyard
+
+flags = Switchyard(
+    url=<span class="s">"https://flags.acme.internal"</span>,
+    key=os.environ[<span class="s">"SWITCHYARD_KEY"</span>],
+)
+
+<span class="k">def</span> <span class="f">checkout</span>(user):
+    <span class="c"># evaluated locally — no network round-trip</span>
+    <span class="k">if</span> flags.<span class="f">is_enabled</span>(<span class="s">"new-checkout-flow"</span>, user):
+        <span class="k">return</span> <span class="f">one_page_checkout</span>(user)
+    <span class="k">return</span> <span class="f">legacy_checkout</span>(user)</pre>
+<pre data-pane="yaml" hidden><span class="c"># flags.yaml — reviewed in PRs, applied with `syard apply`</span>
+<span class="k">new-checkout-flow</span>:
+  <span class="k">description</span>: <span class="s">One-page checkout with saved wallets</span>
+  <span class="k">owner</span>: <span class="s">team-payments</span>
+  <span class="k">environments</span>:
+    <span class="k">prod</span>:
+      <span class="k">enabled</span>: <span class="f">true</span>
+      <span class="k">rules</span>:
+        - <span class="k">if</span>: <span class="s">email ends_with "@acme.co"</span>
+          <span class="k">serve</span>: <span class="f">true</span>
+      <span class="k">rollout</span>: <span class="f">25</span>   <span class="c"># percent, sticky by user.id</span>
+      <span class="k">expires</span>: <span class="s">2026-12-01</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="arch" id="architecture">
+  <div class="wrap">
+    <span class="kicker reveal">// architecture</span>
+    <h2 class="reveal">If Switchyard goes down, your app doesn't notice.</h2>
+    <p class="sub reveal">SDKs keep a full copy of the ruleset in memory and fall back to a local snapshot. The server is the control plane, never the critical path.</p>
+
+    <div class="diagram reveal">
+      <svg viewBox="0 0 900 260" role="img" aria-label="Diagram: dashboard and CLI write to the Switchyard server, which streams rules to edge relays and SDKs that evaluate locally inside your services">
+        <!-- left: writers -->
+        <rect class="box" x="10" y="40" width="170" height="70" rx="12"/>
+        <text class="tt" x="28" y="70">Dashboard</text><text x="28" y="92">humans, approvals</text>
+        <rect class="box" x="10" y="150" width="170" height="70" rx="12"/>
+        <text class="tt" x="28" y="180">CLI · Terraform</text><text x="28" y="202">flags as code</text>
+
+        <path class="wire" d="M180 75 C 230 75, 230 130, 290 130"/>
+        <path class="wire" d="M180 185 C 230 185, 230 130, 290 130"/>
+
+        <!-- server -->
+        <rect class="box-hi" x="290" y="85" width="200" height="90" rx="14"/>
+        <text class="tt-hi" x="310" y="120">Switchyard server</text>
+        <text class="sub-hi" x="310" y="144">rules · audit · Postgres</text>
+
+        <path class="wire" d="M490 130 L 560 130"/>
+        <path class="flow" d="M490 130 L 560 130"/>
+        <text x="497" y="118">SSE</text>
+
+        <!-- relay -->
+        <rect class="box" x="560" y="95" width="120" height="70" rx="12"/>
+        <text class="tt" x="578" y="125">Edge relay</text><text x="578" y="147">cache, fan-out</text>
+
+        <path class="wire" d="M680 130 C 720 130, 720 50, 750 50"/>
+        <path class="wire" d="M680 130 L 750 130"/>
+        <path class="wire" d="M680 130 C 720 130, 720 210, 750 210"/>
+        <path class="flow" d="M680 130 C 720 130, 720 50, 750 50"/>
+        <path class="flow" d="M680 130 L 750 130"/>
+        <path class="flow" d="M680 130 C 720 130, 720 210, 750 210"/>
+
+        <!-- services -->
+        <rect class="box" x="750" y="22" width="140" height="56" rx="10"/>
+        <text class="tt" x="766" y="47" style="font-size:14px">api-gateway</text><text x="766" y="66">SDK · 0.004ms</text>
+        <rect class="box" x="750" y="102" width="140" height="56" rx="10"/>
+        <text class="tt" x="766" y="127" style="font-size:14px">checkout-svc</text><text x="766" y="146">SDK · 0.004ms</text>
+        <rect class="box" x="750" y="182" width="140" height="56" rx="10"/>
+        <text class="tt" x="766" y="207" style="font-size:14px">web · iOS</text><text x="766" y="226">SDK · offline ok</text>
+      </svg>
+    </div>
+
+    <div class="arch-notes">
+      <div class="reveal"><h4>Streaming, not polling</h4><p>Changes propagate over server-sent events. Median global propagation is 41ms.</p></div>
+      <div class="reveal"><h4>Fail static</h4><p>If the stream drops, SDKs keep serving the last known ruleset and reconnect with backoff.</p></div>
+      <div class="reveal"><h4>Privacy by default</h4><p>User context never leaves your process. The server only sees which flags exist, not who saw them.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section>
+  <div class="wrap">
+    <span class="kicker reveal">// why open source</span>
+    <h2 class="reveal">Flags touch every request. You should be able to read the code.</h2>
+    <div class="compare reveal">
+      <div class="compare-scroll">
+      <table>
+        <thead><tr><th></th><th class="us">Switchyard</th><th>Typical SaaS</th><th>Homegrown</th></tr></thead>
+        <tbody>
+          <tr><td>Source available</td><td class="us"><span class="y">✓</span> Apache 2.0</td><td><span class="n">—</span></td><td><span class="y">✓</span></td></tr>
+          <tr><td>Self-host / air-gapped</td><td class="us"><span class="y">✓</span></td><td><span class="n">Enterprise tier</span></td><td><span class="y">✓</span></td></tr>
+          <tr><td>Local evaluation</td><td class="us"><span class="y">✓</span> all SDKs</td><td>Some SDKs</td><td><span class="n">Usually not</span></td></tr>
+          <tr><td>SSO &amp; RBAC</td><td class="us"><span class="y">✓</span> free</td><td>Paid add-on</td><td><span class="n">You build it</span></td></tr>
+          <tr><td>Pricing model</td><td class="us">Free, or flat-rate cloud</td><td>Per seat + per MAU</td><td>Engineer-quarters</td></tr>
+          <tr><td>Stale flag cleanup</td><td class="us"><span class="y">✓</span> expiry + code refs</td><td>Varies</td><td><span class="n">Never happens</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section style="padding-top:24px">
+  <div class="wrap quote reveal">
+    <blockquote>“We replaced a paid flag vendor and a 4,000-line internal service with one Switchyard container. Our deploy-to-release ratio went from 1:1 to about 30:1.”</blockquote>
+    <cite><b>Priya Raman</b> · Staff Engineer, parcel.io</cite>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="padding-top:24px">
+  <div class="wrap">
+    <span class="kicker reveal">// pricing</span>
+    <h2 class="reveal">Free forever to self-host. Pay only if you'd rather we run it.</h2>
+    <div class="plans">
+      <div class="plan reveal">
+        <h3>Open Source</h3>
+        <div class="price">$0</div>
+        <p class="pd">The whole product. Run it anywhere you can run a container.</p>
+        <ul>
+          <li><svg><use href="#check"/></svg>Unlimited flags, seats, environments</li>
+          <li><svg><use href="#check"/></svg>All 14 SDKs + OpenFeature</li>
+          <li><svg><use href="#check"/></svg>SSO, SCIM, RBAC, audit log</li>
+          <li><svg><use href="#check"/></svg>Community support on GitHub</li>
+        </ul>
+        <a class="btn btn-ghost" href="#">Read the install guide</a>
+      </div>
+      <div class="plan hi reveal">
+        <h3>Cloud <span class="badge">most teams</span></h3>
+        <div class="price">$149<small> / month, flat</small></div>
+        <p class="pd">We operate it, you flip flags. No per-seat or per-MAU math.</p>
+        <ul>
+          <li><svg><use href="#check"/></svg>Everything in Open Source</li>
+          <li><svg><use href="#check"/></svg>Managed global edge relays</li>
+          <li><svg><use href="#check"/></svg>99.99% control-plane SLA</li>
+          <li><svg><use href="#check"/></svg>Daily backups, one-click export</li>
+        </ul>
+        <a class="btn btn-primary" href="#">Start 30-day trial <svg><use href="#arrow"/></svg></a>
+      </div>
+      <div class="plan reveal">
+        <h3>Support</h3>
+        <div class="price">Custom</div>
+        <p class="pd">For self-hosted fleets that need a phone number to call.</p>
+        <ul>
+          <li><svg><use href="#check"/></svg>24/7 incident response</li>
+          <li><svg><use href="#check"/></svg>Architecture &amp; migration reviews</li>
+          <li><svg><use href="#check"/></svg>Signed builds, LTS releases</li>
+          <li><svg><use href="#check"/></svg>Funds core development</li>
+        </ul>
+        <a class="btn btn-ghost" href="#">Talk to maintainers</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <div class="cta-flags" id="ctaFlags" aria-hidden="true"></div>
+      <div>
+        <h2>Your next release can be a click.</h2>
+        <p>Spin up Switchyard locally in under a minute. No account, no credit card, no telemetry unless you opt in.</p>
+      </div>
+      <div class="cta-actions">
+        <div class="install">
+          <span class="p">$</span>
+          <code id="installCmd2">docker run -p 4242:4242 switchyard/server</code>
+          <button class="copy" data-copy="installCmd2">copy</button>
+        </div>
+        <div class="row">
+          <a class="btn btn-primary" href="#">Read the docs <svg><use href="#arrow"/></svg></a>
+          <a class="btn btn-ghost" href="#"><svg><use href="#github"/></svg> Star on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="logo" href="#">
+          <svg class="logo-mark" viewBox="0 0 26 26" aria-hidden="true">
+            <rect width="26" height="26" rx="7" fill="var(--ink)"/>
+            <path d="M7 19V7" stroke="var(--bg)" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M7 13c5 0 7-6 12-6" stroke="var(--signal)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <path d="M7 13c5 0 7 6 12 6" stroke="var(--bg)" stroke-width="2.2" stroke-linecap="round" fill="none" opacity=".45"/>
+          </svg>
+          Switchyard
+        </a>
+        <p class="blurb">Open-source feature flags, built in public by 340+ contributors.</p>
+      </div>
+      <div><h5>Product</h5><ul><li><a href="#features">Features</a></li><li><a href="#pricing">Cloud</a></li><li><a href="#">Changelog</a></li><li><a href="#">Roadmap</a></li></ul></div>
+      <div><h5>Developers</h5><ul><li><a href="#">Docs</a></li><li><a href="#sdks">SDKs</a></li><li><a href="#">API reference</a></li><li><a href="#">OpenFeature</a></li></ul></div>
+      <div><h5>Community</h5><ul><li><a href="#">GitHub</a></li><li><a href="#">Discord</a></li><li><a href="#">Contributing</a></li><li><a href="#">Security</a></li></ul></div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Switchyard contributors · Apache License 2.0</span>
+      <span class="status"><i></i>All systems operational</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+  /* theme */
+  const root = document.documentElement;
+  try { const t = localStorage.getItem('syard-theme'); if (t) root.dataset.theme = t; } catch (e) {}
+  $('#themeBtn').addEventListener('click', () => {
+    const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('syard-theme', root.dataset.theme); } catch (e) {}
+  });
+
+  /* nav border on scroll */
+  const nav = $('#nav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 8), { passive: true });
+
+  /* copy buttons */
+  $$('.copy').forEach(b => b.addEventListener('click', async () => {
+    const txt = document.getElementById(b.dataset.copy).textContent;
+    try { await navigator.clipboard.writeText(txt); b.textContent = 'copied'; }
+    catch (e) { b.textContent = 'select'; }
+    setTimeout(() => (b.textContent = 'copy'), 1400);
+  }));
+
+  /* ---- rollout demo ---- */
+  const N = 200;
+  const usersEl = $('#users');
+  // deterministic pseudo-random buckets + attributes per user (sticky bucketing)
+  let seed = 7;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const users = Array.from({ length: N }, () => ({
+    bucket: Math.floor(rnd() * 100),
+    staff: rnd() < .05, beta: rnd() < .1, eu: rnd() < .18,
+    el: usersEl.appendChild(document.createElement('i')),
+  }));
+
+  const state = { on: true, pct: 25, rules: new Set(), env: 'prod' };
+  const envDefaults = { dev: 100, staging: 60, prod: 25 };
+  const slider = $('#rollout'), sw = $('#flagSwitch'), logText = $('#logText'), pulse = $('#pulse');
+
+  function render() {
+    let served = 0;
+    users.forEach(u => {
+      const targeted = state.on && [...state.rules].some(r => u[r]);
+      const rolled = state.on && !targeted && u.bucket < state.pct;
+      u.el.className = targeted ? 'rule' : rolled ? 'on' : '';
+      if (targeted || rolled) served++;
+    });
+    $('#pctLabel').textContent = state.pct + '%';
+    $('#servedLabel').textContent = `${served} / ${N} served`;
+    slider.value = state.pct;
+    slider.style.setProperty('--v', state.pct + '%');
+    slider.disabled = !state.on;
+    sw.setAttribute('aria-checked', state.on);
+    pulse.style.background = state.on ? 'var(--on)' : 'var(--signal)';
+  }
+
+  let logTimer;
+  function log(msg) {
+    clearTimeout(logTimer);
+    logTimer = setTimeout(() => {
+      const ms = 30 + Math.floor(Math.random() * 20);
+      logText.textContent = `${state.env} · ${msg} · synced in ${ms}ms`;
+    }, 120);
+  }
+
+  slider.addEventListener('input', () => { state.pct = +slider.value; render(); log(`rollout → ${state.pct}%`); });
+  sw.addEventListener('click', () => { state.on = !state.on; render(); log(state.on ? 'flag enabled' : 'flag disabled for everyone'); });
+  $$('.chip').forEach(c => c.addEventListener('click', () => {
+    const r = c.dataset.rule, on = c.getAttribute('aria-pressed') !== 'true';
+    c.setAttribute('aria-pressed', on);
+    on ? state.rules.add(r) : state.rules.delete(r);
+    render(); log(`${on ? 'added' : 'removed'} rule "${c.textContent}"`);
+  }));
+  $$('.env button').forEach(b => b.addEventListener('click', () => {
+    $$('.env button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    state.env = b.dataset.env; state.pct = envDefaults[state.env]; state.on = true;
+    render(); log(`switched to ${state.env}`);
+  }));
+  render();
+
+  /* ---- code tabs ---- */
+  const tabs = $$('.tabs button');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.setAttribute('aria-selected', x === t));
+    $$('.editor pre').forEach(p => (p.hidden = p.dataset.pane !== t.dataset.tab));
+  }));
+
+  /* ---- latency bars ---- */
+  const lat = $('#latency');
+  for (let i = 0; i < 36; i++) {
+    const b = document.createElement('i');
+    b.style.height = (22 + Math.abs(Math.sin(i * 1.7)) * 30 + (i % 11 === 4 ? 26 : 0)) + '%';
+    lat.appendChild(b);
+  }
+
+  /* ---- kill switch ---- */
+  const killBtn = $('#killBtn'), killTxt = $('#killTxt');
+  let killed = false;
+  killBtn.addEventListener('click', () => {
+    killed = !killed;
+    killBtn.textContent = killed ? 'Restore' : 'Kill flag';
+    killTxt.textContent = '…propagating';
+    setTimeout(() => (killTxt.textContent = killed ? 'payments-v2 · off on 38 nodes · 37ms' : 'payments-v2 · live'), 260);
+  });
+
+  /* ---- cta decoration ---- */
+  const cf = $('#ctaFlags');
+  for (let i = 0; i < 48; i++) cf.appendChild(document.createElement('i'));
+
+  /* ---- reveal on scroll ---- */
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  $$('.reveal').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>

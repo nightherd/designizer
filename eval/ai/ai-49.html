@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Good Grit — Cat litter, on a schedule</title>
+<meta name="description" content="Cat litter delivered every few weeks, sized to how many cats you have. Pause or skip whenever.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #ece1cb;
+    --paper-2: #e3d5b9;
+    --card: #f6efe1;
+    --ink: #221d17;
+    --ink-soft: #5a5045;
+    --rule: #b9a989;
+    --tomato: #c8442a;
+    --tomato-dark: #a33520;
+    --moss: #4f5b3a;
+    --butter: #f0c95a;
+    --serif: "Young Serif", Georgia, serif;
+    --sans: "Karla", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background-color: var(--paper);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .15 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 18px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  img, svg { display: block; max-width: 100%; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.05; margin: 0; letter-spacing: -0.01em; }
+  .mono { font-family: var(--mono); font-size: 13px; letter-spacing: 0.02em; }
+
+  /* strip */
+  .strip {
+    background: var(--ink); color: var(--paper);
+    font-family: var(--mono); font-size: 12.5px;
+    padding: 9px 0; overflow: hidden; white-space: nowrap;
+  }
+  .strip-track { display: inline-flex; gap: 48px; animation: slide 40s linear infinite; padding-left: 48px; }
+  .strip-track span::before { content: "✳"; margin-right: 12px; color: var(--butter); }
+  @keyframes slide { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .strip-track { animation: none; } }
+
+  /* nav */
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; border-bottom: 1.5px solid var(--ink); }
+  .logo { font-family: var(--serif); font-size: 28px; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .logo svg { width: 34px; height: 34px; }
+  nav ul { list-style: none; display: flex; gap: 28px; margin: 0; padding: 0; font-weight: 500; }
+  nav ul a { text-decoration: none; border-bottom: 1.5px solid transparent; }
+  nav ul a:hover { border-color: var(--ink); }
+  .btn {
+    display: inline-block; font-family: var(--sans); font-weight: 700; font-size: 17px;
+    background: var(--tomato); color: #fff8ee; text-decoration: none;
+    padding: 14px 22px; border: 1.5px solid var(--ink); border-radius: 3px;
+    box-shadow: 3px 3px 0 var(--ink); cursor: pointer;
+    transition: transform .08s, box-shadow .08s;
+  }
+  .btn:hover { background: var(--tomato-dark); }
+  .btn:active { transform: translate(3px,3px); box-shadow: 0 0 0 var(--ink); }
+  .btn.small { padding: 9px 15px; font-size: 15px; box-shadow: 2px 2px 0 var(--ink); }
+  .btn.ghost { background: transparent; color: var(--ink); box-shadow: none; }
+  .btn.ghost:hover { background: var(--paper-2); }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; padding: 72px 0 88px; align-items: center; }
+  .eyebrow { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--moss); margin-bottom: 22px; display: block; }
+  .hero h1 { font-size: clamp(46px, 6.6vw, 88px); }
+  .hero h1 em { font-style: normal; color: var(--tomato); position: relative; white-space: nowrap; }
+  .hero h1 em svg { position: absolute; left: -2%; bottom: -10px; width: 104%; height: 18px; }
+  .hero p.lede { font-size: 21px; max-width: 30em; margin: 30px 0 34px; color: var(--ink-soft); }
+  .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .hero-note { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); margin-top: 18px; }
+
+  .hero-art { position: relative; }
+  .hero-art .cat { width: 100%; height: auto; }
+  .tag {
+    position: absolute; right: -6px; top: 8%;
+    background: var(--butter); border: 1.5px solid var(--ink);
+    padding: 12px 14px 10px; transform: rotate(6deg);
+    font-family: var(--mono); font-size: 12px; line-height: 1.4; text-align: center;
+    box-shadow: 2px 3px 0 rgba(34,29,23,.25);
+  }
+  .tag b { display: block; font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1; }
+  .tag::before { content: ""; position: absolute; top: 8px; left: 50%; width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--paper); }
+  .tag { padding-top: 24px; }
+
+  /* section frame */
+  section { padding: 96px 0; }
+  .sec-head { display: grid; grid-template-columns: 220px 1fr; gap: 40px; margin-bottom: 56px; align-items: baseline; }
+  .sec-head .num { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); border-top: 1.5px solid var(--ink); padding-top: 10px; }
+  .sec-head h2 { font-size: clamp(34px, 4.2vw, 54px); max-width: 16em; }
+
+  /* how */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1.5px solid var(--ink); }
+  .step { padding: 28px 30px 8px 0; }
+  .step + .step { padding-left: 30px; border-left: 1px dashed var(--rule); }
+  .step .big { font-family: var(--serif); font-size: 76px; line-height: 1; color: var(--tomato); }
+  .step h3 { font-size: 26px; margin: 14px 0 10px; }
+  .step p { margin: 0; color: var(--ink-soft); }
+
+  /* builder */
+  #build { background: var(--ink); color: var(--paper); }
+  #build .sec-head .num { border-color: var(--paper); color: #b8ab92; }
+  .builder { display: grid; grid-template-columns: 1fr 380px; gap: 56px; align-items: start; }
+  fieldset { border: 0; padding: 0; margin: 0 0 40px; }
+  legend { font-family: var(--serif); font-size: 26px; margin-bottom: 16px; padding: 0; }
+  legend small { font-family: var(--mono); font-size: 12px; color: #b8ab92; margin-left: 10px; }
+  .litters { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .opt { position: relative; }
+  .opt input { position: absolute; opacity: 0; pointer-events: none; }
+  .opt label {
+    display: block; cursor: pointer; padding: 16px 18px; height: 100%;
+    border: 1.5px solid #5f564a; border-radius: 3px; transition: border-color .12s, background .12s;
+  }
+  .opt label:hover { border-color: var(--paper); }
+  .opt input:checked + label { border-color: var(--butter); background: rgba(240,201,90,.08); }
+  .opt input:focus-visible + label { outline: 2px solid var(--butter); outline-offset: 2px; }
+  .opt .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .opt strong { font-size: 18px; }
+  .opt .price { font-family: var(--mono); font-size: 13px; color: var(--butter); }
+  .opt .desc { display: block; font-size: 15px; color: #c9bda5; margin-top: 4px; }
+
+  .cats { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cats .opt label { padding: 12px 20px; font-family: var(--serif); font-size: 22px; min-width: 64px; text-align: center; }
+  .freq { display: flex; gap: 10px; flex-wrap: wrap; }
+  .freq .opt label { padding: 12px 18px; font-weight: 500; }
+  .hint { font-family: var(--mono); font-size: 12.5px; color: #b8ab92; margin-top: 12px; min-height: 1.4em; }
+
+  .receipt {
+    background: var(--card); color: var(--ink); font-family: var(--mono); font-size: 14px;
+    padding: 28px 26px 34px; position: sticky; top: 24px;
+    transform: rotate(-1.2deg);
+    -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 8px) no-repeat, radial-gradient(circle at 8px 8px, transparent 7px, #000 7.5px) bottom / 16px 8px repeat-x;
+            mask: linear-gradient(#000 0 0) top / 100% calc(100% - 8px) no-repeat, radial-gradient(circle at 8px 8px, transparent 7px, #000 7.5px) bottom / 16px 8px repeat-x;
+  }
+  .receipt h3 { font-family: var(--mono); font-size: 13px; text-align: center; text-transform: uppercase; letter-spacing: .12em; font-weight: 500; }
+  .receipt .r-head { text-align: center; border-bottom: 1.5px dashed var(--ink); padding-bottom: 14px; margin-bottom: 14px; }
+  .receipt .r-head .brand { font-family: var(--serif); font-size: 30px; display: block; margin-bottom: 4px; }
+  .receipt .line { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; }
+  .receipt .line span:first-child { color: var(--ink-soft); }
+  .receipt .total { border-top: 1.5px dashed var(--ink); margin-top: 12px; padding-top: 12px; font-size: 16px; font-weight: 500; }
+  .receipt .total span:first-child { color: var(--ink); }
+  .receipt .big-total { font-family: var(--serif); font-size: 46px; text-align: center; margin: 18px 0 2px; }
+  .receipt .per { text-align: center; color: var(--ink-soft); font-size: 12.5px; margin-bottom: 20px; }
+  .receipt .btn { width: 100%; text-align: center; }
+  .receipt .barcode { height: 34px; margin-top: 22px; background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 5px, transparent 5px 9px, var(--ink) 9px 12px, transparent 12px 13px); opacity: .85; }
+
+  /* compare */
+  .compare { width: 100%; border-collapse: collapse; font-size: 17px; }
+  .compare th, .compare td { text-align: left; padding: 18px 16px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .compare thead th { font-family: var(--mono); font-size: 12.5px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; border-bottom: 1.5px solid var(--ink); }
+  .compare td:first-child { font-family: var(--serif); font-size: 21px; width: 28%; }
+  .compare td:last-child { background: rgba(240,201,90,.22); }
+  .compare thead th:last-child { background: var(--butter); color: var(--ink); }
+  .compare td:nth-child(2) { color: var(--ink-soft); }
+
+  /* notes */
+  .notes { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 26px; align-items: start; }
+  .note { background: var(--card); border: 1.5px solid var(--ink); padding: 26px 26px 22px; position: relative; }
+  .note:nth-child(1) { transform: rotate(-1deg); }
+  .note:nth-child(2) { transform: rotate(1.3deg); margin-top: 34px; background: #f3e6c4; }
+  .note:nth-child(3) { transform: rotate(-.6deg); margin-top: 10px; }
+  .note p { font-family: var(--serif); font-size: 21px; line-height: 1.35; margin: 0 0 18px; }
+  .note:nth-child(1) p { font-size: 26px; }
+  .note .who { font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); }
+  .note::before { content: ""; position: absolute; top: -12px; left: 50%; width: 90px; height: 24px; margin-left: -45px; background: rgba(200,68,42,.32); transform: rotate(-3deg); }
+
+  /* faq */
+  .faq-wrap { display: grid; grid-template-columns: 220px 1fr; gap: 40px; }
+  details { border-top: 1.5px solid var(--ink); }
+  details:last-child { border-bottom: 1.5px solid var(--ink); }
+  summary { list-style: none; cursor: pointer; padding: 22px 0; display: flex; justify-content: space-between; gap: 20px; font-family: var(--serif); font-size: 24px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--mono); font-size: 24px; transition: transform .15s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { margin: 0 0 24px; max-width: 40em; color: var(--ink-soft); }
+
+  /* cta + footer */
+  .cta { background: var(--tomato); color: #fff8ee; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+  .cta .wrap { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .cta h2 { font-size: clamp(36px, 5vw, 64px); max-width: 12em; }
+  .cta .btn { background: var(--butter); color: var(--ink); }
+  .cta .btn:hover { background: #e8bd43; }
+  footer { padding: 64px 0 40px; }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; font-size: 16px; }
+  .foot-grid h4 { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; font-weight: 500; margin: 0 0 12px; color: var(--ink-soft); }
+  .foot-grid ul { list-style: none; padding: 0; margin: 0; }
+  .foot-grid li { margin-bottom: 6px; }
+  .foot-grid a { text-decoration: none; }
+  .foot-grid a:hover { text-decoration: underline; }
+  .wordmark { font-family: var(--serif); font-size: clamp(80px, 19vw, 260px); line-height: .85; letter-spacing: -0.03em; margin-top: 56px; color: var(--ink); white-space: nowrap; overflow: hidden; }
+  .fine { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; border-top: 1.5px solid var(--ink); padding-top: 16px; margin-top: 10px; font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+
+  @media (max-width: 920px) {
+    .hero { grid-template-columns: 1fr; padding-top: 48px; gap: 30px; }
+    .hero-art { max-width: 420px; }
+    .builder { grid-template-columns: 1fr; }
+    .receipt { position: static; transform: none; max-width: 420px; }
+    .sec-head, .faq-wrap { grid-template-columns: 1fr; gap: 14px; }
+    .steps { grid-template-columns: 1fr; }
+    .step + .step { padding-left: 0; border-left: 0; border-top: 1px dashed var(--rule); }
+    .notes { grid-template-columns: 1fr; }
+    .note:nth-child(n) { margin-top: 0; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    nav ul { display: none; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
+    body { font-size: 17px; }
+    section { padding: 64px 0; }
+    .litters { grid-template-columns: 1fr; }
+    .compare td:first-child { width: auto; font-size: 18px; }
+    .compare th, .compare td { padding: 14px 8px; font-size: 15px; }
+    .tag { right: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <span>Free shipping on every box</span><span>Skip a month from your phone</span><span>Bags are 100% recycled kraft</span><span>Delivered to the door, not the curb</span><span>No minimum term</span>
+    <span>Free shipping on every box</span><span>Skip a month from your phone</span><span>Bags are 100% recycled kraft</span><span>Delivered to the door, not the curb</span><span>No minimum term</span>
+  </div>
+</div>
+
+<div class="wrap">
+  <nav>
+    <a href="#" class="logo" aria-label="Good Grit home">
+      <svg viewBox="0 0 40 40" fill="none" stroke="#221d17" stroke-width="2" stroke-linejoin="round"><path d="M6 34V14l6-8 4 7h8l4-7 6 8v20z" fill="#c8442a"/><circle cx="15" cy="21" r="1.6" fill="#221d17" stroke="none"/><circle cx="25" cy="21" r="1.6" fill="#221d17" stroke="none"/><path d="M18 26.5l2 1.5 2-1.5"/></svg>
+      Good Grit
+    </a>
+    <ul>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#build">Pricing</a></li>
+      <li><a href="#faq">Questions</a></li>
+    </ul>
+    <a href="#build" class="btn small">Build a box</a>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <span class="eyebrow">Litter delivery · every 2, 4 or 6 weeks</span>
+      <h1>Never haul a 40&#8209;lb bag up the stairs <em>again<svg viewBox="0 0 200 18" preserveAspectRatio="none" fill="none"><path d="M2 12 C 40 4, 80 15, 120 8 S 180 5, 198 10" stroke="#221d17" stroke-width="3" stroke-linecap="round"/></svg></em>.</h1>
+      <p class="lede">Tell us how many cats you've got and what they'll tolerate. We work out how much litter you actually go through and send it before you run out. That's the whole idea.</p>
+      <div class="hero-actions">
+        <a href="#build" class="btn">Figure out my box →</a>
+        <a href="#how" class="btn ghost">How it works</a>
+      </div>
+      <p class="hero-note">From $12.60 a delivery, shipping included. Cancel in two clicks, not a phone call.</p>
+    </div>
+
+    <div class="hero-art">
+      <!-- cat sitting in a shipping box -->
+      <svg class="cat" viewBox="0 0 400 420" fill="none" stroke="#221d17" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Drawing of a cat sitting in a cardboard box">
+        <ellipse cx="200" cy="398" rx="170" ry="12" fill="#221d17" opacity=".12" stroke="none"/>
+        <!-- tail -->
+        <path d="M300 250 C 360 230, 372 170, 340 150 C 322 140, 312 160, 330 168" stroke-width="14" stroke="#221d17"/>
+        <path d="M300 250 C 360 230, 372 170, 340 150 C 322 140, 312 160, 330 168" stroke-width="9" stroke="#e9a35c"/>
+        <!-- body -->
+        <path d="M120 270 C 110 190, 140 150, 200 150 C 262 150, 292 195, 282 270 Z" fill="#e9a35c"/>
+        <path d="M168 190 c 10 6, 22 6, 32 0 M162 214 c 14 8, 30 8, 44 0 M240 175 l 22 8 M246 198 l 22 4" stroke="#b5682c" stroke-width="5"/>
+        <!-- head -->
+        <path d="M128 112 L 126 40 L 172 74 C 190 68, 212 68, 230 74 L 276 40 L 274 112 C 286 160, 248 186, 200 186 C 152 186, 116 160, 128 112 Z" fill="#e9a35c"/>
+        <path d="M138 58 l 4 30 l 20 -10 z M264 58 l -4 30 l -20 -10 z" fill="#d47a6a" stroke="none"/>
+        <path d="M188 76 l 4 20 M200 74 v 22 M212 76 l -4 20" stroke="#b5682c" stroke-width="4"/>
+        <!-- eyes: unimpressed -->
+        <path d="M158 124 h 26" /><path d="M160 124 c 3 8, 18 8, 22 0" fill="#221d17"/>
+        <path d="M218 124 h 26" /><path d="M220 124 c 3 8, 18 8, 22 0" fill="#221d17"/>
+        <path d="M194 142 l 6 6 l 6 -6 z" fill="#d47a6a"/>
+        <path d="M200 148 v 6 c -4 6, -12 6, -14 2 M200 154 c 4 6, 12 6, 14 2"/>
+        <path d="M150 146 l -44 -6 M150 154 l -42 6 M250 146 l 44 -6 M250 154 l 42 6" stroke-width="2"/>
+        <!-- paws on box edge -->
+        <path d="M150 262 c -2 -14, 30 -14, 30 0" fill="#f3d7b0"/>
+        <path d="M222 262 c -2 -14, 30 -14, 30 0" fill="#f3d7b0"/>
+        <!-- box -->
+        <path d="M70 262 L 330 262 L 318 396 L 82 396 Z" fill="#c99a62"/>
+        <path d="M70 262 L 40 222 L 150 212 L 180 262" fill="#d8ad74"/>
+        <path d="M330 262 L 366 226 L 262 212 L 228 262" fill="#b98a52"/>
+        <path d="M150 300 h 100 v 40 h -100 z" fill="#f6efe1" stroke-width="2.5"/>
+        <text x="200" y="318" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#221d17" stroke="none">THIS SIDE UP</text>
+        <text x="200" y="333" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#c8442a" stroke="none">2 × 20 LB</text>
+        <path d="M100 360 l 12 0 M300 360 l -12 0" stroke-width="2"/>
+      </svg>
+      <div class="tag">next box in<b>11 days</b>for Mochi &amp; Bean</div>
+    </div>
+  </header>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">01 — How it works</div>
+      <h2>Three steps, and two of them are on us.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="big">1</div>
+        <h3>Pick the litter</h3>
+        <p>Clay, pine, walnut or tofu. If you're not sure, order a sample pack first — four small bags, $6, shipping included.</p>
+      </div>
+      <div class="step">
+        <div class="big">2</div>
+        <h3>We do the math</h3>
+        <p>One cat on clumping clay goes through roughly 14 lb every four weeks. We size the box to your household so you're not stockpiling or scraping the bottom.</p>
+      </div>
+      <div class="step">
+        <div class="big">3</div>
+        <h3>It shows up</h3>
+        <p>We text you two days before it ships. Too soon? Reply "later" and it moves back a week. That's it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="build">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">02 — Build your box</div>
+      <h2>See what it'd cost before you hand over an email.</h2>
+    </div>
+
+    <div class="builder">
+      <form id="builder" onsubmit="return false">
+        <fieldset>
+          <legend>Litter <small>prices per bag</small></legend>
+          <div class="litters">
+            <div class="opt"><input type="radio" name="litter" id="l-clay" value="clay" checked><label for="l-clay"><span class="row"><strong>Clumping clay</strong><span class="price">$16 / 20 lb</span></span><span class="desc">Unscented, low-dust. The safe bet for picky cats.</span></label></div>
+            <div class="opt"><input type="radio" name="litter" id="l-pine" value="pine"><label for="l-pine"><span class="row"><strong>Pine pellets</strong><span class="price">$14 / 20 lb</span></span><span class="desc">Turns to sawdust when wet. Smells like a shed, in a good way.</span></label></div>
+            <div class="opt"><input type="radio" name="litter" id="l-walnut" value="walnut"><label for="l-walnut"><span class="row"><strong>Walnut shell</strong><span class="price">$19 / 12 lb</span></span><span class="desc">Clumps well, lighter to carry. Darker colour hides nothing.</span></label></div>
+            <div class="opt"><input type="radio" name="litter" id="l-tofu" value="tofu"><label for="l-tofu"><span class="row"><strong>Tofu &amp; pea fibre</strong><span class="price">$18 / 12 lb</span></span><span class="desc">Flushable in small amounts. Check your plumbing first.</span></label></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Cats in the house</legend>
+          <div class="cats">
+            <div class="opt"><input type="radio" name="cats" id="c1" value="1" checked><label for="c1">1</label></div>
+            <div class="opt"><input type="radio" name="cats" id="c2" value="2"><label for="c2">2</label></div>
+            <div class="opt"><input type="radio" name="cats" id="c3" value="3"><label for="c3">3</label></div>
+            <div class="opt"><input type="radio" name="cats" id="c4" value="4"><label for="c4">4+</label></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Deliver every</legend>
+          <div class="freq">
+            <div class="opt"><input type="radio" name="freq" id="f2" value="2"><label for="f2">2 weeks</label></div>
+            <div class="opt"><input type="radio" name="freq" id="f4" value="4" checked><label for="f4">4 weeks</label></div>
+            <div class="opt"><input type="radio" name="freq" id="f6" value="6"><label for="f6">6 weeks</label></div>
+          </div>
+          <div class="hint" id="hint"></div>
+        </fieldset>
+      </form>
+
+      <aside class="receipt" aria-live="polite">
+        <div class="r-head">
+          <span class="brand">Good Grit</span>
+          <h3>Your box, roughly</h3>
+        </div>
+        <div class="line"><span id="r-item">Clumping clay ×1</span><span id="r-sub">$16.00</span></div>
+        <div class="line"><span>Subscriber price (−10%)</span><span id="r-disc">−$1.60</span></div>
+        <div class="line"><span>Shipping</span><span id="r-ship">$0.00</span></div>
+        <div class="line"><span>Weight</span><span id="r-wt">20 lb</span></div>
+        <div class="line total"><span>Per delivery</span><span id="r-total">$14.40</span></div>
+        <div class="big-total" id="r-month">$15.60</div>
+        <div class="per">averaged per month</div>
+        <a href="#" class="btn">Start with this box</a>
+        <div class="barcode" aria-hidden="true"></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">03 — Versus the store</div>
+      <h2>It's not cheaper than everything. It's just less annoying.</h2>
+    </div>
+    <table class="compare">
+      <thead><tr><th></th><th>Big-box store run</th><th>Good Grit</th></tr></thead>
+      <tbody>
+        <tr><td>Carrying it</td><td>Trunk, then stairs, then a pulled shoulder.</td><td>Left inside the door, or wherever you tell the driver.</td></tr>
+        <tr><td>Running out</td><td>Usually noticed at 9pm on a Sunday.</td><td>Box sized to your actual usage, plus a text before it ships.</td></tr>
+        <tr><td>Price</td><td>Clay runs about $15–18 for 20 lb.</td><td>$14.40 for 20 lb clay with the subscriber discount.</td></tr>
+        <tr><td>Changing your mind</td><td>Half a bag of the wrong stuff in the closet.</td><td>Switch litter for the next box anytime. We'll take an unopened bag back.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section style="padding-top:40px">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="num">04 — From the inbox</div>
+      <h2>Notes people have sent us.</h2>
+    </div>
+    <div class="notes">
+      <div class="note"><p>"I live on the fourth floor with no elevator. This is the single best thing I pay for."</p><div class="who">— 2 cats, Brooklyn</div></div>
+      <div class="note"><p>"Switched to pine for the sample and my cat just stared at me. Went back to clay next box, no fuss."</p><div class="who">— 1 cat (judgmental), Portland</div></div>
+      <div class="note"><p>"The text-before-shipping thing has saved me from a stack of six bags at least twice."</p><div class="who">— 3 cats, Austin</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:40px">
+  <div class="wrap faq-wrap">
+    <div class="sec-head" style="display:block;margin:0"><div class="num">05 — Questions</div></div>
+    <div>
+      <details open><summary>What if my cat refuses the new litter?</summary><p>It happens a lot. Email us within 30 days of your first box and we'll swap it for a different type, free. Mixing the new litter into the old one over a week usually helps too.</p></details>
+      <details><summary>How do I skip or pause?</summary><p>From your account, or by replying to the shipping text. You can push a box back by a week, skip one entirely, or pause indefinitely. No fees for any of it.</p></details>
+      <details><summary>Where do you ship?</summary><p>Anywhere in the contiguous US. Alaska and Hawaii are on the list but freight for heavy bags is still brutal, so not yet.</p></details>
+      <details><summary>Is shipping really free?</summary><p>Yes, on every subscription box, whatever size it is. One-off orders like the sample pack have it built into the price.</p></details>
+      <details><summary>Can I mix litter types in one box?</summary><p>Yes — after your first delivery you can split a box between two litters. Handy if you've got one cat who won't touch pine.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Let someone else carry the heavy bag.</h2>
+    <a href="#build" class="btn">Build my first box →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p style="margin:0;max-width:22em">Good Grit is a small team shipping cat litter out of a warehouse that smells, honestly, quite nice.</p>
+      </div>
+      <div><h4>Shop</h4><ul><li><a href="#build">Build a box</a></li><li><a href="#">Sample pack</a></li><li><a href="#">Gift a month</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="#faq">FAQ</a></li><li><a href="#">Shipping</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><h4>Account</h4><ul><li><a href="#">Log in</a></li><li><a href="#">Skip a box</a></li><li><a href="#">Cancel</a></li></ul></div>
+    </div>
+    <div class="wordmark" aria-hidden="true">Good Grit</div>
+    <div class="fine"><span>© 2026 Good Grit Supply Co.</span><span>Made for cats who have opinions.</span></div>
+  </div>
+</footer>
+
+<script>
+  const LITTERS = {
+    clay:   { name: "Clumping clay", price: 16, bag: 20, usage: 14 },
+    pine:   { name: "Pine pellets",  price: 14, bag: 20, usage: 10 },
+    walnut: { name: "Walnut shell",  price: 19, bag: 12, usage: 9 },
+    tofu:   { name: "Tofu & pea",    price: 18, bag: 12, usage: 9 },
+  };
+  const form = document.getElementById("builder");
+  const $ = id => document.getElementById(id);
+  const money = n => "$" + n.toFixed(2);
+
+  function update() {
+    const l = LITTERS[form.litter.value];
+    const cats = +form.cats.value;
+    const weeks = +form.freq.value;
+
+    const lbsNeeded = l.usage * cats * (weeks / 4);
+    const bags = Math.max(1, Math.ceil(lbsNeeded / l.bag - 0.15));
+    const sub = bags * l.price;
+    const disc = sub * 0.10;
+    const ship = 0;
+    const total = sub - disc + ship;
+    const monthly = total * (52 / 12) / weeks;
+
+    $("r-item").textContent = `${l.name} ×${bags}`;
+    $("r-sub").textContent = money(sub);
+    $("r-disc").textContent = "−" + money(disc);
+    $("r-ship").textContent = ship ? money(ship) : "free";
+    $("r-wt").textContent = `${bags * l.bag} lb`;
+    $("r-total").textContent = money(total);
+    $("r-month").textContent = money(monthly);
+
+    const ideal = Math.round(l.usage * cats);
+    let hint = `${cats === 4 ? "4+" : cats} cat${cats > 1 ? "s" : ""} on ${l.name.toLowerCase()} ≈ ${ideal} lb every 4 weeks.`;
+    if (bags * l.bag > lbsNeeded * 1.6) hint += " That's more than you need — try a longer gap.";    $("hint").textContent = hint;
+  }
+  form.addEventListener("change", update);
+  update();
+</script>
+</body>
+</html>

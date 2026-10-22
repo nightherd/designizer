@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latchkey – Password manager for families</title>
+<meta name="description" content="Latchkey keeps your family's passwords on one hook by the door. Share the Wi-Fi, keep your email private, and make sure Gran can always get in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --door:#1E3A8A;      /* front-door blue */
+  --door-deep:#14275F;
+  --paper:#EEF0EA;     /* cool hallway white */
+  --ink:#101A33;
+  --brass:#C79A2B;
+  --brass-lt:#E8C463;
+  --coral:#FF7A66;
+  --mint:#7FD8B4;
+  --lilac:#B9A6F2;
+  --sun:#FFD25A;
+  --muted:#4A5675;
+  --line:rgba(16,26,51,.16);
+  --display:'Bricolage Grotesque',system-ui,sans-serif;
+  --body:'Newsreader',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:1.25rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:4px}
+.wrap{width:min(1180px,100% - 2.5rem);margin-inline:auto}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1;letter-spacing:-.025em}
+h2{font-size:clamp(2.2rem,5vw,3.8rem);font-stretch:85%;max-width:16ch}
+h3{font-size:1.5rem;letter-spacing:-.01em}
+p{max-width:58ch}
+
+/* nav */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 0;position:relative;z-index:3}
+.logo{font:800 1.6rem var(--display);letter-spacing:-.04em;text-decoration:none;display:flex;align-items:center;gap:.5rem;color:var(--paper)}
+.logo svg{width:26px;height:26px}
+.nav ul{display:flex;gap:2rem;list-style:none;padding:0;font-size:1.05rem}
+.nav ul a{text-decoration:none;color:#dbe3ff}
+.nav ul a:hover{text-decoration:underline;text-underline-offset:4px}
+.btn{display:inline-block;font:600 1.05rem var(--display);padding:.85rem 1.5rem;border-radius:999px;background:var(--sun);color:var(--ink);text-decoration:none;border:0;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--paper);box-shadow:inset 0 0 0 2px rgba(238,240,234,.5)}
+.btn.dark{background:var(--door);color:var(--paper)}
+
+/* hero */
+.hero{background:var(--door);color:var(--paper);padding-bottom:6rem;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:14px;background:var(--brass)}
+.hero-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:3.5rem;align-items:center;padding-top:3rem}
+.hero h1{font-size:clamp(3rem,6.6vw,5.6rem);font-stretch:80%;font-weight:800}
+.hero .lede{margin-top:1.6rem;font-size:1.4rem;color:#dbe3ff}
+.hero .cta{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2.2rem}
+.hero small{display:block;margin-top:1.1rem;color:#aab8ee;font-size:1rem}
+
+/* key board */
+.board{background:var(--door-deep);border-radius:20px;padding:1.4rem 1.4rem 1.6rem;box-shadow:0 30px 60px -30px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.08)}
+.who{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.3rem}
+.who button{font:600 1rem var(--display);border:0;border-radius:999px;padding:.55rem 1rem .55rem .55rem;background:rgba(255,255,255,.08);color:var(--paper);cursor:pointer;display:flex;gap:.5rem;align-items:center;transition:background .2s,color .2s}
+.who button i{width:1.7rem;height:1.7rem;border-radius:50%;display:grid;place-items:center;font-style:normal;color:var(--ink);font-size:.9rem}
+.who button[aria-pressed=true]{background:var(--paper);color:var(--ink)}
+.rail{height:10px;border-radius:5px;background:linear-gradient(var(--brass-lt),var(--brass));margin:0 .2rem}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:.2rem 1rem;padding:0 .4rem}
+.key{position:relative;padding-top:1.5rem;transform-origin:50% 0;border:0;background:none;color:inherit;font:inherit;text-align:center;cursor:default}
+.key::before{content:"";position:absolute;top:-4px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--brass-lt);box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.key::after{content:"";position:absolute;top:8px;left:50%;width:2px;height:20px;background:var(--brass);margin-left:-1px}
+.tag{margin-top:1.3rem;margin-bottom:1rem;background:var(--sun);color:var(--ink);border-radius:6px 6px 14px 14px;padding:.8rem .5rem 1rem;min-height:7.2rem;display:flex;flex-direction:column;justify-content:space-between;align-items:center;gap:.4rem;transition:background .3s,color .3s,opacity .3s,transform .3s}
+.tag .hole{width:10px;height:10px;border-radius:50%;background:var(--door-deep)}
+.tag b{font:700 1rem/1.15 var(--display);display:block}
+.tag span{font:500 .8rem/1.2 var(--display);opacity:.75;display:block;margin-top:.2rem}
+.key.locked .tag{background:rgba(255,255,255,.07);color:#8e9bd0;transform:scale(.94)}
+.key.locked .tag .hole{background:rgba(255,255,255,.18)}
+.key.locked .tag span::before{content:"🔒 "}
+.key.open .tag span::before{content:"✓ "}
+.key.open:nth-child(3n+2) .tag{background:var(--mint)}
+.key.open:nth-child(3n) .tag{background:var(--lilac)}
+.status{margin-top:.6rem;padding:0 .4rem;font-size:1.05rem;color:#dbe3ff;min-height:3.2em}
+.status strong{color:var(--sun);font-family:var(--display)}
+
+/* the one orchestrated moment: keys swing in on load */
+@keyframes swing{0%{transform:rotate(-14deg)}30%{transform:rotate(9deg)}55%{transform:rotate(-5deg)}80%{transform:rotate(2deg)}100%{transform:rotate(0)}}
+.key{animation:swing 1.5s cubic-bezier(.3,.6,.4,1) both}
+.key:nth-child(2){animation-delay:.12s}.key:nth-child(3){animation-delay:.24s}
+.key:nth-child(4){animation-delay:.36s}.key:nth-child(5){animation-delay:.48s}.key:nth-child(6){animation-delay:.6s}
+
+/* sections */
+section{padding:6.5rem 0}
+.split{display:grid;grid-template-columns:1fr 1.3fr;gap:4rem;align-items:start}
+.split p{margin-top:1.4rem;color:var(--muted)}
+
+/* three rules of the house */
+.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3.5rem;border-top:2px solid var(--ink)}
+.room{padding:1.8rem 1.8rem 0 0}
+.room+.room{padding-left:1.8rem;border-left:1px solid var(--line)}
+.room h3{display:flex;align-items:center;gap:.7rem}
+.room h3 i{width:.9rem;height:.9rem;border-radius:50%;display:inline-block}
+.room p{margin-top:.8rem;color:var(--muted);font-size:1.12rem}
+
+/* kids / gran */
+.stories{background:var(--ink);color:var(--paper)}
+.stories h2{max-width:14ch}
+.story-list{display:grid;gap:0;margin-top:3rem}
+.story{display:grid;grid-template-columns:11rem 1fr;gap:2rem;padding:2rem 0;border-top:1px solid rgba(238,240,234,.2)}
+.story:last-child{border-bottom:1px solid rgba(238,240,234,.2)}
+.story h3{color:var(--sun)}
+.story p{color:#c9d0e6;max-width:60ch}
+.story p em{color:var(--paper)}
+
+/* security */
+.facts{display:grid;gap:1.6rem}
+.fact{padding-left:1.4rem;border-left:4px solid var(--door)}
+.fact h3{margin-bottom:.3rem}
+.fact p{margin:0;color:var(--muted);font-size:1.12rem}
+
+/* pricing */
+.price{background:var(--sun)}
+.price-card{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center}
+.amt{font:800 clamp(5rem,12vw,9rem)/.9 var(--display);font-stretch:75%;letter-spacing:-.05em}
+.amt sup{font-size:.4em;vertical-align:top;position:relative;top:.15em}
+.amt small{font:500 1.3rem var(--body);letter-spacing:0;display:block;margin-top:.6rem}
+.price ul{list-style:none;padding:0;display:grid;gap:.7rem;font-size:1.2rem}
+.price li{padding-left:2rem;position:relative}
+.price li::before{content:"";position:absolute;left:0;top:.45em;width:1.1rem;height:.55rem;border-left:3px solid var(--door);border-bottom:3px solid var(--door);transform:rotate(-45deg)}
+.price .btn{margin-top:1.8rem}
+
+/* faq */
+.faq{max-width:760px}
+details{border-top:1px solid var(--line);padding:1.3rem 0}
+details:last-child{border-bottom:1px solid var(--line)}
+summary{font:600 1.35rem var(--display);cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:1rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.6rem;line-height:1;transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:.8rem;color:var(--muted)}
+
+footer{background:var(--door);color:var(--paper);padding:4rem 0 2.5rem}
+.foot{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;align-items:end}
+.foot h2{font-size:clamp(2rem,4vw,3rem);max-width:14ch;margin-bottom:1.4rem}
+.foot nav{display:flex;gap:1.6rem;font-size:1rem;color:#aab8ee}
+.fine{margin-top:3rem;color:#aab8ee;font-size:.95rem}
+
+@media (max-width:900px){
+  .nav ul{display:none}
+  .hero-grid,.split,.price-card{grid-template-columns:1fr;gap:2.5rem}
+  .rooms{grid-template-columns:1fr}
+  .room+.room{padding-left:0;border-left:0;border-top:1px solid var(--line);margin-top:1.6rem}
+  .story{grid-template-columns:1fr;gap:.6rem}
+  section{padding:4.5rem 0}
+}
+@media (max-width:480px){.keys{grid-template-columns:repeat(2,1fr)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="nav">
+      <a class="logo" href="#top" aria-label="Latchkey home">
+        <svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="#FFD25A" stroke-width="3"/><path d="M13.5 13.5 24 24M19 19l3-3M16.5 21.5l2.5-2.5" stroke="#FFD25A" stroke-width="3" stroke-linecap="round"/></svg>
+        Latchkey
+      </a>
+      <ul>
+        <li><a href="#sharing">How sharing works</a></li>
+        <li><a href="#family">For every age</a></li>
+        <li><a href="#safety">Security</a></li>
+        <li><a href="#price">Price</a></li>
+      </ul>
+      <a class="btn" href="#price">Start free trial</a>
+    </div>
+
+    <div class="hero-grid" id="top">
+      <div>
+        <h1>One hook by the door for every family password.</h1>
+        <p class="lede">Latchkey lets you share the Wi-Fi and Netflix with everyone, keep your email to yourself, and make sure Gran can still get in when she forgets her code.</p>
+        <div class="cta">
+          <a class="btn" href="#price">Start 30-day free trial</a>
+          <a class="btn ghost" href="#sharing">See how sharing works</a>
+        </div>
+        <small>Works on iPhone, Android, Mac, Windows and in any browser.</small>
+      </div>
+
+      <div class="board" aria-labelledby="board-title">
+        <p id="board-title" style="position:absolute;left:-9999px">Try it: pick a family member to see which logins they can open.</p>
+        <div class="who" id="who" role="group" aria-label="Choose a family member"></div>
+        <div class="rail" aria-hidden="true"></div>
+        <div class="keys" id="keys"></div>
+        <p class="status" id="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="sharing">
+  <div class="wrap">
+    <h2>Every login hangs on the right hook.</h2>
+    <p style="margin-top:1.4rem;color:var(--muted)">You decide who can open each login when you save it. Change your mind later and it updates for everyone straight away.</p>
+    <div class="rooms">
+      <div class="room">
+        <h3><i style="background:var(--sun);box-shadow:inset 0 0 0 2px var(--ink)"></i>Shared with the family</h3>
+        <p>Wi-Fi, streaming, the school portal, the gas bill. Save it once and everyone you pick can fill it in on their own phone.</p>
+      </div>
+      <div class="room">
+        <h3><i style="background:var(--ink)"></i>Just for you</h3>
+        <p>Your work email, your bank, your surprise-party planning. Private logins stay private. Nobody in the family can see they exist.</p>
+      </div>
+      <div class="room">
+        <h3><i style="background:var(--coral)"></i>Handed on if needed</h3>
+        <p>Choose a trusted person who can ask for access to your vault. You get a message and 48 hours to say no. If you don't answer, they get in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stories" id="family">
+  <div class="wrap">
+    <h2>Built for the whole house, not just the one who sets it up.</h2>
+    <div class="story-list">
+      <div class="story">
+        <h3>Kids</h3>
+        <p>Give a child their own vault with a parent as guardian. They log in to games and school sites without writing passwords on a sticky note. <em>You can reset anything they get locked out of.</em></p>
+      </div>
+      <div class="story">
+        <h3>Grandparents</h3>
+        <p>Gran gets a simple view: big text, one button to fill in a login, and a call-for-help button that rings whoever set her up. <em>No master password to memorise; she unlocks with her fingerprint or face.</em></p>
+      </div>
+      <div class="story">
+        <h3>Partners</h3>
+        <p>Share the joint account and keep the rest apart. When someone changes the broadband password, everyone's phone has the new one in seconds.</p>
+      </div>
+      <div class="story">
+        <h3>Teenagers</h3>
+        <p>Teens can hide their own logins from the family. Parents can still see a short list of the sites a teen uses, never the passwords. <em>You agree the rules together when you add them.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="safety">
+  <div class="wrap split">
+    <div>
+      <h2>We can't read your passwords. Not even if we wanted to.</h2>
+      <p>Everything is locked on your device before it reaches us. We store scrambled data and have no key to open it.</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><h3>Zero-knowledge encryption</h3><p>Your vault is encrypted with AES-256 using a key that never leaves your devices.</p></div>
+      <div class="fact"><h3>Checked by outsiders</h3><p>An independent security firm audits our code and publishes the full report every year.</p></div>
+      <div class="fact"><h3>Breach alerts for the whole family</h3><p>If a site you use leaks, we tell the person whose login it is and what to change.</p></div>
+      <div class="fact"><h3>A recovery sheet for the fridge door</h3><p>Print a one-page recovery kit at setup. If you lose every device, it gets you back in.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="price" id="price">
+  <div class="wrap price-card">
+    <div class="amt"><sup>$</sup>6<small>a month for up to 6 people. Billed yearly at $72.</small></div>
+    <div>
+      <h2 style="margin-bottom:1.6rem;max-width:12ch">One price. The whole family.</h2>
+      <ul>
+        <li>Unlimited logins, cards and notes</li>
+        <li>Shared and private vaults for each person</li>
+        <li>Kid, teen and grandparent accounts</li>
+        <li>Emergency access and breach alerts</li>
+        <li>Import from your browser or another manager</li>
+      </ul>
+      <a class="btn dark" href="#top">Start 30-day free trial</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 style="margin-bottom:2.5rem">Questions parents ask</h2>
+    <div class="faq">
+      <details><summary>What if I forget my master password?</summary><p>Use the recovery kit you printed at setup, or ask a family admin to approve a reset. We can't reset it for you because we never have it.</p></details>
+      <details><summary>Can my partner see everything I save?</summary><p>No. Each person has a private vault. Only logins you choose to share show up for others.</p></details>
+      <details><summary>Does it work if my family uses different phones?</summary><p>Yes. Latchkey runs on iPhone, Android, Mac, Windows, Linux and as a browser extension for Chrome, Safari, Firefox and Edge.</p></details>
+      <details><summary>What happens when the trial ends?</summary><p>You pick a plan or your vault becomes read-only. Nothing is deleted, and you can export everything whenever you like.</p></details>
+      <details><summary>Can I move over from my current password manager?</summary><p>Yes. Import a file from 1Password, Bitwarden, LastPass, Dashlane, Chrome or Apple Passwords in a couple of minutes.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <h2>Put every key back on its hook.</h2>
+        <a class="btn" href="#price">Start 30-day free trial</a>
+      </div>
+      <nav aria-label="Footer"><a href="#sharing">Sharing</a><a href="#safety">Security</a><a href="#price">Price</a><a href="#top">Back to top</a></nav>
+    </div>
+    <p class="fine">© 2026 Latchkey. Made for families who share a Wi-Fi password and not much else.</p>
+  </div>
+</footer>
+
+<script>
+const people = [
+  {id:'priya', name:'Priya', initial:'P', color:'var(--coral)', role:'parent'},
+  {id:'sam',   name:'Sam',   initial:'S', color:'var(--mint)',  role:'parent'},
+  {id:'maya',  name:'Maya, 14', initial:'M', color:'var(--lilac)', role:'teen'},
+  {id:'gran',  name:'Gran',  initial:'G', color:'var(--sun)',   role:'grandparent'}
+];
+const logins = [
+  {name:'Home Wi-Fi',      note:'Shared with everyone', who:['priya','sam','maya','gran']},
+  {name:'Netflix',         note:'Shared with everyone', who:['priya','sam','maya','gran']},
+  {name:'Electric bill',   note:'Parents only',         who:['priya','sam']},
+  {name:'Priya’s email', note:'Only Priya',        who:['priya']},
+  {name:'Maya’s school portal', note:'Maya and parents', who:['maya','priya','sam']},
+  {name:'Pharmacy',        note:'Gran and Priya',       who:['gran','priya']}
+];
+const whoEl = document.getElementById('who'),
+      keysEl = document.getElementById('keys'),
+      statusEl = document.getElementById('status');
+
+people.forEach((p,i)=>{
+  const b = document.createElement('button');
+  b.type='button';
+  b.setAttribute('aria-pressed', i===0);
+  b.innerHTML = `<i style="background:${p.color}">${p.initial}</i>${p.name}`;
+  b.onclick = ()=>select(p.id);
+  b.dataset.id = p.id;
+  whoEl.appendChild(b);
+});
+logins.forEach(l=>{
+  const k = document.createElement('div');
+  k.className='key';
+  k.innerHTML = `<div class="tag"><span class="hole"></span><div><b>${l.name}</b><span>${l.note}</span></div></div>`;
+  keysEl.appendChild(k);
+});
+function select(id){
+  const p = people.find(x=>x.id===id);
+  whoEl.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.id===id));
+  let n=0;
+  [...keysEl.children].forEach((k,i)=>{
+    const ok = logins[i].who.includes(id);
+    k.classList.toggle('open', ok);
+    k.classList.toggle('locked', !ok);
+    if(ok) n++;
+  });
+  const first = p.name.split(',')[0];
+  statusEl.innerHTML = `<strong>${first}</strong> can open ${n} of ${logins.length} logins. ` +
+    (id==='gran' ? 'She sees large text and one button to fill each one in.' :
+     id==='maya' ? 'Her parents can reset her school login but can’t see her private ones.' :
+     id==='priya'? 'Her email stays hidden from everyone else.' :
+                   'Sam can’t see Priya’s email, and she can’t see his private logins.');
+}
+select('priya');
+</script>
+</body>
+</html>

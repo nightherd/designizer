@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lees, natural wine bar</title>
+<meta name="description" content="Lees is a 22-seat natural wine bar. Unfiltered wine by the glass, small plates, open late.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Figtree:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --grape: #3A1430;
+    --grape-deep: #2A0C22;
+    --haze: #ECEFD6;
+    --haze-dim: #D9DDBF;
+    --amber: #F0A030;
+    --bottle: #24402F;
+    --rose: #E88C9B;
+    --leaf: #B8C77A;
+
+    --display: "Bagel Fat One", "Arial Rounded MT Bold", system-ui, sans-serif;
+    --body: "Figtree", system-ui, sans-serif;
+
+    /* modular scale, ratio 1.333 from 18px */
+    --s-1: 0.8125rem;
+    --s0: 1.125rem;
+    --s1: 1.5rem;
+    --s2: 2rem;
+    --s3: 2.666rem;
+    --s4: 3.555rem;
+
+    --gutter: clamp(1rem, 4vw, 3.5rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--haze);
+    color: var(--grape);
+    font-family: var(--body);
+    font-size: var(--s0);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; line-height: 0.95; }
+  p { margin: 0; }
+
+  .wrap { max-width: 82rem; margin: 0 auto; padding-inline: var(--gutter); }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font: 700 1rem/1 var(--body);
+    padding: 1rem 1.5rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 2px solid currentColor;
+    transition: background-color .2s, color .2s, transform .2s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-amber { background: var(--amber); border-color: var(--amber); color: var(--grape-deep); }
+  .btn-amber:hover { background: var(--haze); border-color: var(--haze); }
+  .btn-ghost { color: var(--haze); }
+  .btn-ghost:hover { background: var(--haze); color: var(--grape); border-color: var(--haze); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    background: var(--grape);
+    color: var(--haze);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  #sediment { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .hero > *:not(canvas) { position: relative; z-index: 1; }
+
+  nav.top {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding-block: 1.25rem;
+  }
+  nav.top .mark { font-family: var(--display); font-size: var(--s1); text-decoration: none; }
+  nav.top ul { list-style: none; display: flex; gap: 1.75rem; margin: 0; padding: 0; align-items: center; }
+  nav.top ul a { text-decoration: none; font-weight: 500; }
+  nav.top ul a:not(.btn):hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+  nav.top .btn { padding: .65rem 1.1rem; }
+
+  .hero-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: 2rem 9rem; }
+  .hero h1 {
+    font-size: clamp(7rem, 31vw, 30rem);
+    line-height: .78;
+    letter-spacing: -0.02em;
+    margin-left: -0.04em;
+    color: var(--haze);
+  }
+  .hero-foot {
+    display: grid;
+    grid-template-columns: minmax(0, 34rem) auto;
+    justify-content: space-between;
+    align-items: end;
+    gap: 2rem;
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .lede { font-size: clamp(1.25rem, 2.2vw, var(--s1)); line-height: 1.35; max-width: 30ch; }
+  .tonight { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .open-now { font-weight: 500; display: flex; align-items: center; gap: .6rem; }
+  .open-now .dot { width: .6rem; height: .6rem; border-radius: 50%; background: var(--leaf); flex: none; }
+  .open-now.closed .dot { background: var(--rose); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+  /* ---------- Section shell ---------- */
+  section.block { padding-block: clamp(4rem, 9vw, 8rem); }
+  .block-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 26rem); gap: 1.5rem 3rem; align-items: end; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .block-head h2 { font-size: clamp(var(--s3), 7vw, 6rem); }
+  .block-head p { max-width: 42ch; }
+
+  /* ---------- Wine list ---------- */
+  .filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
+  .filters button {
+    font: 500 .95rem/1 var(--body);
+    padding: .65rem 1rem;
+    border-radius: 999px;
+    border: 2px solid var(--grape);
+    background: transparent; color: var(--grape);
+    cursor: pointer;
+    transition: background-color .15s, color .15s;
+  }
+  .filters button:hover { background: var(--haze-dim); }
+  .filters button[aria-pressed="true"] { background: var(--grape); color: var(--haze); }
+
+  .pours { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--grape); }
+  .pour {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1.4fr) minmax(0, 1fr) 4.5rem 4.5rem;
+    gap: 1.5rem;
+    align-items: baseline;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid rgba(58, 20, 48, .25);
+  }
+  .pour[hidden] { display: none; }
+  .style-tag {
+    justify-self: start;
+    font-size: var(--s-1); font-weight: 700;
+    padding: .3rem .7rem;
+    border-radius: 6px 14px 6px 14px;
+    color: var(--grape-deep);
+    white-space: nowrap;
+  }
+  .t-petnat { background: #F5E58A; }
+  .t-orange { background: var(--amber); }
+  .t-white  { background: var(--leaf); }
+  .t-rose   { background: var(--rose); }
+  .t-red    { background: var(--grape); color: var(--haze); }
+  .pour h3 { font-family: var(--body); font-weight: 700; font-size: var(--s1); line-height: 1.15; }
+  .pour .who { font-size: 1rem; margin-top: .2rem; }
+  .pour .note { font-size: 1rem; font-style: italic; }
+  .pour .price { font-variant-numeric: tabular-nums; text-align: right; font-weight: 500; }
+  .pour .price small { display: block; font-size: var(--s-1); font-weight: 400; opacity: .75; }
+  .list-foot { margin-top: 1.5rem; font-size: 1rem; max-width: 60ch; }
+
+  /* ---------- What natural means ---------- */
+  .natural { background: var(--bottle); color: var(--haze); }
+  .natural .block-head h2 { color: var(--haze); }
+  .rules { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem 3rem; margin: 0; padding: 0; list-style: none; }
+  .rules li { border-top: 2px solid var(--leaf); padding-top: 1.25rem; }
+  .rules strong { display: block; font-family: var(--display); font-weight: 400; font-size: var(--s2); line-height: 1; margin-bottom: .75rem; color: var(--leaf); }
+  .rules p { font-size: 1rem; max-width: 34ch; }
+
+  /* ---------- Food ---------- */
+  .food-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 4rem; }
+  .plates { list-style: none; margin: 0; padding: 0; }
+  .plates li { display: flex; justify-content: space-between; gap: 1rem; padding-block: .9rem; border-bottom: 1px dashed rgba(58, 20, 48, .35); }
+  .plates span:last-child { font-variant-numeric: tabular-nums; }
+  .plates em { display: block; font-size: var(--s-1); font-style: normal; opacity: .75; }
+
+  /* ---------- Visit ---------- */
+  .visit { background: var(--amber); color: var(--grape-deep); }
+  .visit .block-head p { color: var(--grape-deep); }
+  .visit-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); gap: 2.5rem 3rem; }
+  .visit h3 { font-family: var(--body); font-weight: 700; font-size: var(--s0); margin-bottom: .75rem; }
+  .hours { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .hours td { padding: .35rem 0; border-bottom: 1px solid rgba(42, 12, 34, .25); }
+  .hours td:last-child { text-align: right; }
+  .hours tr.today td { font-weight: 700; }
+  .visit address { font-style: normal; }
+  .visit .btn-book { background: var(--grape); border-color: var(--grape); color: var(--haze); margin-top: 1.25rem; }
+  .visit .btn-book:hover { background: transparent; color: var(--grape); }
+
+  footer { background: var(--grape); color: var(--haze); padding-block: 2.5rem; font-size: 1rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+  footer .mark { font-family: var(--display); font-size: var(--s2); line-height: 1; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 960px) {
+    .pour { grid-template-columns: 6.5rem minmax(0, 1fr) 4rem 4rem; }
+    .pour .note { grid-column: 2 / -1; grid-row: 2; margin-top: -.75rem; }
+    .rules { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .visit-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  }
+  @media (max-width: 720px) {
+    nav.top ul li:not(:last-child) { display: none; }
+    .hero-foot, .block-head, .food-grid { grid-template-columns: minmax(0, 1fr); }
+    .hero-body { padding-bottom: 7rem; }
+    .pour { grid-template-columns: minmax(0, 1fr) auto auto; gap: .25rem 1rem; }
+    .style-tag { grid-column: 1 / -1; margin-bottom: .4rem; }
+    .pour .note { grid-column: 1 / -1; grid-row: auto; margin-top: .25rem; }
+    .rules, .visit-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <canvas id="sediment" aria-hidden="true"></canvas>
+  <nav class="top wrap" aria-label="Main">
+    <a class="mark" href="#">Lees</a>
+    <ul>
+      <li><a href="#list">Tonight's list</a></li>
+      <li><a href="#food">Food</a></li>
+      <li><a href="#visit">Visit</a></li>
+      <li><a class="btn btn-ghost" href="#visit">Book a table</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero-body wrap">
+    <h1>Lees</h1>
+    <div class="hero-foot">
+      <p class="lede">Unfiltered wine by the glass, small plates from one hot plate, and 22 seats around a zinc bar.</p>
+      <div class="tonight">
+        <p class="open-now" id="openNow"><span class="dot"></span><span>Open tonight from 5pm</span></p>
+        <div class="hero-actions">
+          <a class="btn btn-amber" href="#visit">Book a table</a>
+          <a class="btn btn-ghost" href="#list">See tonight's list</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="block" id="list" aria-labelledby="list-h">
+    <div class="wrap">
+      <div class="block-head">
+        <h2 id="list-h">Tonight's list</h2>
+        <p>Eleven bottles open by the glass. When one runs out, we open something else, so this changes most nights. Ask us for the bottle list too: about 200 more.</p>
+      </div>
+
+      <div class="filters" role="group" aria-label="Filter by style">
+        <button type="button" data-filter="all" aria-pressed="true">Everything</button>
+        <button type="button" data-filter="petnat" aria-pressed="false">Pét-nat</button>
+        <button type="button" data-filter="white" aria-pressed="false">White</button>
+        <button type="button" data-filter="orange" aria-pressed="false">Skin contact</button>
+        <button type="button" data-filter="rose" aria-pressed="false">Rosé</button>
+        <button type="button" data-filter="red" aria-pressed="false">Red</button>
+      </div>
+
+      <ul class="pours" id="pours" aria-live="polite">
+        <li class="pour" data-style="petnat">
+          <span class="style-tag t-petnat">Pét-nat</span>
+          <div><h3>Cloud Nine</h3><p class="who">Domaine des Orties,Loire, France,2025</p></div>
+          <p class="note">Chenin, bottled mid-ferment. Green apple, bread dough, a little funk.</p>
+          <p class="price">9<small>glass</small></p>
+          <p class="price">48<small>bottle</small></p>
+        </li>
+        <li class="pour" data-style="petnat">
+          <span class="style-tag t-petnat">Pét-nat</span>
+          <div><h3>Fizzy Lifting</h3><p class="who">Hof Kellner,Burgenland, Austria,2025</p></div>
+          <p class="note">Pink, cloudy, raspberry-sharp. Shake it gently, the good stuff sinks.</p>
+          <p class="price">10<small>glass</small></p>
+          <p class="price">52<small>bottle</small></p>
+        </li>
+        <li class="pour" data-style="white">
+          <span class="style-tag t-white">White</span>
+          <div><h3>Pierres Sèches</h3><p class="who">Mas Combarel,Roussillon, France,2024</p></div>
+          <p class="note">Macabeu off schist. Salty, lemon pith, very dry.</p>
+          <p class="price">11<small>glass</small></p>
+          <p class="price">56<small>bottle</small></p>
+        </li>
+        <li class="pour" data-style="white">
+          <span class="style-tag t-white">White</span>
+          <div><h3>Kalkstein</h3><p class="who">Weingut Brehm,Rheinhessen, Germany,2023</p></div>
+          <p class="note">Silvaner, a touch of residual sugar, a lot of chalk.</p>
+          <p class="price">12<small>glass</small></p>
+          <p class="price">60<small>bottle</small></p>
+        </li>
+        <li class="pour" data-style="orange">
+          <span class="style-tag t-orange">Skin contact</span>
+          <div><h3>Amfora</h3><p class="who">Klet Rebula,Brda, Slovenia,2021</p></div>
+          <p class="note">Rebula on skins for six months in clay. Apricot, black tea, grip.</p>
+          <p class="price">13<small>glass</small></p>
+          <p class="price">66<small>bottle</small></p>
+        </li>
+        <li class="pour" data-style="orange">
+          <span class="style-tag t-orange">Skin contact</span>
+          <div><h3>Sun Tea</h3><p class="who">Ridgeback Cellars,Finger Lakes, USA,2024</p></div>
+          <p class="note">Gewürztraminer, ten days on skins. Lychee and orange peel, easy on tannin.</p>
+          <p class="price">11<small>glass</small></p>
+          <p class="price">54<small>bottle</small></p>
+        </li>
+        <li class="pour" data-style="orange">
+          <span class="style-tag t-orange">Skin contact</span>
+          <div><h3>Rkatsiteli Qvevri</h3><p class="who">Gogi Matiashvili,Kakheti, Georgia,2022</p></div>
+          <p class="note">Buried in clay all winter. Walnut, quince, drying finish. Good with the cheese.</p>
+          <p class="price">12<small>glass</small></p>
+          <p class="price">58<small>bottle</small></p>
+        </li>
+        <li class="pour" data-style="rose">
+          <span class="style-tag t-rose">Rosé</span>
+          <div><h3>Pink Moon</h3><p class="who">Cantina Sole Basso,Abruzzo, Italy,2025</p></div>
+          <p class="note">Montepulciano pressed straight off. Cherry, rhubarb, serve cold.</p>
+          <p class="price">10<small>glass</small></p>
+          <p class="price">50<small>bottle</small></p>
+        </li>
+        <li class="pour" data-style="red">
+          <span class="style-tag t-red">Red</span>
+          <div><h3>Glouglou</h3><p class="who">Les Vignes Folles,Beaujolais, France,2025</p></div>
+          <p class="note">Carbonic Gamay, chilled. Crunchy red fruit; the one people order twice.</p>
+          <p class="price">10<small>glass</small></p>
+          <p class="price">49<small>bottle</small></p>
+        </li>
+        <li class="pour" data-style="red">
+          <span class="style-tag t-red">Red</span>
+          <div><h3>Terra Nera</h3><p class="who">Azienda Carbone,Etna, Sicily,2022</p></div>
+          <p class="note">Nerello Mascalese from old bush vines. Smoke, sour cherry, iron.</p>
+          <p class="price">14<small>glass</small></p>
+          <p class="price">72<small>bottle</small></p>
+        </li>
+        <li class="pour" data-style="red">
+          <span class="style-tag t-red">Red</span>
+          <div><h3>Old Vine Cinsault</h3><p class="who">Swartland Wild Co.,Swartland, South Africa,2024</p></div>
+          <p class="note">Light, perfumed, a bit of brett. The lightest red on the list.</p>
+          <p class="price">11<small>glass</small></p>
+          <p class="price">55<small>bottle</small></p>
+        </li>
+      </ul>
+      <p class="list-foot">Not sure what to order? Tell us what you usually like and we'll pour you a taste first. Tastes are free.</p>
+    </div>
+  </section>
+
+  <section class="block natural" aria-labelledby="nat-h">
+    <div class="wrap">
+      <div class="block-head">
+        <h2 id="nat-h">What we mean by natural</h2>
+        <p>There's no legal definition, so here is ours. Every wine we pour meets all four.</p>
+      </div>
+      <ul class="rules">
+        <li><strong>Farmed clean</strong><p>Organic or biodynamic vineyards, picked by hand. No synthetic sprays.</p></li>
+        <li><strong>Wild yeast</strong><p>Fermented with the yeasts that came in on the grapes, not from a packet.</p></li>
+        <li><strong>Nothing added</strong><p>No added sugar, acid, oak chips or colour. Not fined, not filtered, so some bottles are cloudy.</p></li>
+        <li><strong>Low sulphur</strong><p>None at all, or a tiny dose at bottling. Under 30mg per litre either way.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="food" aria-labelledby="food-h">
+    <div class="wrap">
+      <div class="block-head">
+        <h2 id="food-h">Small plates</h2>
+        <p>One hot plate, one fridge, a lot of good bread. Plates come out when they're ready, and two or three make dinner.</p>
+      </div>
+      <div class="food-grid">
+        <ul class="plates">
+          <li><span>Sourdough, cultured butter</span><span>6</span></li>
+          <li><span>Gordal olives, orange zest, fennel seed</span><span>5</span></li>
+          <li><span>Anchovies on toast, brown butter<em>Ask for an extra slice</em></span><span>9</span></li>
+          <li><span>Smoked trout rillettes, pickled shallot</span><span>12</span></li>
+        </ul>
+        <ul class="plates">
+          <li><span>Charred leeks, hazelnut, crème fraîche</span><span>11</span></li>
+          <li><span>Three cheeses, quince, crackers<em>Changes weekly</em></span><span>18</span></li>
+          <li><span>Pork and pistachio terrine, cornichons</span><span>14</span></li>
+          <li><span>Dark chocolate, olive oil, sea salt</span><span>8</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block visit" id="visit" aria-labelledby="visit-h">
+    <div class="wrap">
+      <div class="block-head">
+        <h2 id="visit-h">Come in</h2>
+        <p>We keep half the bar for walk-ins every night. Book for groups of four or more, or if you want to be sure of a seat on a Friday.</p>
+      </div>
+      <div class="visit-grid">
+        <div>
+          <h3>Hours</h3>
+          <table class="hours" id="hours">
+            <tbody>
+              <tr data-day="1"><td>Monday</td><td>Closed</td></tr>
+              <tr data-day="2"><td>Tuesday</td><td>5pm – 11pm</td></tr>
+              <tr data-day="3"><td>Wednesday</td><td>5pm – 11pm</td></tr>
+              <tr data-day="4"><td>Thursday</td><td>5pm – midnight</td></tr>
+              <tr data-day="5"><td>Friday</td><td>4pm – 1am</td></tr>
+              <tr data-day="6"><td>Saturday</td><td>2pm – 1am</td></tr>
+              <tr data-day="0"><td>Sunday</td><td>2pm – 10pm</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Find us</h3>
+          <address>41 Harrow Lane<br>Through the green door, down three steps</address>
+          <p style="margin-top:1rem">Step-free entrance on Cobb Street. Ring the bell and we'll come up.</p>
+        </div>
+        <div>
+          <h3>Book a table</h3>
+          <p>Tables hold up to eight. For more, or to take over the whole room, email us.</p>
+          <a class="btn btn-book" href="mailto:hello@leeswine.bar?subject=Booking">Book a table</a>
+          <p style="margin-top:1rem"><a href="mailto:hello@leeswine.bar">hello@leeswine.bar</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="mark">Lees</span>
+    <p>Natural wine bar and bottle shop. Bottles to take home at shop prices.</p>
+  </div>
+</footer>
+
+<script>
+  // Hours: highlight today and say whether we're open now.
+  (function () {
+    const hours = { 0:[14,22], 1:null, 2:[17,23], 3:[17,23], 4:[17,24], 5:[16,25], 6:[14,25] };
+    const label = h => h >= 24 ? (h === 24 ? 'midnight' : (h - 24) + 'am') : h === 12 ? 'noon' : h > 12 ? (h - 12) + 'pm' : h + 'am';
+    const now = new Date(), d = now.getDay(), h = now.getHours() + now.getMinutes() / 60;
+    const row = document.querySelector(`#hours tr[data-day="${d}"]`);
+    if (row) row.classList.add('today');
+    const el = document.getElementById('openNow'), text = el.lastElementChild;
+    const prev = hours[(d + 6) % 7];
+    if (prev && h < prev[1] - 24) { text.textContent = `Open now until ${label(prev[1])}`; return; }
+    const t = hours[d];
+    if (!t) { el.classList.add('closed'); text.textContent = 'Closed Mondays. Back Tuesday at 5pm'; }
+    else if (h < t[0]) text.textContent = `Open today from ${label(t[0])}`;
+    else if (h < t[1]) text.textContent = `Open now until ${label(t[1])}`;
+    else { el.classList.add('closed'); text.textContent = 'Closed for tonight'; }
+  })();
+
+  // Wine list filter.
+  (function () {
+    const buttons = document.querySelectorAll('.filters button');
+    const pours = document.querySelectorAll('.pour');
+    buttons.forEach(b => b.addEventListener('click', () => {
+      buttons.forEach(x => x.setAttribute('aria-pressed', x === b));
+      const f = b.dataset.filter;
+      pours.forEach(p => p.hidden = f !== 'all' && p.dataset.style !== f);
+    }));
+  })();
+
+  // Sediment: particles drift down once and settle at the bottom of the hero.
+  (function () {
+    const canvas = document.getElementById('sediment');
+    const ctx = canvas.getContext('2d');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const colors = ['#F0A030', '#E88C9B', '#B8C77A', '#C9762A', '#7A2E5E'];
+    let W, H, parts = [], start;
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    // Pile is deeper in a few soft mounds.
+    function pileDepth(x) {
+      return 30 + 26 * Math.sin(x / W * Math.PI * 2.3 + 1) + 18 * Math.sin(x / W * Math.PI * 5.1);
+    }
+    function build() {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = Math.round(Math.min(900, W * 0.7));
+      parts = Array.from({ length: n }, () => {
+        const x = rand(0, W);
+        const r = Math.random() < 0.85 ? rand(1, 2.6) : rand(3, 5);
+        const end = H - Math.pow(Math.random(), 1.6) * (pileDepth(x) + 40) - r;
+        return {
+          x, r, end,
+          y0: rand(-H * 0.2, H * 0.85),
+          drift: rand(-14, 14),
+          delay: rand(0, 0.35),
+          dur: rand(0.55, 1),
+          c: colors[Math.floor(Math.random() * colors.length)],
+          a: rand(0.45, 0.95),
+        };
+      });
+    }
+    const ease = t => 1 - Math.pow(1 - t, 3);
+    function draw(progress) {
+      ctx.clearRect(0, 0, W, H);
+      for (const p of parts) {
+        let t = Math.min(1, Math.max(0, (progress - p.delay) / p.dur));
+        t = ease(t);
+        const y = p.y0 + (p.end - p.y0) * t;
+        const x = p.x + Math.sin((1 - t) * 6 + p.r) * p.drift * (1 - t);
+        ctx.globalAlpha = p.a * (0.5 + 0.5 * t);
+        ctx.fillStyle = p.c;
+        ctx.beginPath(); ctx.arc(x, y, p.r, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    const DURATION = 4200;
+    function frame(ts) {
+      if (!start) start = ts;
+      const progress = Math.min(1.35, (ts - start) / DURATION * 1.35);
+      draw(progress);
+      if (progress < 1.35) requestAnimationFrame(frame);
+    }
+    build();
+    if (reduce) draw(2); else requestAnimationFrame(frame);
+    let rt;
+    addEventListener('resize', () => {
+      clearTimeout(rt);
+      rt = setTimeout(() => { const w = canvas.clientWidth; if (Math.abs(w - W) > 40 || Math.abs(canvas.clientHeight - H) > 120) { build(); draw(2); } }, 150);
+    });
+  })();
+</script>
+</body>
+</html>

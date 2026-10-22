@@ -1,8 +1,173 @@
 {
+  "ai-01": {
+    "label": "ai",
+    "split": "test",
+    "score": 23,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "warm-editorial",
+      "icon-cards",
+      "stat-row",
+      "faq",
+      "broadsheet",
+      "reveal"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "strong",
+      "meta-string": "weak",
+      "warm-editorial": "strong",
+      "icon-cards": "weak",
+      "stat-row": "medium",
+      "faq": "weak",
+      "broadsheet": "medium",
+      "reveal": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 8,
+        "fired": [
+          "low-contrast",
+          "hero-eyebrow-chip",
+          "italic-serif-display",
+          "undersized-ui-text",
+          "bounce-easing",
+          "icon-tile-stack",
+          "kicker-above-heading",
+          "numbered-section-labels",
+          "cream-palette",
+          "text-occlusion"
+        ]
+      },
+      "slopcop": {
+        "score": 29,
+        "fired": [
+          "hero_font_mix",
+          "stat_banner_row",
+          "hero_eyebrow_pill",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-02": {
+    "label": "ai",
+    "split": "test",
+    "score": 14,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "eyebrow",
+      "tracked-caps",
+      "meta-string",
+      "gradients",
+      "warm-editorial",
+      "faq"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "meta-string": "weak",
+      "gradients": "medium",
+      "warm-editorial": "strong",
+      "faq": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 5,
+        "fired": [
+          "hero-eyebrow-chip",
+          "overused-font",
+          "cream-palette",
+          "repeating-stripes-gradient",
+          "kicker-above-heading",
+          "nested-cards"
+        ]
+      },
+      "slopcop": {
+        "score": 21,
+        "fired": [
+          "slop_fonts",
+          "stat_banner_row",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-03": {
+    "label": "ai",
+    "split": "test",
+    "score": 15,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "eyebrow",
+      "tracked-caps",
+      "meta-string",
+      "gradients",
+      "nested-cards",
+      "stat-row",
+      "faq"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "meta-string": "weak",
+      "gradients": "medium",
+      "nested-cards": "medium",
+      "stat-row": "medium",
+      "faq": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 6,
+        "fired": [
+          "hero-eyebrow-chip",
+          "side-tab",
+          "ai-color-palette",
+          "low-contrast",
+          "overused-font",
+          "skipped-heading",
+          "repeating-stripes-gradient",
+          "kicker-above-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 36,
+        "fired": [
+          "slop_fonts",
+          "gradients",
+          "accent_stripe",
+          "hero_eyebrow_pill",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
   "ai-04": {
     "label": "ai",
     "split": "dev",
-    "score": 17,
+    "score": 15,
     "verdict": "ai",
     "fired": [
       "accent-word",
@@ -15,6 +180,17 @@
       "faq",
       "infinite-motion"
     ],
+    "strength": {
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "mono-label": "medium",
+      "numbered": "medium",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "warm-editorial": "strong",
+      "faq": "weak",
+      "infinite-motion": "medium"
+    },
     "scanned": "2026-10-22",
     "baselines": {
       "impeccable": {
@@ -39,6 +215,148 @@
       }
     }
   },
+  "ai-05": {
+    "label": "ai",
+    "split": "test",
+    "score": 19,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "type-scale",
+      "warm-editorial",
+      "uniform-spacing"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "strong",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "warm-editorial": "strong",
+      "uniform-spacing": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 4,
+        "fired": [
+          "oversized-h1",
+          "low-contrast",
+          "kicker-above-heading",
+          "numbered-section-labels",
+          "em-dash-overuse",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "slop_fonts",
+          "hero_font_mix"
+        ]
+      }
+    }
+  },
+  "ai-06": {
+    "label": "ai",
+    "split": "test",
+    "score": 22,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "type-scale",
+      "warm-editorial",
+      "faq",
+      "broadsheet"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "strong",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "warm-editorial": "strong",
+      "faq": "weak",
+      "broadsheet": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 7,
+        "fired": [
+          "italic-serif-display",
+          "oversized-h1",
+          "hero-eyebrow-chip",
+          "line-length",
+          "kicker-above-heading",
+          "skipped-heading",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 21,
+        "fired": [
+          "hero_font_mix",
+          "numbered_steps",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-07": {
+    "label": "ai",
+    "split": "test",
+    "score": 4,
+    "verdict": "human",
+    "fired": [
+      "type-scale",
+      "nested-cards",
+      "decor",
+      "faq"
+    ],
+    "strength": {
+      "type-scale": "weak",
+      "nested-cards": "medium",
+      "decor": "weak",
+      "faq": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "low-contrast",
+          "oversized-h1",
+          "codex-grid-background"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "accent_stripe",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
   "ai-08": {
     "label": "ai",
     "split": "dev",
@@ -48,6 +366,10 @@
       "trendy-font",
       "gradients"
     ],
+    "strength": {
+      "trendy-font": "weak",
+      "gradients": "medium"
+    },
     "scanned": "2026-10-22",
     "baselines": {
       "impeccable": {
@@ -65,10 +387,176 @@
       }
     }
   },
+  "ai-09": {
+    "label": "ai",
+    "split": "test",
+    "score": 7,
+    "verdict": "human",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "type-scale",
+      "side-stripe",
+      "faq",
+      "reveal"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "type-scale": "weak",
+      "side-stripe": "strong",
+      "faq": "weak",
+      "reveal": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "low-contrast",
+          "oversized-h1"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-10": {
+    "label": "ai",
+    "split": "test",
+    "score": 23,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "crushed-tracking",
+      "nested-cards",
+      "decor",
+      "stat-row",
+      "faq",
+      "reveal",
+      "infinite-motion"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "strong",
+      "meta-string": "weak",
+      "crushed-tracking": "weak",
+      "nested-cards": "medium",
+      "decor": "weak",
+      "stat-row": "medium",
+      "faq": "weak",
+      "reveal": "medium",
+      "infinite-motion": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 10,
+        "fired": [
+          "hero-eyebrow-chip",
+          "low-contrast",
+          "icon-tile-stack",
+          "overused-font",
+          "repeated-container-text",
+          "skipped-heading",
+          "cream-palette",
+          "pulsing-dot",
+          "marquee",
+          "repeating-stripes-gradient",
+          "kicker-above-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 36,
+        "fired": [
+          "slop_fonts",
+          "hero_font_mix",
+          "numbered_steps",
+          "stat_banner_row",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-11": {
+    "label": "ai",
+    "split": "test",
+    "score": 18,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "meta-string",
+      "type-scale",
+      "purple",
+      "nested-cards",
+      "hero",
+      "faq",
+      "emoji",
+      "sparkles"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "purple": "medium",
+      "nested-cards": "medium",
+      "hero": "strong",
+      "faq": "weak",
+      "emoji": "strong",
+      "sparkles": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 7,
+        "fired": [
+          "italic-serif-display",
+          "low-contrast",
+          "icon-tile-stack",
+          "overused-font",
+          "skipped-heading",
+          "pulsing-dot",
+          "kicker-above-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 21,
+        "fired": [
+          "slop_fonts",
+          "hero_font_mix",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
   "ai-12": {
     "label": "ai",
     "split": "dev",
-    "score": 17,
+    "score": 15,
     "verdict": "ai",
     "fired": [
       "default-sans",
@@ -80,6 +568,16 @@
       "nested-cards",
       "hero"
     ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "warm-editorial": "strong",
+      "nested-cards": "medium",
+      "hero": "medium"
+    },
     "scanned": "2026-10-22",
     "baselines": {
       "impeccable": {
@@ -102,10 +600,150 @@
       }
     }
   },
+  "ai-13": {
+    "label": "ai",
+    "split": "test",
+    "score": 19,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "type-scale",
+      "warm-editorial",
+      "broadsheet"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "medium",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "medium",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "warm-editorial": "strong",
+      "broadsheet": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 5,
+        "fired": [
+          "italic-serif-display",
+          "oversized-h1",
+          "hero-eyebrow-chip",
+          "low-contrast",
+          "numbered-section-labels",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "hero_font_mix"
+        ]
+      }
+    }
+  },
+  "ai-14": {
+    "label": "ai",
+    "split": "test",
+    "score": 18,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "warm-editorial",
+      "stat-row"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "strong",
+      "warm-editorial": "medium",
+      "stat-row": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 4,
+        "fired": [
+          "low-contrast",
+          "kicker-above-heading",
+          "skipped-heading",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "hero_font_mix",
+          "numbered_steps"
+        ]
+      }
+    }
+  },
+  "ai-15": {
+    "label": "ai",
+    "split": "test",
+    "score": 15,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "type-scale",
+      "warm-editorial",
+      "broadsheet"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "mono-label": "medium",
+      "numbered": "strong",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "warm-editorial": "strong",
+      "broadsheet": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 3,
+        "fired": [
+          "italic-serif-display",
+          "oversized-h1",
+          "numbered-section-labels",
+          "em-dash-overuse",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "hero_font_mix"
+        ]
+      }
+    }
+  },
   "ai-16": {
     "label": "ai",
     "split": "dev",
-    "score": 6,
+    "score": 4,
     "verdict": "human",
     "fired": [
       "accent-word",
@@ -113,6 +751,12 @@
       "faq",
       "uniform-spacing"
     ],
+    "strength": {
+      "accent-word": "strong",
+      "hero": "medium",
+      "faq": "weak",
+      "uniform-spacing": "weak"
+    },
     "scanned": "2026-10-22",
     "baselines": {
       "impeccable": {
@@ -131,10 +775,135 @@
       }
     }
   },
+  "ai-17": {
+    "label": "ai",
+    "split": "test",
+    "score": 2,
+    "verdict": "human",
+    "fired": [
+      "trendy-font",
+      "bounce"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "bounce": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "bounce-easing",
+          "low-contrast",
+          "skipped-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "slop_fonts",
+          "accent_stripe"
+        ]
+      }
+    }
+  },
+  "ai-18": {
+    "label": "ai",
+    "split": "test",
+    "score": 1,
+    "verdict": "human",
+    "fired": [
+      "trendy-font",
+      "faq",
+      "reveal"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "faq": "weak",
+      "reveal": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 0,
+        "fired": []
+      },
+      "slopcop": {
+        "score": 21,
+        "fired": [
+          "accent_stripe",
+          "stat_banner_row",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-19": {
+    "label": "ai",
+    "split": "test",
+    "score": 17,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "meta-string",
+      "dark-glow",
+      "warm-editorial",
+      "stat-row",
+      "faq",
+      "uniform-spacing",
+      "reveal",
+      "infinite-motion"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "meta-string": "weak",
+      "dark-glow": "medium",
+      "warm-editorial": "medium",
+      "stat-row": "medium",
+      "faq": "weak",
+      "uniform-spacing": "weak",
+      "reveal": "medium",
+      "infinite-motion": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 6,
+        "fired": [
+          "italic-serif-display",
+          "hero-eyebrow-chip",
+          "low-contrast",
+          "text-occlusion",
+          "icon-tile-stack",
+          "kicker-above-heading",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 43,
+        "fired": [
+          "slop_fonts",
+          "hero_font_mix",
+          "accent_stripe",
+          "colored_glows",
+          "stat_banner_row",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
   "ai-20": {
     "label": "ai",
     "split": "dev",
-    "score": 19,
+    "score": 15,
     "verdict": "ai",
     "fired": [
       "default-sans",
@@ -149,6 +918,19 @@
       "infinite-motion",
       "emoji"
     ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "medium",
+      "type-scale": "weak",
+      "warm-editorial": "medium",
+      "hero": "medium",
+      "icon-cards": "weak",
+      "faq": "weak",
+      "infinite-motion": "medium",
+      "emoji": "strong"
+    },
     "scanned": "2026-10-22",
     "baselines": {
       "impeccable": {
@@ -174,6 +956,157 @@
       }
     }
   },
+  "ai-21": {
+    "label": "ai",
+    "split": "test",
+    "score": 17,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "meta-string",
+      "gradients",
+      "warm-editorial",
+      "stat-row",
+      "reveal"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "meta-string": "weak",
+      "gradients": "medium",
+      "warm-editorial": "strong",
+      "stat-row": "medium",
+      "reveal": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 6,
+        "fired": [
+          "italic-serif-display",
+          "hero-eyebrow-chip",
+          "low-contrast",
+          "kicker-above-heading",
+          "overused-font",
+          "cream-palette",
+          "organic-clip-path",
+          "repeating-stripes-gradient"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "hero_font_mix",
+          "gradients"
+        ]
+      }
+    }
+  },
+  "ai-22": {
+    "label": "ai",
+    "split": "test",
+    "score": 16,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "meta-string",
+      "warm-editorial",
+      "broadsheet"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "meta-string": "weak",
+      "warm-editorial": "medium",
+      "broadsheet": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "kicker-above-heading",
+          "cream-palette",
+          "shape-assembled-illustration"
+        ]
+      },
+      "slopcop": {
+        "score": 21,
+        "fired": [
+          "hero_font_mix",
+          "accent_stripe",
+          "stat_banner_row"
+        ]
+      }
+    }
+  },
+  "ai-23": {
+    "label": "ai",
+    "split": "test",
+    "score": 22,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "warm-editorial",
+      "faq",
+      "broadsheet",
+      "uniform-spacing"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "strong",
+      "meta-string": "weak",
+      "warm-editorial": "strong",
+      "faq": "weak",
+      "broadsheet": "medium",
+      "uniform-spacing": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 6,
+        "fired": [
+          "italic-serif-display",
+          "hero-eyebrow-chip",
+          "low-contrast",
+          "tiny-text",
+          "kicker-above-heading",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 29,
+        "fired": [
+          "slop_fonts",
+          "hero_font_mix",
+          "numbered_steps",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
   "ai-24": {
     "label": "ai",
     "split": "dev",
@@ -189,6 +1122,16 @@
       "warm-editorial",
       "stat-row"
     ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "mono-label": "medium",
+      "numbered": "strong",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "warm-editorial": "strong",
+      "stat-row": "medium"
+    },
     "scanned": "2026-10-22",
     "baselines": {
       "impeccable": {
@@ -210,10 +1153,108 @@
       }
     }
   },
+  "ai-25": {
+    "label": "ai",
+    "split": "test",
+    "score": 4,
+    "verdict": "human",
+    "fired": [
+      "mono-label",
+      "numbered",
+      "reveal",
+      "bounce"
+    ],
+    "strength": {
+      "mono-label": "medium",
+      "numbered": "medium",
+      "reveal": "medium",
+      "bounce": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "low-contrast",
+          "undersized-ui-text",
+          "bounce-easing",
+          "repeating-stripes-gradient"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "gradients"
+        ]
+      }
+    }
+  },
+  "ai-26": {
+    "label": "ai",
+    "split": "test",
+    "score": 0,
+    "verdict": "human",
+    "fired": [
+      "trendy-font"
+    ],
+    "strength": {
+      "trendy-font": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 0,
+        "fired": [
+          "low-contrast"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "ai-27": {
+    "label": "ai",
+    "split": "test",
+    "score": 6,
+    "verdict": "human",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "type-scale",
+      "crushed-tracking"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "type-scale": "weak",
+      "crushed-tracking": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "oversized-h1",
+          "low-contrast"
+        ]
+      },
+      "slopcop": {
+        "score": 29,
+        "fired": [
+          "slop_fonts",
+          "hero_font_mix",
+          "accent_stripe",
+          "stat_banner_row"
+        ]
+      }
+    }
+  },
   "ai-28": {
     "label": "ai",
     "split": "dev",
-    "score": 16,
+    "score": 11,
     "verdict": "ai",
     "fired": [
       "trendy-font",
@@ -228,6 +1269,19 @@
       "infinite-motion",
       "bounce"
     ],
+    "strength": {
+      "trendy-font": "weak",
+      "mono-label": "medium",
+      "meta-string": "weak",
+      "purple": "medium",
+      "warm-editorial": "medium",
+      "card-kit": "weak",
+      "decor": "weak",
+      "stat-row": "medium",
+      "faq": "weak",
+      "infinite-motion": "medium",
+      "bounce": "weak"
+    },
     "scanned": "2026-10-22",
     "baselines": {
       "impeccable": {
@@ -250,6 +1304,154 @@
       }
     }
   },
+  "ai-29": {
+    "label": "ai",
+    "split": "test",
+    "score": 9,
+    "verdict": "human",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "nested-cards",
+      "stat-row",
+      "emoji"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "nested-cards": "medium",
+      "stat-row": "medium",
+      "emoji": "strong"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "low-contrast",
+          "overused-font",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "slop_fonts",
+          "stat_banner_row"
+        ]
+      }
+    }
+  },
+  "ai-30": {
+    "label": "ai",
+    "split": "test",
+    "score": 15,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "type-scale",
+      "nested-cards",
+      "icon-cards",
+      "faq",
+      "infinite-motion"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "type-scale": "weak",
+      "nested-cards": "medium",
+      "icon-cards": "weak",
+      "faq": "weak",
+      "infinite-motion": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 10,
+        "fired": [
+          "low-contrast",
+          "hero-eyebrow-chip",
+          "italic-serif-display",
+          "icon-tile-stack",
+          "gray-on-color",
+          "overused-font",
+          "skipped-heading",
+          "cream-palette",
+          "kicker-above-heading",
+          "nested-cards"
+        ]
+      },
+      "slopcop": {
+        "score": 50,
+        "fired": [
+          "slop_fonts",
+          "hero_font_mix",
+          "accent_stripe",
+          "colored_glows",
+          "stat_banner_row",
+          "hero_eyebrow_pill",
+          "faq_accordion"
+        ]
+      }
+    }
+  },
+  "ai-31": {
+    "label": "ai",
+    "split": "test",
+    "score": 19,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "type-scale",
+      "warm-editorial",
+      "uniform-spacing"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "strong",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "warm-editorial": "strong",
+      "uniform-spacing": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 5,
+        "fired": [
+          "low-contrast",
+          "italic-serif-display",
+          "oversized-h1",
+          "kicker-above-heading",
+          "numbered-section-labels",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "hero_font_mix"
+        ]
+      }
+    }
+  },
   "ai-32": {
     "label": "ai",
     "split": "dev",
@@ -266,6 +1468,17 @@
       "faq",
       "uniform-spacing"
     ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "mono-label": "medium",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "warm-editorial": "strong",
+      "faq": "weak",
+      "uniform-spacing": "weak"
+    },
     "scanned": "2026-10-22",
     "baselines": {
       "impeccable": {
@@ -291,6 +1504,127 @@
       }
     }
   },
+  "ai-33": {
+    "label": "ai",
+    "split": "test",
+    "score": 17,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "type-scale",
+      "warm-editorial",
+      "decor",
+      "stat-row"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "strong",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "warm-editorial": "medium",
+      "decor": "weak",
+      "stat-row": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 5,
+        "fired": [
+          "oversized-h1",
+          "hero-eyebrow-chip",
+          "low-contrast",
+          "text-occlusion",
+          "kicker-above-heading",
+          "numbered-section-labels",
+          "cream-palette"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "ai-34": {
+    "label": "ai",
+    "split": "test",
+    "score": 4,
+    "verdict": "human",
+    "fired": [
+      "mono-label",
+      "type-scale",
+      "crushed-tracking",
+      "decor"
+    ],
+    "strength": {
+      "mono-label": "medium",
+      "type-scale": "weak",
+      "crushed-tracking": "weak",
+      "decor": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "low-contrast",
+          "repeating-stripes-gradient"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "gradients"
+        ]
+      }
+    }
+  },
+  "ai-35": {
+    "label": "ai",
+    "split": "test",
+    "score": 4,
+    "verdict": "human",
+    "fired": [
+      "trendy-font",
+      "meta-string",
+      "type-scale",
+      "bounce"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "bounce": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 4,
+        "fired": [
+          "oversized-h1",
+          "bounce-easing",
+          "low-contrast",
+          "overused-font",
+          "side-tab",
+          "repeating-stripes-gradient"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "slop_fonts"
+        ]
+      }
+    }
+  },
   "ai-36": {
     "label": "ai",
     "split": "dev",
@@ -300,6 +1634,10 @@
       "accent-word",
       "type-scale"
     ],
+    "strength": {
+      "accent-word": "strong",
+      "type-scale": "weak"
+    },
     "scanned": "2026-10-22",
     "baselines": {
       "impeccable": {
@@ -314,6 +1652,181 @@
         "score": 7,
         "fired": [
           "hero_font_mix"
+        ]
+      }
+    }
+  },
+  "ai-37": {
+    "label": "ai",
+    "split": "test",
+    "score": 20,
+    "verdict": "ai",
+    "fired": [
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "arrow-links",
+      "type-scale",
+      "crushed-tracking",
+      "warm-editorial",
+      "card-kit",
+      "nested-cards",
+      "stat-row",
+      "reveal",
+      "infinite-motion"
+    ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "mono-label": "medium",
+      "numbered": "strong",
+      "meta-string": "weak",
+      "arrow-links": "weak",
+      "type-scale": "weak",
+      "crushed-tracking": "weak",
+      "warm-editorial": "medium",
+      "card-kit": "weak",
+      "nested-cards": "medium",
+      "stat-row": "medium",
+      "reveal": "medium",
+      "infinite-motion": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 7,
+        "fired": [
+          "low-contrast",
+          "italic-serif-display",
+          "oversized-h1",
+          "kicker-above-heading",
+          "numbered-section-labels",
+          "em-dash-overuse",
+          "cream-palette",
+          "pulsing-dot",
+          "marquee"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "ai-38": {
+    "label": "ai",
+    "split": "test",
+    "score": 17,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "numbered",
+      "meta-string",
+      "gradients",
+      "nested-cards"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "numbered": "medium",
+      "meta-string": "weak",
+      "gradients": "medium",
+      "nested-cards": "medium"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 6,
+        "fired": [
+          "low-contrast",
+          "italic-serif-display",
+          "hero-eyebrow-chip",
+          "overused-font",
+          "cream-palette",
+          "kicker-above-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 29,
+        "fired": [
+          "slop_fonts",
+          "hero_font_mix",
+          "gradients",
+          "numbered_steps"
+        ]
+      }
+    }
+  },
+  "ai-39": {
+    "label": "ai",
+    "split": "test",
+    "score": 20,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "trendy-font",
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "type-scale",
+      "gradients",
+      "warm-editorial",
+      "card-kit",
+      "nested-cards",
+      "glass",
+      "faq",
+      "uniform-spacing"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "type-scale": "weak",
+      "gradients": "medium",
+      "warm-editorial": "strong",
+      "card-kit": "weak",
+      "nested-cards": "medium",
+      "glass": "medium",
+      "faq": "weak",
+      "uniform-spacing": "weak"
+    },
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 9,
+        "fired": [
+          "gray-on-color",
+          "low-contrast",
+          "italic-serif-display",
+          "oversized-h1",
+          "hero-eyebrow-chip",
+          "kicker-above-heading",
+          "overused-font",
+          "cream-palette",
+          "organic-clip-path",
+          "repeating-stripes-gradient"
+        ]
+      },
+      "slopcop": {
+        "score": 29,
+        "fired": [
+          "hero_font_mix",
+          "gradients",
+          "glassmorphism",
+          "faq_accordion"
         ]
       }
     }
@@ -338,6 +1851,21 @@
       "faq",
       "broadsheet"
     ],
+    "strength": {
+      "trendy-font": "weak",
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "medium",
+      "meta-string": "weak",
+      "type-scale": "weak",
+      "warm-editorial": "strong",
+      "decor": "weak",
+      "stat-row": "medium",
+      "faq": "weak",
+      "broadsheet": "medium"
+    },
     "scanned": "2026-10-22",
     "baselines": {
       "impeccable": {
@@ -364,10 +1892,1046 @@
       }
     }
   },
+  "h-01": {
+    "label": "human",
+    "split": "test",
+    "score": 1,
+    "verdict": "human",
+    "fired": [
+      "numbered",
+      "reveal"
+    ],
+    "strength": {
+      "numbered": "medium",
+      "reveal": "medium"
+    },
+    "url": "https://www.basicagency.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 3,
+        "fired": [
+          "tight-leading",
+          "low-contrast",
+          "skipped-heading",
+          "bounce-easing"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "stat_banner_row"
+        ]
+      }
+    }
+  },
+  "h-02": {
+    "label": "human",
+    "split": "test",
+    "score": 5,
+    "verdict": "human",
+    "fired": [
+      "eyebrow",
+      "tracked-caps",
+      "type-scale",
+      "crushed-tracking",
+      "hero"
+    ],
+    "strength": {
+      "eyebrow": "medium",
+      "tracked-caps": "medium",
+      "type-scale": "weak",
+      "crushed-tracking": "weak",
+      "hero": "weak"
+    },
+    "url": "https://www.instrument.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "low-contrast",
+          "tight-leading",
+          "bounce-easing"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-03": {
+    "label": "human",
+    "split": "test",
+    "score": 3,
+    "verdict": "human",
+    "fired": [
+      "numbered",
+      "arrow-links",
+      "type-scale",
+      "dark-glow"
+    ],
+    "strength": {
+      "numbered": "strong",
+      "arrow-links": "weak",
+      "type-scale": "weak",
+      "dark-glow": "weak"
+    },
+    "url": "https://order.design/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "low-contrast"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "gradients",
+          "perma_dark_mode"
+        ]
+      }
+    }
+  },
+  "h-04": {
+    "label": "human",
+    "split": "test",
+    "score": 1,
+    "verdict": "human",
+    "fired": [
+      "mono-label",
+      "glass",
+      "infinite-motion"
+    ],
+    "strength": {
+      "mono-label": "medium",
+      "glass": "medium",
+      "infinite-motion": "medium"
+    },
+    "url": "https://koto.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 4,
+        "fired": [
+          "tight-leading",
+          "low-contrast",
+          "body-text-viewport-edge",
+          "marquee"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "glassmorphism",
+          "perma_dark_mode"
+        ]
+      }
+    }
+  },
+  "h-05": {
+    "label": "human",
+    "split": "test",
+    "score": 0,
+    "verdict": "human",
+    "fired": [],
+    "strength": {},
+    "url": "https://teenage.engineering/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "buried-raster"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-06": {
+    "label": "human",
+    "split": "test",
+    "score": 1,
+    "verdict": "human",
+    "fired": [
+      "nested-cards",
+      "hero",
+      "infinite-motion"
+    ],
+    "strength": {
+      "nested-cards": "medium",
+      "hero": "weak",
+      "infinite-motion": "medium"
+    },
+    "url": "https://ia.net/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "low-contrast"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-07": {
+    "label": "human",
+    "split": "test",
+    "score": 0,
+    "verdict": "human",
+    "fired": [
+      "type-scale",
+      "glass",
+      "infinite-motion"
+    ],
+    "strength": {
+      "type-scale": "weak",
+      "glass": "medium",
+      "infinite-motion": "medium"
+    },
+    "url": "https://www.are.na/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 4,
+        "fired": [
+          "low-contrast",
+          "gray-on-color",
+          "flat-type-hierarchy",
+          "marquee"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "glassmorphism",
+          "numbered_steps"
+        ]
+      }
+    }
+  },
+  "h-08": {
+    "label": "human",
+    "split": "test",
+    "score": 5,
+    "verdict": "human",
+    "fired": [
+      "accent-word",
+      "purple",
+      "gradient-text",
+      "gradients",
+      "hero"
+    ],
+    "strength": {
+      "accent-word": "strong",
+      "purple": "medium",
+      "gradient-text": "strong",
+      "gradients": "medium",
+      "hero": "weak"
+    },
+    "url": "https://www.hey.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 3,
+        "fired": [
+          "low-contrast",
+          "gradient-text",
+          "nested-cards"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "purple_accent",
+          "gradients"
+        ]
+      }
+    }
+  },
+  "h-09": {
+    "label": "human",
+    "split": "test",
+    "score": 14,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "eyebrow",
+      "mono-label",
+      "numbered",
+      "gradients",
+      "nested-cards",
+      "glass",
+      "hero",
+      "fake-window",
+      "reveal",
+      "infinite-motion",
+      "emoji",
+      "sparkles"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "eyebrow": "medium",
+      "mono-label": "medium",
+      "numbered": "medium",
+      "gradients": "medium",
+      "nested-cards": "medium",
+      "glass": "medium",
+      "hero": "weak",
+      "fake-window": "medium",
+      "reveal": "medium",
+      "infinite-motion": "medium",
+      "emoji": "strong",
+      "sparkles": "medium"
+    },
+    "url": "https://www.raycast.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 9,
+        "fired": [
+          "low-contrast",
+          "cramped-padding",
+          "dark-glow",
+          "undersized-ui-text",
+          "overused-font",
+          "skipped-heading",
+          "shape-assembled-illustration",
+          "radial-halo",
+          "kicker-above-heading",
+          "nested-cards"
+        ]
+      },
+      "slopcop": {
+        "score": 36,
+        "fired": [
+          "gradients",
+          "glassmorphism",
+          "center_aligned_hero",
+          "perma_dark_mode",
+          "numbered_steps"
+        ]
+      }
+    }
+  },
+  "h-10": {
+    "label": "human",
+    "split": "test",
+    "score": 12,
+    "verdict": "ai",
+    "fired": [
+      "default-sans",
+      "accent-word",
+      "mono-label",
+      "numbered",
+      "arrow-links",
+      "type-scale",
+      "dark-glow",
+      "nested-cards",
+      "glass",
+      "icon-cards"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "accent-word": "strong",
+      "mono-label": "medium",
+      "numbered": "medium",
+      "arrow-links": "weak",
+      "type-scale": "weak",
+      "dark-glow": "weak",
+      "nested-cards": "medium",
+      "glass": "medium",
+      "icon-cards": "weak"
+    },
+    "url": "https://linear.app/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 6,
+        "fired": [
+          "low-contrast",
+          "undersized-ui-text",
+          "tiny-text",
+          "nested-cards",
+          "text-occlusion",
+          "skipped-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "gradients",
+          "perma_dark_mode"
+        ]
+      }
+    }
+  },
+  "h-11": {
+    "label": "human",
+    "split": "test",
+    "score": 9,
+    "verdict": "human",
+    "fired": [
+      "accent-word",
+      "mono-label",
+      "arrow-links",
+      "purple",
+      "gradient-text",
+      "gradients",
+      "glass",
+      "icon-cards",
+      "stat-row",
+      "fake-window"
+    ],
+    "strength": {
+      "accent-word": "strong",
+      "mono-label": "medium",
+      "arrow-links": "weak",
+      "purple": "medium",
+      "gradient-text": "strong",
+      "gradients": "medium",
+      "glass": "medium",
+      "icon-cards": "weak",
+      "stat-row": "medium",
+      "fake-window": "medium"
+    },
+    "url": "https://stripe.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 5,
+        "fired": [
+          "low-contrast",
+          "ai-color-palette",
+          "icon-tile-stack",
+          "tight-leading",
+          "nested-cards",
+          "heading-rhythm"
+        ]
+      },
+      "slopcop": {
+        "score": 21,
+        "fired": [
+          "gradients",
+          "glassmorphism",
+          "stat_banner_row"
+        ]
+      }
+    }
+  },
+  "h-12": {
+    "label": "human",
+    "split": "test",
+    "score": 2,
+    "verdict": "human",
+    "fired": [
+      "mono-label",
+      "crushed-tracking"
+    ],
+    "strength": {
+      "mono-label": "medium",
+      "crushed-tracking": "weak"
+    },
+    "url": "https://vercel.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "low-contrast"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "gradients"
+        ]
+      }
+    }
+  },
+  "h-13": {
+    "label": "human",
+    "split": "test",
+    "score": 0,
+    "verdict": "human",
+    "fired": [
+      "arrow-links",
+      "type-scale",
+      "dark-glow"
+    ],
+    "strength": {
+      "arrow-links": "weak",
+      "type-scale": "weak",
+      "dark-glow": "weak"
+    },
+    "url": "https://klim.co.nz/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "low-contrast",
+          "tight-leading"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "perma_dark_mode"
+        ]
+      }
+    }
+  },
+  "h-14": {
+    "label": "human",
+    "split": "test",
+    "score": 1,
+    "verdict": "human",
+    "fired": [
+      "mono-label",
+      "card-kit",
+      "infinite-motion"
+    ],
+    "strength": {
+      "mono-label": "medium",
+      "card-kit": "weak",
+      "infinite-motion": "medium"
+    },
+    "url": "https://abcdinamo.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 4,
+        "fired": [
+          "undersized-ui-text",
+          "low-contrast",
+          "tiny-text",
+          "skipped-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 14,
+        "fired": [
+          "perma_dark_mode",
+          "numbered_steps"
+        ]
+      }
+    }
+  },
+  "h-15": {
+    "label": "human",
+    "split": "test",
+    "score": -1,
+    "verdict": "human",
+    "fired": [
+      "infinite-motion"
+    ],
+    "strength": {
+      "infinite-motion": "medium"
+    },
+    "url": "https://commercialtype.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 3,
+        "fired": [
+          "low-contrast",
+          "line-length",
+          "text-overflow"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-16": {
+    "label": "human",
+    "split": "test",
+    "score": -1,
+    "verdict": "human",
+    "fired": [
+      "purple",
+      "hero"
+    ],
+    "strength": {
+      "purple": "medium",
+      "hero": "weak"
+    },
+    "url": "https://www.swisstypefaces.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 4,
+        "fired": [
+          "text-overflow",
+          "undersized-ui-text",
+          "ai-color-palette",
+          "low-contrast"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "purple_accent"
+        ]
+      }
+    }
+  },
+  "h-17": {
+    "label": "human",
+    "split": "test",
+    "score": 0,
+    "verdict": "human",
+    "fired": [
+      "type-scale"
+    ],
+    "strength": {
+      "type-scale": "weak"
+    },
+    "url": "https://www.grillitype.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "low-contrast",
+          "skipped-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-18": {
+    "label": "human",
+    "split": "test",
+    "score": 5,
+    "verdict": "human",
+    "fired": [
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "purple",
+      "glass",
+      "hero",
+      "reveal"
+    ],
+    "strength": {
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "medium",
+      "purple": "medium",
+      "glass": "medium",
+      "hero": "weak",
+      "reveal": "medium"
+    },
+    "url": "https://www.theverge.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "low-contrast",
+          "tight-leading",
+          "line-length"
+        ]
+      },
+      "slopcop": {
+        "score": 29,
+        "fired": [
+          "purple_accent",
+          "accent_stripe",
+          "glassmorphism",
+          "numbered_steps"
+        ]
+      }
+    }
+  },
+  "h-19": {
+    "label": "human",
+    "split": "test",
+    "score": 5,
+    "verdict": "human",
+    "fired": [
+      "eyebrow",
+      "tracked-caps",
+      "faq"
+    ],
+    "strength": {
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "faq": "weak"
+    },
+    "url": "https://www.quantamagazine.org/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 5,
+        "fired": [
+          "line-length",
+          "undersized-ui-text",
+          "kicker-above-heading",
+          "tiny-text",
+          "low-contrast",
+          "skipped-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-20": {
+    "label": "human",
+    "split": "test",
+    "score": -1,
+    "verdict": "human",
+    "fired": [
+      "hero"
+    ],
+    "strength": {
+      "hero": "weak"
+    },
+    "url": "https://thegentlewoman.co.uk/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 0,
+        "fired": []
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-21": {
+    "label": "human",
+    "split": "test",
+    "score": 0,
+    "verdict": "human",
+    "fired": [
+      "meta-string",
+      "hero"
+    ],
+    "strength": {
+      "meta-string": "weak",
+      "hero": "weak"
+    },
+    "url": "https://craigmod.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 4,
+        "fired": [
+          "low-contrast",
+          "tight-leading",
+          "line-length",
+          "skipped-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-22": {
+    "label": "human",
+    "split": "test",
+    "score": 2,
+    "verdict": "human",
+    "fired": [
+      "type-scale",
+      "warm-editorial",
+      "card-kit",
+      "reveal",
+      "infinite-motion"
+    ],
+    "strength": {
+      "type-scale": "weak",
+      "warm-editorial": "medium",
+      "card-kit": "weak",
+      "reveal": "medium",
+      "infinite-motion": "medium"
+    },
+    "url": "https://www.graza.co/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 4,
+        "fired": [
+          "low-contrast",
+          "tight-leading",
+          "cream-palette",
+          "marquee"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-23": {
+    "label": "human",
+    "split": "test",
+    "score": -1,
+    "verdict": "human",
+    "fired": [
+      "arrow-links",
+      "hero"
+    ],
+    "strength": {
+      "arrow-links": "weak",
+      "hero": "weak"
+    },
+    "url": "https://acehotel.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 3,
+        "fired": [
+          "undersized-ui-text",
+          "line-length",
+          "gray-on-color",
+          "low-contrast"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-24": {
+    "label": "human",
+    "split": "test",
+    "score": -1,
+    "verdict": "human",
+    "fired": [],
+    "strength": {},
+    "url": "https://liquiddeath.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 5,
+        "fired": [
+          "line-length",
+          "tight-leading",
+          "low-contrast",
+          "skipped-heading",
+          "organic-clip-path"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-25": {
+    "label": "human",
+    "split": "test",
+    "score": 1,
+    "verdict": "human",
+    "fired": [
+      "mono-label",
+      "reveal",
+      "infinite-motion"
+    ],
+    "strength": {
+      "mono-label": "medium",
+      "reveal": "medium",
+      "infinite-motion": "medium"
+    },
+    "url": "https://www.glossier.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "line-length",
+          "flat-type-hierarchy"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "gradients"
+        ]
+      }
+    }
+  },
+  "h-26": {
+    "label": "human",
+    "split": "test",
+    "score": 1,
+    "verdict": "human",
+    "fired": [
+      "numbered"
+    ],
+    "strength": {
+      "numbered": "medium"
+    },
+    "url": "https://www.hermanmiller.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 3,
+        "fired": [
+          "line-length",
+          "tiny-text",
+          "skipped-heading"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-27": {
+    "label": "human",
+    "split": "test",
+    "score": 2,
+    "verdict": "human",
+    "fired": [
+      "default-sans",
+      "type-scale",
+      "bounce"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "type-scale": "weak",
+      "bounce": "weak"
+    },
+    "url": "https://maggieappleton.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 3,
+        "fired": [
+          "oversized-h1",
+          "bounce-easing",
+          "low-contrast",
+          "overused-font"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-28": {
+    "label": "human",
+    "split": "test",
+    "score": 0,
+    "verdict": "human",
+    "fired": [
+      "type-scale"
+    ],
+    "strength": {
+      "type-scale": "weak"
+    },
+    "url": "https://emilkowal.ski/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "low-contrast"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-29": {
+    "label": "human",
+    "split": "test",
+    "score": 0,
+    "verdict": "human",
+    "fired": [
+      "type-scale",
+      "reveal"
+    ],
+    "strength": {
+      "type-scale": "weak",
+      "reveal": "medium"
+    },
+    "url": "https://paco.me/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 2,
+        "fired": [
+          "line-length",
+          "flat-type-hierarchy"
+        ]
+      },
+      "slopcop": {
+        "score": 0,
+        "fired": []
+      }
+    }
+  },
+  "h-30": {
+    "label": "human",
+    "split": "test",
+    "score": 4,
+    "verdict": "human",
+    "fired": [
+      "default-sans",
+      "tracked-caps",
+      "meta-string",
+      "reveal"
+    ],
+    "strength": {
+      "default-sans": "weak",
+      "tracked-caps": "medium",
+      "meta-string": "weak",
+      "reveal": "medium"
+    },
+    "url": "https://brittanychiang.com/",
+    "scanned": "2026-10-22",
+    "baselines": {
+      "impeccable": {
+        "score": 1,
+        "fired": [
+          "low-contrast"
+        ]
+      },
+      "slopcop": {
+        "score": 7,
+        "fired": [
+          "perma_dark_mode"
+        ]
+      }
+    }
+  },
   "h-31": {
     "label": "human",
     "split": "dev",
-    "score": 9,
+    "score": 4,
     "verdict": "human",
     "fired": [
       "tracked-caps",
@@ -377,6 +2941,14 @@
       "glass",
       "hero"
     ],
+    "strength": {
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "type-scale": "weak",
+      "dark-acid": "medium",
+      "glass": "medium",
+      "hero": "weak"
+    },
     "url": "https://how.studio/",
     "scanned": "2026-10-22",
     "baselines": {
@@ -396,7 +2968,7 @@
   "h-32": {
     "label": "human",
     "split": "dev",
-    "score": 6,
+    "score": 3,
     "verdict": "human",
     "fired": [
       "arrow-links",
@@ -404,6 +2976,12 @@
       "reveal",
       "emoji"
     ],
+    "strength": {
+      "arrow-links": "weak",
+      "type-scale": "weak",
+      "reveal": "medium",
+      "emoji": "strong"
+    },
     "url": "https://locomotive.ca/en",
     "scanned": "2026-10-22",
     "baselines": {
@@ -420,13 +2998,18 @@
   "h-33": {
     "label": "human",
     "split": "dev",
-    "score": 3,
+    "score": 2,
     "verdict": "human",
     "fired": [
       "default-sans",
       "type-scale",
       "hero"
     ],
+    "strength": {
+      "default-sans": "weak",
+      "type-scale": "weak",
+      "hero": "weak"
+    },
     "url": "https://culturedcode.com/things/",
     "scanned": "2026-10-22",
     "baselines": {
@@ -448,13 +3031,18 @@
   "h-34": {
     "label": "human",
     "split": "dev",
-    "score": 3,
+    "score": 2,
     "verdict": "human",
     "fired": [
       "crushed-tracking",
       "nested-cards",
       "hero"
     ],
+    "strength": {
+      "crushed-tracking": "weak",
+      "nested-cards": "medium",
+      "hero": "weak"
+    },
     "url": "https://mymind.com/",
     "scanned": "2026-10-22",
     "baselines": {
@@ -479,11 +3067,14 @@
   "h-35": {
     "label": "human",
     "split": "dev",
-    "score": 0,
+    "score": -1,
     "verdict": "human",
     "fired": [
       "card-kit"
     ],
+    "strength": {
+      "card-kit": "weak"
+    },
     "url": "https://www.typotheque.com/",
     "scanned": "2026-10-22",
     "baselines": {
@@ -502,13 +3093,18 @@
   "h-36": {
     "label": "human",
     "split": "dev",
-    "score": 3,
+    "score": 2,
     "verdict": "human",
     "fired": [
       "mono-label",
       "arrow-links",
       "type-scale"
     ],
+    "strength": {
+      "mono-label": "medium",
+      "arrow-links": "weak",
+      "type-scale": "weak"
+    },
     "url": "https://ohnotype.co/",
     "scanned": "2026-10-22",
     "baselines": {
@@ -532,6 +3128,9 @@
     "fired": [
       "default-sans"
     ],
+    "strength": {
+      "default-sans": "weak"
+    },
     "url": "https://99percentinvisible.org/",
     "scanned": "2026-10-22",
     "baselines": {
@@ -554,11 +3153,14 @@
   "h-38": {
     "label": "human",
     "split": "dev",
-    "score": 0,
+    "score": -1,
     "verdict": "human",
     "fired": [
       "hero"
     ],
+    "strength": {
+      "hero": "weak"
+    },
     "url": "https://www.kinfolk.com/",
     "scanned": "2026-10-22",
     "baselines": {
@@ -578,13 +3180,18 @@
   "h-39": {
     "label": "human",
     "split": "dev",
-    "score": 4,
+    "score": 0,
     "verdict": "human",
     "fired": [
       "reveal",
       "infinite-motion",
       "bounce"
     ],
+    "strength": {
+      "reveal": "medium",
+      "infinite-motion": "medium",
+      "bounce": "weak"
+    },
     "url": "https://takearecess.com/",
     "scanned": "2026-10-22",
     "baselines": {
@@ -606,13 +3213,18 @@
   "h-40": {
     "label": "human",
     "split": "dev",
-    "score": 4,
+    "score": 0,
     "verdict": "human",
     "fired": [
       "reveal",
       "bounce",
       "sparkles"
     ],
+    "strength": {
+      "reveal": "medium",
+      "bounce": "weak",
+      "sparkles": "medium"
+    },
     "url": "https://www.joshwcomeau.com/",
     "scanned": "2026-10-22",
     "baselines": {

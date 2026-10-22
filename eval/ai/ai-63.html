@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Netday: get paid on invoice day</title>
+<meta name="description" content="Send an invoice, receive most of its value within a day, and collect the rest when your customer pays. Flat, visible fees.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F1F2EC;
+    --sheet: #FBFBF7;
+    --ink: #15211D;
+    --mute: #5E6B65;
+    --rule: #C9CEC6;
+    --stamp: #B0362A;
+
+    --serif: "Newsreader", Georgia, serif;
+    --sans: "Hanken Grotesk", system-ui, sans-serif;
+    --gutter: 16px;
+    --max: 1120px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 17px/1.6 var(--sans);
+  }
+
+  img, svg { display: block; max-width: 100%; }
+
+  a { color: inherit; }
+
+  :focus-visible {
+    outline: 2px solid var(--stamp);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0;
+    font-variation-settings: "opsz" 72;
+  }
+
+  h1 { font-size: clamp(2.7rem, 6.2vw, 5.6rem); }
+  h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
+  h3 { font-size: 1.4rem; line-height: 1.2; letter-spacing: -0.01em; }
+
+  p { margin: 0; }
+
+  .lede {
+    font-size: 1.15rem;
+    color: var(--mute);
+    max-width: 36ch;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Header ---------- */
+
+  header.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .brand {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  nav.links {
+    display: flex;
+    gap: 28px;
+    font-size: 0.95rem;
+  }
+
+  nav.links a {
+    text-decoration: none;
+    color: var(--mute);
+  }
+
+  nav.links a:hover { color: var(--ink); }
+
+  /* ---------- Buttons ---------- */
+
+  .btn {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 15px 24px;
+    font: 600 1rem/1 var(--sans);
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background-color 150ms ease;
+  }
+
+  .btn:hover { background: #2B3C36; }
+
+  .btn.quiet {
+    background: transparent;
+    color: var(--ink);
+    padding-left: 0;
+    padding-right: 0;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+  }
+
+  .btn.quiet:hover { background: transparent; color: var(--stamp); }
+
+  /* ---------- Hero ---------- */
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+    padding: clamp(56px, 9vw, 110px) 0 clamp(64px, 9vw, 120px);
+  }
+
+  .hero h1 { max-width: 12ch; }
+
+  .hero .lede { margin: 28px 0 36px; }
+
+  .hero .proof {
+    margin-top: 28px;
+    font-size: 0.92rem;
+    color: var(--mute);
+  }
+
+  /* The ledger sheet: the one memorable object on the page */
+
+  .sheet {
+    background: var(--sheet);
+    border-top: 3px solid var(--ink);
+    padding: clamp(24px, 3.5vw, 36px);
+    box-shadow: 0 1px 0 var(--rule);
+  }
+
+  .field {
+    display: block;
+    margin-bottom: 30px;
+  }
+
+  .field-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+
+  .field-head output {
+    font: 500 1.35rem/1 var(--serif);
+    font-variant-numeric: tabular-nums;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 24px;
+    background: transparent;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 2px;
+    background: var(--ink);
+  }
+
+  input[type="range"]::-moz-range-track {
+    height: 2px;
+    background: var(--ink);
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-top: -8px;
+    background: var(--sheet);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--sheet);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+  }
+
+  .days-scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--mute);
+    margin-top: 6px;
+  }
+
+  .ledger {
+    margin: 8px 0 0;
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+  }
+
+  .ledger > div {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 9px 0;
+    font-size: 0.98rem;
+  }
+
+  .ledger dt {
+    color: var(--mute);
+    white-space: nowrap;
+  }
+
+  /* dotted leader between label and figure */
+  .ledger dt::after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+    margin-left: 6px;
+    border-bottom: 1px dotted var(--rule);
+    transform: translateY(-4px);
+    min-width: 24px;
+  }
+
+  .ledger dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .ledger .total {
+    border-top: 1px solid var(--ink);
+    margin-top: 6px;
+    padding-top: 14px;
+    font-size: 1.05rem;
+  }
+
+  .ledger .total dt { color: var(--ink); font-weight: 600; }
+
+  .ledger .total dd {
+    font: 500 1.9rem/1 var(--serif);
+    color: var(--stamp);
+  }
+
+  .ledger .total dt::after { display: none; }
+
+  .fine {
+    font-size: 0.85rem;
+    color: var(--mute);
+    margin-top: 18px;
+  }
+
+  /* One orchestrated load moment: the ledger rows settle in order */
+  @media (prefers-reduced-motion: no-preference) {
+    .sheet .ledger > div {
+      animation: settle 600ms cubic-bezier(.2,.7,.2,1) both;
+    }
+    .sheet .ledger > div:nth-child(2) { animation-delay: 80ms; }
+    .sheet .ledger > div:nth-child(3) { animation-delay: 160ms; }
+    .sheet .ledger > div:nth-child(4) { animation-delay: 240ms; }
+
+    @keyframes settle {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+
+  /* ---------- Sections ---------- */
+
+  section.block {
+    border-top: 1px solid var(--rule);
+    padding: clamp(64px, 9vw, 112px) 0;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(32px, 6vw, 80px);
+  }
+
+  .split > header p { margin-top: 20px; color: var(--mute); max-width: 32ch; }
+
+  /* Steps: a real sequence, so ordered list is correct here */
+  ol.steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: step;
+  }
+
+  ol.steps li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    padding: 28px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  ol.steps li:last-child { border-bottom: 1px solid var(--rule); }
+
+  ol.steps li::before {
+    counter-increment: step;
+    content: counter(step);
+    font: 400 2.2rem/1 var(--serif);
+    color: var(--mute);
+    font-variant-numeric: lining-nums;
+  }
+
+  ol.steps p { color: var(--mute); margin-top: 8px; max-width: 52ch; }
+
+  /* ---------- Pricing table ---------- */
+
+  table.rates {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  table.rates caption {
+    text-align: left;
+    color: var(--mute);
+    font-size: 0.95rem;
+    padding-bottom: 14px;
+    caption-side: top;
+  }
+
+  table.rates th,
+  table.rates td {
+    text-align: left;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+    font-weight: 400;
+  }
+
+  table.rates th {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--mute);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  table.rates td:last-child,
+  table.rates th:last-child { text-align: right; }
+
+  table.rates td.big {
+    font: 500 1.5rem/1 var(--serif);
+  }
+
+  .pricing-note {
+    margin-top: 28px;
+    color: var(--mute);
+    max-width: 58ch;
+  }
+
+  /* ---------- Quote ---------- */
+
+  blockquote {
+    margin: 0;
+    max-width: 30ch;
+    font: 400 clamp(1.8rem, 3.4vw, 2.6rem)/1.2 var(--serif);
+    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 72;
+  }
+
+  figcaption {
+    margin-top: 24px;
+    font-size: 0.95rem;
+    color: var(--mute);
+  }
+
+  /* ---------- FAQ ---------- */
+
+  details {
+    border-top: 1px solid var(--rule);
+    padding: 22px 0;
+  }
+
+  details:last-of-type { border-bottom: 1px solid var(--rule); }
+
+  summary {
+    cursor: pointer;
+    font: 400 1.4rem/1.25 var(--serif);
+    letter-spacing: -0.01em;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: baseline;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+
+  summary::after {
+    content: "+";
+    font-family: var(--sans);
+    font-size: 1.3rem;
+    color: var(--mute);
+    transition: transform 200ms ease;
+  }
+
+  details[open] summary::after { content: "\2212"; }
+
+  details p {
+    margin-top: 14px;
+    color: var(--mute);
+    max-width: 60ch;
+  }
+
+  /* ---------- Closing ---------- */
+
+  .closing {
+    background: var(--ink);
+    color: var(--paper);
+    padding: clamp(72px, 10vw, 128px) 0;
+  }
+
+  .closing .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+  }
+
+  .closing h2 { max-width: 16ch; }
+
+  .closing .btn {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .closing .btn:hover { background: #fff; }
+
+  footer {
+    padding: 36px 0 48px;
+    font-size: 0.9rem;
+    color: var(--mute);
+  }
+
+  footer .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .split { grid-template-columns: 1fr; }
+    nav.links { display: none; }
+  }
+
+  @media (max-width: 520px) {
+    body { font-size: 16px; }
+    ol.steps li { grid-template-columns: 40px 1fr; }
+    ol.steps li::before { font-size: 1.8rem; }
+    table.rates th:nth-child(2),
+    table.rates td:nth-child(2) { display: none; }
+    .ledger dt { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#">Netday</a>
+    <nav class="links" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#questions">Questions</a>
+    </nav>
+    <a class="btn quiet" href="#start">Log in</a>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title">Your customers pay in sixty days. Your payroll doesn't wait.</h1>
+        <p class="lede">Send an invoice to Netday and receive most of its value the same day. We collect from your customer when they pay, and you keep the rest.</p>
+        <a class="btn" href="#start">Advance my first invoice</a>
+        <p class="proof">Fees shown before you sign. No personal guarantee.</p>
+      </div>
+
+      <form class="sheet" aria-label="Advance calculator" onsubmit="return false">
+        <label class="field" for="amt">
+          <span class="field-head">
+            <span>Invoice amount</span>
+            <output id="amtOut" for="amt"></output>
+          </span>
+          <input type="range" id="amt" min="2000" max="250000" step="500" value="48000">
+        </label>
+
+        <label class="field" for="days">
+          <span class="field-head">
+            <span>Days until your customer pays</span>
+            <output id="daysOut" for="days"></output>
+          </span>
+          <input type="range" id="days" min="30" max="90" step="30" value="60">
+          <span class="days-scale" aria-hidden="true"><span>30</span><span>60</span><span>90</span></span>
+        </label>
+
+        <dl class="ledger">
+          <div><dt>Invoice face value</dt><dd class="num" id="face"></dd></div>
+          <div><dt>Advance at 90%</dt><dd class="num" id="adv"></dd></div>
+          <div><dt>Fee, 1.2% per 30 days</dt><dd class="num" id="fee"></dd></div>
+          <div class="total"><dt>Deposited today</dt><dd class="num" id="net"></dd></div>
+        </dl>
+
+        <p class="fine">Estimate only. Your final rate depends on your customer's payment history.</p>
+      </form>
+    </section>
+
+    <!-- How it works -->
+    <section class="block" id="how" aria-labelledby="how-title">
+      <div class="split">
+        <header>
+          <h2 id="how-title">Three steps, and the first one takes a minute.</h2>
+          <p>You already send invoices. Netday only changes what happens after.</p>
+        </header>
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>Send the invoice to Netday</h3>
+              <p>Connect your accounting software or upload a PDF. We read the customer, amount, and due date.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Receive the advance</h3>
+              <p>Most of the invoice lands in your bank account within one business day. Use it for payroll, fuel, or stock.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Your customer pays us</h3>
+              <p>They pay the invoice as usual. We send you the remainder, minus the fee you already saw.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="block" id="pricing" aria-labelledby="pricing-title">
+      <div class="split">
+        <header>
+          <h2 id="pricing-title">One fee, set by time, shown in advance.</h2>
+          <p>The longer your customer takes, the more it costs. There are no setup charges, no monthly minimums, and no penalty for paying early.</p>
+        </header>
+        <div>
+          <table class="rates">
+            <caption>Fee on a $50,000 invoice, by days until payment</caption>
+            <thead>
+              <tr>
+                <th scope="col">Days</th>
+                <th scope="col">Rate</th>
+                <th scope="col">Fee</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>30</td><td>1.2%</td><td class="big">$600</td></tr>
+              <tr><td>60</td><td>2.4%</td><td class="big">$1,200</td></tr>
+              <tr><td>90</td><td>3.6%</td><td class="big">$1,800</td></tr>
+            </tbody>
+          </table>
+          <p class="pricing-note">Advances are 90% of the invoice. The other 10% is held as a reserve and returned when your customer pays.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote -->
+    <section class="block" aria-label="Customer quote">
+      <div class="split">
+        <div></div>
+        <figure style="margin:0">
+          <blockquote>We stopped choosing which supplier to pay late. Now we pay everyone on time and the bank statement finally makes sense.</blockquote>
+          <!-- Placeholder attribution: replace with a real, approved customer quote before launch. -->
+          <figcaption>Owner, 14-person freight brokerage</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="block" id="questions" aria-labelledby="faq-title">
+      <div class="split">
+        <header>
+          <h2 id="faq-title">Questions owners ask first.</h2>
+        </header>
+        <div>
+          <details>
+            <summary>Does my customer need to know?</summary>
+            <p>Yes, and that is intentional. Your customer receives the invoice from you with a payment link. They pay the same way they always do.</p>
+          </details>
+          <details>
+            <summary>What if my customer doesn't pay?</summary>
+            <p>We follow up on the due date and tell you where it stands every week. What happens next is spelled out in the agreement you sign, before any money moves.</p>
+          </details>
+          <details>
+            <summary>Do you check my personal credit?</summary>
+            <p>No personal guarantee is required. We underwrite on the strength of your customers' payment history and your business's receivables.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<section class="closing" id="start" aria-labelledby="close-title">
+  <div class="wrap">
+    <h2 id="close-title">Send your next invoice to Netday.</h2>
+    <a class="btn" href="#">Open an account</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Netday</span>
+    <span>Advances and fees are subject to the agreement you sign. Figures on this page are examples.</span>
+  </div>
+</footer>
+
+<script>
+  (() => {
+    const amt = document.getElementById("amt");
+    const days = document.getElementById("days");
+    const money = new Intl.NumberFormat("en-US", {
+      style: "currency", currency: "USD", maximumFractionDigits: 0
+    });
+
+    function render() {
+      const face = Number(amt.value);
+      const term = Number(days.value);
+      const advance = face * 0.9;
+      const fee = face * 0.012 * (term / 30);
+      const deposit = advance - fee;
+
+      document.getElementById("amtOut").textContent = money.format(face);
+      document.getElementById("daysOut").textContent = term + " days";
+      document.getElementById("face").textContent = money.format(face);
+      document.getElementById("adv").textContent = money.format(advance);
+      document.getElementById("fee").textContent = "−" + money.format(fee);
+      document.getElementById("net").textContent = money.format(deposit);
+    }
+
+    amt.addEventListener("input", render);
+    days.addEventListener("input", render);
+    render();
+  })();
+</script>
+
+</body>
+</html>

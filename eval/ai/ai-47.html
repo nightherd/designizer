@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gearshift Robotics Camp — Summer 2027 for Teens</title>
+<meta name="description" content="A two-week summer robotics camp for ages 13–17. Design, build, program and battle your own robots.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e1116;
+    --surface: #171c24;
+    --surface-2: #1f2631;
+    --text: #eef1f5;
+    --muted: #a3adbb;
+    --line: #2b3441;
+    --accent: #ffb020;
+    --accent-ink: #1a1200;
+    --cyan: #3fd0e8;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: Inter, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Space Grotesk", Inter, sans-serif; line-height: 1.1; letter-spacing: -0.02em; }
+  a { color: inherit; }
+  .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+  section { padding: 88px 0; }
+  .eyebrow { color: var(--cyan); font: 700 .8rem "Space Grotesk", sans-serif; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; }
+  h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); margin-bottom: 16px; }
+  .lede { color: var(--muted); max-width: 60ch; font-size: 1.1rem; }
+
+  .btn {
+    display: inline-block; padding: 14px 26px; border-radius: 999px; font-weight: 600; text-decoration: none;
+    background: var(--accent); color: var(--accent-ink); border: 2px solid var(--accent);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,176,32,.3); }
+  .btn.ghost { background: transparent; color: var(--text); border-color: var(--line); }
+  .btn.ghost:hover { border-color: var(--text); box-shadow: none; }
+  :focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+
+  /* nav */
+  header { position: sticky; top: 0; z-index: 10; background: rgba(14,17,22,.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font: 700 1.2rem "Space Grotesk", sans-serif; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .logo svg { width: 26px; height: 26px; }
+  nav ul { display: flex; gap: 28px; list-style: none; padding: 0; align-items: center; }
+  nav ul a { text-decoration: none; color: var(--muted); font-size: .95rem; }
+  nav ul a:hover { color: var(--text); }
+  nav .btn { padding: 8px 18px; font-size: .9rem; color: var(--accent-ink); }
+  @media (max-width: 760px) { nav ul li:not(:last-child) { display: none; } }
+
+  /* hero */
+  .hero { padding: 72px 0 96px; position: relative; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 48px 48px; opacity: .35;
+    mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 70%);
+  }
+  .hero .wrap { position: relative; display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
+  .badge { display: inline-block; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: .85rem; margin-bottom: 24px; background: var(--surface); }
+  .badge b { color: var(--accent); font-weight: 600; }
+  h1 { font-size: clamp(2.6rem, 6.5vw, 4.8rem); margin-bottom: 24px; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .hero .lede { margin-bottom: 36px; }
+  .cta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .robot { width: 100%; max-width: 420px; margin-inline: auto; animation: float 4s ease-in-out infinite; }
+  .antenna-dot { animation: blink 1.6s infinite; }
+  @keyframes float { 50% { transform: translateY(-12px); } }
+  @keyframes blink { 50% { opacity: .25; } }
+  @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .robot { max-width: 280px; order: -1; } }
+
+  /* stats */
+  .stats { border-block: 1px solid var(--line); background: var(--surface); padding: 36px 0; }
+  .stats .wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+  .stat b { display: block; font: 700 2.4rem "Space Grotesk", sans-serif; color: var(--accent); }
+  .stat span { color: var(--muted); font-size: .9rem; }
+  @media (max-width: 640px) { .stats .wrap { grid-template-columns: repeat(2, 1fr); } }
+
+  /* tracks */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 48px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; transition: transform .2s, border-color .2s; }
+  .card:hover { transform: translateY(-4px); border-color: var(--cyan); }
+  .card .ico { width: 48px; height: 48px; border-radius: 12px; background: var(--surface-2); display: grid; place-items: center; margin-bottom: 18px; font-size: 1.5rem; }
+  .card h3 { font-size: 1.3rem; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: .98rem; }
+  .tag { display: inline-block; margin-top: 16px; font-size: .78rem; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); color: var(--cyan); }
+
+  /* schedule */
+  .alt { background: var(--surface); border-block: 1px solid var(--line); }
+  .split { display: grid; grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: start; }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; gap: 32px; } }
+  .timeline { list-style: none; padding: 0; border-left: 2px solid var(--line); }
+  .timeline li { position: relative; padding: 0 0 26px 28px; }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before { content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--surface); }
+  .timeline time { font: 700 .85rem "Space Grotesk", sans-serif; color: var(--accent); }
+  .timeline h3 { font-size: 1.1rem; margin: 2px 0; }
+  .timeline p { color: var(--muted); font-size: .95rem; }
+
+  /* sessions */
+  .sessions { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 48px; }
+  .session { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; display: flex; flex-direction: column; }
+  .session.featured { border-color: var(--accent); position: relative; }
+  .session.featured::before { content: "Most popular"; position: absolute; top: -12px; left: 24px; background: var(--accent); color: var(--accent-ink); font-size: .75rem; font-weight: 700; padding: 3px 12px; border-radius: 999px; }
+  .session h3 { font-size: 1.4rem; }
+  .dates { color: var(--muted); margin: 4px 0 18px; }
+  .price { font: 700 2.6rem "Space Grotesk", sans-serif; }
+  .price small { font: 400 .95rem Inter, sans-serif; color: var(--muted); }
+  .session ul { list-style: none; padding: 0; margin: 20px 0 28px; color: var(--muted); font-size: .95rem; flex: 1; }
+  .session li { padding: 6px 0 6px 26px; position: relative; }
+  .session li::before { content: "✓"; position: absolute; left: 0; color: var(--cyan); font-weight: 700; }
+  .session .btn { text-align: center; }
+  .note { margin-top: 24px; color: var(--muted); font-size: .92rem; }
+
+  /* faq */
+  .faq { max-width: 760px; margin-top: 40px; }
+  details { border-bottom: 1px solid var(--line); padding: 20px 0; }
+  summary { cursor: pointer; font: 600 1.1rem "Space Grotesk", sans-serif; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--accent); font-size: 1.5rem; line-height: 1; transition: transform .2s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { color: var(--muted); margin-top: 12px; }
+
+  /* form */
+  .signup { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  @media (max-width: 860px) { .signup { grid-template-columns: 1fr; gap: 32px; } }
+  form { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; display: grid; gap: 18px; }
+  label { display: grid; gap: 6px; font-size: .9rem; font-weight: 500; }
+  input, select { font: inherit; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--text); }
+  input:focus, select:focus { outline: 2px solid var(--cyan); border-color: transparent; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
+  .msg { display: none; padding: 14px; border-radius: 10px; background: rgba(63,208,232,.12); color: var(--cyan); font-size: .95rem; }
+  .msg.show { display: block; }
+  button.btn { font: inherit; font-weight: 600; cursor: pointer; }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0; color: var(--muted); font-size: .9rem; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="logo" href="#top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#ffb020" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>
+        Gearshift
+      </a>
+      <ul>
+        <li><a href="#tracks">Tracks</a></li>
+        <li><a href="#day">A day at camp</a></li>
+        <li><a href="#sessions">Dates &amp; pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a class="btn" href="#register">Register</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="badge"><b>Summer 2027</b> · Ages 13–17 · No experience needed</span>
+        <h1>Build a robot. <em>Break</em> it. Make it better.</h1>
+        <p class="lede">Two weeks of hands-on engineering with real tools: soldering irons, 3D printers, motors and code. You'll leave with a robot you built, skills you can use, and a crew of friends who get it.</p>
+        <div class="cta">
+          <a class="btn" href="#register">Save my spot</a>
+          <a class="btn ghost" href="#tracks">See what we build</a>
+        </div>
+      </div>
+      <svg class="robot" viewBox="0 0 320 360" role="img" aria-label="Friendly cartoon robot">
+        <line x1="160" y1="30" x2="160" y2="70" stroke="#a3adbb" stroke-width="6" stroke-linecap="round"/>
+        <circle class="antenna-dot" cx="160" cy="26" r="11" fill="#ffb020"/>
+        <rect x="70" y="70" width="180" height="140" rx="30" fill="#1f2631" stroke="#3fd0e8" stroke-width="5"/>
+        <rect x="95" y="100" width="130" height="62" rx="18" fill="#0e1116"/>
+        <circle cx="132" cy="131" r="14" fill="#3fd0e8"/>
+        <circle cx="188" cy="131" r="14" fill="#3fd0e8"/>
+        <circle cx="136" cy="127" r="4" fill="#fff"/><circle cx="192" cy="127" r="4" fill="#fff"/>
+        <path d="M130 186 q30 16 60 0" stroke="#ffb020" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <rect x="100" y="222" width="120" height="100" rx="20" fill="#171c24" stroke="#2b3441" stroke-width="5"/>
+        <circle cx="160" cy="270" r="22" fill="none" stroke="#ffb020" stroke-width="5"/>
+        <path d="M160 256v28M146 270h28" stroke="#ffb020" stroke-width="4" stroke-linecap="round"/>
+        <rect x="46" y="228" width="34" height="76" rx="17" fill="#1f2631" stroke="#3fd0e8" stroke-width="4"/>
+        <rect x="240" y="228" width="34" height="76" rx="17" fill="#1f2631" stroke="#3fd0e8" stroke-width="4"/>
+        <rect x="112" y="324" width="34" height="26" rx="8" fill="#2b3441"/>
+        <rect x="174" y="324" width="34" height="26" rx="8" fill="#2b3441"/>
+      </svg>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="wrap">
+      <div class="stat"><b>10</b><span>days of building</span></div>
+      <div class="stat"><b>6:1</b><span>camper to mentor ratio</span></div>
+      <div class="stat"><b>4</b><span>project tracks</span></div>
+      <div class="stat"><b>100%</b><span>take-home robots</span></div>
+    </div>
+  </div>
+
+  <section id="tracks">
+    <div class="wrap">
+      <p class="eyebrow">Choose your track</p>
+      <h2>Four ways to bring a machine to life</h2>
+      <p class="lede">Pick a main track on day one. Swap into the others during open lab and the Friday showcase.</p>
+      <div class="grid">
+        <article class="card"><div class="ico" aria-hidden="true">🥊</div><h3>Arena Combat</h3><p>Design a wedge-and-flipper bot, tune your drivetrain, and fight for the title in a padded arena. Safety gear provided.</p><span class="tag">Mechanical design</span></article>
+        <article class="card"><div class="ico" aria-hidden="true">🧭</div><h3>Autonomous Rovers</h3><p>Wire up sensors and write Python so your rover follows lines, dodges obstacles and solves a maze, all on its own.</p><span class="tag">Python · Sensors</span></article>
+        <article class="card"><div class="ico" aria-hidden="true">🦾</div><h3>Robotic Arms</h3><p>Model parts in CAD, 3D print them, and program a servo arm to sort, stack and pick up objects with precision.</p><span class="tag">CAD · 3D printing</span></article>
+        <article class="card"><div class="ico" aria-hidden="true">👁️</div><h3>Vision &amp; AI</h3><p>Teach a camera-equipped bot to recognize objects and follow a target using beginner-friendly machine learning tools.</p><span class="tag">Computer vision</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="day" class="alt">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">A day at camp</p>
+        <h2>Less lecture, more lab.</h2>
+        <p class="lede">Short demos, then you're hands-on. Every day ends with something that moves, beeps or breaks (and gets fixed).</p>
+        <p class="note">Day camp runs 9:00 am – 4:00 pm, Monday to Friday. Optional extended care from 8:00 am and until 5:30 pm.</p>
+      </div>
+      <ol class="timeline">
+        <li><time>9:00</time><h3>Boot-up</h3><p>Team check-in, a quick challenge and the day's goal.</p></li>
+        <li><time>9:30</time><h3>Mini-workshop</h3><p>Soldering, motor control, CAD, a new line of code: one skill at a time.</p></li>
+        <li><time>10:30</time><h3>Build block</h3><p>Work on your robot with mentors circulating to help.</p></li>
+        <li><time>12:00</time><h3>Lunch &amp; lawn games</h3><p>Bring your own lunch. Snacks and water on us.</p></li>
+        <li><time>1:00</time><h3>Guest engineer</h3><p>Local engineers and makers share how they work and what they build.</p></li>
+        <li><time>2:00</time><h3>Test &amp; iterate</h3><p>Run trials, find the bugs, fix them. Repeat.</p></li>
+        <li><time>3:30</time><h3>Demo &amp; debrief</h3><p>Show the group what you made today.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="sessions">
+    <div class="wrap">
+      <p class="eyebrow">Dates &amp; pricing</p>
+      <h2>Pick your session</h2>
+      <p class="lede">Each session is two weeks and ends with a public showcase and tournament for families.</p>
+      <div class="sessions">
+        <div class="session">
+          <h3>Session A</h3><p class="dates">June 14 – June 25, 2027</p>
+          <div class="price">$895 <small>/ camper</small></div>
+          <ul><li>All parts, tools &amp; safety gear</li><li>Take-home robot kit</li><li>Camp T-shirt &amp; snacks</li></ul>
+          <a class="btn ghost" href="#register">Register</a>
+        </div>
+        <div class="session featured">
+          <h3>Session B</h3><p class="dates">July 12 – July 23, 2027</p>
+          <div class="price">$895 <small>/ camper</small></div>
+          <ul><li>All parts, tools &amp; safety gear</li><li>Take-home robot kit</li><li>Camp T-shirt &amp; snacks</li><li>Inter-camp tournament day</li></ul>
+          <a class="btn" href="#register">Register</a>
+        </div>
+        <div class="session">
+          <h3>Session C</h3><p class="dates">August 2 – August 13, 2027</p>
+          <div class="price">$895 <small>/ camper</small></div>
+          <ul><li>All parts, tools &amp; safety gear</li><li>Take-home robot kit</li><li>Camp T-shirt &amp; snacks</li></ul>
+          <a class="btn ghost" href="#register">Register</a>
+        </div>
+      </div>
+      <p class="note">Early-bird: $100 off before March 1. Sibling discount and need-based scholarships available. Just ask.</p>
+    </div>
+  </section>
+
+  <section id="faq" class="alt">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>Good to know</h2>
+      <div class="faq">
+        <details><summary>Does my teen need prior experience?</summary><p>Nope. We group campers by comfort level, so first-timers build alongside others just getting started, and returning campers get tougher challenges.</p></details>
+        <details><summary>What should they bring?</summary><p>A packed lunch, water bottle, closed-toe shoes, and a laptop if they have one (loaners are available). We supply everything else.</p></details>
+        <details><summary>Is it safe?</summary><p>Yes. Every tool has a safety briefing, eye protection is required in the lab, and campers only use tools after a mentor sign-off. Our mentors are background-checked and trained in first aid.</p></details>
+        <details><summary>Who are the mentors?</summary><p>Working engineers, college robotics team members and experienced teachers, with a 6:1 camper-to-mentor ratio.</p></details>
+        <details><summary>What's the refund policy?</summary><p>Full refund up to 30 days before your session starts. After that, we'll transfer your spot to another session or a friend.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="register">
+    <div class="wrap signup">
+      <div>
+        <p class="eyebrow">Register</p>
+        <h2>Spots are limited to 48 per session.</h2>
+        <p class="lede">Reserve a spot with this quick form. We'll email details and a payment link within two business days. No payment is taken here.</p>
+      </div>
+      <form id="form" novalidate>
+        <div class="row">
+          <label>Camper name<input name="camper" required autocomplete="off"></label>
+          <label>Camper age<select name="age" required><option value="">Select</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option></select></label>
+        </div>
+        <label>Parent / guardian email<input type="email" name="email" required autocomplete="email"></label>
+        <div class="row">
+          <label>Session<select name="session" required><option value="">Select</option><option>A · June 14</option><option>B · July 12</option><option>C · August 2</option></select></label>
+          <label>First-choice track<select name="track"><option>Arena Combat</option><option>Autonomous Rovers</option><option>Robotic Arms</option><option>Vision &amp; AI</option></select></label>
+        </div>
+        <button class="btn" type="submit">Reserve my spot</button>
+        <p class="msg" id="msg" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2027 Gearshift Robotics Camp</span>
+    <span>hello@gearshiftcamp.example · (555) 010-0199</span>
+  </div>
+</footer>
+
+<script>
+  const form = document.getElementById('form');
+  const msg = document.getElementById('msg');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const ok = d.get('camper').trim() && d.get('age') && d.get('session') && /^\S+@\S+\.\S+$/.test(d.get('email'));
+    msg.className = 'msg show';
+    msg.textContent = ok
+      ? `Thanks! We've noted ${d.get('camper').trim()} for Session ${d.get('session')[0]}. Check your inbox soon.`
+      : 'Please fill in every field with a valid email.';
+    if (ok) form.reset();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sallow &amp; Pike — Vintage Watches, Bristol</title>
+<meta name="description" content="Independent vintage watch dealer. Every piece is graded honestly, serviced in-house and sold with its history.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f2ede3;
+    --ink: #1c1a16;
+    --muted: #6a6356;
+    --rule: #d3c9b6;
+    --brass: #8d5f24;
+    --serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+    --sans: "IBM Plex Sans", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14130f;
+      --ink: #ebe4d4;
+      --muted: #9a9180;
+      --rule: #37342b;
+      --brass: #c99a5e;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #14130f;
+    --ink: #ebe4d4;
+    --muted: #9a9180;
+    --rule: #37342b;
+    --brass: #c99a5e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+  .mono { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .muted { color: var(--muted); }
+  .brass { color: var(--brass); }
+
+  /* Header */
+  header.top {
+    border-bottom: 1px solid var(--rule);
+  }
+  .top .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .logo {
+    font-family: var(--serif);
+    font-size: 22px;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .logo em { font-style: italic; color: var(--brass); }
+  nav.links { display: flex; gap: 22px; flex-wrap: wrap; }
+  nav.links a { text-decoration: none; color: var(--muted); }
+  nav.links a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+
+  /* Hero */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 48px;
+    align-items: center;
+    padding: 64px 0 72px;
+  }
+  .kicker { color: var(--muted); margin-bottom: 22px; }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(44px, 6.2vw, 80px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+  h1 em { font-style: italic; color: var(--brass); }
+  .lede {
+    font-size: 18px;
+    max-width: 46ch;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .ctas { display: flex; gap: 28px; flex-wrap: wrap; align-items: baseline; }
+  .ctas a {
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+  }
+  .ctas a.secondary { border-bottom-color: var(--rule); color: var(--muted); }
+  .ctas a:hover { border-bottom-color: var(--brass); color: var(--brass); }
+
+  .dial-figure { position: relative; justify-self: center; width: min(100%, 420px); }
+  .dial-figure svg { width: 100%; height: auto; display: block; }
+  .dial-figure figcaption {
+    margin-top: 14px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+  .sec-hand { transform-origin: 100px 100px; animation: sweep 60s steps(60) infinite; }
+  @keyframes sweep { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .sec-hand { animation: none; } }
+
+  /* Sections */
+  section { border-top: 1px solid var(--rule); padding: 72px 0; }
+  .sec-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+  .sec-head .mono { color: var(--muted); padding-top: 10px; }
+  h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 46px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+  }
+  h2 em { font-style: italic; }
+
+  /* Bench listing */
+  .bench { border-top: 1px solid var(--ink); }
+  .row {
+    display: grid;
+    grid-template-columns: 56px 1.7fr 1.1fr 70px 110px 110px;
+    gap: 20px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .row.head {
+    padding: 12px 0;
+    color: var(--muted);
+    border-bottom: 1px solid var(--rule);
+  }
+  .row .no { color: var(--muted); font-family: var(--mono); font-size: 13px; }
+  .row .piece-name { font-family: var(--serif); font-size: 22px; line-height: 1.2; }
+  .row .piece-note { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  .row .price { font-family: var(--mono); font-size: 16px; text-align: right; }
+  .row .grade { font-family: var(--mono); font-size: 13px; }
+  .row .sold { color: var(--muted); font-style: italic; font-family: var(--serif); font-size: 17px; text-align: right; }
+  .bench-foot { margin-top: 24px; color: var(--muted); font-size: 14px; }
+
+  /* Grading */
+  .grades { display: grid; grid-template-columns: 200px 1fr; gap: 16px 32px; }
+  .grades dt { font-family: var(--serif); font-size: 22px; line-height: 1.2; padding-top: 2px; }
+  .grades dd { color: var(--ink); max-width: 60ch; }
+  .grades dd span { color: var(--muted); }
+  .grades > div {
+    display: contents;
+  }
+  .grades > div > * { padding-bottom: 18px; border-bottom: 1px solid var(--rule); }
+
+  /* Service */
+  .service { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 32px; }
+  .service .mono { color: var(--muted); padding-top: 10px; }
+  .service p { max-width: 44ch; }
+  .service ul { list-style: none; border-top: 1px solid var(--rule); }
+  .service li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .service li b { font-family: var(--mono); font-weight: 400; font-size: 14px; white-space: nowrap; }
+
+  /* Contact */
+  .contact { background: var(--ink); color: var(--paper); }
+  .contact .mono { color: color-mix(in srgb, var(--paper) 60%, transparent); }
+  .contact h2 { max-width: 16ch; }
+  .contact h2 em { color: var(--brass); }
+  .contact-grid { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 32px; }
+  .contact-grid p, .contact-grid address { font-style: normal; line-height: 1.7; }
+  .contact a { text-underline-offset: 4px; }
+  .contact .mail {
+    font-family: var(--serif);
+    font-size: 28px;
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--paper) 40%, transparent);
+  }
+  .contact .mail:hover { border-bottom-color: var(--brass); color: var(--brass); }
+  .hours { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .hours td { padding: 6px 0; border-bottom: 1px solid color-mix(in srgb, var(--paper) 18%, transparent); }
+  .hours td:last-child { text-align: right; font-family: var(--mono); font-size: 14px; }
+
+  footer { padding: 28px 0 40px; color: var(--muted); font-size: 13px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 40px; }
+    .dial-figure { order: -1; width: min(80%, 320px); }
+    .sec-head, .grades, .service, .contact-grid { grid-template-columns: 1fr; gap: 16px; }
+    .sec-head .mono { padding-top: 0; }
+    .grades dt { padding-top: 0; }
+    .service { gap: 24px; }
+    .row { grid-template-columns: 1fr auto; gap: 6px 16px; }
+    .row .no { display: none; }
+    .row.head { display: none; }
+    .row .piece-name { grid-column: 1 / -1; }
+    .row .piece-note { grid-column: 1 / -1; margin-top: 0; }
+    .row .grade::before { content: "Grade "; color: var(--muted); }
+    .row .year::before { content: "Circa "; color: var(--muted); }
+    .row .year { color: var(--muted); font-family: var(--mono); font-size: 13px; }
+    .row .price { text-align: right; }
+    .row .sold { text-align: right; }
+  }
+  @media (max-width: 600px) {
+    nav.links { gap: 14px; font-size: 14px; }
+    section { padding: 56px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#">Sallow <em>&amp;</em> Pike</a>
+    <nav class="links mono" aria-label="Primary">
+      <a href="#bench">The bench</a>
+      <a href="#grading">Grading</a>
+      <a href="#service">Service</a>
+      <a href="#visit">Visit</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <p class="kicker mono">Vintage watches · Bristol · Est. 1987</p>
+        <h1>Old watches, <em>honestly</em> graded.</h1>
+        <p class="lede">We buy, repair and sell mechanical watches from the 1930s to the 1980s. Every piece is opened, timed on the bench and described in plain terms, including the parts that have been replaced.</p>
+        <div class="ctas">
+          <a href="#bench">Browse the bench</a>
+          <a href="#visit" class="secondary">Book a viewing</a>
+        </div>
+      </div>
+
+      <figure class="dial-figure" aria-label="Illustration of a manual-wind dial">
+        <svg viewBox="0 0 200 200" role="img" aria-hidden="true">
+          <circle cx="100" cy="100" r="98" fill="none" stroke="currentColor" stroke-width="1" style="color: var(--ink)"/>
+          <circle cx="100" cy="100" r="88" fill="var(--paper)" stroke="var(--ink)" stroke-width="0.6"/>
+          <g stroke="var(--ink)" stroke-linecap="butt">
+            <line x1="100" y1="16" x2="100" y2="26" stroke-width="2.4"/>
+            <line x1="184" y1="100" x2="174" y2="100" stroke-width="2.4"/>
+            <line x1="100" y1="184" x2="100" y2="174" stroke-width="2.4"/>
+            <line x1="16" y1="100" x2="26" y2="100" stroke-width="2.4"/>
+            <line x1="100" y1="22" x2="100" y2="28" stroke-width="0.8" transform="rotate(30 100 100)"/>
+            <line x1="100" y1="22" x2="100" y2="28" stroke-width="0.8" transform="rotate(60 100 100)"/>
+            <line x1="100" y1="22" x2="100" y2="28" stroke-width="0.8" transform="rotate(120 100 100)"/>
+            <line x1="100" y1="22" x2="100" y2="28" stroke-width="0.8" transform="rotate(150 100 100)"/>
+            <line x1="100" y1="22" x2="100" y2="28" stroke-width="0.8" transform="rotate(210 100 100)"/>
+            <line x1="100" y1="22" x2="100" y2="28" stroke-width="0.8" transform="rotate(240 100 100)"/>
+            <line x1="100" y1="22" x2="100" y2="28" stroke-width="0.8" transform="rotate(300 100 100)"/>
+            <line x1="100" y1="22" x2="100" y2="28" stroke-width="0.8" transform="rotate(330 100 100)"/>
+          </g>
+          <text x="100" y="62" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="9" fill="var(--muted)" letter-spacing="1">SALLOW &amp; PIKE</text>
+          <text x="100" y="140" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6" fill="var(--muted)" letter-spacing="1">17 JEWELS · MANUAL WIND</text>
+          <line x1="100" y1="100" x2="100" y2="52" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" transform="rotate(68 100 100)"/>
+          <line x1="100" y1="100" x2="100" y2="36" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" transform="rotate(-20 100 100)"/>
+          <line class="sec-hand" x1="100" y1="118" x2="100" y2="30" stroke="var(--brass)" stroke-width="0.9"/>
+          <circle cx="100" cy="100" r="3.2" fill="var(--brass)"/>
+          <circle cx="100" cy="100" r="1" fill="var(--paper)"/>
+        </svg>
+        <figcaption class="mono">
+          <span>Fig. 1 — Dial, unrestored</span>
+          <span>Live</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <section id="bench">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="mono">01 — The bench</p>
+        <h2>Currently <em>on the bench</em>, updated weekly.</h2>
+      </div>
+
+      <div class="bench">
+        <div class="row head mono">
+          <span>No.</span>
+          <span>Piece</span>
+          <span>Movement</span>
+          <span>Year</span>
+          <span>Grade</span>
+          <span style="text-align:right">Price</span>
+        </div>
+
+        <div class="row">
+          <span class="no">001</span>
+          <div>
+            <div class="piece-name">Steel field watch, tropical dial</div>
+            <div class="piece-note">Serviced in-house. Original bracelet with two period links.</div>
+          </div>
+          <span class="muted">Manual wind, 17 jewels</span>
+          <span class="year">1962</span>
+          <span class="grade">Very good</span>
+          <span class="price">£1,450</span>
+        </div>
+
+        <div class="row">
+          <span class="no">002</span>
+          <div>
+            <div class="piece-name">Three-register chronograph, black dial</div>
+            <div class="piece-note">Column-wheel, all pushers work. Hairline on the crystal, not visible under light.</div>
+          </div>
+          <span class="muted">Hand wind, column-wheel</span>
+          <span class="year">1968</span>
+          <span class="grade">Excellent</span>
+          <span class="price">£4,900</span>
+        </div>
+
+        <div class="row">
+          <span class="no">003</span>
+          <div>
+            <div class="piece-name">Gold-filled dress watch, enamel dial</div>
+            <div class="piece-note">Dial is original and unrefinished. We have not cleaned the hands.</div>
+          </div>
+          <span class="muted">Manual wind, 15 jewels</span>
+          <span class="year">1938</span>
+          <span class="grade">Good</span>
+          <span class="price">£690</span>
+        </div>
+
+        <div class="row">
+          <span class="no">004</span>
+          <div>
+            <div class="piece-name">Diver, bakelite bezel insert</div>
+            <div class="piece-note">Crown replaced with a period-correct part. Lume re-applied to hands only.</div>
+          </div>
+          <span class="muted">Automatic, 25 jewels</span>
+          <span class="year">1971</span>
+          <span class="grade">Very good</span>
+          <span class="price">£2,250</span>
+        </div>
+
+        <div class="row">
+          <span class="no">005</span>
+          <div>
+            <div class="piece-name">Square cocktail watch, rhodium case</div>
+            <div class="piece-note">Small, flat, quiet. Keeps time within 10 seconds a day on the bench.</div>
+          </div>
+          <span class="muted">Hand wind, 17 jewels</span>
+          <span class="year">1950</span>
+          <span class="grade">Excellent</span>
+          <span class="sold">Sold</span>
+        </div>
+      </div>
+      <p class="bench-foot">Prices include a 12-month warranty and a timing report. Postage and insurance are quoted separately.</p>
+    </div>
+  </section>
+
+  <section id="grading">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="mono">02 — Grading</p>
+        <h2>Four grades. <em>No adjectives</em> that mean nothing.</h2>
+      </div>
+      <dl class="grades">
+        <div>
+          <dt>Unrestored</dt>
+          <dd>Untouched since it left the factory, with its original dial, hands and case finish. Rare, and priced accordingly. <span>Marks and wear are described, not hidden.</span></dd>
+        </div>
+        <div>
+          <dt>Good</dt>
+          <dd>Working and complete. Expect visible wear on the case, a refinished or replaced crystal, and at least one non-original part. <span>Listed on the bench with each substitution named.</span></dd>
+        </div>
+        <div>
+          <dt>Very good</dt>
+          <dd>Light wear, original dial and hands, and a service within the last three years. <span>The grade most of our stock sits in.</span></dd>
+        </div>
+        <div>
+          <dt>Excellent</dt>
+          <dd>Close to the day it was sold. No refinishing, a clean dial, and documented timing within tolerance. <span>Very few pieces reach this grade.</span></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="service">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="mono">03 — Service</p>
+        <h2>Serviced by the same hands that <em>graded</em> it.</h2>
+      </div>
+      <div class="service">
+        <div></div>
+        <div>
+          <p>Everything we sell has been opened, cleaned and timed in our workshop. We also service watches that are not for sale, including pieces that belong to you and have been sitting in a drawer.</p>
+          <p style="margin-top: 16px" class="muted">We will tell you before we replace anything original. If a part is beyond repair, you get the old one back.</p>
+        </div>
+        <ul>
+          <li><span>Strip, clean and lubricate</span><b>from £180</b></li>
+          <li><span>Crystal fitted to period</span><b>from £35</b></li>
+          <li><span>Dial restoration, non-original</span><b>quoted</b></li>
+          <li><span>Timing report on machine</span><b>included</b></li>
+          <li><span>Turnaround</span><b>6–10 weeks</b></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="visit">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="mono">04 — Visit, sell, consign</p>
+        <h2>Bring it in. <em>We will tell you</em> what it is.</h2>
+      </div>
+      <div class="contact-grid">
+        <div></div>
+        <div>
+          <p class="mono" style="margin-bottom: 12px">Write to us</p>
+          <a class="mail" href="mailto:hello@sallowandpike.example">hello@sallowandpike.example</a>
+          <p style="margin-top: 20px">Send a photo of the dial, the back of the case and the movement if you can open it safely. We reply within two working days, with an honest valuation or a no.</p>
+        </div>
+        <div>
+          <p class="mono" style="margin-bottom: 12px">Workshop</p>
+          <address>
+            Unit 3, Quay Arcade<br>
+            Bristol BS1 4XE
+          </address>
+          <p class="mono" style="margin: 24px 0 12px" id="status">&nbsp;</p>
+          <table class="hours">
+            <tr><td>Tuesday – Friday</td><td>10:00 – 17:30</td></tr>
+            <tr><td>Saturday</td><td>10:00 – 16:00</td></tr>
+            <tr><td>Sunday – Monday</td><td>Closed</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Sallow &amp; Pike Vintage Timepieces Ltd.</span>
+    <span>Prices in GBP, inc. VAT where applicable. Listings are placeholders for this page.</span>
+  </div>
+</footer>
+
+<script>
+  // Shows whether the workshop is open right now, based on the hours above.
+  (function () {
+    var el = document.getElementById("status");
+    if (!el) return;
+    var now = new Date();
+    var day = now.getDay();
+    var mins = now.getHours() * 60 + now.getMinutes();
+    var open = (day >= 2 && day <= 5 && mins >= 600 && mins < 1050) ||
+               (day === 6 && mins >= 600 && mins < 960);
+    el.textContent = open ? "Open now" : "Closed now";
+    el.className = "mono " + (open ? "brass" : "muted");
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rifugio Pian dei Larìs</title>
+<meta name="description" content="A 42-bunk mountain hut at 2,312 m in the Pale di San Martino, Dolomites. Open 20 June to 21 September.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rock: #E4E1DA;
+    --pine: #1F3A2E;
+    --pine-deep: #152A20;
+    --rose: #EE8F94;
+    --red: #C8102E;
+    --night: #0E1430;
+    --paper: #F3F4F1;
+    --ink: #1C2420;
+    --ink-soft: #4D5852;
+    --rule: #C9CCC5;
+
+    /* driven by the time-of-day script */
+    --sky-top: #6E9CC8;
+    --sky-bottom: #DCE7EE;
+    --far: #B9BFC6;
+    --near: #E4E1DA;
+    --shade: #A8AAA9;
+    --stars: 0;
+
+    --display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+    --serif: "Source Serif 4", Georgia, serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+
+  .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: max(640px, 100svh);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #fff;
+    background: var(--pine-deep);
+    overflow: hidden;
+    padding-top: 96px;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: linear-gradient(to top, rgba(21,42,32,.92) 0%, rgba(21,42,32,.6) 38%, rgba(21,42,32,0) 62%);
+  }
+  .hero h1, .hero .lede { text-shadow: 0 1px 18px rgba(10,22,16,.45); }
+  .scene { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .scene .sky-top { stop-color: var(--sky-top); }
+  .scene .sky-bottom { stop-color: var(--sky-bottom); }
+  .scene .far { fill: var(--far); }
+  .scene .near { fill: var(--near); }
+  .scene .shade { fill: var(--shade); }
+  .scene .stars { opacity: var(--stars); }
+  .scene * { transition: fill 1.2s ease, stop-color 1.2s ease, opacity 1.2s ease; }
+  .scene.scrubbing * { transition: none; }
+
+  .topbar {
+    position: absolute; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 0;
+    z-index: 2;
+  }
+  .topbar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .mark {
+    font-family: var(--display); font-weight: 700; font-size: 1.35rem;
+    letter-spacing: .02em; text-decoration: none; color: var(--pine-deep);
+    background: rgba(255,255,255,.82); padding: 4px 12px 2px; border-radius: 3px;
+  }
+  .topbar nav { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .topbar nav a {
+    font-size: .95rem; text-decoration: none; color: var(--pine-deep);
+    background: rgba(255,255,255,.7); padding: 4px 12px; border-radius: 3px;
+  }
+  .topbar nav a:hover { background: #fff; }
+
+  .hero-body { position: relative; z-index: 1; padding-bottom: 28px; }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(4rem, 12vw, 11rem);
+    line-height: .82;
+    letter-spacing: -.01em;
+    margin: 0 0 18px;
+  }
+  .hero h1 span { display: block; font-weight: 500; font-size: .36em; letter-spacing: .01em; line-height: 1; margin-bottom: .1em; }
+  .hero-row {
+    display: grid; grid-template-columns: minmax(0, 34rem) auto; gap: 24px 48px;
+    align-items: end; justify-content: space-between;
+  }
+  .hero .lede { margin: 0; font-size: 1.2rem; line-height: 1.55; color: #E6EEE8; }
+  .hero .lede strong { color: #fff; font-weight: 600; }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+
+  .btn {
+    display: inline-block; font-family: var(--display); font-weight: 700;
+    font-size: 1.3rem; letter-spacing: .02em; text-decoration: none;
+    padding: 10px 22px 8px; border-radius: 4px; border: 2px solid transparent; cursor: pointer;
+  }
+  .btn-red { background: var(--red); color: #fff; }
+  .btn-red:hover { background: #A50D25; }
+  .btn-ghost { border-color: rgba(255,255,255,.7); color: #fff; }
+  .btn-ghost:hover { background: rgba(255,255,255,.12); }
+
+  .clock {
+    background: rgba(10, 22, 16, .55);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 6px; padding: 14px 18px 12px; width: min(340px, 100%);
+    backdrop-filter: blur(6px);
+  }
+  .clock label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: .95rem; color: #CFDAD3; }
+  .clock output { font-family: var(--display); font-weight: 700; font-size: 1.6rem; color: #fff; }
+  .clock p { margin: 2px 0 8px; font-size: .95rem; line-height: 1.4; color: #fff; min-height: 2.8em; }
+  .clock input[type=range] { width: 100%; accent-color: var(--rose); }
+  .clock button {
+    background: none; border: 0; padding: 0; color: #CFDAD3; font: inherit; font-size: .85rem;
+    text-decoration: underline; cursor: pointer;
+  }
+  .clock button:hover { color: #fff; }
+
+  /* ---------- Sections ---------- */
+  section { padding: clamp(72px, 10vw, 128px) 0; }
+  h2 {
+    font-family: var(--display); font-weight: 900;
+    font-size: clamp(2.8rem, 7vw, 5.2rem); line-height: .9; margin: 0 0 20px;
+    color: var(--pine);
+  }
+  h3 { font-family: var(--display); font-weight: 700; font-size: 1.6rem; line-height: 1.1; margin: 0 0 6px; }
+  .intro { max-width: 36rem; color: var(--ink-soft); margin: 0 0 48px; }
+
+  /* waymark: red-white-red CAI trail sign, used only for trail numbers */
+  .waymark {
+    display: inline-flex; align-items: stretch; vertical-align: middle;
+    height: 1.5em; border-radius: 2px; overflow: hidden; border: 1px solid rgba(0,0,0,.15);
+    font-family: var(--display); font-weight: 700; font-size: 1rem; line-height: 1;
+  }
+  .waymark::before, .waymark::after { content: ""; width: .7em; background: var(--red); }
+  .waymark b { background: #fff; color: var(--ink); padding: .3em .5em 0; }
+
+  /* Route */
+  .route-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items: start; }
+  .profile { width: 100%; height: auto; display: block; }
+  .profile .ground { fill: #DDE1D9; }
+  .profile .line { fill: none; stroke: var(--pine); stroke-width: 3; stroke-linejoin: round; }
+  .profile .grid line { stroke: var(--rule); stroke-dasharray: 2 5; }
+  .profile text { font-family: var(--serif); font-size: 13px; fill: var(--ink-soft); }
+  .profile .pt circle { fill: var(--paper); stroke: var(--pine); stroke-width: 3; }
+  .profile .pt.end circle { fill: var(--red); stroke: var(--red); }
+  .profile .pt text.n { font-family: var(--display); font-weight: 700; font-size: 15px; fill: var(--pine); }
+
+  .stages { list-style: none; margin: 0; padding: 0; counter-reset: stage; }
+  .stages li {
+    counter-increment: stage;
+    display: grid; grid-template-columns: 2.2rem 1fr; gap: 0 12px;
+    padding: 16px 0; border-top: 1px solid var(--rule);
+  }
+  .stages li::before {
+    content: counter(stage);
+    font-family: var(--display); font-weight: 700; font-size: 1.6rem; line-height: 1.1; color: var(--pine);
+  }
+  .stages h3 { font-size: 1.35rem; }
+  .stages p { margin: 0; color: var(--ink-soft); font-size: 1rem; }
+  .route-meta { display: flex; gap: 10px 28px; flex-wrap: wrap; margin-top: 28px; color: var(--ink-soft); font-size: 1rem; }
+  .route-meta strong { color: var(--ink); font-weight: 600; }
+
+  /* Stay */
+  .stay { background: var(--rock); }
+  .stay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .board {
+    background: #FBFBF9; border: 1px solid #CFCBC1; border-radius: 4px; padding: 28px 30px 22px;
+  }
+  .board h3 { color: var(--pine); margin-bottom: 14px; }
+  .board dl { margin: 0; }
+  .board .row { display: flex; align-items: baseline; gap: 8px; padding: 9px 0; }
+  .board dt { flex: none; max-width: 70%; }
+  .board dt small { display: block; color: var(--ink-soft); font-size: .88rem; line-height: 1.35; }
+  .board .row::after { content: none; }
+  .board .dots { flex: 1; border-bottom: 2px dotted #B5B1A7; transform: translateY(-5px); min-width: 20px; }
+  .board dd { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.45rem; color: var(--pine); }
+  .board .note { margin: 16px 0 0; font-size: .92rem; color: var(--ink-soft); }
+
+  .day { list-style: none; padding: 0; margin: 0; }
+  .day li { display: grid; grid-template-columns: 4.2rem 1fr; gap: 12px; padding: 12px 0; border-top: 1px solid #CFCBC1; }
+  .day time { font-family: var(--display); font-weight: 700; font-size: 1.4rem; color: var(--pine); line-height: 1.2; }
+  .day p { margin: 0; }
+
+  /* Season */
+  .season-strip {
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; margin: 8px 0 14px;
+  }
+  .season-strip div {
+    height: 64px; background: #DADDD6; border-radius: 2px; position: relative;
+    display: flex; align-items: flex-end; padding: 6px; font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--ink-soft);
+  }
+  .season-strip .open { background: var(--pine); color: #fff; }
+  .season-strip .part { background: linear-gradient(to right, #DADDD6 var(--from, 0%), var(--pine) var(--from, 0%), var(--pine) var(--to, 100%), #DADDD6 var(--to, 100%)); }
+  .season-strip .part span { mix-blend-mode: normal; background: rgba(255,255,255,.85); color: var(--ink); padding: 1px 4px; border-radius: 2px; }
+  .legend { display: flex; gap: 24px; flex-wrap: wrap; font-size: .95rem; color: var(--ink-soft); margin-bottom: 40px; }
+  .legend i { display: inline-block; width: 14px; height: 14px; border-radius: 2px; vertical-align: -2px; margin-right: 6px; }
+  .season-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .season-cols p { margin: 0; color: var(--ink-soft); font-size: 1rem; }
+
+  /* Booking */
+  .book { background: var(--pine); color: #E8EFEA; }
+  .book h2 { color: #fff; }
+  .book .intro { color: #BFD0C5; }
+  .book-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start; }
+  .keepers p { margin: 0 0 16px; }
+  .keepers a { color: #fff; }
+  .phone { font-family: var(--display); font-weight: 700; font-size: 2.2rem; color: #fff; text-decoration: none; display: inline-block; margin-bottom: 4px; }
+
+  form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label, fieldset legend { font-size: .95rem; color: #CFDDD4; }
+  input, select, textarea {
+    font: inherit; font-size: 1rem; color: var(--ink);
+    background: #F7F8F5; border: 2px solid transparent; border-radius: 4px; padding: 10px 12px;
+  }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: none; border-color: var(--rose); }
+  textarea { min-height: 96px; resize: vertical; }
+  fieldset { border: 0; padding: 0; margin: 0; grid-column: 1 / -1; }
+  .choices { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+  .choices label {
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    border: 2px solid rgba(255,255,255,.3); border-radius: 4px; padding: 8px 14px; color: #fff; font-size: 1rem;
+  }
+  .choices input { accent-color: var(--rose); margin: 0; }
+  .choices label:has(input:checked) { border-color: var(--rose); background: rgba(238,143,148,.12); }
+  .form-end { grid-column: 1 / -1; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .form-end small { color: #BFD0C5; font-size: .92rem; }
+  .sent {
+    grid-column: 1 / -1; background: #F7F8F5; color: var(--ink); border-radius: 4px; padding: 20px 22px; display: none;
+  }
+  .sent h3 { color: var(--pine); }
+  .sent p { margin: 0; }
+  form.done .sent { display: block; }
+
+  footer { background: var(--pine-deep); color: #9FB3A6; padding: 36px 0; font-size: .95rem; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer p { margin: 0; }
+
+  @media (max-width: 860px) {
+    .hero-row, .route-grid, .stay-grid, .book-grid { grid-template-columns: 1fr; gap: 40px; }
+    .season-cols { grid-template-columns: 1fr; gap: 24px; }
+    .season-strip { grid-template-columns: repeat(6, 1fr); }
+    .topbar nav a:not(.nav-book) { display: none; }
+  }
+  @media (max-width: 520px) {
+    form { grid-template-columns: 1fr; }
+    .board { padding: 22px 18px 18px; }
+    .season-strip div { height: 48px; font-size: .9rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <svg class="scene" id="scene" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop class="sky-top" offset="0"/>
+        <stop class="sky-bottom" offset=".75"/>
+      </linearGradient>
+      <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#152A20" stop-opacity="0"/>
+        <stop offset="1" stop-color="#152A20" stop-opacity=".9"/>
+      </linearGradient>
+    </defs>
+    <rect width="1440" height="800" fill="url(#sky)"/>
+    <g class="stars" fill="#fff" id="stars"></g>
+    <!-- far range -->
+    <path class="far" d="M0,520 L80,470 L140,430 L200,450 L260,400 L330,430 L380,380 L420,400 L470,350 L540,390 L600,360 L650,300 L690,330 L720,310 L780,370 L860,340 L920,280 L960,310 L1000,290 L1070,350 L1140,320 L1200,360 L1260,310 L1320,340 L1380,300 L1440,330 L1440,620 L0,620 Z"/>
+    <!-- near range: the Pale towers -->
+    <path class="near" d="M0,620 L0,470 L60,440 L95,380 L120,400 L150,300 L175,320 L190,250 L215,290 L240,270 L270,360 L300,340 L330,410 L380,380 L420,300 L440,180 L455,200 L470,140 L490,170 L505,120 L520,160 L545,210 L560,190 L590,280 L640,330 L700,300 L740,220 L760,240 L790,160 L810,200 L830,190 L860,290 L900,320 L960,260 L990,200 L1010,230 L1040,150 L1060,190 L1085,170 L1120,280 L1180,330 L1230,290 L1270,330 L1330,300 L1380,360 L1440,340 L1440,620 Z"/>
+    <polygon class="shade" points="190,250 215,290 240,270 270,360 300,340 290,620 205,620 197,400"/>
+    <polygon class="shade" points="505,120 520,160 545,210 560,190 590,280 640,330 610,620 520,620 512,330"/>
+    <polygon class="shade" points="790,160 810,200 830,190 860,290 900,320 880,620 805,620 797,360"/>
+    <polygon class="shade" points="1040,150 1060,190 1085,170 1120,280 1180,330 1160,620 1055,620 1047,340"/>
+    <polygon class="shade" points="1380,360 1440,340 1440,620 1390,620"/>
+    <!-- larch forest -->
+    <g id="forest" fill="#1F3A2E"></g>
+    <rect y="560" width="1440" height="240" fill="url(#fade)"/>
+  </svg>
+
+  <div class="topbar">
+    <div class="wrap">
+      <a class="mark" href="#top">Pian dei Larìs</a>
+      <nav aria-label="Main">
+        <a href="#route">Route up</a>
+        <a href="#stay">Staying</a>
+        <a href="#season">Season</a>
+        <a class="nav-book" href="#book">Book</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="hero-body wrap">
+    <h1><span>Rifugio</span>Pian dei Larìs</h1>
+    <div class="hero-row">
+      <div>
+        <p class="lede"><strong>2,312 metres up in the Pale di San Martino.</strong> Forty-two bunks, a wood stove, and dinner at seven. Open from 20 June to 21 September, reached only on foot.</p>
+        <div class="actions">
+          <a class="btn btn-red" href="#book">Request a bed</a>
+          <a class="btn btn-ghost" href="#route">See the route up</a>
+        </div>
+      </div>
+      <div class="clock" aria-live="polite">
+        <label for="hour">Time at the hut <output id="hourOut" for="hour">--:--</output></label>
+        <p id="phase">&nbsp;</p>
+        <input type="range" id="hour" min="0" max="23.75" step="0.25" value="12" aria-describedby="phase">
+        <button type="button" id="now" hidden>Back to the time now</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="route">
+    <div class="wrap">
+      <h2>The walk up</h2>
+      <p class="intro">From the car park at Malga Ronch it's 470 metres of climbing on trail <span class="waymark"><b>712</b></span>. The path is well marked and steady, and there's no scrambling. Allow two and a half hours with a full pack.</p>
+
+      <div class="route-grid">
+        <figure style="margin:0">
+          <svg class="profile" viewBox="0 0 640 340" role="img" aria-labelledby="profTitle">
+            <title id="profTitle">Elevation profile: from 1,840 m at Malga Ronch to 2,312 m at the hut over 5.6 km</title>
+            <g class="grid">
+              <line x1="40" y1="60" x2="620" y2="60"/><line x1="40" y1="140" x2="620" y2="140"/><line x1="40" y1="220" x2="620" y2="220"/>
+            </g>
+            <text x="0" y="64">2,300</text><text x="0" y="144">2,100</text><text x="0" y="224">1,900</text>
+            <path class="ground" d="M40,244 C90,240 120,220 160,200 S240,170 280,176 S350,150 390,124 S470,120 500,96 S580,58 620,55 L620,300 L40,300 Z"/>
+            <path class="line" d="M40,244 C90,240 120,220 160,200 S240,170 280,176 S350,150 390,124 S470,120 500,96 S580,58 620,55"/>
+            <text x="40" y="324">0 km</text><text x="300" y="324">2.8</text><text x="580" y="324">5.6 km</text>
+            <g class="pt"><circle cx="40" cy="244" r="8"/><text class="n" x="34" y="276">1</text></g>
+            <g class="pt"><circle cx="280" cy="176" r="8"/><text class="n" x="274" y="208">2</text></g>
+            <g class="pt"><circle cx="440" cy="118" r="8"/><text class="n" x="434" y="150">3</text></g>
+            <g class="pt end"><circle cx="620" cy="55" r="9"/><text class="n" x="606" y="34">4</text></g>
+          </svg>
+          <div class="route-meta">
+            <span><strong>5.6 km</strong> one way</span>
+            <span><strong>+470 m</strong> ascent</span>
+            <span><strong>2 h 30</strong> up, 1 h 45 down</span>
+          </div>
+        </figure>
+
+        <ol class="stages">
+          <li><div><h3>Malga Ronch, 1,840 m</h3><p>Park at the dairy farm (€6 a day, cash). The trail leaves from behind the cheese hut, past the water trough.</p></div></li>
+          <li><div><h3>Bait de le Fede, 2,050 m</h3><p>After the larch wood, a shepherd's hut with a spring. Fill your bottles here; there's no water higher up until the hut.</p></div></li>
+          <li><div><h3>Lago Verde, 2,210 m</h3><p>A small green tarn under the north wall. The path turns to scree switchbacks for the last stretch.</p></div></li>
+          <li><div><h3>The hut, 2,312 m</h3><p>You'll see the red shutters a few minutes before you arrive. Leave boots in the boot room; hut slippers are by the stairs.</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="stay" id="stay">
+    <div class="wrap stay-grid">
+      <div>
+        <h2>Staying the night</h2>
+        <p class="intro" style="margin-bottom:32px">Most guests come for half-board: a bunk, a three-course dinner and breakfast. Bring a sleeping-bag liner; blankets and pillows are here.</p>
+        <ol class="day">
+          <li><time>15:00</time><p>Check in at the bar. Apple strudel comes out of the oven about now.</p></li>
+          <li><time>19:00</time><p>Dinner at long tables: barley soup, then canederli or polenta with mushrooms, then dessert.</p></li>
+          <li><time>22:00</time><p>Lights out in the dorms. The stove stays lit through the night.</p></li>
+          <li><time>06:30</time><p>Breakfast. Early starters can take a packed lunch, ordered the night before.</p></li>
+        </ol>
+      </div>
+      <div class="board">
+        <h3>Prices for summer 2027</h3>
+        <dl>
+          <div class="row"><dt>Half-board, dorm bunk<small>Rooms of 6 to 10</small></dt><span class="dots"></span><dd>€68</dd></div>
+          <div class="row"><dt>Half-board, private room<small>For two, with a window on the Pale</small></dt><span class="dots"></span><dd>€170</dd></div>
+          <div class="row"><dt>Bed only, dorm bunk</dt><span class="dots"></span><dd>€32</dd></div>
+          <div class="row"><dt>Packed lunch</dt><span class="dots"></span><dd>€9</dd></div>
+          <div class="row"><dt>Hot shower<small>Token from the bar, 4 minutes</small></dt><span class="dots"></span><dd>€4</dd></div>
+        </dl>
+        <p class="note">Members of the CAI and other alpine clubs pay €12 less for a bed. Card payment works when the satellite link does; bringing cash is safer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="season">
+    <div class="wrap">
+      <h2>When we're open</h2>
+      <p class="intro">The hut is staffed from 20 June to 21 September. Outside the season, the winter room stays unlocked for climbers and ski tourers.</p>
+      <div class="season-strip" role="img" aria-label="Staffed from 20 June to 21 September; winter room open the rest of the year">
+        <div>Jan</div><div>Feb</div><div>Mar</div><div>Apr</div><div>May</div>
+        <div class="part" style="--from:63%;--to:100%"><span>Jun</span></div>
+        <div class="open">Jul</div><div class="open">Aug</div>
+        <div class="part" style="--from:0%;--to:70%"><span>Sep</span></div>
+        <div>Oct</div><div>Nov</div><div>Dec</div>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--pine)"></i>Staffed, meals served</span>
+        <span><i style="background:#DADDD6"></i>Winter room only</span>
+      </div>
+      <div class="season-cols">
+        <div><h3>Early summer</h3><p>Snow can lie on the last switchbacks until early July. Check with us before you set out; we'll tell you if you need microspikes.</p></div>
+        <div><h3>August</h3><p>Every bunk is taken on weekends. Book a few weeks ahead, or come midweek, when it's quieter.</p></div>
+        <div><h3>Winter room</h3><p>Six bunks, blankets and a gas stove, but no food and no heating. Bring everything you need, and close the shutters when you leave.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="book" id="book">
+    <div class="wrap book-grid">
+      <div class="keepers">
+        <h2>Request a bed</h2>
+        <p class="intro" style="margin-bottom:28px">Marta and Ivo Dellantonio have run the hut since 2009. They answer requests each evening, once the dinner dishes are done.</p>
+        <p>For tomorrow or today, phone the hut:</p>
+        <a class="phone" href="tel:+390439768214">+39 0439 768 214</a>
+        <p><small>Usually answered from 8:00 to 21:00.</small></p>
+      </div>
+
+      <form id="bookForm" novalidate>
+        <div class="field">
+          <label for="arrive">Arriving on</label>
+          <input type="date" id="arrive" name="arrive" min="2027-06-20" max="2027-09-20" required>
+        </div>
+        <div class="field">
+          <label for="nights">Nights</label>
+          <select id="nights" name="nights"><option>1</option><option>2</option><option>3</option><option>4 or more</option></select>
+        </div>
+        <div class="field">
+          <label for="people">People</label>
+          <input type="number" id="people" name="people" min="1" max="20" value="2" required>
+        </div>
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+        </div>
+        <fieldset>
+          <legend>Sleeping</legend>
+          <div class="choices">
+            <label><input type="radio" name="room" value="dorm" checked> Dorm, half-board</label>
+            <label><input type="radio" name="room" value="private"> Private room, half-board</label>
+            <label><input type="radio" name="room" value="bed"> Bed only</label>
+          </div>
+        </fieldset>
+        <div class="field full">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+        <div class="field full">
+          <label for="note">Anything we should know? (optional)</label>
+          <textarea id="note" name="note" placeholder="Dietary needs, a late arrival, a birthday on the mountain…"></textarea>
+        </div>
+        <div class="form-end">
+          <button class="btn btn-red" type="submit">Send request</button>
+          <small id="formMsg" role="status">You'll get a confirmation by email. Nothing is charged until you arrive.</small>
+        </div>
+        <div class="sent" tabindex="-1" id="sent">
+          <h3>Request sent</h3>
+          <p>Marta or Ivo will confirm your bed by email this evening. If you don't hear back within two days, please phone the hut.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Rifugio Pian dei Larìs, 2,312 m, Pale di San Martino, Trentino</p>
+    <p>Run with the SAT section of Primiero</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const scene = document.getElementById('scene');
+  const slider = document.getElementById('hour');
+  const out = document.getElementById('hourOut');
+  const phaseEl = document.getElementById('phase');
+  const nowBtn = document.getElementById('now');
+
+  // Larch forest along the foot of the hero
+  const forest = document.getElementById('forest');
+  let trees = '<path d="M0,800 L0,600 C300,570 600,610 900,585 C1150,565 1300,590 1440,575 L1440,800 Z"/>';
+  let seed = 7;
+  const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  for (let x = -10; x < 1460; x += 9 + rnd() * 10) {
+    const base = 600 - 15 * Math.sin(x / 210) + rnd() * 12;
+    const h = 34 + rnd() * 46, w = h * 0.28;
+    trees += `<polygon points="${x.toFixed(1)},${(base - h).toFixed(1)} ${(x + w).toFixed(1)},${(base + 8).toFixed(1)} ${(x - w).toFixed(1)},${(base + 8).toFixed(1)}"/>`;
+  }
+  forest.innerHTML = trees;
+
+  const stars = document.getElementById('stars');
+  let s = '';
+  for (let i = 0; i < 70; i++) s += `<circle cx="${(rnd() * 1440).toFixed(0)}" cy="${(rnd() * 330).toFixed(0)}" r="${(0.6 + rnd() * 1.3).toFixed(1)}"/>`;
+  stars.innerHTML = s;
+
+  // Approximate local sunrise / sunset (hours, Italian clock time) by month
+  const SUNRISE = [7.9, 7.4, 6.6, 6.6, 5.9, 5.5, 5.7, 6.2, 6.9, 7.5, 7.2, 7.8];
+  const SUNSET  = [16.9, 17.6, 18.2, 19.9, 20.5, 20.9, 20.8, 20.2, 19.3, 18.4, 16.9, 16.6];
+
+  const P = {
+    night: { skyTop: '#0E1430', skyBottom: '#26304F', far: '#2C3350', near: '#3A4160', shade: '#252B45', stars: 1 },
+    dawn:  { skyTop: '#5A6A9A', skyBottom: '#F2BFA0', far: '#B79AA6', near: '#E7B4AC', shade: '#9C7F8E', stars: .15 },
+    day:   { skyTop: '#6E9CC8', skyBottom: '#DCE7EE', far: '#B9BFC6', near: '#E4E1DA', shade: '#A8AAA9', stars: 0 },
+    glow:  { skyTop: '#3E4C86', skyBottom: '#F0A889', far: '#B07D97', near: '#EE8F94', shade: '#A35C74', stars: 0 },
+    dusk:  { skyTop: '#1A2246', skyBottom: '#6B5A82', far: '#4A4566', near: '#5E5577', shade: '#3A3655', stars: .6 },
+  };
+
+  const rome = () => {
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Rome', hour: 'numeric', minute: 'numeric', month: 'numeric', hourCycle: 'h23'
+    }).formatToParts(new Date()).map(p => [p.type, p.value]));
+    return { hour: +parts.hour + +parts.minute / 60, month: +parts.month - 1 };
+  };
+  const month = rome().month;
+  const rise = SUNRISE[month], set = SUNSET[month];
+
+  const frames = [
+    [0, P.night], [rise - 1, P.night], [rise - .2, P.dawn], [rise + 1.5, P.day],
+    [set - 1.2, P.day], [set - .1, P.glow], [set + .7, P.dusk], [set + 1.6, P.night], [24, P.night]
+  ];
+
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const mix = (a, b, t) => '#' + hex(a).map((v, i) => Math.round(v + (hex(b)[i] - v) * t).toString(16).padStart(2, '0')).join('');
+  const fmt = h => { const m = Math.round(h * 60) % 1440; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); };
+
+  function describe(h) {
+    if (h < rise - 1 || h >= set + 1.6) return 'Night. The hut is asleep, and on a clear night you can see the Milky Way from the terrace.';
+    if (h < rise + .6) return `First light. The sun reaches the summits at about ${fmt(rise)}.`;
+    if (h < set - 1.2) return `Daylight on the pale rock. The walls should turn pink around ${fmt(set - .2)} tonight.`;
+    if (h < set + .3) return 'Enrosadira: the dolomite walls glow pink in the last sun. Everyone is out on the terrace.';
+    return 'Dusk. The walls fade to violet, and dinner is on the table.';
+  }
+
+  function render(h) {
+    let i = 0;
+    while (i < frames.length - 2 && h >= frames[i + 1][0]) i++;
+    const [h0, a] = frames[i], [h1, b] = frames[i + 1];
+    const t = h1 === h0 ? 0 : Math.min(1, Math.max(0, (h - h0) / (h1 - h0)));
+    root.style.setProperty('--sky-top', mix(a.skyTop, b.skyTop, t));
+    root.style.setProperty('--sky-bottom', mix(a.skyBottom, b.skyBottom, t));
+    root.style.setProperty('--far', mix(a.far, b.far, t));
+    root.style.setProperty('--near', mix(a.near, b.near, t));
+    root.style.setProperty('--shade', mix(a.shade, b.shade, t));
+    root.style.setProperty('--stars', (a.stars + (b.stars - a.stars) * t).toFixed(2));
+    out.textContent = fmt(h);
+    phaseEl.textContent = describe(h);
+  }
+
+  const showNow = () => { const h = rome().hour; slider.value = h; render(h); nowBtn.hidden = true; };
+  slider.addEventListener('input', () => { scene.classList.add('scrubbing'); render(+slider.value); nowBtn.hidden = false; });
+  slider.addEventListener('change', () => scene.classList.remove('scrubbing'));
+  nowBtn.addEventListener('click', showNow);
+  showNow();
+  setInterval(() => { if (nowBtn.hidden) showNow(); }, 60000);
+
+  // Booking form
+  const form = document.getElementById('bookForm');
+  const msg = document.getElementById('formMsg');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const bad = [...form.querySelectorAll('[required]')].find(el => !el.checkValidity());
+    if (bad) {
+      const fix = {
+        arrive: bad.value
+          ? 'Pick an arrival date between 20 June and 20 September 2027. The hut is closed outside the season.'
+          : 'Add your arrival date so we can hold a bed.',
+        people: 'Enter how many people are coming, from 1 to 20. For bigger groups, phone the hut.',
+        name: 'Add your name so we know who the bed is for.',
+        email: 'Add a valid email address so we can confirm your bed.'
+      };
+      msg.textContent = fix[bad.id];
+      msg.style.color = '#FFC9CC';
+      bad.focus();
+      return;
+    }
+    msg.style.color = '';
+    form.classList.add('done');
+    document.getElementById('sent').focus();
+  });
+})();
+</script>
+</body>
+</html>

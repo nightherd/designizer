@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hopscotch Children's Physiotherapy</title>
+<meta name="description" content="Play-based physiotherapy for babies, children and teens. Book a 60-minute assessment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Shantell+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tarmac: #3A4553;
+    --tarmac-deep: #2F3945;
+    --chalk: #EEF2F4;
+    --paper: #F8FAFB;
+    --ink: #1D2833;
+    --ink-soft: #4A5866;
+    --pink: #FF9FC6;
+    --yellow: #FFD86B;
+    --mint: #8EE2C2;
+    --sky: #9FC9FF;
+    --line: #CBD5DC;
+
+    --display: "Shantell Sans", "Comic Sans MS", system-ui, sans-serif;
+    --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+
+    /* Modular scale, ratio 1.25 from 18px */
+    --s-1: 0.889rem;
+    --s0: 1.125rem;
+    --s1: 1.406rem;
+    --s2: 1.758rem;
+    --s3: 2.197rem;
+    --s4: 2.747rem;
+    --s5: 3.433rem;
+
+    --gutter: clamp(16px, 5vw, 64px);
+    --measure: 36rem;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--chalk);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: var(--s0);
+    line-height: 1.55;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  :focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 var(--gutter); }
+  .skip {
+    position: absolute; left: -999px; top: 8px;
+    background: var(--yellow); color: var(--ink); padding: 8px 14px; border-radius: 6px; z-index: 10;
+  }
+  .skip:focus { left: 8px; }
+
+  h1, h2, h3 { font-family: var(--display); line-height: 1.12; margin: 0; }
+  h2 { font-size: var(--s4); font-weight: 800; letter-spacing: -0.01em; }
+  h3 { font-size: var(--s1); font-weight: 600; }
+  p { margin: 0 0 1em; max-width: var(--measure); }
+
+  .btn {
+    display: inline-block;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: var(--s0);
+    text-decoration: none;
+    padding: 0.8em 1.4em;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  .btn-yellow { background: var(--yellow); color: var(--ink); }
+  .btn-yellow:hover { background: #FFE38F; }
+  .btn-line { border-color: currentColor; color: inherit; background: transparent; }
+  .btn-line:hover { background: rgba(255,255,255,0.08); }
+
+  /* ---------- Header + hero (tarmac) ---------- */
+  .tarmac {
+    background-color: var(--tarmac);
+    /* faint aggregate speckle */
+    background-image:
+      radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.4px),
+      radial-gradient(rgba(0,0,0,0.12) 1px, transparent 1.6px);
+    background-size: 7px 7px, 11px 11px;
+    background-position: 0 0, 3px 5px;
+    color: var(--paper);
+  }
+  .site-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding-top: 22px; padding-bottom: 22px;
+  }
+  .brand {
+    font-family: var(--display); font-weight: 800; font-size: var(--s1);
+    text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .brand-mark { width: 30px; height: 30px; }
+  .site-nav { display: flex; gap: 1.6rem; align-items: center; }
+  .site-nav a { text-decoration: none; font-size: var(--s-1); }
+  .site-nav a:not(.btn):hover { text-decoration: underline; text-underline-offset: 4px; }
+  .site-nav .btn { font-size: var(--s-1); padding: 0.55em 1.1em; }
+  @media (max-width: 760px) { .site-nav a:not(.btn) { display: none; } }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+    padding-top: clamp(2rem, 5vw, 4rem);
+    padding-bottom: clamp(3rem, 7vw, 6rem);
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 6.2vw, 4.6rem);
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    margin-bottom: 1.4rem;
+  }
+  .hero-lede { font-size: var(--s1); line-height: 1.45; color: #DCE3E9; max-width: 30rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+  .hero-note { margin-top: 1.4rem; font-size: var(--s-1); color: #B9C4CE; }
+
+  /* ---------- Hopscotch ---------- */
+  .court {
+    display: grid;
+    grid-template-columns: auto minmax(0, 15rem);
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    align-items: end;
+    justify-content: center;
+  }
+  .grid {
+    --sq: clamp(52px, 6.4vw, 68px);
+    display: grid;
+    grid-template-columns: repeat(4, calc(var(--sq) / 2));
+    grid-auto-rows: var(--sq);
+    margin: 0; padding: 0; list-style: none;
+  }
+  .grid li { display: contents; }
+  .sq {
+    position: relative;
+    grid-column: span 2;
+    width: 100%; height: 100%;
+    background: transparent;
+    border: 0; padding: 0;
+    color: var(--c, var(--paper));
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: var(--s2);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .sq::before {
+    content: "";
+    position: absolute; inset: 0;
+    border: 3px solid var(--c, var(--paper));
+    margin: -1.5px;
+    border-radius: 3px;
+    filter: url(#chalk);
+    opacity: 0.85;
+    transition: background-color 0.2s;
+  }
+  .sq.top::before { border-radius: 50% 50% 3px 3px / 70% 70% 3px 3px; }
+  .sq span { position: relative; filter: url(#chalk); }
+  .sq:hover::before { background: rgba(255,255,255,0.06); }
+  .sq[aria-pressed="true"]::before { background: color-mix(in srgb, var(--c) 28%, transparent); opacity: 1; }
+  .sq[aria-pressed="true"] { color: var(--paper); }
+  .sq:focus-visible { outline-offset: 6px; }
+
+  /* placement, drawn bottom to top */
+  .r1 { grid-row: 8; grid-column: 2 / span 2; }
+  .r2 { grid-row: 7; grid-column: 2 / span 2; }
+  .r3 { grid-row: 6; grid-column: 2 / span 2; }
+  .r4 { grid-row: 5; grid-column: 1 / span 2; }
+  .r5 { grid-row: 5; grid-column: 3 / span 2; }
+  .r6 { grid-row: 4; grid-column: 2 / span 2; }
+  .r7 { grid-row: 3; grid-column: 1 / span 2; }
+  .r8 { grid-row: 3; grid-column: 3 / span 2; }
+  .r9 { grid-row: 2; grid-column: 2 / span 2; }
+  .r10 { grid-row: 1; grid-column: 2 / span 2; }
+
+  /* one orchestrated moment: the court is chalked in, square by square */
+  @media (prefers-reduced-motion: no-preference) {
+    .sq { animation: chalkin 0.38s ease-out both; animation-delay: calc(var(--i) * 0.09s + 0.25s); }
+    @keyframes chalkin { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: none; } }
+    .reading { animation: fadein 0.5s ease-out 1.3s both; }
+    @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+  }
+
+  .reading { align-self: center; min-height: 16rem; }
+  .reading-num {
+    font-family: var(--display); font-weight: 800; font-size: var(--s5); line-height: 1;
+    color: var(--rc, var(--yellow));
+    filter: url(#chalk);
+  }
+  .reading-name { font-family: var(--display); font-weight: 800; font-size: var(--s2); line-height: 1.12; margin: 0.35rem 0 0.25rem; }
+  .reading-age { font-weight: 700; color: var(--paper); margin-bottom: 0.9rem; }
+  .reading-flag { font-size: var(--s-1); color: #CBD4DC; }
+  .reading-flag strong { color: var(--paper); }
+  .reading-hint { font-size: var(--s-1); color: #9FADBA; margin-top: 1rem; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .court { justify-content: start; }
+  }
+  @media (max-width: 520px) {
+    .court { grid-template-columns: 1fr; justify-items: center; }
+    .reading { min-height: 0; width: 100%; }
+  }
+
+  /* ---------- Body sections ---------- */
+  section.band { padding: clamp(4rem, 9vw, 7rem) 0; }
+  .band-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 2rem 4rem; align-items: end; margin-bottom: 3rem; }
+  .band-head p { color: var(--ink-soft); margin: 0; }
+  @media (max-width: 800px) { .band-head { grid-template-columns: 1fr; } }
+
+  /* conditions: grouped lists, no cards */
+  .concerns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem 3rem; }
+  .concern h3 { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.9rem; }
+  .concern h3 svg { width: 34px; height: 14px; flex: none; }
+  .concern ul { list-style: none; margin: 0; padding: 0; }
+  .concern li { padding: 0.55rem 0; border-top: 1px solid var(--line); }
+  .concern li:last-child { border-bottom: 1px solid var(--line); }
+  @media (max-width: 860px) { .concerns { grid-template-columns: 1fr; } }
+
+  /* first visit: a genuine sequence */
+  .visit { background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; counter-reset: step; }
+  .steps li { counter-increment: step; position: relative; padding-top: 4.2rem; }
+  .steps li::before {
+    content: counter(step);
+    position: absolute; top: 0; left: 0;
+    width: 3.2rem; height: 3.2rem;
+    display: grid; place-items: center;
+    font-family: var(--display); font-weight: 600; font-size: var(--s2);
+    border: 2.5px solid var(--ink); border-radius: 3px;
+    filter: url(#chalk);
+  }
+  .steps li:not(:last-child)::after {
+    content: ""; position: absolute; top: 1.6rem; left: 4rem; right: -1rem;
+    border-top: 2px dashed var(--line);
+  }
+  .steps h3 { margin-bottom: 0.5rem; }
+  .steps p { color: var(--ink-soft); font-size: var(--s-1); }
+  @media (max-width: 860px) {
+    .steps { grid-template-columns: 1fr 1fr; }
+    .steps li::after { display: none; }
+  }
+  @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+
+  /* quote */
+  .quote { padding: clamp(4rem, 9vw, 7rem) 0 0; }
+  .quote blockquote { margin: 0; max-width: 46rem; }
+  .quote blockquote p {
+    font-family: var(--display); font-weight: 400; font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+    line-height: 1.3; max-width: none; margin-bottom: 1.2rem;
+  }
+  .quote cite { font-style: normal; color: var(--ink-soft); }
+
+  /* team */
+  .team { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+  .person-face {
+    width: 96px; height: 96px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--display); font-weight: 800; font-size: var(--s2);
+    background: var(--bg); color: var(--ink); margin-bottom: 1.1rem;
+  }
+  .person h3 { margin-bottom: 0.15rem; }
+  .person-role { color: var(--ink-soft); font-size: var(--s-1); margin-bottom: 0.8rem; }
+  .person p:last-child { font-size: var(--s-1); }
+  @media (max-width: 860px) { .team { grid-template-columns: 1fr; max-width: 34rem; } }
+
+  /* practical */
+  .practical { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem 3rem; }
+  .practical h3 { margin-bottom: 0.7rem; }
+  .practical dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 0.35rem 1.2rem; }
+  .practical dt { font-weight: 700; }
+  .practical dd { margin: 0; color: var(--ink-soft); }
+  .practical p { color: var(--ink-soft); }
+  @media (max-width: 860px) { .practical { grid-template-columns: 1fr; } }
+
+  /* booking */
+  .book { padding: clamp(4rem, 9vw, 6.5rem) 0; }
+  .book-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; align-items: start; }
+  .book h2 { margin-bottom: 1rem; }
+  .book-lede { color: #DCE3E9; }
+  .book-phone { font-family: var(--display); font-weight: 600; font-size: var(--s3); text-decoration: none; display: inline-block; margin-top: 0.5rem; }
+  .book-phone:hover { text-decoration: underline; text-underline-offset: 6px; }
+  form { display: grid; gap: 1.1rem; }
+  .field { display: grid; gap: 0.35rem; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  label { font-weight: 700; font-size: var(--s-1); }
+  .hint { font-weight: 400; color: #B9C4CE; }
+  input, select, textarea {
+    font: inherit; font-size: 1rem;
+    color: var(--ink); background: var(--paper);
+    border: 2px solid transparent; border-radius: 8px;
+    padding: 0.7rem 0.85rem; width: 100%;
+  }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--yellow); outline-offset: 1px; }
+  input[aria-invalid="true"] { border-color: var(--pink); }
+  .err { color: var(--pink); font-size: var(--s-1); min-height: 0; }
+  .form-done { background: var(--tarmac-deep); border: 2px dashed var(--mint); border-radius: 10px; padding: 1.5rem; }
+  .form-done h3 { color: var(--mint); margin-bottom: 0.5rem; }
+  @media (max-width: 860px) { .book-inner { grid-template-columns: 1fr; } }
+  @media (max-width: 460px) { .field-row { grid-template-columns: 1fr; } }
+
+  .site-foot { padding: 2rem 0 2.5rem; border-top: 1px solid rgba(255,255,255,0.12); font-size: var(--s-1); color: #B9C4CE; }
+  .site-foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+  .site-foot p { margin: 0; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- chalk texture filter -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="chalk" x="-10%" y="-10%" width="120%" height="120%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feComponentTransfer in="n" result="grain"><feFuncA type="discrete" tableValues="0 1 1 1 1 0.6"/></feComponentTransfer>
+    <feComposite in="d" in2="grain" operator="in"/>
+  </filter>
+</svg>
+
+<div class="tarmac">
+  <header class="wrap site-head">
+    <a class="brand" href="#">
+      <svg class="brand-mark" viewBox="0 0 30 30" aria-hidden="true">
+        <g fill="none" stroke-width="2.4" stroke-linejoin="round">
+          <rect x="10" y="19" width="10" height="9" stroke="#FFD86B"/>
+          <rect x="3" y="10" width="12" height="9" stroke="#FF9FC6"/>
+          <rect x="15" y="10" width="12" height="9" stroke="#8EE2C2"/>
+          <path d="M10 10V6a5 5 0 0 1 10 0v4" stroke="#9FC9FF"/>
+        </g>
+      </svg>
+      Hopscotch
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#help">What we help with</a>
+      <a href="#visit">Your first visit</a>
+      <a href="#team">Our team</a>
+      <a class="btn btn-yellow" href="#book">Book an assessment</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div class="wrap hero">
+      <div>
+        <h1>Physio that feels like playtime</h1>
+        <p class="hero-lede">We help babies, children and teens roll, crawl, walk, run and jump with more confidence. Sessions are hands-on and full of games, and you get a plan you can actually do at home.</p>
+        <div class="hero-actions">
+          <a class="btn btn-yellow" href="#book">Book an assessment</a>
+          <a class="btn btn-line" href="#help">See what we help with</a>
+        </div>
+        <p class="hero-note">No referral needed. Health fund rebates available on the spot.</p>
+      </div>
+
+      <div class="court">
+        <ul class="grid" aria-label="Movement milestones, from first to last">
+          <li><button class="sq r1" style="--i:0;--c:var(--yellow)" data-m="0" aria-pressed="false"><span>1</span></button></li>
+          <li><button class="sq r2" style="--i:1;--c:var(--pink)" data-m="1" aria-pressed="false"><span>2</span></button></li>
+          <li><button class="sq r3" style="--i:2;--c:var(--mint)" data-m="2" aria-pressed="false"><span>3</span></button></li>
+          <li><button class="sq r4" style="--i:3;--c:var(--sky)" data-m="3" aria-pressed="false"><span>4</span></button></li>
+          <li><button class="sq r5" style="--i:4;--c:var(--yellow)" data-m="4" aria-pressed="false"><span>5</span></button></li>
+          <li><button class="sq r6" style="--i:5;--c:var(--pink)" data-m="5" aria-pressed="true"><span>6</span></button></li>
+          <li><button class="sq r7" style="--i:6;--c:var(--mint)" data-m="6" aria-pressed="false"><span>7</span></button></li>
+          <li><button class="sq r8" style="--i:7;--c:var(--sky)" data-m="7" aria-pressed="false"><span>8</span></button></li>
+          <li><button class="sq r9" style="--i:8;--c:var(--yellow)" data-m="8" aria-pressed="false"><span>9</span></button></li>
+          <li><button class="sq r10 top" style="--i:9;--c:var(--pink)" data-m="9" aria-pressed="false"><span>10</span></button></li>
+        </ul>
+
+        <div class="reading" aria-live="polite">
+          <div class="reading-num" id="r-num">6</div>
+          <p class="reading-name" id="r-name">Walks alone</p>
+          <p class="reading-age" id="r-age">Usually 12–18 months</p>
+          <p class="reading-flag" id="r-flag"><strong>Worth a check if</strong> they aren't walking by 18 months, or walk mostly on tiptoes.</p>
+          <p class="reading-hint">Tap a square to see when each milestone usually happens. Every child has their own timing.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<section class="band" id="help" aria-labelledby="help-title">
+  <div class="wrap">
+    <div class="band-head">
+      <h2 id="help-title">What we help with</h2>
+      <p>Some families come to us with a diagnosis. Others just have a feeling that something isn't quite right. Either way, we'll assess properly and tell you plainly what we find.</p>
+    </div>
+    <div class="concerns">
+      <div class="concern">
+        <h3><svg viewBox="0 0 34 14" aria-hidden="true"><path d="M2 9c6-6 10 4 16-1s10-3 14-2" fill="none" stroke="#E86FA4" stroke-width="3" stroke-linecap="round"/></svg>Babies</h3>
+        <ul>
+          <li>Head turning to one side (torticollis)</li>
+          <li>Flat spots on the head</li>
+          <li>Late rolling, sitting or crawling</li>
+          <li>Low or high muscle tone</li>
+          <li>Hip dysplasia follow-up</li>
+        </ul>
+      </div>
+      <div class="concern">
+        <h3><svg viewBox="0 0 34 14" aria-hidden="true"><path d="M2 9c6-6 10 4 16-1s10-3 14-2" fill="none" stroke="#3FBF91" stroke-width="3" stroke-linecap="round"/></svg>Growing kids</h3>
+        <ul>
+          <li>Toe walking and flat feet</li>
+          <li>Clumsiness and coordination</li>
+          <li>Cerebral palsy and other neurological conditions</li>
+          <li>Developmental coordination disorder</li>
+          <li>Hypermobility</li>
+        </ul>
+      </div>
+      <div class="concern">
+        <h3><svg viewBox="0 0 34 14" aria-hidden="true"><path d="M2 9c6-6 10 4 16-1s10-3 14-2" fill="none" stroke="#4F93E8" stroke-width="3" stroke-linecap="round"/></svg>Sporty teens</h3>
+        <ul>
+          <li>Knee and heel pain from growth spurts</li>
+          <li>Sprains, strains and return to sport</li>
+          <li>Recovery after surgery or a fracture</li>
+          <li>Back and posture pain</li>
+          <li>Scoliosis exercise programs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band visit" id="visit" aria-labelledby="visit-title">
+  <div class="wrap">
+    <div class="band-head">
+      <h2 id="visit-title">Your first visit</h2>
+      <p>The first appointment is 60 minutes, so nobody is rushed. Bring comfy clothes, any reports you have, and a favourite toy if it helps.</p>
+    </div>
+    <ol class="steps">
+      <li>
+        <h3>Tell us what you've noticed</h3>
+        <p>We start with your story: pregnancy and birth, milestones so far, and what's worrying you now.</p>
+      </li>
+      <li>
+        <h3>We watch them play</h3>
+        <p>Climbing, balancing, ball games. Most children don't realise they're being assessed.</p>
+      </li>
+      <li>
+        <h3>We explain what we found</h3>
+        <p>You'll hear what's typical, what isn't, and what we'd suggest, in plain words and before you leave.</p>
+      </li>
+      <li>
+        <h3>You go home with a plan</h3>
+        <p>A few short games for home, a written summary, and a letter to your GP or school if needed.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="quote" aria-label="What a parent said">
+  <div class="wrap">
+    <blockquote>
+      <p>"Mia thought she was going to the playground. Three months later she was hopping on one foot at kinder pick-up, and I finally stopped worrying."</p>
+      <cite>Priya, mum of Mia, 4</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section class="band" id="team" aria-labelledby="team-title">
+  <div class="wrap">
+    <div class="band-head">
+      <h2 id="team-title">Our team</h2>
+      <p>Three physiotherapists who only work with children, and who are very good at getting down on the floor.</p>
+    </div>
+    <div class="team">
+      <div class="person">
+        <div class="person-face" style="--bg:var(--yellow)" aria-hidden="true">RK</div>
+        <h3>Ruth Kaplan</h3>
+        <p class="person-role">Founder, paediatric physiotherapist</p>
+        <p>Eighteen years in children's hospitals before opening Hopscotch. Ruth sees most of our babies and has a drawer full of squeaky toys.</p>
+      </div>
+      <div class="person">
+        <div class="person-face" style="--bg:var(--mint)" aria-hidden="true">TO</div>
+        <h3>Tomás Ortega</h3>
+        <p class="person-role">Neurological physiotherapist</p>
+        <p>Works with children with cerebral palsy and developmental delay, and with their schools to make sure progress carries over.</p>
+      </div>
+      <div class="person">
+        <div class="person-face" style="--bg:var(--sky)" aria-hidden="true">AN</div>
+        <h3>Amara Nwosu</h3>
+        <p class="person-role">Sports and musculoskeletal physiotherapist</p>
+        <p>A former netball player who helps teens recover from injury and get back on the court without rushing it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band visit" aria-labelledby="info-title">
+  <div class="wrap">
+    <h2 id="info-title" style="margin-bottom:2.5rem">Practical details</h2>
+    <div class="practical">
+      <div>
+        <h3>Opening hours</h3>
+        <dl>
+          <dt>Mon–Thu</dt><dd>8am – 6:30pm</dd>
+          <dt>Friday</dt><dd>8am – 4pm</dd>
+          <dt>Saturday</dt><dd>8am – 12pm</dd>
+        </dl>
+      </div>
+      <div>
+        <h3>Finding us</h3>
+        <p>2/18 Wattle Street, ground floor. There's a ramp, a pram bay, a parents' room and free parking out the back.</p>
+      </div>
+      <div>
+        <h3>Fees and rebates</h3>
+        <p>First assessment $165 (60 min). Follow-up sessions $120 (40 min). Claim your health fund rebate on the spot. GP care plans and disability funding accepted.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tarmac">
+  <section class="book" id="book" aria-labelledby="book-title">
+    <div class="wrap book-inner">
+      <div>
+        <h2 id="book-title">Book an assessment</h2>
+        <p class="book-lede">Send us a few details and we'll call you within one working day to find a time. Most families are seen within a week.</p>
+        <p class="book-lede">Rather talk now?</p>
+        <a class="book-phone" href="tel:+61255501234">(02) 5550 1234</a>
+      </div>
+
+      <div id="form-area">
+        <form id="book-form" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="parent">Your name</label>
+              <input id="parent" name="parent" autocomplete="name" required aria-describedby="parent-err">
+              <span class="err" id="parent-err"></span>
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="phone-err">
+              <span class="err" id="phone-err"></span>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="child">Child's first name</label>
+              <input id="child" name="child">
+            </div>
+            <div class="field">
+              <label for="age">Child's age</label>
+              <select id="age" name="age">
+                <option>Under 1</option>
+                <option>1–3 years</option>
+                <option>4–8 years</option>
+                <option>9–12 years</option>
+                <option>13–18 years</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="notes">What would you like help with? <span class="hint">(optional)</span></label>
+            <textarea id="notes" name="notes" rows="3"></textarea>
+          </div>
+          <div><button class="btn btn-yellow" type="submit">Request a call back</button></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>Hopscotch Children's Physiotherapy, 2/18 Wattle Street</p>
+      <p>If your child is in pain after an injury and can't bear weight, see your GP or emergency department first.</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const milestones = [
+    ["Holds head up", "Usually around 3 months", "their head still flops when held upright at 4 months, or they always turn the same way."],
+    ["Rolls over", "Usually 4–6 months", "they aren't rolling either way by 7 months."],
+    ["Sits without support", "Usually 6–8 months", "they can't sit steadily on their own by 9 months."],
+    ["Crawls", "Usually 7–10 months", "they drag one side, or show no interest in moving by 12 months. Some babies skip crawling entirely, and that's often fine."],
+    ["Pulls to stand", "Usually 8–10 months", "they aren't pulling up on furniture by 12 months."],
+    ["Walks alone", "Usually 12–18 months", "they aren't walking by 18 months, or walk mostly on tiptoes."],
+    ["Runs", "Usually 18 months – 2 years", "they fall much more than friends their age, or can't run by 2½."],
+    ["Jumps with both feet", "Usually 2–3 years", "they can't get both feet off the ground together by 3."],
+    ["Hops on one foot", "Usually around 4 years", "they can't hop a few times on either foot by 5."],
+    ["Skips", "Usually 5–6 years", "they still can't skip by 6½, or tire much faster than other kids."]
+  ];
+  const colors = ["--yellow","--pink","--mint","--sky"];
+  const squares = document.querySelectorAll(".sq");
+  const num = document.getElementById("r-num");
+  const reading = document.querySelector(".reading");
+
+  function show(i) {
+    const [name, age, flag] = milestones[i];
+    squares.forEach(s => s.setAttribute("aria-pressed", s.dataset.m == i));
+    num.textContent = i + 1;
+    reading.style.setProperty("--rc", `var(${colors[i % 4]})`);
+    document.getElementById("r-name").textContent = name;
+    document.getElementById("r-age").textContent = age;
+    document.getElementById("r-flag").innerHTML = "<strong>Worth a check if</strong> " + flag;
+  }
+  squares.forEach(s => {
+    s.setAttribute("aria-label", `${+s.dataset.m + 1}: ${milestones[s.dataset.m][0]}`);
+    s.addEventListener("click", () => show(+s.dataset.m));
+  });
+  show(5);
+
+  const form = document.getElementById("book-form");
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    let ok = true;
+    [["parent", "Add your name so we know who to ask for."],
+     ["phone", "Add a phone number so we can call you back."]].forEach(([id, msg]) => {
+      const el = document.getElementById(id);
+      const err = document.getElementById(id + "-err");
+      const bad = !el.value.trim();
+      el.setAttribute("aria-invalid", bad);
+      err.textContent = bad ? msg : "";
+      if (bad && ok) { el.focus(); ok = false; }
+    });
+    if (!ok) return;
+    const name = form.parent.value.trim().split(" ")[0];
+    document.getElementById("form-area").innerHTML =
+      `<div class="form-done" role="status" tabindex="-1"><h3>Call back requested</h3><p>Thanks, ${name.replace(/[<>&"]/g, "")}. We'll ring you on ${form.phone.value.replace(/[<>&"]/g, "")} within one working day to find a time.</p></div>`;
+    document.querySelector(".form-done").focus();
+  });
+</script>
+</body>
+</html>

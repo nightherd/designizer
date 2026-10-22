@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rung — hiring software for companies with fewer than 50 people</title>
+<meta name="description" content="Rung is an applicant tracking system for startups. One pipeline, no admin, no sales call. Free until your second hire.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4efe6;
+  --paper-2:#ebe4d6;
+  --ink:#1b1a17;
+  --ink-2:#55514a;
+  --rule:#cfc6b4;
+  --red:#d9411e;
+  --green:#2f6b4f;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Instrument Sans',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+
+/* nav */
+nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--rule)}
+.logo{font-family:var(--serif);font-weight:600;font-size:26px;text-decoration:none;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.logo i{display:inline-block;width:14px;height:20px;border:2.5px solid var(--red);border-radius:2px;position:relative}
+.logo i::after{content:"";position:absolute;left:-2.5px;right:-2.5px;top:5px;height:2.5px;background:var(--red)}
+.nav-links{display:flex;gap:28px;align-items:center;font-size:15px}
+.nav-links a{text-decoration:none;color:var(--ink-2)}
+.nav-links a:hover{color:var(--ink)}
+.btn{display:inline-block;background:var(--ink);color:var(--paper)!important;padding:12px 20px;border-radius:3px;text-decoration:none;font-weight:500;font-size:15px;box-shadow:3px 3px 0 var(--red);transition:transform .1s,box-shadow .1s}
+.btn:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--red)}
+.btn.ghost{background:none;color:var(--ink)!important;box-shadow:none;border:1px solid var(--ink)}
+.btn.ghost:hover{background:var(--paper-2);transform:none}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;padding:76px 0 90px;align-items:start}
+.eyebrow{color:var(--red);margin-bottom:22px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(42px,6vw,76px);line-height:.98;letter-spacing:-.035em}
+h1 em{font-style:italic;color:var(--red)}
+.lede{margin-top:26px;font-size:19px;color:var(--ink-2);max-width:30em}
+.cta{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.fine{margin-top:18px;font-size:14px;color:var(--ink-2)}
+
+/* board mock */
+.board{background:#fbf8f1;border:1.5px solid var(--ink);border-radius:4px;box-shadow:8px 8px 0 var(--ink);transform:rotate(1.2deg);overflow:hidden}
+.board-top{display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1.5px solid var(--ink);background:var(--paper-2)}
+.cols{display:grid;grid-template-columns:repeat(3,1fr)}
+.col{padding:12px 10px 16px;border-right:1px solid var(--rule);min-height:300px}
+.col:last-child{border-right:0}
+.col h4{font-family:var(--mono);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);margin-bottom:10px;display:flex;justify-content:space-between}
+.card{background:#fff;border:1px solid var(--rule);border-radius:3px;padding:9px 10px;margin-bottom:8px;font-size:13px;line-height:1.35}
+.card b{display:block;font-weight:600}
+.card span{color:var(--ink-2);font-size:12px}
+.card.hot{border-color:var(--red);box-shadow:inset 3px 0 0 var(--red)}
+.card .tag{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:2px;background:var(--paper-2);color:var(--ink)}
+.card .tag.g{background:#dcebe2;color:var(--green)}
+.note{position:absolute}
+
+/* ticker strip */
+.strip{border-block:1px solid var(--ink);background:var(--ink);color:var(--paper);overflow:hidden;white-space:nowrap}
+.strip div{display:inline-block;padding:13px 0;animation:slide 40s linear infinite}
+.strip span{margin:0 26px}
+.strip span::before{content:"✱";color:var(--red);margin-right:26px}
+@keyframes slide{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.strip div{animation:none}}
+
+/* sections */
+section{padding:96px 0}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.4vw,52px);line-height:1.04;letter-spacing:-.03em;max-width:15em}
+h2 em{font-style:italic}
+.sec-label{color:var(--ink-2);margin-bottom:18px;display:flex;gap:12px;align-items:center}
+.sec-label::after{content:"";flex:0 0 60px;height:1px;background:var(--ink-2)}
+
+/* problem */
+.split{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;margin-top:48px}
+.split p{color:var(--ink-2);margin-bottom:1em;max-width:34em}
+.split p strong{color:var(--ink);font-weight:600}
+.big-num{font-family:var(--serif);font-size:clamp(80px,12vw,150px);line-height:.85;letter-spacing:-.05em;color:var(--red)}
+.big-cap{margin-top:12px;max-width:16em;color:var(--ink-2)}
+
+/* features: ruled list, not cards */
+.feats{margin-top:56px;border-top:1.5px solid var(--ink)}
+.feat{display:grid;grid-template-columns:70px 1fr 1.3fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.feat .n{font-family:var(--mono);color:var(--red);font-size:13px}
+.feat h3{font-family:var(--serif);font-weight:600;font-size:25px;letter-spacing:-.02em;line-height:1.15}
+.feat p{color:var(--ink-2)}
+.feat code{font-family:var(--mono);font-size:13.5px;background:var(--paper-2);padding:1px 6px;border-radius:2px;color:var(--ink)}
+
+/* left out */
+.out{background:var(--paper-2);border-block:1px solid var(--rule)}
+.out ul{list-style:none;margin-top:44px;columns:2;column-gap:64px}
+.out li{break-inside:avoid;padding:14px 0;border-bottom:1px dashed var(--rule);display:flex;gap:14px}
+.out li s{color:var(--ink-2);text-decoration-color:var(--red);text-decoration-thickness:2px}
+.out li::before{content:"×";font-family:var(--mono);color:var(--red);font-weight:500}
+
+/* quote */
+.quote{display:grid;grid-template-columns:1fr 2fr;gap:64px;align-items:start}
+blockquote{font-family:var(--serif);font-size:clamp(24px,3vw,36px);line-height:1.25;letter-spacing:-.015em}
+blockquote::first-letter{color:var(--red)}
+.who{margin-top:22px;font-size:15px;color:var(--ink-2)}
+.who b{color:var(--ink)}
+
+/* pricing */
+.price{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--ink);background:#fbf8f1}
+.tier{padding:30px 28px 34px;border-right:1.5px solid var(--ink);display:flex;flex-direction:column}
+.tier:last-child{border-right:0}
+.tier.pick{background:var(--ink);color:var(--paper)}
+.tier .mono{color:var(--red)}
+.tier h3{font-family:var(--serif);font-weight:400;font-size:44px;letter-spacing:-.04em;margin:10px 0 2px}
+.tier h3 small{font-family:var(--sans);font-size:15px;letter-spacing:0;color:var(--ink-2)}
+.tier.pick h3 small{color:#b9b2a4}
+.tier ul{list-style:none;margin:20px 0 28px;flex:1}
+.tier li{padding:7px 0;border-top:1px solid var(--rule);font-size:15px}
+.tier.pick li{border-color:#4a4740}
+.tier .btn{text-align:center}
+.tier.pick .btn{background:var(--paper);color:var(--ink)!important}
+
+/* faq */
+details{border-bottom:1px solid var(--rule);padding:20px 0}
+details:first-of-type{border-top:1.5px solid var(--ink)}
+summary{cursor:pointer;font-family:var(--serif);font-size:22px;list-style:none;display:flex;justify-content:space-between;gap:20px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--mono);color:var(--red)}
+details[open] summary::after{content:"–"}
+details p{margin-top:12px;color:var(--ink-2);max-width:42em}
+.faq{margin-top:44px;max-width:780px}
+
+/* final */
+.final{background:var(--red);color:#fff6ee;padding:90px 0;text-align:left}
+.final h2{max-width:11em}
+.final .btn{background:var(--ink);box-shadow:3px 3px 0 #fff6ee;margin-top:32px}
+.final .btn:hover{box-shadow:1px 1px 0 #fff6ee}
+footer{padding:30px 0 50px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;color:var(--ink-2);font-size:14px}
+
+@media (max-width:860px){
+  .hero,.split,.quote{grid-template-columns:1fr;gap:40px}
+  .hero{padding-top:48px}
+  .board{transform:none}
+  .feat{grid-template-columns:40px 1fr;}
+  .feat p{grid-column:2}
+  .out ul{columns:1}
+  .price{grid-template-columns:1fr}
+  .tier{border-right:0;border-bottom:1.5px solid var(--ink)}
+  .tier:last-child{border-bottom:0}
+  .nav-links a:not(.btn){display:none}
+  section{padding:68px 0}
+}
+@media (max-width:480px){.cols{grid-template-columns:1fr 1fr}.col:nth-child(3){display:none}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <a class="logo" href="#"><i></i>Rung</a>
+    <div class="nav-links">
+      <a href="#why">Why</a>
+      <a href="#how">What it does</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="#start">Start hiring</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <p class="eyebrow mono">Applicant tracking · for teams under 50</p>
+      <h1>You're hiring your fourth engineer, not <em>running HR.</em></h1>
+      <p class="lede">Rung is an applicant tracking system built for the founder who is also the recruiter, the interviewer, and the person who has to send the rejection emails. One pipeline. Zero admin.</p>
+      <div class="cta">
+        <a class="btn" href="#start">Open a role in 4 minutes</a>
+        <a class="btn ghost" href="#how">See how it works</a>
+      </div>
+      <p class="fine">Free until your second hire. No card, no demo call, no "talk to sales".</p>
+    </div>
+
+    <div class="board" aria-label="Example hiring pipeline">
+      <div class="board-top mono"><span>Senior Backend · Berlin / Remote</span><span>14 open</span></div>
+      <div class="cols">
+        <div class="col">
+          <h4>Replied <span>5</span></h4>
+          <div class="card"><b>Anika Roy</b><span>ex-Stripe, Go</span></div>
+          <div class="card"><b>Tomás Vidal</b><span>Referred by Dee</span><br><em class="tag g">referral</em></div>
+          <div class="card"><b>Priya N.</b><span>Rust, 6 yrs</span></div>
+        </div>
+        <div class="col">
+          <h4>Take-home <span>3</span></h4>
+          <div class="card hot"><b>Mika Sato</b><span>Due Thu · 2 days left</span><br><em class="tag">nudge sent</em></div>
+          <div class="card"><b>Jonah Pike</b><span>Submitted, 2 reviews in</span></div>
+        </div>
+        <div class="col">
+          <h4>Talk to us <span>2</span></h4>
+          <div class="card hot"><b>Lea Brandt</b><span>Fri 15:00 with Sam &amp; Dee</span><br><em class="tag g">4.5 avg</em></div>
+          <div class="card"><b>Omar Haddad</b><span>Scorecard due from you</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<div class="strip" aria-hidden="true">
+  <div>
+    <span>Median setup: 4 minutes</span><span>Imports from a CSV, a Greenhouse export, or your inbox</span><span>No per-seat pricing</span><span>Your data exports with one click</span><span>Built in Lisbon by two ex-founders</span>
+    <span>Median setup: 4 minutes</span><span>Imports from a CSV, a Greenhouse export, or your inbox</span><span>No per-seat pricing</span><span>Your data exports with one click</span><span>Built in Lisbon by two ex-founders</span>
+  </div>
+</div>
+
+<section id="why">
+  <div class="wrap">
+    <p class="sec-label mono">The problem</p>
+    <h2>Enterprise ATS tools assume you have a <em>recruiting team.</em></h2>
+    <div class="split">
+      <div>
+        <div class="big-num">11</div>
+        <p class="big-cap">tabs open the last time we watched a founder fill one candidate scorecard.</p>
+      </div>
+      <div>
+        <p>The big platforms were designed for a company with a recruiting ops manager, a compliance review, and a procurement process. You have a Notion table, a Gmail label called "candidates?", and a sinking feeling that someone good went quiet two weeks ago.</p>
+        <p><strong>Rung is what's left when you remove everything that only matters at 500 people.</strong> A pipeline you can read at a glance, a shared inbox that files itself, and a nudge when someone's been sitting too long.</p>
+        <p>We built it for our own hiring at two previous startups. It got used for the third one, then for our friends', and then we stopped pretending it was a side project.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="padding-top:0">
+  <div class="wrap">
+    <p class="sec-label mono">What it does</p>
+    <h2>Five things. We're fairly sure that's enough.</h2>
+    <div class="feats">
+      <div class="feat"><span class="n">01</span><h3>One pipeline per role</h3><p>Drag people between stages, or just reply to the email thread and Rung moves them. Stages are yours to rename; the default is three because three is what most of you use.</p></div>
+      <div class="feat"><span class="n">02</span><h3>Inbox that files itself</h3><p>Forward anything to <code>jobs@yourco.rung.app</code> or connect Gmail. Resumes get parsed, duplicates get merged, and the thread stays attached to the person.</p></div>
+      <div class="feat"><span class="n">03</span><h3>Scorecards in 90 seconds</h3><p>Four questions, a 1–5, and a free-text box. Interviewers can't see each other's scores until they've submitted their own, which cuts the "well, Sam liked her" effect.</p></div>
+      <div class="feat"><span class="n">04</span><h3>Quiet-candidate alerts</h3><p>Anyone who has sat in a stage longer than you said they would gets flagged on Monday morning. That's the whole notification system. We don't ping you at 9pm.</p></div>
+      <div class="feat"><span class="n">05</span><h3>A careers page you don't have to design</h3><p>Hosted at <code>yourco.rung.app/jobs</code> or embedded on your site with a single script tag. It looks like a page a person wrote, not a widget.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="out">
+  <div class="wrap">
+    <p class="sec-label mono">Deliberately missing</p>
+    <h2>The features we <em>refused</em> to build.</h2>
+    <ul>
+      <li><span><s>AI candidate scoring.</s> You can read a resume. We'd rather not rank humans with a number we can't explain.</span></li>
+      <li><span><s>Seven-step approval workflows.</s> You have a Slack channel.</span></li>
+      <li><span><s>Per-seat pricing.</s> Your whole team should see the pipeline, including the person who started on Monday.</span></li>
+      <li><span><s>"Talent community" newsletters.</s> Nobody wants them. Least of all candidates.</span></li>
+      <li><span><s>Onboarding consultants.</s> If it takes a call to set up, we built it wrong.</span></li>
+      <li><span><s>Lock-in.</s> Export everything as CSV and PDFs whenever you like, including after you cancel.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap quote">
+    <p class="mono" style="color:var(--ink-2)">From a customer<br>who didn't have to say this</p>
+    <div>
+      <blockquote>"We hired our first six people out of a spreadsheet and a lot of guilt. Rung took an afternoon to set up, and the first Monday alert caught a designer we'd have ghosted by accident."</blockquote>
+      <p class="who"><b>Ines Carvalho</b>, cofounder &amp; CEO at Tidewater Labs (11 people)</p>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" style="padding-top:0">
+  <div class="wrap">
+    <p class="sec-label mono">Pricing</p>
+    <h2>Priced by open roles, because that's when you need us.</h2>
+    <div class="price">
+      <div class="tier">
+        <span class="mono">Just looking</span>
+        <h3>$0</h3>
+        <ul><li>1 open role</li><li>Unlimited candidates</li><li>Unlimited teammates</li><li>Careers page</li></ul>
+        <a class="btn ghost" href="#start">Start free</a>
+      </div>
+      <div class="tier pick">
+        <span class="mono">Actually hiring</span>
+        <h3>$49 <small>/ month, flat</small></h3>
+        <ul><li>Up to 5 open roles</li><li>Gmail &amp; Outlook sync</li><li>Quiet-candidate alerts</li><li>Scorecards &amp; blind review</li><li>Slack digest</li></ul>
+        <a class="btn" href="#start">Start 14-day trial</a>
+      </div>
+      <div class="tier">
+        <span class="mono">Hiring a lot</span>
+        <h3>$129 <small>/ month, flat</small></h3>
+        <ul><li>Unlimited roles</li><li>Everything in the middle</li><li>Custom domain for careers</li><li>Priority email, answered by a founder</li></ul>
+        <a class="btn ghost" href="#start">Start 14-day trial</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <p class="sec-label mono">Questions</p>
+    <h2>Things people ask before they sign up.</h2>
+    <div class="faq">
+      <details><summary>Can I move over from Notion, Sheets, or Greenhouse?</summary><p>Yes. Drop a CSV or a Greenhouse export on the import screen. It maps the columns for you and shows what it'll do before it does it.</p></details>
+      <details><summary>What happens when we hit 50 people?</summary><p>It keeps working. You might want something heavier at some point, and when you do, the export is one click. We'd rather you leave happy than stay stuck.</p></details>
+      <details><summary>Is candidate data safe?</summary><p>Hosted in the EU on encrypted storage, with GDPR deletion requests handled from the candidate's own profile. A data processing agreement is available without needing to ask a salesperson.</p></details>
+      <details><summary>Who's behind this?</summary><p>Two people, Marta and Joe, who've run hiring at three startups between them and got tired of the tools. You can email us at <a href="mailto:hello@rung.app">hello@rung.app</a>. It really is us.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="start">
+  <div class="wrap">
+    <h2>Go on. Open the role you've been putting off.</h2>
+    <a class="btn" href="mailto:hello@rung.app?subject=Rung%20signup">Get started, it's free</a>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <span>© 2026 Rung. Made in Lisbon.</span>
+    <span>Privacy · Terms · Status · <a href="mailto:hello@rung.app">hello@rung.app</a></span>
+  </footer>
+</div>
+
+</body>
+</html>
