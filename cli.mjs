@@ -115,9 +115,12 @@ function finish(merged, split) {
   const table = report(merged, split);
   console.log(table.text);
   if (flag('write')) {
+    const alt = charts(table, split);
+    const pic = (name, text) => `<picture>\n  <source media="(prefers-color-scheme: dark)" srcset="eval/charts/${name}-dark.svg">\n  <img alt="${text}" src="eval/charts/${name}-light.svg">\n</picture>`;
+    const block = [pic('results', alt.results), '', table.md, '', pic('patterns', alt.patterns)].join('\n');
     const readme = join(ROOT, 'README.md');
     const src = readFileSync(readme, 'utf8');
-    writeFileSync(readme, src.replace(/<!-- eval -->[\s\S]*<!-- \/eval -->/, `<!-- eval -->\n${table.md}\n<!-- /eval -->`));
+    writeFileSync(readme, src.replace(/<!-- eval -->[\s\S]*<!-- \/eval -->/, `<!-- eval -->\n${block}\n<!-- /eval -->`));
   }
   if (/test/.test(split) && !table.pass) process.exitCode = 1;
 }
@@ -146,26 +149,78 @@ function report(results, split) {
   const md = ['| Tool | Accuracy | AI pages caught | Human pages flagged as AI | Verdict rule |', '|---|---|---|---|---|'];
   let text = `\n${split} split, ${rows.length} pages\n`;
   let pass = false;
+  const toolStats = [];
   for (const t of tools) {
     const s = stats(rows.map(([, r]) => r), t.isAi);
+    toolStats.push({ name: t.name, ...s });
     if (t.name === 'designizer') pass = s.acc >= 0.8 && s.fp <= 3;
-    md.push(`| ${t.name} | ${(s.acc * 100).toFixed(0)}% | ${s.tp} / ${s.ai} | ${s.fp} / ${s.hu} | ${t.note} |`);
+    md.push(`| ${t.name === 'slopcop' ? 'design-slop-cop' : t.name} | ${(s.acc * 100).toFixed(0)}% | ${s.tp} / ${s.ai} | ${s.fp} / ${s.hu} | ${t.note} |`);
     text += `${t.name.padEnd(12)} accuracy ${(s.acc * 100).toFixed(1)}%  caught ${s.tp}/${s.ai}  false alarms ${s.fp}/${s.hu}  (${t.note})\n`;
   }
   const variants = ['plain', 'less-ai', 'skill'].map(v => {
     const vs = rows.filter(([, r]) => r.variant === v);
     return { v, caught: vs.filter(([, r]) => r.verdict === 'ai').length, n: vs.length };
   });
-  md.push('', '| AI prompt variant | Caught by designizer |', '|---|---|', ...variants.map(x => `| ${x.v} | ${x.caught} / ${x.n} |`));
   text += '\nby prompt variant: ' + variants.map(x => `${x.v} ${x.caught}/${x.n}`).join(', ') + '\n';
   const per = new Map();
   for (const [, r] of rows) for (const id of r.fired) { const p = per.get(id) || { ai: 0, human: 0 }; p[r.label]++; per.set(id, p); }
-  const pat = ['', '| Pattern | AI pages | Human pages |', '|---|---|---|',
-    ...[...per].sort((a, b) => b[1].ai - a[1].ai).map(([id, p]) => `| ${id} | ${p.ai} | ${p.human} |`)];
   text += '\npattern            ai  human\n' + [...per].sort((a, b) => b[1].ai - a[1].ai).map(([id, p]) => `${id.padEnd(18)} ${String(p.ai).padStart(3)} ${String(p.human).padStart(6)}`).join('\n');
   const misses = rows.filter(([, r]) => (r.verdict === 'ai') !== (r.label === 'ai')).map(([id, r]) => `${id} (${r.label}, score ${r.score})`);
   text += `\n\nmisses: ${misses.join(', ') || 'none'}\n${pass ? 'PASS' : 'BELOW TARGET'} (target: accuracy ≥ 80%, ≤ 3 human pages flagged)`;
-  return { text, md: [...md, ...pat].join('\n'), pass };
+  return { text, md: md.join('\n'), pass, toolStats, per };
+}
+
+// Butterfly charts for the README, one SVG per GitHub theme: human pages grow left, AI pages grow right.
+const THEMES = {
+  light: { text: '#1f2328', muted: '#59636e', rule: '#d1d9e0', ai: '#2a78d6', human: '#eb6834' },
+  dark: { text: '#f0f6fc', muted: '#9198a1', rule: '#3d444d', ai: '#3987e5', human: '#d95926' },
+};
+const FONT = '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
+
+function butterfly(rows, o, c) {
+  const W = 760, top = 44, gap = 34, side = (W - o.labelW) / 2 - gap;
+  const x0 = gap + side, x1 = x0 + o.labelW, h = o.barH, r = 4;
+  const len = v => (v / o.max) * side;
+  const bar = (x, y, w, dir, fill) => w <= 0 ? '' : (() => {
+    const k = Math.min(r, w / 2), e = x + dir * w;
+    return `<path fill="${fill}" d="M${x} ${y}H${e - dir * k}Q${e} ${y} ${e} ${y + k}V${y + h - k}Q${e} ${y + h} ${e - dir * k} ${y + h}H${x}Z"/>`;
+  })();
+  const H = top + rows.length * o.rowH + (o.note ? 30 : 8);
+  const out = [`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family='${FONT}' font-size="12">`];
+  out.push(`<rect x="${x0 - 14}" y="12" width="10" height="10" rx="2" fill="${c.human}"/><text x="${x0 - 20}" y="21" text-anchor="end" fill="${c.text}" font-weight="600">${o.left}</text>`);
+  out.push(`<rect x="${x1 + 4}" y="12" width="10" height="10" rx="2" fill="${c.ai}"/><text x="${x1 + 20}" y="21" fill="${c.text}" font-weight="600">${o.right}</text>`);
+  out.push(`<path stroke="${c.rule}" d="M${x0} ${top - 6}V${top + rows.length * o.rowH}M${x1} ${top - 6}V${top + rows.length * o.rowH}"/>`);
+  rows.forEach((row, i) => {
+    const y = top + i * o.rowH + (o.rowH - h) / 2, mid = y + h / 2 + 4;
+    out.push(bar(x0, y, len(row.human), -1, c.human), bar(x1, y, len(row.ai), 1, c.ai));
+    out.push(`<text x="${x0 - len(row.human) - 6}" y="${mid}" text-anchor="end" fill="${c.muted}">${row.human}</text>`);
+    out.push(`<text x="${x1 + len(row.ai) + 6}" y="${mid}" fill="${c.muted}">${row.ai}</text>`);
+    out.push(`<text x="${(x0 + x1) / 2}" y="${mid}" text-anchor="middle" fill="${row.dim ? c.muted : c.text}"${row.bold ? ' font-weight="600"' : ''}>${row.label}</text>`);
+  });
+  if (o.note) out.push(`<text x="${W / 2}" y="${H - 10}" text-anchor="middle" fill="${c.muted}">${o.note}</text>`);
+  return out.join('') + '</svg>\n';
+}
+
+function charts({ toolStats, per }, split) {
+  const NAMES = { slopcop: 'design-slop-cop' };
+  const unscored = new Set([...DETECTOR.matchAll(/'?([\w-]+)'?: \{ n: \d+, w: '\w+', scored: false/g)].map(m => m[1]));
+  const tools = toolStats.map(t => ({ label: NAMES[t.name] || t.name, ai: t.tp, human: t.fp, bold: t.name === 'designizer' }));
+  const pats = [...per].map(([id, p]) => ({ label: id, ai: p.ai, human: p.human, dim: unscored.has(id) }))
+    .sort((a, b) => b.ai - a.ai || a.human - b.human);
+  const n = toolStats[0];
+  mkdirSync(join(ROOT, 'eval/charts'), { recursive: true });
+  for (const [theme, c] of Object.entries(THEMES)) {
+    writeFileSync(join(ROOT, `eval/charts/results-${theme}.svg`), butterfly(tools,
+      { labelW: 140, rowH: 34, barH: 18, max: n.ai, left: `Human sites flagged as AI (of ${n.hu})`, right: `AI pages caught (of ${n.ai})` }, c));
+    writeFileSync(join(ROOT, `eval/charts/patterns-${theme}.svg`), butterfly(pats,
+      { labelW: 150, rowH: 20, barH: 12, max: Math.max(...pats.flatMap(p => [p.ai, p.human])),
+        left: `Human sites it fired on (of ${n.hu})`, right: `AI pages it fired on (of ${n.ai})`,
+        note: 'Grey names are reported but not counted toward the page verdict.' }, c));
+  }
+  return {
+    results: `${split}: ` + tools.map(t => `${t.label} caught ${t.ai} of ${n.ai} AI pages and flagged ${t.human} of ${n.hu} human sites`).join('; '),
+    patterns: `How often each pattern fired on ${split}, AI pages vs human sites: ` + pats.map(p => `${p.label} ${p.ai}/${p.human}`).join(', '),
+  };
 }
 
 async function examples() {

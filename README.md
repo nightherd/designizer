@@ -4,72 +4,39 @@
 
 ![Overlay on a generated landing page](examples/overview.jpg)
 
-designizer is a Claude Code skill with a measuring tool inside. `detector.js` is one file with no dependencies. It runs inside a rendered page and reads computed styles and layout, so Tailwind, React, Astro and hand-written CSS all look the same to it. It reports each element that matches a known AI default, with the numbers that prove it (`letter-spacing 0.14em, 11px, uppercase`). The skill adds what a script can't see: the page's composition, invented testimonials, and whether a pattern follows from the product. Then it proposes the smallest CSS change and applies it only after you say yes.
+designizer is a Claude Code skill with a measuring tool inside. The tool, `detector.js`, is one file with no dependencies. It runs inside a rendered page and reads computed styles and layout, so Tailwind, React, Astro and hand-written CSS all look the same to it. For each element that matches a known AI default it reports the measurements behind the match (`letter-spacing 0.14em, 11px, uppercase`). The skill adds what a script can't see: the page's composition, invented testimonials, and whether a pattern follows from the product. Then it proposes the smallest CSS change and applies it only after you say yes.
 
 The name and the structure come from [humanizer](https://github.com/blader/humanizer), which does the same for text. Copy found on a page is handed over to it.
 
 ## Results
 
-Results on test-b, a held-out split the detector never saw while it was being built: 30 pages generated with Claude Code and 30 human-designed sites. Seven of the human sites are hard cases from product companies whose look AI imitates (Notion, Apple, Supabase, Resend, Mercury, Cal.com, rauchg.com). Each tool's threshold was tuned on the development pages, then applied unchanged. Run on 2026-10-22.
+Results on test-b, a held-out split the detector never saw while it was being built: 30 pages generated with Claude Code and 30 human-designed sites. Seven of the human sites are hard cases with the look AI imitates: the product sites of Notion, Apple, Supabase, Resend, Mercury and Cal.com, and rauchg.com. Each tool's threshold was tuned on the development pages, then applied unchanged. Run on 2026-10-22.
 
 <!-- eval -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="eval/charts/results-dark.svg">
+  <img alt="test-b: designizer caught 19 of 30 AI pages and flagged 0 of 30 human sites; impeccable caught 14 of 30 AI pages and flagged 1 of 30 human sites; design-slop-cop caught 29 of 30 AI pages and flagged 12 of 30 human sites" src="eval/charts/results-light.svg">
+</picture>
+
 | Tool | Accuracy | AI pages caught | Human pages flagged as AI | Verdict rule |
 |---|---|---|---|---|
 | designizer | 82% | 19 / 30 | 0 / 30 | threshold in detector.js |
 | impeccable | 72% | 14 / 30 | 1 / 30 | score ≥ 5 (tuned on dev + test) |
-| slopcop | 78% | 29 / 30 | 12 / 30 | score ≥ 7 (tuned on dev + test) |
+| design-slop-cop | 78% | 29 / 30 | 12 / 30 | score ≥ 7 (tuned on dev + test) |
 
-| AI prompt variant | Caught by designizer |
-|---|---|
-| plain | 9 / 9 |
-| less-ai | 10 / 11 |
-| skill | 0 / 10 |
-
-| Pattern | AI pages | Human pages |
-|---|---|---|
-| trendy-font | 23 | 0 |
-| accent-word | 20 | 5 |
-| meta-string | 16 | 0 |
-| faq | 16 | 1 |
-| type-scale | 15 | 8 |
-| warm-editorial | 14 | 0 |
-| numbered | 13 | 3 |
-| tracked-caps | 13 | 2 |
-| eyebrow | 12 | 0 |
-| mono-label | 11 | 2 |
-| default-sans | 10 | 6 |
-| infinite-motion | 8 | 6 |
-| uniform-spacing | 7 | 0 |
-| stat-row | 7 | 0 |
-| broadsheet | 6 | 0 |
-| reveal | 6 | 5 |
-| nested-cards | 6 | 2 |
-| crushed-tracking | 4 | 3 |
-| decor | 3 | 0 |
-| hero | 3 | 12 |
-| dark-glow | 3 | 0 |
-| card-kit | 2 | 2 |
-| emoji | 2 | 1 |
-| gradients | 2 | 1 |
-| icon-cards | 1 | 2 |
-| side-stripe | 1 | 0 |
-| glass | 1 | 3 |
-| gradient-text | 1 | 1 |
-| arrow-links | 0 | 6 |
-| purple | 0 | 2 |
-| fake-window | 0 | 3 |
-| bounce | 0 | 2 |
-| sparkles | 0 | 1 |
-| dark-acid | 0 | 1 |
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="eval/charts/patterns-dark.svg">
+  <img alt="How often each pattern fired on test-b, AI pages vs human sites: trendy-font 23/0, accent-word 20/5, meta-string 16/0, faq 16/1, type-scale 15/8, warm-editorial 14/0, tracked-caps 13/2, numbered 13/3, eyebrow 12/0, mono-label 11/2, default-sans 10/6, infinite-motion 8/6, uniform-spacing 7/0, stat-row 7/0, broadsheet 6/0, nested-cards 6/2, reveal 6/5, crushed-tracking 4/3, decor 3/0, dark-glow 3/0, hero 3/12, emoji 2/1, gradients 2/1, card-kit 2/2, side-stripe 1/0, gradient-text 1/1, icon-cards 1/2, glass 1/3, sparkles 0/1, dark-acid 0/1, purple 0/2, bounce 0/2, fake-window 0/3, arrow-links 0/6" src="eval/charts/patterns-light.svg">
+</picture>
 <!-- /eval -->
 
-What the numbers say:
+designizer flagged none of the human sites and 19 of the 30 AI pages. design-slop-cop catches more AI pages but also flags 12 human sites, because gradients, glass and a pill above the headline are common on well-designed product sites. impeccable, at its best threshold, flags one human site and catches 14 AI pages.
 
-- **No human page was flagged, and 19 of 30 AI pages were.** design-slop-cop catches more AI pages but flags 12 of the 30 human sites, because gradients, glass and a pill above the headline appear on well-designed product sites too. impeccable at its best threshold flags one human site but catches 14 of the 30 AI pages.
-- **The pages it misses were built with Anthropic's frontend-design skill.** Plain prompts were caught 9 times out of 9, and "make it look less AI-generated" 10 out of 11. The skill prompts were caught 0 out of 10, because those pages don't have the default look. The skill works. A detector that flagged them anyway would be measuring something other than the look.
-- **Current Claude output has moved past the first wave.** Purple buttons, gradient text, glass and fake window chrome hardly appear in 70 generated pages. The tells today are a template display font, one italic or coloured word in the headline, `A · B · C` meta lines, cream with a serif and terracotta, eyebrows, monospace labels and 01/02/03.
+All 11 AI pages designizer missed came from two prompts: 10 from "use the frontend-design skill" (0 of 10 caught) and one from "make it look less AI-generated" (10 of 11 caught). Plain prompts were caught 9 out of 9. The skill's pages don't have the default look, and flagging them would mean measuring something other than the look.
 
-The first held-out run did not pass, and the history is part of the result:
+Current Claude output has also moved past the first wave. Purple buttons, gradient text, glass and fake window chrome hardly appear in the 70 generated eval pages. The tells now are a template display font, one italic or coloured word in the headline, `A · B · C` meta lines, cream with a serif and terracotta, eyebrows, monospace labels and 01/02/03.
+
+The first held-out run missed the target. All three runs:
 
 | Version | Pages | Accuracy | Human pages flagged | Note |
 |---|---|---|---|---|
@@ -159,20 +126,28 @@ The full catalogue, with what counts as a reason to keep each one, is in [SKILL.
 
 ## How the evaluation works
 
-**AI pages.** 75 landing pages built by Claude Code with `claude -p` on a subscription. Each prompt is one line ("Build a landing page for a family dental clinic in Denver"). Each page comes from Opus, Sonnet or Haiku 5.5 with one of three prompts: plain, plain plus "make it look less AI-generated", or "use the frontend-design skill". Every model meets every variant equally often. Each page is generated in an empty temp directory with user settings switched off, so no personal instructions, hooks or plugins leak in. All prompts and the resulting files are in [`eval/ai.json`](eval/ai.json) and [`eval/ai/`](eval/ai/); `npm run generate` rebuilds missing ones. Five of them (`ex-01`…`ex-05`) only exist to give first-wave patterns an example screenshot and are not part of the eval; `ex-05` was asked for its palette outright.
+### AI pages
 
-**Human pages.** 70 sites: design studios, type foundries, publishers, product companies with in-house design teams, brands and personal portfolios. Every site was compared with its Wayback Machine snapshot from June 2024, and kept only if the current design already existed then, before AI-built sites were common. The exceptions are hard negatives such as Linear and Stripe, kept because in-house design teams made them. The repo stores only their URLs and the scores, never their code or screenshots ([`eval/human.json`](eval/human.json), [`eval/results.json`](eval/results.json)).
+75 landing pages built by Claude Code with `claude -p` on a subscription. Each prompt is one line ("Build a landing page for a family dental clinic in Denver"). Pages come from Opus, Sonnet or Haiku 5.5 with one of three prompts: plain, plain plus "make it look less AI-generated", or "use the frontend-design skill". Every model meets every variant equally often. Generation runs in an empty temp directory with user settings switched off, so no personal instructions, hooks or plugins leak in. All prompts and the resulting files are in [`eval/ai.json`](eval/ai.json) and [`eval/ai/`](eval/ai/); `npm run generate` rebuilds missing ones. Five of them (`ex-01`…`ex-05`) only exist to give first-wave patterns an example screenshot and are not part of the eval; `ex-05` was asked for its palette outright.
 
-**Protocol.** The commit history shows the order:
+### Human pages
+
+70 sites: design studios, type foundries, publishers, product companies with in-house design teams, brands and personal portfolios. Every site was compared with its Wayback Machine snapshot from June 2024, and kept only if the current design already existed then, before AI-built sites were common. The exceptions are hard negatives such as Linear and Stripe, kept because in-house design teams made them. The repo stores only their URLs and the scores, never their code or screenshots ([`eval/human.json`](eval/human.json), [`eval/results.json`](eval/results.json)).
+
+### Protocol
+
+The commit history shows this order:
 
 1. Rules were written against the dev split (10 AI + 10 human). The threshold was set to the lowest score at which no human dev page was flagged, and the detector was frozen ([3bc891d](../../commit/3bc891d)).
-2. One run on the held-out test split (30 + 30) scored 75% with 5 human pages flagged, below the target of 80% and at most 3.
+2. One run on the held-out test split (30 + 30) scored 75% with 5 human pages flagged, below the target (at least 80% accuracy, at most 3 human pages flagged).
 3. Using dev and test together as development data (80 pages), 12 patterns that fired on at least as many human as AI pages were left out of the score. The threshold stayed at 10. Frozen again ([9128f39](../../commit/9128f39)).
 4. A fresh split, test-b (30 + 30), was generated and picked only after that freeze ([0ff739d](../../commit/0ff739d)) and run once. The table above is that run. Between the freeze and the run, one fix went in for a rule that does not count toward the verdict (window dots next to a title).
 
-**Baselines.** [design-slop-cop](https://github.com/AdrianKrebs/design-slop-cop) (MIT, commit `e2fab6c`) and [impeccable](https://github.com/pbakaus/impeccable)'s in-page engine (Apache-2.0, `engine-v0.1.12`) run on the same loaded page as designizer, from [`eval/baselines.mjs`](eval/baselines.mjs). Neither has a single "this is AI" threshold that fits this task, so each gets the threshold that maximises its accuracy on the same development pages designizer was tuned on: dev for the first test run, dev + test for test-b.
+### Baselines
 
-**Reproduce.**
+[design-slop-cop](https://github.com/AdrianKrebs/design-slop-cop) (MIT, commit `e2fab6c`) and [impeccable](https://github.com/pbakaus/impeccable)'s in-page engine (Apache-2.0, `engine-v0.1.12`) run on the same loaded page as designizer, from [`eval/baselines.mjs`](eval/baselines.mjs). Neither has a single "this is AI" threshold that fits this task, so each gets the threshold that maximises its accuracy on the same development pages designizer was tuned on: dev for the first test run, dev + test for test-b.
+
+### Reproduce
 
 ```bash
 npm install
@@ -181,16 +156,16 @@ node cli.mjs eval --split test-b --baselines   # or dev, test, dev,test, all; --
 
 Human sites change, so a rerun on another day can differ by a page or two.
 
-**Limits.**
+### Limits
 
 - 30 + 30 pages give a margin of error of about ±10 percentage points on accuracy.
 - AI pages are single-file prototypes from one vendor's models. Pages from v0, Lovable or Bolt, deployed apps and other models are not in the set.
 - The human set is professional design. A small business site set in a free Google Font would score higher on patterns 1 and 2. That is why those two stay weak, even though no human page in the set used a template display font.
 - AI pages have no real photography, and human sites do. To keep that from doing the work, designizer has no rule about images.
-- The detector measures the look, but the eval labels pages by origin. A page generated with a careful design brief may not have the look at all, and then no detector should flag it (see the prompt-variant table).
+- The detector measures the look, but the eval labels pages by origin. A page generated with a careful design brief may not have the look at all, and then no detector should flag it (see the prompt breakdown under Results).
 
 ## Credits
 
-Pattern sources: [Impeccable's slop list](https://impeccable.style/slop), Adrian Krebs's [audit of 1,590 Show HN pages](https://www.adriankrebs.ch/blog/design-slop/), [Capital & Compute](https://capitalandcompute.net/blog/fix-ai-slop-design/) on the second wave, [Developers Digest](https://www.developersdigest.tech/blog/ai-design-slop-and-how-to-spot-it), [prg.sh](https://prg.sh/ramblings/Why-Your-AI-Keeps-Building-the-Same-Purple-Gradient-Website), [925studios](https://www.925studios.co/blog/ai-slop-design-tells), [CodeMySpec](https://codemyspec.com/blog/vibe-coded-websites-look-the-same), [vibecoded-design-tells](https://github.com/JCarterJohnson/vibecoded-design-tells), [ai-design-tells](https://github.com/hankimis/ai-design-tells), and Anthropic's [frontend-design](https://github.com/anthropics/skills) skill, which describes both waves of the look. Skill structure after [humanizer](https://github.com/blader/humanizer) by Siqi Chen (MIT).
+Pattern sources: [Impeccable's slop list](https://impeccable.style/slop), Adrian Krebs's [audit of 1,590 Show HN pages](https://www.adriankrebs.ch/blog/design-slop/), [Capital & Compute](https://capitalandcompute.net/blog/fix-ai-slop-design/) on the second wave, [Developers Digest](https://www.developersdigest.tech/blog/ai-design-slop-and-how-to-spot-it), [prg.sh](https://prg.sh/ramblings/Why-Your-AI-Keeps-Building-the-Same-Purple-Gradient-Website), [925studios](https://www.925studios.co/blog/ai-slop-design-tells), [CodeMySpec](https://codemyspec.com/blog/vibe-coded-websites-look-the-same), [vibecoded-design-tells](https://github.com/JCarterJohnson/vibecoded-design-tells), [ai-design-tells](https://github.com/hankimis/ai-design-tells), and Anthropic's [frontend-design](https://github.com/anthropics/skills) skill, whose current version describes the second-wave look. Skill structure after [humanizer](https://github.com/blader/humanizer) by Siqi Chen (MIT).
 
 MIT licence.
