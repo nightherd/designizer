@@ -68,7 +68,7 @@ async function shoot(page, file, only) {
 }
 
 function sets(split) {
-  const ai = read(join(ROOT, 'eval/ai.json')).map(e => ({ id: e.id, label: 'ai', split: e.split, target: join(ROOT, 'eval', e.file) }));
+  const ai = read(join(ROOT, 'eval/ai.json')).map(e => ({ id: e.id, label: 'ai', split: e.split, variant: e.variant, target: join(ROOT, 'eval', e.file) }));
   const human = read(join(ROOT, 'eval/human.json')).map(e => ({ id: e.id, label: 'human', split: e.split, target: e.url, hard: e.hard }));
   return [...ai, ...human].filter(e => split === 'all' || split.split(',').includes(e.split));
 }
@@ -87,7 +87,7 @@ async function evaluate() {
       try {
         ({ page, close } = await open(browser, e.target));
         const r = await scanPage(page);
-        const row = { label: e.label, split: e.split, score: r.score, verdict: r.verdict, fired: r.fired.map(f => f.id), strength: Object.fromEntries(r.fired.map(f => [f.id, f.strength])), url: e.label === 'human' ? e.target : undefined, scanned: new Date().toISOString().slice(0, 10) };
+        const row = { label: e.label, split: e.split, variant: e.variant, score: r.score, verdict: r.verdict, fired: r.fired.map(f => f.id), strength: Object.fromEntries(r.fired.map(f => [f.id, f.strength])), url: e.label === 'human' ? e.target : undefined, scanned: new Date().toISOString().slice(0, 10) };
         if (baselines) {
           row.baselines = {};
           for (const [name, fn] of Object.entries(baselines)) {
@@ -145,6 +145,12 @@ function report(results, split) {
     md.push(`| ${t.name} | ${(s.acc * 100).toFixed(0)}% | ${s.tp} / ${s.ai} | ${s.fp} / ${s.hu} | ${t.note} |`);
     text += `${t.name.padEnd(12)} accuracy ${(s.acc * 100).toFixed(1)}%  caught ${s.tp}/${s.ai}  false alarms ${s.fp}/${s.hu}  (${t.note})\n`;
   }
+  const variants = ['plain', 'less-ai', 'skill'].map(v => {
+    const vs = rows.filter(([, r]) => r.variant === v);
+    return { v, caught: vs.filter(([, r]) => r.verdict === 'ai').length, n: vs.length };
+  });
+  md.push('', '| AI prompt variant | Caught by designizer |', '|---|---|', ...variants.map(x => `| ${x.v} | ${x.caught} / ${x.n} |`));
+  text += '\nby prompt variant: ' + variants.map(x => `${x.v} ${x.caught}/${x.n}`).join(', ') + '\n';
   const per = new Map();
   for (const [, r] of rows) for (const id of r.fired) { const p = per.get(id) || { ai: 0, human: 0 }; p[r.label]++; per.set(id, p); }
   const pat = ['', '| Pattern | AI pages | Human pages |', '|---|---|---|',
@@ -180,6 +186,13 @@ async function examples() {
     index.push({ id, n: p.n, file, page: e.id });
     console.log(`${id}: ${file} from ${e.id}`);
   }
+  // Hero image for the README: the top of the highest-scoring dev page with every outline on.
+  const top = ai.filter(e => e.split === 'dev' && results[e.id]).sort((a, b) => results[b.id].score - results[a.id].score)[0];
+  const { page, close } = await open(browser, join(ROOT, 'eval', top.file));
+  await scanPage(page);
+  await page.evaluate(() => window.designizer.overlay());
+  await page.screenshot({ path: join(ROOT, 'examples/overview.jpg'), clip: { x: 0, y: 0, width: 1440, height: 1000 }, type: 'jpeg', quality: 72 });
+  await close();
   await browser.close();
   writeFileSync(join(ROOT, 'examples/index.json'), JSON.stringify(index, null, 2) + '\n');
 }

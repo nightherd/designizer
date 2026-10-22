@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Holdfast Energy — Home batteries for Vermont and New Hampshire</title>
+<meta name="description" content="Holdfast Energy installs home batteries across Vermont and New Hampshire, so your furnace, well pump and fridge keep running when the power goes out.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --storm: #1E2B45;
+    --storm-deep: #15203A;
+    --snow: #EDF1F4;
+    --white: #FFFFFF;
+    --amber: #F4B03A;
+    --amber-soft: #FBE3B0;
+    --spruce: #2E5A4F;
+    --ink: #16202F;
+    --ink-2: #4A5668;
+    --frost: #C9D3DC;
+    --on-storm: #DCE3EC;
+    --on-storm-2: #9DAABD;
+
+    --step--1: 0.875rem;
+    --step-0: 1.0625rem;
+    --step-1: 1.3125rem;
+    --step-2: 1.75rem;
+    --step-3: 2.5rem;
+    --step-4: clamp(2.6rem, 5.4vw, 4.6rem);
+
+    --gutter: clamp(16px, 4vw, 48px);
+    --max: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--snow);
+    color: var(--ink);
+    font-family: "Archivo", system-ui, sans-serif;
+    font-variation-settings: "wdth" 100;
+    font-size: var(--step-0);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 2px; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+  .display {
+    font-variation-settings: "wdth" 125;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.02;
+  }
+  h2.display { font-size: var(--step-3); margin: 0 0 1rem; }
+  .lede { font-size: var(--step-1); line-height: 1.45; color: var(--ink-2); max-width: 36ch; margin: 0; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .9rem 1.4rem;
+    border-radius: 6px;
+    font: inherit; font-weight: 700;
+    font-variation-settings: "wdth" 110;
+    text-decoration: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  .btn-amber { background: var(--amber); color: var(--storm-deep); }
+  .btn-amber:hover { background: #FFC457; }
+  .btn-line { border-color: currentColor; color: inherit; background: transparent; }
+  .btn-line:hover { background: rgba(255,255,255,.08); }
+
+  /* Header */
+  .site-head { background: var(--storm); color: var(--on-storm); }
+  .site-head .wrap {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding-top: 1.1rem; padding-bottom: 1.1rem;
+  }
+  .brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--white); }
+  .brand-mark { width: 30px; height: 30px; }
+  .brand-name { font-variation-settings: "wdth" 125; font-weight: 800; font-size: 1.2rem; letter-spacing: .01em; }
+  .head-links { display: flex; align-items: center; gap: 1.5rem; }
+  .head-links nav { display: flex; gap: 1.4rem; font-size: var(--step--1); }
+  .head-links nav a { text-decoration: none; color: var(--on-storm-2); }
+  .head-links nav a:hover { color: var(--white); }
+  .phone { font-weight: 700; text-decoration: none; color: var(--white); font-variant-numeric: tabular-nums; }
+  @media (max-width: 860px) { .head-links nav { display: none; } }
+  @media (max-width: 520px) { .head-links .btn { display: none; } }
+
+  /* Hero */
+  .hero { background: var(--storm); color: var(--on-storm); padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(3rem, 7vw, 6rem); position: relative; overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+  .hero h1 { color: var(--white); font-size: var(--step-4); margin: 0 0 1.4rem; max-width: 12ch; }
+  .hero .lede { color: var(--on-storm); }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+  .hero-facts { margin: 2.6rem 0 0; padding: 1.4rem 0 0; border-top: 1px solid rgba(220,227,236,.18); display: grid; grid-template-columns: repeat(3, auto); gap: 1.6rem; justify-content: start; font-size: var(--step--1); color: var(--on-storm-2); }
+  .hero-facts dt { color: var(--white); font-weight: 700; font-size: var(--step-0); }
+  .hero-facts dd { margin: 0; }
+  .hero-facts div { display: flex; flex-direction: column; gap: .1rem; }
+  @media (max-width: 960px) { .hero .wrap { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .hero-facts { grid-template-columns: 1fr 1fr; } }
+
+  /* Outage planner */
+  .planner {
+    background: var(--storm-deep);
+    border: 1px solid rgba(220,227,236,.14);
+    border-radius: 14px;
+    padding: clamp(1.2rem, 3vw, 2rem);
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    gap: 1.6rem;
+  }
+  .planner h2 { font-size: var(--step-1); color: var(--white); margin: 0 0 .3rem; font-variation-settings: "wdth" 115; font-weight: 750; }
+  .planner > div > p { margin: 0 0 1.1rem; font-size: var(--step--1); color: var(--on-storm-2); }
+  .loads { list-style: none; margin: 0; padding: 0; display: grid; gap: .35rem; }
+  .load label {
+    display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: .7rem;
+    padding: .55rem .7rem; border-radius: 6px; cursor: pointer;
+    color: var(--on-storm);
+  }
+  .load label:hover { background: rgba(255,255,255,.04); }
+  .load input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .tick {
+    width: 22px; height: 22px; border-radius: 4px; border: 2px solid var(--on-storm-2);
+    display: grid; place-items: center;
+  }
+  .tick svg { width: 13px; opacity: 0; }
+  .load input:checked + .tick { background: var(--amber); border-color: var(--amber); }
+  .load input:checked + .tick svg { opacity: 1; }
+  .load input:focus-visible + .tick { outline: 3px solid var(--amber); outline-offset: 2px; }
+  .load .w { font-size: var(--step--1); color: var(--on-storm-2); font-variant-numeric: tabular-nums; }
+
+  .size { display: flex; gap: .4rem; margin-top: 1.1rem; flex-wrap: wrap; }
+  .size legend { font-size: var(--step--1); color: var(--on-storm-2); margin-bottom: .45rem; padding: 0; }
+  .size fieldset { border: 0; padding: 0; margin: 0; }
+  .seg { display: inline-flex; border: 1px solid rgba(220,227,236,.25); border-radius: 6px; overflow: hidden; }
+  .seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .seg label { padding: .45rem .8rem; font-size: var(--step--1); cursor: pointer; color: var(--on-storm); font-variant-numeric: tabular-nums; }
+  .seg input:checked + label { background: var(--on-storm); color: var(--storm-deep); font-weight: 700; }
+  .seg input:focus-visible + label { outline: 3px solid var(--amber); outline-offset: -3px; }
+
+  .cell-col { display: flex; flex-direction: column; align-items: center; gap: .8rem; }
+  .cell {
+    position: relative;
+    width: 84px; flex: 1; min-height: 300px;
+    border: 3px solid var(--on-storm);
+    border-radius: 12px;
+    padding: 5px;
+    margin-top: 12px;
+  }
+  .cell::before {
+    content: ""; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    width: 32px; height: 9px; background: var(--on-storm); border-radius: 3px 3px 0 0;
+  }
+  .cell-inner { position: relative; height: 100%; border-radius: 6px; overflow: hidden; background: rgba(255,255,255,.04); }
+  .fill {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 40px 6px rgba(244,176,58,.35);
+    transition: height .7s cubic-bezier(.3,.7,.2,1), background-color .4s;
+  }
+  .fill.low { background: #E07B4A; }
+  .ticks { position: absolute; inset: 0; pointer-events: none; }
+  .ticks span { position: absolute; left: 0; right: 0; border-top: 1px dashed rgba(220,227,236,.45); }
+  .ticks span::after { content: attr(data-l); position: absolute; left: 6px; top: -1.45em; font-size: .72rem; font-weight: 600; color: #fff; mix-blend-mode: difference; white-space: nowrap; }
+  .readout { text-align: center; }
+  .readout output { display: block; color: var(--white); font-variation-settings: "wdth" 125; font-weight: 800; font-size: 1.6rem; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .readout small { display: block; color: var(--on-storm-2); font-size: .78rem; margin-top: .3rem; }
+  .planner-note { grid-column: 1 / -1; margin: 0; font-size: .82rem; color: var(--on-storm-2); border-top: 1px solid rgba(220,227,236,.12); padding-top: 1rem; }
+  @media (max-width: 520px) {
+    .planner { grid-template-columns: 1fr 96px; gap: 1rem; }
+    .cell { width: 64px; }
+    .readout output { font-size: 1.25rem; }
+  }
+
+  /* Sections */
+  section.band { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
+  section.band + section.band { border-top: 1px solid var(--frost); }
+  .split { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+
+  /* Outage timeline */
+  .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 6.2rem; top: .6rem; bottom: .6rem; width: 2px; background: var(--frost); }
+  .timeline li { display: grid; grid-template-columns: 5.4rem 1fr; gap: 1.8rem; padding: 0 0 1.8rem; position: relative; }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before { content: ""; position: absolute; left: calc(6.2rem - 5px); top: .45rem; width: 12px; height: 12px; border-radius: 50%; background: var(--snow); border: 2px solid var(--storm); }
+  .timeline li.lit::before { background: var(--amber); border-color: var(--amber); }
+  .timeline time { font-weight: 800; font-variation-settings: "wdth" 115; font-variant-numeric: tabular-nums; text-align: right; color: var(--storm); }
+  .timeline h3 { margin: 0 0 .25rem; font-size: var(--step-0); font-weight: 700; }
+  .timeline p { margin: 0; color: var(--ink-2); max-width: 52ch; }
+
+  /* Steps */
+  .steps { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; counter-reset: s; }
+  .steps li { padding: 0 1.6rem 0 0; border-top: 3px solid var(--storm); padding-top: 1.1rem; counter-increment: s; }
+  .steps li::before { content: counter(s); display: block; font-variation-settings: "wdth" 125; font-weight: 800; font-size: var(--step-2); line-height: 1; color: var(--storm); margin-bottom: .8rem; }
+  .steps h3 { margin: 0 0 .4rem; font-size: var(--step-0); }
+  .steps p { margin: 0; color: var(--ink-2); font-size: .97rem; }
+  .steps .when { display: block; margin-top: .7rem; font-size: var(--step--1); color: var(--spruce); font-weight: 600; }
+  @media (max-width: 860px) { .steps { grid-template-columns: 1fr 1fr; row-gap: 2.2rem; } }
+  @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+
+  /* Comparison */
+  .table-wrap { overflow-x: auto; margin-top: 2.2rem; border: 1px solid var(--frost); border-radius: 10px; background: var(--white); }
+  table { width: 100%; border-collapse: collapse; min-width: 620px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 1rem 1.2rem; vertical-align: top; }
+  thead th { font-size: var(--step--1); font-weight: 600; color: var(--ink-2); border-bottom: 1px solid var(--frost); }
+  tbody th { font-weight: 700; }
+  tbody th span { display: block; font-weight: 400; font-size: var(--step--1); color: var(--ink-2); }
+  tbody tr + tr > * { border-top: 1px solid var(--snow); }
+  .fit { color: var(--spruce); font-weight: 600; }
+  .fine { font-size: var(--step--1); color: var(--ink-2); margin: 1rem 0 0; max-width: 70ch; }
+
+  /* Quote */
+  .quote { background: var(--spruce); color: #E8F0EC; }
+  .quote .wrap { display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: end; }
+  .quote blockquote { margin: 0; }
+  .quote blockquote p { font-variation-settings: "wdth" 112; font-weight: 600; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.25; margin: 0; max-width: 30ch; color: var(--white); }
+  .quote figcaption { margin-top: 1.4rem; color: #BFD3CA; }
+  .quote figcaption b { color: var(--white); }
+  .quote dl { margin: 0; display: grid; gap: 1rem; min-width: 200px; }
+  .quote dt { font-size: var(--step--1); color: #BFD3CA; }
+  .quote dd { margin: 0; font-weight: 800; font-variation-settings: "wdth" 120; font-size: var(--step-1); color: var(--white); }
+  @media (max-width: 760px) { .quote .wrap { grid-template-columns: 1fr; } }
+
+  /* Booking */
+  .book .split { grid-template-columns: 1fr 1.1fr; }
+  @media (max-width: 860px) { .book .split { grid-template-columns: 1fr; } }
+  .areas { margin-top: 1.8rem; color: var(--ink-2); font-size: .97rem; max-width: 46ch; }
+  .areas b { color: var(--ink); }
+  form { background: var(--white); border: 1px solid var(--frost); border-radius: 10px; padding: clamp(1.2rem, 3vw, 2rem); display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .field { display: grid; gap: .35rem; }
+  .field.full { grid-column: 1 / -1; }
+  .field label, .field legend { font-weight: 600; font-size: .95rem; }
+  .field .hint { font-size: var(--step--1); color: var(--ink-2); }
+  input[type=text], input[type=tel], input[type=email], select {
+    font: inherit; padding: .7rem .8rem; border: 1.5px solid var(--frost); border-radius: 6px; background: var(--white); color: var(--ink); width: 100%;
+  }
+  input:focus-visible, select:focus-visible { outline: 3px solid var(--amber); outline-offset: 1px; border-color: var(--storm); }
+  input[aria-invalid=true] { border-color: #B23A2A; }
+  .err { color: #B23A2A; font-size: var(--step--1); min-height: 0; }
+  .radios { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; border: 0; padding: 0; margin: 0; }
+  .radios legend { margin-bottom: .45rem; }
+  .radios label { display: flex; align-items: center; gap: .4rem; font-weight: 400; }
+  .radios input { accent-color: var(--storm); width: 18px; height: 18px; }
+  form .btn { grid-column: 1 / -1; justify-content: center; background: var(--storm); color: var(--white); }
+  form .btn:hover { background: var(--storm-deep); }
+  .form-foot { grid-column: 1 / -1; margin: 0; font-size: var(--step--1); color: var(--ink-2); }
+  .done { grid-column: 1 / -1; display: none; }
+  .done h3 { margin: 0 0 .4rem; font-variation-settings: "wdth" 120; font-weight: 800; font-size: var(--step-2); }
+  .done p { margin: 0; color: var(--ink-2); }
+  form.sent > :not(.done) { display: none; }
+  form.sent .done { display: block; }
+  @media (max-width: 520px) { form { grid-template-columns: 1fr; } }
+
+  /* Footer */
+  footer { background: var(--storm); color: var(--on-storm-2); padding: 2.5rem 0; font-size: var(--step--1); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; }
+  footer a { color: var(--on-storm); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .fill { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Holdfast Energy home">
+      <svg class="brand-mark" viewBox="0 0 30 30" aria-hidden="true">
+        <path d="M3 14 15 4l12 10v13H3z" fill="none" stroke="#DCE3EC" stroke-width="2.4" stroke-linejoin="round"/>
+        <rect x="11" y="13" width="8" height="10" rx="1.5" fill="#F4B03A"/>
+        <rect x="13" y="11" width="4" height="2" fill="#F4B03A"/>
+      </svg>
+      <span class="brand-name">Holdfast</span>
+    </a>
+    <div class="head-links">
+      <nav aria-label="Main">
+        <a href="#outage">How backup works</a>
+        <a href="#process">Install process</a>
+        <a href="#batteries">Batteries</a>
+      </nav>
+      <a class="phone" href="tel:+18025550148">(802) 555-0148</a>
+      <a class="btn btn-amber" href="#book">Book a site visit</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1 class="display">Keep the heat on when the lines come down.</h1>
+        <p class="lede">We install home batteries across Vermont and New Hampshire, so your furnace, well pump and fridge keep running through the next ice storm. No generator to fuel or start.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-amber" href="#book">Book a free site visit</a>
+          <a class="btn btn-line" href="#outage">See what happens in an outage</a>
+        </div>
+        <dl class="hero-facts">
+          <div><dt>640+</dt><dd>homes installed since 2017</dd></div>
+          <div><dt>1 day</dt><dd>typical install time</dd></div>
+          <div><dt>10 years</dt><dd>parts and labor warranty</dd></div>
+        </dl>
+      </div>
+
+      <div class="planner" aria-labelledby="planner-title">
+        <div>
+          <h2 id="planner-title">How long would your house last?</h2>
+          <p>Pick what you'd want running during an outage.</p>
+          <ul class="loads" id="loads"></ul>
+          <div class="size">
+            <fieldset>
+              <legend>Battery size</legend>
+              <div class="seg" role="radiogroup">
+                <input type="radio" name="kwh" id="k1" value="13.5" checked><label for="k1">13.5 kWh</label>
+                <input type="radio" name="kwh" id="k2" value="27"><label for="k2">27 kWh</label>
+                <input type="radio" name="kwh" id="k3" value="40.5"><label for="k3">40.5 kWh</label>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <div class="cell-col">
+          <div class="cell" aria-hidden="true">
+            <div class="cell-inner">
+              <div class="fill" id="fill"></div>
+              <div class="ticks">
+                <span style="bottom:33.33%" data-l="1 day"></span>
+                <span style="bottom:66.66%" data-l="2 days"></span>
+              </div>
+            </div>
+          </div>
+          <div class="readout">
+            <output id="hours" for="loads" aria-live="polite">—</output>
+            <small id="draw">—</small>
+          </div>
+        </div>
+        <p class="planner-note">Estimates use average winter draw and no solar recharging; the gauge tops out at 3 days. With solar panels, most sunny days refill the battery before dark. We size your system from your actual panel and appliance data at the site visit.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="outage">
+    <div class="wrap split">
+      <div>
+        <h2 class="display">What happens when the grid drops</h2>
+        <p class="lede">Most of our customers sleep through it. Here's the sequence, from the moment a tree hits the line on your road.</p>
+      </div>
+      <ol class="timeline">
+        <li><time>0 sec</time><div><h3>The grid goes down</h3><p>The battery's gateway detects the voltage loss and disconnects your house from the street, so no power flows back onto lines that crews are repairing.</p></div></li>
+        <li class="lit"><time>&lt; 1 sec</time><div><h3>Your house switches over</h3><p>Lights may blink once. Clocks, routers and the furnace controller keep going. Nothing to pull-start, nothing to refuel.</p></div></li>
+        <li class="lit"><time>Hours</time><div><h3>You keep living normally</h3><p>The app shows how much charge is left and which circuits are drawing power. You can shed loads, like the dryer, to stretch it further.</p></div></li>
+        <li class="lit"><time>Morning</time><div><h3>Solar tops it up</h3><p>If you have panels, they keep charging the battery during the outage, even with the grid down.</p></div></li>
+        <li><time>Restore</time><div><h3>The grid comes back</h3><p>The gateway reconnects your house automatically, then recharges the battery so it's ready for the next storm.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band" id="process">
+    <div class="wrap">
+      <h2 class="display">From first call to switched on</h2>
+      <p class="lede">Usually six to ten weeks, most of it waiting on permits and the utility. We handle that paperwork.</p>
+      <ol class="steps">
+        <li><h3>Site visit</h3><p>An electrician looks at your panel, meter and wall space, and asks which circuits matter most to you.</p><span class="when">About an hour, free</span></li>
+        <li><h3>Design and quote</h3><p>A fixed price and a one-line diagram showing exactly what will be backed up. No sales follow-up calls.</p><span class="when">Within a week</span></li>
+        <li><h3>Permits and utility</h3><p>We file the electrical permit and the interconnection application with your utility, and enroll you in any battery program it offers.</p><span class="when">3 to 8 weeks</span></li>
+        <li><h3>Install day</h3><p>Two electricians, one day. Power is off for about three hours. We walk you through the app before we leave.</p><span class="when">1 day</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band" id="batteries">
+    <div class="wrap">
+      <h2 class="display">Batteries we install</h2>
+      <p class="lede">We install three systems and recommend whichever fits your house. Most homes need one or two units.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">Battery</th><th scope="col">Storage per unit</th><th scope="col">Continuous power</th><th scope="col">Best for</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Tesla Powerwall 3<span>Built-in solar inverter</span></th><td>13.5 kWh</td><td>11.5 kW</td><td class="fit">New solar plus battery installs</td></tr>
+            <tr><th scope="row">FranklinWH aPower 2<span>Generator input available</span></th><td>15 kWh</td><td>10 kW</td><td class="fit">Whole-home backup with a well pump</td></tr>
+            <tr><th scope="row">Enphase IQ Battery 5P<span>Modular, stacks in 5 kWh steps</span></th><td>5 kWh</td><td>3.84 kW</td><td class="fit">Adding storage to existing Enphase solar</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fine">Specs are manufacturer figures per unit. The federal residential clean energy credit ended for systems installed after December 31, 2025. We'll check current Vermont and New Hampshire utility programs for your address at the site visit.</p>
+    </div>
+  </section>
+
+  <section class="band quote">
+    <div class="wrap">
+      <figure style="margin:0">
+        <blockquote><p>"The December storm took our road out for four days. We kept the boiler, the well and the freezer running, and never once went outside to check a generator."</p></blockquote>
+        <figcaption><b>Dana Whitcomb</b>, Calais, Vermont</figcaption>
+      </figure>
+      <dl>
+        <div><dt>Outage length</dt><dd>4 days, 6 hours</dd></div>
+        <div><dt>System</dt><dd>2 × 13.5 kWh + solar</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="band book" id="book">
+    <div class="wrap split">
+      <div>
+        <h2 class="display">Book a free site visit</h2>
+        <p class="lede">An electrician comes to your house, looks at your panel, and tells you what a battery would actually back up. No cost and no obligation.</p>
+        <p class="areas"><b>Where we work:</b> central and northern Vermont, the Upper Valley, and western New Hampshire. If you're unsure whether you're in range, call <a href="tel:+18025550148">(802) 555-0148</a>.</p>
+      </div>
+      <form id="bookForm" novalidate>
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+          <span class="err" id="name-err"></span>
+        </div>
+        <div class="field">
+          <label for="tel">Phone</label>
+          <input type="tel" id="tel" name="tel" autocomplete="tel" required>
+          <span class="err" id="tel-err"></span>
+        </div>
+        <div class="field full">
+          <label for="addr">Street address and town</label>
+          <input type="text" id="addr" name="addr" autocomplete="street-address" required>
+          <span class="err" id="addr-err"></span>
+        </div>
+        <fieldset class="field full radios">
+          <legend>Do you have solar panels?</legend>
+          <label><input type="radio" name="solar" value="yes"> Yes</label>
+          <label><input type="radio" name="solar" value="planned"> Planning to</label>
+          <label><input type="radio" name="solar" value="no" checked> No</label>
+        </fieldset>
+        <div class="field full">
+          <label for="heat">How do you heat your home?</label>
+          <select id="heat" name="heat">
+            <option>Oil or propane furnace</option>
+            <option>Oil or propane boiler</option>
+            <option>Heat pumps</option>
+            <option>Wood or pellet stove</option>
+            <option>Something else</option>
+          </select>
+          <span class="hint">This tells us how much power your heating needs during an outage.</span>
+        </div>
+        <button class="btn" type="submit">Book a site visit</button>
+        <p class="form-foot">We'll call within one business day to pick a time.</p>
+        <div class="done" role="status" tabindex="-1">
+          <h3>Site visit requested</h3>
+          <p>Thanks. We'll call you within one business day to pick a time. If a storm is on the way, call us at (802) 555-0148.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Holdfast Energy, 42 Barre Street, Montpelier, VT. Licensed master electricians in VT and NH.</span>
+    <span><a href="tel:+18025550148">(802) 555-0148</a> &nbsp; <a href="mailto:hello@holdfast.example">hello@holdfast.example</a></span>
+  </div>
+</footer>
+
+<script>
+  // Average winter draw in watts (duty cycle included)
+  const LOADS = [
+    { id: 'fridge', name: 'Refrigerator', w: 150, on: true },
+    { id: 'furnace', name: 'Furnace or boiler controls', w: 350, on: true },
+    { id: 'well', name: 'Well pump', w: 250, on: true },
+    { id: 'lights', name: 'Lights, LED throughout', w: 80, on: true },
+    { id: 'net', name: 'Internet and phone charging', w: 40, on: true },
+    { id: 'freezer', name: 'Chest freezer', w: 80, on: false },
+    { id: 'sump', name: 'Sump pump', w: 120, on: false },
+    { id: 'hp', name: 'Heat pump, one zone', w: 900, on: false },
+  ];
+  const MAX_H = 72;
+  const list = document.getElementById('loads');
+  const tickSvg = '<svg viewBox="0 0 13 10" aria-hidden="true"><path d="M1 5l4 4 7-8" fill="none" stroke="#15203A" stroke-width="2.4"/></svg>';
+
+  LOADS.forEach(l => {
+    const li = document.createElement('li');
+    li.className = 'load';
+    li.innerHTML = `<label><input type="checkbox" value="${l.w}" ${l.on ? 'checked' : ''}><span class="tick">${tickSvg}</span><span>${l.name}</span><span class="w">${l.w} W</span></label>`;
+    list.appendChild(li);
+  });
+
+  const fill = document.getElementById('fill');
+  const out = document.getElementById('hours');
+  const draw = document.getElementById('draw');
+
+  function fmt(h) {
+    if (!isFinite(h)) return 'Pick something';
+    if (h >= 72) return '3+ days';
+    const d = Math.floor(h / 24), r = Math.round(h % 24);
+    if (d === 0) return `${Math.round(h)} hours`;
+    return `${d} day${d > 1 ? 's' : ''}${r ? ` ${r} h` : ''}`;
+  }
+
+  function update() {
+    const watts = [...list.querySelectorAll('input:checked')].reduce((s, i) => s + +i.value, 0);
+    const kwh = +document.querySelector('input[name=kwh]:checked').value;
+    const hours = watts ? (kwh * 1000) / watts : Infinity;
+    const pct = watts ? Math.min(hours / MAX_H, 1) * 100 : 0;
+    fill.style.height = pct + '%';
+    fill.classList.toggle('low', hours < 12);
+    out.textContent = fmt(hours);
+    draw.textContent = watts ? `at ${watts.toLocaleString()} W` : 'nothing selected';
+  }
+
+  document.querySelector('.planner').addEventListener('change', update);
+  update();
+
+  // Booking form
+  const form = document.getElementById('bookForm');
+  const rules = {
+    name: v => v.trim() ? '' : 'Enter your name so we know who to ask for.',
+    tel: v => v.replace(/\D/g, '').length >= 10 ? '' : 'Enter a 10-digit phone number, including area code.',
+    addr: v => v.trim().length > 4 ? '' : 'Enter your street address and town so we can check you are in our area.',
+  };
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let first = null;
+    for (const [id, check] of Object.entries(rules)) {
+      const el = document.getElementById(id);
+      const msg = check(el.value);
+      document.getElementById(id + '-err').textContent = msg;
+      el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      if (msg) el.setAttribute('aria-describedby', id + '-err'); else el.removeAttribute('aria-describedby');
+      if (msg && !first) first = el;
+    }
+    if (first) { first.focus(); return; }
+    form.classList.add('sent');
+    form.querySelector('.done').focus();
+  });
+</script>
+</body>
+</html>

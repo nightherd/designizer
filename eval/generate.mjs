@@ -107,6 +107,18 @@ const plan = PRODUCTS.map((product, i) => {
   };
 });
 
+// Outside the eval: prompts that call up the first-wave look, so every pattern has an example screenshot.
+const EXAMPLES = [
+  'an AI writing assistant, with a dark futuristic look',
+  'a crypto trading terminal for day traders',
+  'a developer API for sending emails, with a code sample in the hero',
+  'a Web3 NFT marketplace',
+];
+plan.push(...EXAMPLES.map((product, i) => ({
+  id: `ex-${String(i + 1).padStart(2, '0')}`, split: 'examples', model: ['sonnet', 'haiku'][i % 2], variant: 'plain', product,
+  prompt: VARIANTS.plain(product),
+})));
+
 const manifest = existsSync(MANIFEST) ? JSON.parse(readFileSync(MANIFEST, 'utf8')) : [];
 const done = new Set(manifest.map(e => e.id));
 const todo = plan.filter(e => !done.has(e.id)).slice(0, Number(process.argv[2]) || Infinity);

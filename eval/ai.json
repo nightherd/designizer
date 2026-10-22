@@ -895,5 +895,70 @@
     ],
     "file": "ai/ai-69.html",
     "generated": "2026-10-22"
+  },
+  {
+    "id": "ai-70",
+    "split": "test-b",
+    "model": "opus",
+    "variant": "skill",
+    "product": "a home battery installer",
+    "prompt": "Use the frontend-design skill to build a landing page for a home battery installer. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-opus-5-5"
+    ],
+    "file": "ai/ai-70.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ex-01",
+    "split": "examples",
+    "model": "sonnet",
+    "variant": "plain",
+    "product": "an AI writing assistant, with a dark futuristic look",
+    "prompt": "Build a landing page for an AI writing assistant, with a dark futuristic look. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ex-01.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ex-02",
+    "split": "examples",
+    "model": "haiku",
+    "variant": "plain",
+    "product": "a crypto trading terminal for day traders",
+    "prompt": "Build a landing page for a crypto trading terminal for day traders. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ex-02.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ex-03",
+    "split": "examples",
+    "model": "sonnet",
+    "variant": "plain",
+    "product": "a developer API for sending emails, with a code sample in the hero",
+    "prompt": "Build a landing page for a developer API for sending emails, with a code sample in the hero. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ex-03.html",
+    "generated": "2026-10-22"
+  },
+  {
+    "id": "ex-04",
+    "split": "examples",
+    "model": "haiku",
+    "variant": "plain",
+    "product": "a Web3 NFT marketplace",
+    "prompt": "Build a landing page for a Web3 NFT marketplace. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-haiku-5-5"
+    ],
+    "file": "ai/ex-04.html",
+    "generated": "2026-10-22"
   }
 ]

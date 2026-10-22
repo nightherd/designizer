@@ -1,0 +1,204 @@
+[
+  {
+    "id": "default-sans",
+    "n": 1,
+    "file": "examples/01-default-sans.jpg",
+    "page": "ai-02"
+  },
+  {
+    "id": "trendy-font",
+    "n": 2,
+    "file": "examples/02-trendy-font.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "accent-word",
+    "n": 3,
+    "file": "examples/03-accent-word.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "eyebrow",
+    "n": 4,
+    "file": "examples/04-eyebrow.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "tracked-caps",
+    "n": 5,
+    "file": "examples/05-tracked-caps.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "mono-label",
+    "n": 6,
+    "file": "examples/06-mono-label.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "numbered",
+    "n": 7,
+    "file": "examples/07-numbered.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "meta-string",
+    "n": 8,
+    "file": "examples/08-meta-string.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "arrow-links",
+    "n": 9,
+    "file": "examples/09-arrow-links.jpg",
+    "page": "ai-37"
+  },
+  {
+    "id": "type-scale",
+    "n": 10,
+    "file": "examples/10-type-scale.jpg",
+    "page": "ai-04"
+  },
+  {
+    "id": "crushed-tracking",
+    "n": 11,
+    "file": "examples/11-crushed-tracking.jpg",
+    "page": "ai-10"
+  },
+  {
+    "id": "purple",
+    "n": 12,
+    "file": "examples/12-purple.jpg",
+    "page": "ai-11"
+  },
+  {
+    "id": "gradient-text",
+    "n": 13,
+    "file": "examples/13-gradient-text.jpg",
+    "page": "ex-01"
+  },
+  {
+    "id": "gradients",
+    "n": 14,
+    "file": "examples/14-gradients.jpg",
+    "page": "ai-02"
+  },
+  {
+    "id": "dark-glow",
+    "n": 15,
+    "file": "examples/15-dark-glow.jpg",
+    "page": "ai-19"
+  },
+  {
+    "id": "warm-editorial",
+    "n": 16,
+    "file": "examples/16-warm-editorial.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "dark-acid",
+    "n": 17,
+    "file": null
+  },
+  {
+    "id": "card-kit",
+    "n": 18,
+    "file": "examples/18-card-kit.jpg",
+    "page": "ai-28"
+  },
+  {
+    "id": "side-stripe",
+    "n": 19,
+    "file": "examples/19-side-stripe.jpg",
+    "page": "ai-09"
+  },
+  {
+    "id": "nested-cards",
+    "n": 20,
+    "file": "examples/20-nested-cards.jpg",
+    "page": "ai-03"
+  },
+  {
+    "id": "glass",
+    "n": 21,
+    "file": "examples/21-glass.jpg",
+    "page": "ai-39"
+  },
+  {
+    "id": "decor",
+    "n": 22,
+    "file": "examples/22-decor.jpg",
+    "page": "ai-07"
+  },
+  {
+    "id": "hero",
+    "n": 23,
+    "file": "examples/23-hero.jpg",
+    "page": "ai-11"
+  },
+  {
+    "id": "icon-cards",
+    "n": 24,
+    "file": "examples/24-icon-cards.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "stat-row",
+    "n": 25,
+    "file": "examples/25-stat-row.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "faq",
+    "n": 26,
+    "file": "examples/26-faq.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "broadsheet",
+    "n": 27,
+    "file": "examples/27-broadsheet.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "fake-window",
+    "n": 28,
+    "file": null
+  },
+  {
+    "id": "uniform-spacing",
+    "n": 29,
+    "file": "examples/29-uniform-spacing.jpg",
+    "page": "ai-05"
+  },
+  {
+    "id": "reveal",
+    "n": 30,
+    "file": "examples/30-reveal.jpg",
+    "page": "ai-01"
+  },
+  {
+    "id": "infinite-motion",
+    "n": 31,
+    "file": "examples/31-infinite-motion.jpg",
+    "page": "ai-04"
+  },
+  {
+    "id": "bounce",
+    "n": 32,
+    "file": "examples/32-bounce.jpg",
+    "page": "ai-17"
+  },
+  {
+    "id": "emoji",
+    "n": 33,
+    "file": "examples/33-emoji.jpg",
+    "page": "ai-11"
+  },
+  {
+    "id": "sparkles",
+    "n": 35,
+    "file": "examples/35-sparkles.jpg",
+    "page": "ai-11"
+  }
+]
