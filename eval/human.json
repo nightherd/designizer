@@ -358,5 +358,275 @@
     "hard": false,
     "wayback": "20240626",
     "note": "same design since 2024"
+  },
+  {
+    "id": "h-41",
+    "url": "https://area17.com/",
+    "split": "test-b",
+    "category": "studio",
+    "hard": false,
+    "wayback": "20240627",
+    "note": "same A/ mark, type and nav since 2024; hero copy and layout evolved; cookie bar bottom ~17%"
+  },
+  {
+    "id": "h-42",
+    "url": "https://www.wolffolins.com/",
+    "split": "test-b",
+    "category": "studio",
+    "hard": false,
+    "wayback": "20240629",
+    "note": "same full-bleed case slider since 2024; cookie bar bottom"
+  },
+  {
+    "id": "h-43",
+    "url": "https://clearleft.com/",
+    "split": "test-b",
+    "category": "studio",
+    "hard": false,
+    "wayback": "20240625",
+    "note": "same design since 2024 (slate + green, torn edge); headline changed"
+  },
+  {
+    "id": "h-44",
+    "url": "https://portorocha.com/",
+    "split": "test-b",
+    "category": "studio",
+    "hard": false,
+    "wayback": "20240621",
+    "note": "same design since 2024 (info column + live clock, project list)"
+  },
+  {
+    "id": "h-45",
+    "url": "https://bear.app/",
+    "split": "test-b",
+    "category": "product",
+    "hard": false,
+    "wayback": "20240624",
+    "note": "same design since 2024 (Hugo)"
+  },
+  {
+    "id": "h-46",
+    "url": "https://www.sublimetext.com/",
+    "split": "test-b",
+    "category": "product",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024; animated editor demo"
+  },
+  {
+    "id": "h-47",
+    "url": "https://play.date/",
+    "split": "test-b",
+    "category": "product",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024 (Panic); device hero is a canvas, plenty of DOM text"
+  },
+  {
+    "id": "h-48",
+    "url": "https://resend.com/",
+    "split": "test-b",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240624",
+    "note": "same layout since 2024, hero headline now serif; dark + glow, pill badge"
+  },
+  {
+    "id": "h-49",
+    "url": "https://supabase.com/",
+    "split": "test-b",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240630",
+    "note": "evolved from 2024 (now light by default), same headline, green and card grid; in-house team"
+  },
+  {
+    "id": "h-50",
+    "url": "https://mercury.com/",
+    "split": "test-b",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240630",
+    "note": "same design family since 2024; centered headline, email + pill CTA, soft gradient/photo hero"
+  },
+  {
+    "id": "h-51",
+    "url": "https://cal.com/",
+    "split": "test-b",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240630",
+    "note": "evolved since 2024, same Cal Sans + booker-widget hero; built in Framer by in-house team"
+  },
+  {
+    "id": "h-52",
+    "url": "https://www.notion.com/",
+    "split": "test-b",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240624",
+    "note": "same design family since 2024; centered bold headline, blue CTA, illustrations; cookie box bottom-right"
+  },
+  {
+    "id": "h-53",
+    "url": "https://www.apple.com/",
+    "split": "test-b",
+    "category": "product",
+    "hard": true,
+    "wayback": "20240630",
+    "note": "same design system since 2024 (SF Pro, centered product tiles); region bar on top"
+  },
+  {
+    "id": "h-54",
+    "url": "https://djr.com/",
+    "split": "test-b",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same site shell since 2024; featured-typeface hero rotates"
+  },
+  {
+    "id": "h-55",
+    "url": "https://productiontype.com/",
+    "split": "test-b",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same site shell since 2024; hero rotates; small cookie box"
+  },
+  {
+    "id": "h-56",
+    "url": "https://sharptype.co/",
+    "split": "test-b",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same site shell since 2024; hero rotates"
+  },
+  {
+    "id": "h-57",
+    "url": "https://www.typemates.com/",
+    "split": "test-b",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-58",
+    "url": "https://lettersfromsweden.se/",
+    "split": "test-b",
+    "category": "foundry",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same design since 2024 (WordPress); specimen hero rotates"
+  },
+  {
+    "id": "h-59",
+    "url": "https://www.apartamentomagazine.com/",
+    "split": "test-b",
+    "category": "editorial",
+    "hard": false,
+    "wayback": "20240628",
+    "note": "same header and type since 2024; hero content rotates; cookie bar bottom"
+  },
+  {
+    "id": "h-60",
+    "url": "https://aeon.co/",
+    "split": "test-b",
+    "category": "editorial",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-61",
+    "url": "https://kottke.org/",
+    "split": "test-b",
+    "category": "editorial",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024"
+  },
+  {
+    "id": "h-62",
+    "url": "https://www.fantasticman.com/",
+    "split": "test-b",
+    "category": "editorial",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design since 2024 (WordPress)"
+  },
+  {
+    "id": "h-63",
+    "url": "https://www.baggu.com/",
+    "split": "test-b",
+    "category": "brand",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same site shell since 2024; hero imagery rotates"
+  },
+  {
+    "id": "h-64",
+    "url": "https://www.parachutehome.com/",
+    "split": "test-b",
+    "category": "brand",
+    "hard": false,
+    "wayback": "20240630",
+    "note": "same design family since 2024 (centered wordmark, full-bleed photo, serif headline)"
+  },
+  {
+    "id": "h-65",
+    "url": "https://fermliving.com/",
+    "split": "test-b",
+    "category": "brand",
+    "hard": false,
+    "wayback": "20240623",
+    "note": "same design since 2024; split full-bleed hero"
+  },
+  {
+    "id": "h-66",
+    "url": "https://rauchg.com/",
+    "split": "test-b",
+    "category": "portfolio",
+    "hard": true,
+    "wayback": "20240618",
+    "note": "same post-list layout since 2024, title font mono -> sans; minimal Vercel-style"
+  },
+  {
+    "id": "h-67",
+    "url": "https://jvns.ca/",
+    "split": "test-b",
+    "category": "portfolio",
+    "hard": false,
+    "wayback": "20240627",
+    "note": "same design since 2024 (Hugo)"
+  },
+  {
+    "id": "h-68",
+    "url": "https://mxb.dev/",
+    "split": "test-b",
+    "category": "portfolio",
+    "hard": false,
+    "wayback": "20240625",
+    "note": "same design since 2024 (Eleventy)"
+  },
+  {
+    "id": "h-69",
+    "url": "https://upstatement.com/",
+    "split": "test-b",
+    "category": "studio",
+    "hard": false,
+    "wayback": "20240627",
+    "note": "same black + light serif look and round menu button since 2024; hero layout evolved"
+  },
+  {
+    "id": "h-70",
+    "url": "https://www.offscreenmag.com/",
+    "split": "test-b",
+    "category": "editorial",
+    "hard": false,
+    "wayback": "20240625",
+    "note": "same design since 2024"
   }
 ]
