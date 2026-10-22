@@ -195,6 +195,16 @@ async function examples() {
   await close();
   await browser.close();
   writeFileSync(join(ROOT, 'examples/index.json'), JSON.stringify(index, null, 2) + '\n');
+  // Pattern table for the README, straight from the detector so the two can't drift apart.
+  const model = { 34: 'Invented testimonials and numbers', 36: 'Template copy' };
+  const rows = [...index.map(x => ({ ...x, p: patterns[x.id] })), ...Object.entries(model).map(([n, name]) => ({ n: +n, name }))]
+    .sort((a, b) => a.n - b.n)
+    .map(x => x.p
+      ? `| ${x.n} | ${x.p.name} | \`${x.id}\` | ${x.p.w} | ${x.p.scored === false ? 'no' : 'yes'} | ${x.file ? `[${x.page}](${x.file})` : '–'} |`
+      : `| ${x.n} | ${x.name} | model only | strong / medium | – | – |`);
+  const table = ['| # | Pattern | Id | Strength | Counts toward verdict | Example |', '|---|---|---|---|---|---|', ...rows].join('\n');
+  const readme = join(ROOT, 'README.md');
+  writeFileSync(readme, readFileSync(readme, 'utf8').replace(/<!-- patterns -->[\s\S]*<!-- \/patterns -->/, `<!-- patterns -->\n${table}\n<!-- /patterns -->`));
 }
 
 const commands = { scan, eval: evaluate, examples };

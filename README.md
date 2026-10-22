@@ -50,7 +50,8 @@ Decisions you made on purpose go in `.designizer.json` at the project root, and 
 
 The full catalogue, with what counts as a reason to keep each one, is in [SKILL.md](SKILL.md). Strength works as in humanizer: a strong pattern is worth fixing on its own, a weak one only next to others. Unscored patterns are still reported, but they don't count toward the page verdict, because in the development data they fired on at least as many human pages as AI ones.
 
-PATTERN_TABLE
+<!-- patterns -->
+<!-- /patterns -->
 
 ## How the evaluation works
 

@@ -113,6 +113,7 @@ const EXAMPLES = [
   'a crypto trading terminal for day traders',
   'a developer API for sending emails, with a code sample in the hero',
   'a Web3 NFT marketplace',
+  'a late-night techno club, near-black with a single acid-green accent',
 ];
 plan.push(...EXAMPLES.map((product, i) => ({
   id: `ex-${String(i + 1).padStart(2, '0')}`, split: 'examples', model: ['sonnet', 'haiku'][i % 2], variant: 'plain', product,

@@ -584,8 +584,10 @@
       const hits = [];
       const dot = k => k.r.width >= 6 && k.r.width <= 16 && Math.abs(k.r.width - k.r.height) <= 1 && radius(k.s, k.r) >= 0.4 * k.r.width && rgba(k.s.backgroundColor)[3] >= 0.5;
       for (const p of m.recs) {
-        const kids = m.children(p.el);
-        if (kids.length !== 3 || !kids.every(dot)) continue;
+        const all = m.children(p.el);
+        const i = all.findIndex((k, j) => j + 2 < all.length && [k, all[j + 1], all[j + 2]].every(dot));
+        if (i < 0) continue;
+        const kids = all.slice(i, i + 3);
         const hs = kids.map(k => hsl(rgba(k.s.backgroundColor)));
         const mac = (hs[0][0] < 15 || hs[0][0] > 345) && hs[1][0] >= 30 && hs[1][0] <= 60 && hs[2][0] >= 85 && hs[2][0] <= 160;
         const grey = hs.every(x => x[1] < 0.12);

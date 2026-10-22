@@ -1950,6 +1950,7 @@
       "hero",
       "stat-row",
       "faq",
+      "fake-window",
       "infinite-motion"
     ],
     "strength": {
@@ -1966,6 +1967,7 @@
       "hero": "medium",
       "stat-row": "medium",
       "faq": "weak",
+      "fake-window": "medium",
       "infinite-motion": "medium"
     },
     "scanned": "2026-10-22"
@@ -2032,6 +2034,42 @@
       "icon-cards": "weak",
       "stat-row": "medium",
       "faq": "weak",
+      "infinite-motion": "medium"
+    },
+    "scanned": "2026-10-22"
+  },
+  "ex-05": {
+    "label": "ai",
+    "split": "examples",
+    "variant": "plain",
+    "score": 14,
+    "verdict": "ai",
+    "fired": [
+      "accent-word",
+      "eyebrow",
+      "tracked-caps",
+      "mono-label",
+      "numbered",
+      "meta-string",
+      "arrow-links",
+      "dark-glow",
+      "dark-acid",
+      "stat-row",
+      "reveal",
+      "infinite-motion"
+    ],
+    "strength": {
+      "accent-word": "strong",
+      "eyebrow": "strong",
+      "tracked-caps": "medium",
+      "mono-label": "medium",
+      "numbered": "medium",
+      "meta-string": "weak",
+      "arrow-links": "weak",
+      "dark-glow": "weak",
+      "dark-acid": "medium",
+      "stat-row": "medium",
+      "reveal": "medium",
       "infinite-motion": "medium"
     },
     "scanned": "2026-10-22"

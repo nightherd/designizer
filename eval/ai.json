@@ -960,5 +960,18 @@
     ],
     "file": "ai/ex-04.html",
     "generated": "2026-10-22"
+  },
+  {
+    "id": "ex-05",
+    "split": "examples",
+    "model": "sonnet",
+    "variant": "plain",
+    "product": "a late-night techno club, near-black with a single acid-green accent",
+    "prompt": "Build a landing page for a late-night techno club, near-black with a single acid-green accent. Put everything in a single index.html in the current directory (CDN links are fine).",
+    "models": [
+      "claude-sonnet-5-5"
+    ],
+    "file": "ai/ex-05.html",
+    "generated": "2026-10-22"
   }
 ]

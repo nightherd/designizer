@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NULL HOUR — Techno, 00:00 till late</title>
+<meta name="description" content="NULL HOUR is a late-night techno club. Doors midnight. Two rooms, one sound system, no windows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #070707;
+    --bg-2: #0e0e0e;
+    --line: #232323;
+    --text: #e9e9e4;
+    --muted: #8a8a84;
+    --acid: #b8ff00;
+    --display: "Big Shoulders Display", Impact, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--acid); color: #000; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--acid); outline-offset: 3px; }
+
+  /* film grain */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: .07;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  .label { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+  .label b { color: var(--acid); font-weight: 500; }
+
+  /* nav */
+  header.nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+    background: linear-gradient(var(--bg) 40%, transparent);
+  }
+  .nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 68px; }
+  .logo { font-family: var(--display); font-weight: 900; font-size: 26px; letter-spacing: .04em; }
+  .logo i { color: var(--acid); font-style: normal; }
+  .nav nav { display: flex; gap: 28px; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; }
+  .nav nav a { color: var(--muted); transition: color .2s; }
+  .nav nav a:hover { color: var(--acid); }
+  @media (max-width: 720px) { .nav nav a:not(.cta-s) { display: none; } }
+  .cta-s { color: var(--acid) !important; border: 1px solid var(--acid); padding: 6px 14px; }
+
+  /* hero */
+  .hero {
+    min-height: 100svh; position: relative; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 120px 0 40px; overflow: hidden;
+  }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .9; }
+  .hero::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, transparent 0%, var(--bg) 75%),
+                linear-gradient(transparent 55%, var(--bg));
+  }
+  .hero .wrap { position: relative; z-index: 2; width: 100%; }
+  h1 {
+    font-family: var(--display); font-weight: 900; text-transform: uppercase;
+    font-size: clamp(88px, 21vw, 300px); line-height: .8; letter-spacing: -.01em;
+    margin: 18px 0 28px;
+  }
+  h1 span { display: block; }
+  h1 .o { color: transparent; -webkit-text-stroke: 2px var(--acid); }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 24px 48px; align-items: end; justify-content: space-between; }
+  .hero-meta p { max-width: 380px; color: var(--muted); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--acid); color: #000; font-family: var(--mono); font-weight: 700;
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    padding: 16px 28px; border: 1px solid var(--acid); cursor: pointer;
+    transition: background .2s, color .2s, transform .2s;
+  }
+  .btn:hover { background: transparent; color: var(--acid); transform: translateX(4px); }
+  .btn.ghost { background: transparent; color: var(--text); border-color: #444; }
+  .btn.ghost:hover { color: var(--acid); border-color: var(--acid); }
+
+  /* marquee */
+  .marquee { border-block: 1px solid var(--line); overflow: hidden; background: var(--acid); color: #000; }
+  .marquee div { display: flex; width: max-content; animation: slide 28s linear infinite; }
+  .marquee span {
+    font-family: var(--display); font-weight: 900; text-transform: uppercase;
+    font-size: 30px; letter-spacing: .06em; padding: 8px 0; white-space: nowrap;
+  }
+  .marquee span::after { content: "✦"; margin: 0 28px; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  section { padding: 110px 0; }
+  h2 {
+    font-family: var(--display); font-weight: 900; text-transform: uppercase;
+    font-size: clamp(48px, 8vw, 104px); line-height: .9; margin: 14px 0 48px;
+  }
+  h2 em { font-style: normal; color: var(--acid); }
+
+  /* lineup */
+  .lineup { border-top: 1px solid var(--line); }
+  .act {
+    display: grid; grid-template-columns: 90px 1fr auto; gap: 20px; align-items: baseline;
+    padding: 22px 0; border-bottom: 1px solid var(--line);
+    transition: padding .25s, background .25s;
+  }
+  .act:hover { padding-left: 18px; background: linear-gradient(90deg, rgba(184,255,0,.08), transparent 60%); }
+  .act time { color: var(--acid); font-size: 13px; }
+  .act h3 {
+    font-family: var(--display); font-weight: 800; text-transform: uppercase;
+    font-size: clamp(36px, 6vw, 72px); line-height: 1; transition: color .2s;
+  }
+  .act:hover h3 { color: var(--acid); }
+  .act small { color: var(--muted); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; text-align: right; }
+  @media (max-width: 640px) {
+    .act { grid-template-columns: 64px 1fr; }
+    .act small { grid-column: 2; text-align: left; }
+  }
+
+  /* rooms */
+  .rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .room { background: var(--bg-2); padding: 40px 32px; min-height: 340px; display: flex; flex-direction: column; justify-content: space-between; transition: background .3s; }
+  .room:hover { background: #121a00; }
+  .room h3 { font-family: var(--display); font-weight: 900; font-size: 64px; text-transform: uppercase; line-height: .9; margin: 12px 0 16px; }
+  .room p { color: var(--muted); max-width: 40ch; }
+  .room ul { list-style: none; margin-top: 28px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+  .room li { padding: 8px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; }
+  .room li span:last-child { color: var(--acid); }
+
+  /* rules */
+  .rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; }
+  .rule b { display: block; font-family: var(--display); font-size: 56px; color: var(--acid); line-height: 1; }
+  .rule h4 { text-transform: uppercase; letter-spacing: .12em; font-size: 13px; margin: 10px 0 6px; }
+  .rule p { color: var(--muted); font-size: 14px; }
+
+  /* tickets */
+  .tickets { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .ticket {
+    border: 1px solid #333; padding: 32px 28px; position: relative; display: flex; flex-direction: column; gap: 6px;
+    transition: border-color .2s, transform .2s;
+  }
+  .ticket:hover { border-color: var(--acid); transform: translateY(-4px); }
+  .ticket.hot { border-color: var(--acid); background: rgba(184,255,0,.05); }
+  .ticket .tag { position: absolute; top: -11px; right: 20px; background: var(--acid); color: #000; font-size: 11px; font-weight: 700; letter-spacing: .14em; padding: 2px 10px; text-transform: uppercase; }
+  .ticket h3 { text-transform: uppercase; letter-spacing: .14em; font-size: 13px; color: var(--muted); font-weight: 500; }
+  .ticket .price { font-family: var(--display); font-weight: 900; font-size: 88px; line-height: 1; }
+  .ticket .price sup { font-size: 32px; color: var(--acid); vertical-align: top; margin-right: 4px; position: relative; top: 14px; }
+  .ticket p { color: var(--muted); font-size: 14px; margin-bottom: 20px; flex: 1; }
+  .ticket .btn { justify-content: space-between; }
+
+  /* info / footer */
+  .info { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; border-top: 1px solid var(--line); padding-top: 48px; }
+  .info h4 { font-size: 12px; letter-spacing: .2em; color: var(--acid); text-transform: uppercase; font-weight: 500; margin-bottom: 12px; }
+  .info p { color: var(--muted); }
+  form { display: flex; border: 1px solid #444; }
+  form input { flex: 1; min-width: 0; background: transparent; border: 0; color: var(--text); padding: 14px 16px; font: inherit; }
+  form input:focus { outline: none; }
+  form:focus-within { border-color: var(--acid); }
+  form button { background: var(--acid); border: 0; padding: 0 20px; font: 700 13px var(--mono); cursor: pointer; text-transform: uppercase; letter-spacing: .1em; }
+  .msg { margin-top: 10px; color: var(--acid); font-size: 13px; min-height: 1.6em; }
+  footer { padding: 28px 0 40px; color: var(--muted); font-size: 12px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .big-word { font-family: var(--display); font-weight: 900; font-size: clamp(80px, 24vw, 340px); line-height: .8; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px #2a2a2a; text-align: center; overflow: hidden; white-space: nowrap; user-select: none; padding-top: 40px; }
+
+  .blink { display: inline-block; width: 8px; height: 8px; background: var(--acid); border-radius: 50%; margin-right: 8px; animation: blink 1.2s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: .15; } }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee div, .blink { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="logo">NULL<i>/</i>HOUR</a>
+    <nav>
+      <a href="#lineup">Lineup</a>
+      <a href="#rooms">Rooms</a>
+      <a href="#rules">Rules</a>
+      <a href="#tickets" class="cta-s">Tickets</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <canvas id="wave" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <p class="label"><span class="blink"></span><b>Next night</b> — Fri 30 Oct · Doors 00:00 · Close 08:00</p>
+      <h1><span>Null</span><span class="o">Hour</span></h1>
+      <div class="hero-meta">
+        <p>Two rooms. One sound system. No windows, no clocks, no phones on the floor. Techno from midnight until the sun gives up.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap">
+          <a class="btn" href="#tickets">Get tickets →</a>
+          <a class="btn ghost" href="#lineup">Lineup</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div>
+      <span>Doors 00:00</span><span>Till 08:00</span><span>140 BPM</span><span>No photos</span><span>Funktion-One</span><span>18+</span>
+      <span>Doors 00:00</span><span>Till 08:00</span><span>140 BPM</span><span>No photos</span><span>Funktion-One</span><span>18+</span>
+    </div>
+  </div>
+
+  <section id="lineup">
+    <div class="wrap">
+      <p class="label"><b>01</b> / Fri 30 Oct — Hall A</p>
+      <h2 class="reveal">The <em>lineup</em></h2>
+      <div class="lineup reveal">
+        <div class="act"><time>00:00</time><h3>Mara Voss</h3><small>Opening · Berlin</small></div>
+        <div class="act"><time>01:30</time><h3>Kōji Tanabe</h3><small>Live · Osaka</small></div>
+        <div class="act"><time>03:00</time><h3>Sable &amp; Ghost</h3><small>B2B · London</small></div>
+        <div class="act"><time>05:00</time><h3>Ilya Brandt</h3><small>Headliner · Rotterdam</small></div>
+        <div class="act"><time>06:30</time><h3>Dun Kellan</h3><small>Closing · Detroit</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="rooms" style="padding-top:0">
+    <div class="wrap">
+      <p class="label"><b>02</b> / The building</p>
+      <h2 class="reveal">Two <em>rooms</em></h2>
+      <div class="rooms reveal">
+        <article class="room">
+          <div>
+            <p class="label">Main floor · 900 cap</p>
+            <h3>Hall A</h3>
+            <p>Concrete, black paint, a rig that you feel in your sternum. Hard, driving, peak-time techno under strobe and haze.</p>
+          </div>
+          <ul><li><span>Sound</span><span>Funktion-One</span></li><li><span>Tempo</span><span>138–150 BPM</span></li></ul>
+        </article>
+        <article class="room">
+          <div>
+            <p class="label">Basement · 250 cap</p>
+            <h3>The Pit</h3>
+            <p>Low ceiling, no lights but red-shifted green. Dub, broken beats and slower hypnotic grooves for when Hall A is too much.</p>
+          </div>
+          <ul><li><span>Sound</span><span>Custom stacks</span></li><li><span>Tempo</span><span>120–132 BPM</span></li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="rules" style="padding-top:0">
+    <div class="wrap">
+      <p class="label"><b>03</b> / House rules</p>
+      <h2 class="reveal">Respect the <em>dark</em></h2>
+      <div class="rules reveal">
+        <div class="rule"><b>01</b><h4>Cameras off</h4><p>Lenses get a sticker at the door. Be here, not on your feed.</p></div>
+        <div class="rule"><b>02</b><h4>Safe floor</h4><p>Harassment of any kind means you're out, no refund, no discussion.</p></div>
+        <div class="rule"><b>03</b><h4>Free water</h4><p>Taps in every room. Look after yourself and the people next to you.</p></div>
+        <div class="rule"><b>04</b><h4>Door policy</h4><p>We pick the room, not the outfit. Come curious, leave the ego outside.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tickets" style="padding-top:0">
+    <div class="wrap">
+      <p class="label"><b>04</b> / Admission</p>
+      <h2 class="reveal">Get <em>in</em></h2>
+      <div class="tickets reveal">
+        <div class="ticket">
+          <h3>Early bird</h3>
+          <div class="price"><sup>€</sup>14</div>
+          <p>Limited. Valid until 02:00. Both rooms.</p>
+          <a class="btn ghost" href="#" onclick="return false">Sold out <span>×</span></a>
+        </div>
+        <div class="ticket hot">
+          <span class="tag">Selling fast</span>
+          <h3>General</h3>
+          <div class="price"><sup>€</sup>22</div>
+          <p>Full night access to Hall A and The Pit. Re-entry until 04:00.</p>
+          <a class="btn" href="#">Buy ticket <span>→</span></a>
+        </div>
+        <div class="ticket">
+          <h3>Sunrise pass</h3>
+          <div class="price"><sup>€</sup>12</div>
+          <p>Enter after 05:00 for the headliner and closing set.</p>
+          <a class="btn ghost" href="#">Buy ticket <span>→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap info">
+      <div>
+        <h4>Location</h4>
+        <p>Sub-level 2, Gasworks Yard<br>Kellerstraße 9<br>Entrance via the loading bay.</p>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <p>Fri &amp; Sat · 00:00 — 08:00<br>Last entry 05:00<br>18+ · ID required</p>
+      </div>
+      <div>
+        <h4>Join the list</h4>
+        <form id="f">
+          <input type="email" required placeholder="you@domain.com" aria-label="Email address">
+          <button type="submit">Join</button>
+        </form>
+        <p class="msg" id="msg" role="status"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="big-word" aria-hidden="true">Null Hour</div>
+  <div class="wrap">
+    <span>© 2026 NULL/HOUR. All rights reserved.</span>
+    <span>Instagram · Resident Advisor · Contact</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Newsletter (demo)
+  document.getElementById('f').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('msg').textContent = '> You\'re on the list. See you in the dark.';
+    e.target.reset();
+  });
+
+  // Hero: scrolling waveform lines
+  const c = document.getElementById('wave'), ctx = c.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W, H, dpr, t = 0;
+  function size() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = c.clientWidth; H = c.clientHeight;
+    c.width = W * dpr; c.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const lines = 26, top = H * .08, span = H * .62;
+    for (let i = 0; i < lines; i++) {
+      const p = i / (lines - 1), y0 = top + p * span;
+      ctx.beginPath();
+      for (let x = 0; x <= W; x += 6) {
+        const nx = x / W;
+        const env = Math.exp(-Math.pow((nx - .68) * 3.2, 2));
+        const n = Math.sin(nx * 14 + t * 1.2 + i * .35) * Math.sin(nx * 5 - t * .6 + i * .12);
+        const y = y0 - env * n * 70 * (.4 + p);
+        x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(184,255,0,${.12 + p * .5})`;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    }
+  }
+  function loop() { t += .015; draw(); if (!reduce) requestAnimationFrame(loop); }
+  addEventListener('resize', () => { size(); draw(); });
+  size(); loop();
+</script>
+</body>
+</html>
